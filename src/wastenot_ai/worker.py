@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 from threading import Lock
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 
 from .media import MAX_BYTES, MediaError
 from .http_api import BoundedHTTP, configure_errors, envelope, install_security_schema
@@ -38,8 +38,10 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
             raise HTTPException(401, detail="UNAUTHENTICATED")
 
     @app.get("/health/ready")
-    async def ready(request: Request):
+    async def ready(request: Request, response: Response):
         authorize(request)
+        if os.getenv('WASTENOT_AI_RELEASE'):
+            response.headers['X-WasteNot-Release'] = os.environ['WASTENOT_AI_RELEASE']
         if app.state.detector is None:
             raise HTTPException(503, detail="MODEL_NOT_READY")
         return {"ready": True}

@@ -1,5 +1,7 @@
 # Kontrak HTTP AI v1 dan pembagian tanggung jawab
 
+Status 7 November 2026: backend Go dan sesi produksi sudah tersedia. Kontrak publik/snapshot Go terkini serta status wiring Android dijelaskan di [INTEGRATION.md](INTEGRATION.md), dan worker/deploy pada [DEPLOYMENT.md](DEPLOYMENT.md). Pernyataan belum diimplementasikan pada uraian historis di bawah berlaku pada checkpoint demo awal, bukan kondisi layanan saat ini.
+
 Pembaruan aktif: [pilot-policy-06, kondisi kosong dan audit background](CONDITIONAL_AND_BACKGROUND.md). UNKNOWN biasa boleh mendapat READY/CONDITIONAL; syarat yang belum diketahui muncul di conditions_to_verify. Bagian policy-05/evaluasi 40 kasus di bawah adalah perilaku/run sebelumnya; allow_conditional=false mempertahankan mode ketat tersebut. Suite aktif kini 44 kasus, dengan 40 kasus lama diuji dalam mode ketat dan empat kasus kondisi kosong. Hash report lama merujuk snapshot skenario sebelum perubahan, bukan byte file skenario aktif.
 
 Keputusan 20 Oktober 2026: **Python memiliki satu implementasi aturan AI**.
@@ -32,11 +34,11 @@ memerlukan regenerasi, pemeriksaan kompatibilitas Go/Android, serta pembaruan
 versi jika mematahkan kontrak; jangan mengedit JSON hasil generate secara manual.
 
 ```powershell
-.\.venv-ai\Scripts\python.exe -m pip install -e "./ai[worker,test]" -c ai/constraints.txt
+.\.venv-ai\Scripts\python.exe -m pip install -e ".[worker,test]" -c constraints.txt
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli export-contracts
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli export-contracts --check
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = '1'
-.\.venv-ai\Scripts\python.exe -m pytest ai/tests -q -p no:cacheprovider
+.\.venv-ai\Scripts\python.exe -m pytest tests -q -p no:cacheprovider
 ```
 
 CI memvalidasi tiga dokumen OpenAPI, contoh terhadap JSON Schema, conditional
@@ -96,7 +98,7 @@ Gemini, database atau endpoint penyimpanan catatan.
 ```powershell
 $headers = @{Authorization='Bearer mock-user-a'}
 Invoke-RestMethod http://127.0.0.1:8094/v1/ai/objects -Headers $headers
-$body = Get-Content ai/contracts/v1/examples/recycle-request.json -Raw
+$body = Get-Content contracts/v1/examples/recycle-request.json -Raw
 Invoke-RestMethod http://127.0.0.1:8094/v1/ai/recommendations -Method Post -Headers $headers -ContentType 'application/json' -Body $body
 ```
 
