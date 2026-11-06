@@ -43,6 +43,12 @@ jobs:
         run: |
           python audit_dependencies.py
 
+      - name: Sync OpenAPI Contract Artifacts
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m wastenot_ai.cli export-contracts --output contracts/v1
+
       - name: Run Test Suite
         env:
           PYTHONPATH: src
