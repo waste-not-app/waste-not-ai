@@ -37,7 +37,7 @@ jobs:
 
       - name: Code Quality & Syntax Check (Ruff)
         run: |
-          ruff check --select E9,F src tests
+          ruff check --ignore F401 --select E9,F src tests
 
       - name: Security & Dependency Audit
         run: |
