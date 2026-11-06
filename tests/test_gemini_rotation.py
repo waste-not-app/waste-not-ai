@@ -60,11 +60,18 @@ def test_rate_limited_key_is_skipped_until_retry_after_expires(monkeypatch):
     assert used == [KEYS[0],KEYS[1],KEYS[1],KEYS[1],KEYS[0]]
 
 
-@pytest.mark.parametrize("response", [
-    httpx.Response(429, json={"error":{"details":[{"@type":"type.googleapis.com/google.rpc.RetryInfo", "retryDelay":"180.5s"}]}}),
-    httpx.Response(429, headers={"Retry-After":format_datetime(datetime.now(timezone.utc) + timedelta(seconds=190), usegmt=True)}),
-])
-def test_provider_retry_hints_extend_cooldown(response, monkeypatch):
+@pytest.mark.parametrize("hint", ["retry_info", "http_date"])
+def test_provider_retry_hints_extend_cooldown(hint, monkeypatch):
+    fixed = datetime(2026, 11, 7, tzinfo=timezone.utc)
+    class Clock:
+        @staticmethod
+        def now(tz):
+            return fixed
+    monkeypatch.setattr("wastenot_ai.providers.datetime", Clock)
+    response = (httpx.Response(429, json={"error":{"details":[{
+        "@type":"type.googleapis.com/google.rpc.RetryInfo", "retryDelay":"180.5s"}]}})
+        if hint == "retry_info" else httpx.Response(429, headers={
+            "Retry-After":format_datetime(fixed + timedelta(seconds=190), usegmt=True)}))
     now = [0.0]
     monkeypatch.setattr("wastenot_ai.providers.monotonic", lambda:now[0])
     used = []
