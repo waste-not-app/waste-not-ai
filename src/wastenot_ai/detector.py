@@ -26,10 +26,14 @@ class YoloDetector:
         self.input_shape = input_shape
         self.labels = {int(k): v for k, v in self.model.names.items()}
         checksum = hashlib.sha256(model_path.read_bytes()).hexdigest()
+        try:
+            runtime_version = importlib.metadata.version("ultralytics")
+        except importlib.metadata.PackageNotFoundError:
+            runtime_version = importlib.metadata.version("ultralytics-opencv-headless")
         self.artifact = {
             "model_version": f"candidate-{checksum[:12]}" + ("-square640" if input_shape == "square" else ""),
             "sha256": checksum,
-            "labels": self.labels, "ultralytics_version": importlib.metadata.version("ultralytics"),
+            "labels": self.labels, "ultralytics_version": runtime_version,
             "device": device, "input_size": 640,
             "input_shape": input_shape,
             "preprocessing": "EXIF transpose, RGB, Ultralytics letterbox",
