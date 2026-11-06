@@ -130,6 +130,7 @@ jobs:
             sudo mkdir -p "$RELEASE_DIR"
             sudo tar -xzf "/home/dev/ai-releases/wastenot-ai-$SHA.tar.gz" -C "$RELEASE_DIR"
             sudo chown -R root:root "$RELEASE_DIR"
+            sudo chmod -R a+rX "$RELEASE_DIR"
 
             # Point /opt/wastenot-ai/current to the active release
             sudo ln -sfn "$RELEASE_DIR" /opt/wastenot-ai/current-new
@@ -140,6 +141,7 @@ jobs:
               sudo mkdir -p /opt/wastenot/current/python
               sudo cp -r "$RELEASE_DIR/src/wastenot_ai" /opt/wastenot/current/python/ || true
               sudo cp "$RELEASE_DIR/serve.py" /opt/wastenot/current/ai-serve.py || true
+              sudo chmod -R a+rX /opt/wastenot/current/python /opt/wastenot/current/ai-serve.py || true
             fi
 
             echo "==> Restarting AI worker services..."
