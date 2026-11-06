@@ -4,7 +4,7 @@ import hmac
 import os
 from threading import Lock
 
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from .decisions import DecisionError, Decisions
@@ -35,7 +35,9 @@ def create_recommendation_app(*, token=None, provider=None, guides=None, demo_gu
     app.state.decisions = decisions
 
     @app.get("/health/ready")
-    def ready(request: Request):
+    def ready(request: Request, response: Response):
+        if os.getenv('WASTENOT_AI_RELEASE'):
+            response.headers['X-WasteNot-Release'] = os.environ['WASTENOT_AI_RELEASE']
         return envelope(request, {"ready": True, "recommendation_version": "pilot-policy-06"})
 
     @app.get("/internal/v1/objects", response_model=Envelope[ObjectCatalog])

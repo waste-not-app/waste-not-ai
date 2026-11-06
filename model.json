@@ -1,6 +1,6 @@
 {
   "name": "yolo11n-coco-baseline",
-  "model_version": "yolo11n-coco-v8.3.0",
+  "model_version": "candidate-0ebbc80d4a76",
   "filename": "yolo11n.pt",
   "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt",
   "source_url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt",

@@ -3,11 +3,15 @@ import argparse
 from contextlib import nullcontext
 import hashlib
 import io
+import json
 import os
 from pathlib import Path
 
 
 def application(kind):
+    release = Path(__file__).resolve().parent / 'release.json'
+    if release.is_file():
+        os.environ['WASTENOT_AI_RELEASE'] = json.loads(release.read_text())['commit']
     if kind == 'detection':
         for name in ('GEMINI_API_KEY', *(f'GEMINI_API_KEY_{i}' for i in range(1, 6)), 'AI_RECOMMENDATION_TOKEN'):
             os.environ.pop(name, None)

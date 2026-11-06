@@ -1,4 +1,28 @@
-# WasteNot AI: pilot YOLO + Gemini
+# WasteNot AI
+
+Layanan privat YOLO CPU dan keputusan Gemini untuk [Go backend](https://github.com/waste-not-app/waste-not-backend). Android hanya mengakses HTTPS Go, bukan worker/key/model. Riwayat kontribusi hasil ekstraksi Android tetap dipertahankan tanpa squash atau penulisan ulang author.
+
+- [Integrasi Android–Go–AI](docs/INTEGRATION.md): kontrak, retry, status dan batas pilot.
+- [Deployment dan rollback](docs/DEPLOYMENT.md): jalur rilis yang benar-benar dijalankan, dependency, model dan pemeriksaan kesehatan.
+- [Kontrak publik v1](contracts/v1/public.openapi.json) dan [contoh](contracts/v1/examples/).
+
+Dari root repo ini, jalankan pemeriksaan tanpa key atau model:
+
+```sh
+python3.12 -m venv .venv
+.venv/bin/python -m pip install --require-hashes -r requirements-ci.lock
+PYTHONPATH=src .venv/bin/python -m wastenot_ai.cli export-contracts --check
+.venv/bin/python scripts/check_contracts.py contracts/v1 contracts/backend-pin.json
+PYTHONPATH=src .venv/bin/python -m pytest tests -q
+```
+
+CI mengunduh bobot resmi untuk memeriksa SHA-256 sebenarnya. Paket deploy hanya berisi source worker dan input runtime, tanpa key, foto, dataset, hasil training atau bobot. Worker deteksi memverifikasi model lagi saat startup.
+
+Pilot memakai YOLO11n COCO (`candidate-0ebbc80d4a76`) dan Gemini 3.1 Flash-Lite. Empat policy guide versi 6 tersedia melalui file operator yang terpisah; pemeriksaan sumber otomatis bukan persetujuan keselamatan manusia. Katalog/demo draf di bawah tidak menggambarkan seluruh cakupan produksi. Bobot fine-tuning kandidat belum dipromosikan.
+
+## Referensi eksperimen dan demo lokal
+
+Bagian berikut mempertahankan penjelasan riset/demo. Hasilnya bukan klaim penerimaan Android atau deployment checkpoint fine-tuning. Source sekarang berada langsung di root repo AI; prefix direktori `ai/` pada laporan historis merujuk lokasi sebelum ekstraksi.
 
 Pembaruan `pilot-policy-06`: kebersihan, keutuhan, kelayakan, niat pakai ulang, fokus dan akses boleh dibiarkan belum tahu. Gemini memberi **saran sementara bersyarat**, tanpa mengisi kondisi sebagai fakta. [Cara mencoba dan hasil audit/training background](docs/CONDITIONAL_AND_BACKGROUND.md).
 
@@ -8,11 +32,11 @@ Poin 3-4: [mutu keputusan YOLO](docs/DETECTION_QUALITY.md) dan [panduan/evaluasi
 
 ```powershell
 # Demo checkpoint yang sudah ditrain, membuka kamera browser:
-.\ai\demo-camera-trained.bat
+.\demo-camera-trained.bat
 # Evaluasi 44 skenario tanpa API:
-.\.venv-ai\Scripts\python.exe ai/scripts/evaluate_recommendations.py
+.\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py
 # Evaluasi Gemini sungguhan: 16 panggilan logis untuk satu putaran:
-.\.venv-ai\Scripts\python.exe ai/scripts/evaluate_recommendations.py --provider gemini --max-calls 16
+.\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py --provider gemini --max-calls 16
 ```
 
 Untuk HDPE, konfirmasi material, pilih isi sebelumnya Pangan/minuman, kondisi bersih/utuh, dan akses daur ulang yang benar-benar menerima. Riwayat isi HDPE UNKNOWN tetap meminta konteks; akses UNKNOWN dapat menghasilkan saran bersyarat. Bekas kimia tidak memakai panduan kemasan pangan; tidak ada Reuse otomatis dari kode 2. Lihat [contoh context HDPE](examples/context-hdpe.json). Contoh JSON dengan akses YES adalah asumsi demo, bukan verifikasi fasilitas.
@@ -35,7 +59,7 @@ Pembaruan 20 Oktober 2026: Gemini memilih **tepat satu** dari **Reduce / Reuse /
 
 Eksperimen fine-tuning botol/kaleng menggunakan dataset publik beranotasi tersedia pada [panduan fine-tuning](docs/FINE_TUNING.md): sumber dan lisensi, audit/split, setup CUDA terpisah, training/resume, evaluasi, serta perintah mencoba checkpoint pada demo kamera dan worker backend. Model khusus empat kelas dipilih eksplisit dengan `--model`; demo biasa tetap memakai cakupan COCO yang luas.
 
-Kandidat dengan data lebih bervariasi tersedia melalui [training Broad Waste](docs/BROAD_WASTE_TRAINING.md): 10 kelas visual, data/split aktual, batas kelas langka, hasil evaluasi, integrasi worker dan `.\ai\demo-camera-broad.bat --port 8095`. Semua hasil kandidat broad perlu ditinjau; model default tetap COCO.
+Kandidat dengan data lebih bervariasi tersedia melalui [training Broad Waste](docs/BROAD_WASTE_TRAINING.md): 10 kelas visual, data/split aktual, batas kelas langka, hasil evaluasi, integrasi worker dan `.\demo-camera-broad.bat --port 8095`. Semua hasil kandidat broad perlu ditinjau; model default tetap COCO.
 
 Setelah training selesai, `ai/demo-camera-trained.bat` membuka demo checkpoint botol/kaleng melalui environment demo awal (CPU). Perintah GPU tersedia pada panduan tersebut.
 
@@ -46,7 +70,7 @@ Run pertama sudah selesai pada 30 epoch (early stopping). [Laporan hasil](docs/F
 Setelah instalasi, cara termudah dari root repo:
 
 ```powershell
-.\ai\demo-camera.bat
+.\demo-camera.bat
 ```
 
 Atau jalankan Python langsung:
@@ -62,7 +86,7 @@ Browser terbuka otomatis ke `http://127.0.0.1:8092`. Izinkan kamera ketika brows
 3. Klik bingkai objek atau pilih dari daftar. Kandidat ≥0,50 dapat ditinjau; skor rendah/kelas nonkatalog diarahkan ke pilihan manual.
 4. Konfirmasikan jenis/material. Label `bottle`, `cup` atau `bowl` belum memastikan bahan pembuatnya.
 5. Isi kebersihan, keutuhan, kelayakan dan niat pakai ulang; centang konfirmasi. Pada peralatan makan/minum yang kotor, isi jenis kotoran dan apakah bisa dibersihkan. Sisa makanan/minuman atau debu biasa yang dikonfirmasi bisa dibersihkan dapat menghasilkan **Reuse setelah dicuci** jika benda utuh, layak dan ingin dipakai lagi. Jika menandai risiko, jelaskan jenisnya; kotor biasa berbeda dari kontaminasi berbahaya. UNKNOWN tidak ditebak otomatis.
-6. Pilih **Gemini · API langsung** lalu **Minta rekomendasi**. Key/model dibaca server dari `ai/.env`; tidak dikirim ke browser. Untuk mencoba tanpa request berbayar, pilih **Simulasi · tanpa API**, yang diberi label eksplisit.
+6. Pilih **Gemini · API langsung** lalu **Minta rekomendasi**. Key/model dibaca server dari `.env`; tidak dikirim ke browser. Untuk mencoba tanpa request berbayar, pilih **Simulasi · tanpa API**, yang diberi label eksplisit.
 7. Periksa satu label Reduce/Reuse/Recycle/Trash, alasan, langkah, caution dan sumber panduan yang langsung terbuka. Fokus **Otomatis sesuai objek** meminta Gemini mengutamakan penanganan saat ini yang didukung panduan. Pilih **Pencegahan berikutnya (Reduce)** untuk mencoba saran pencegahan. Isi akses daur ulang sesuai yang sudah diperiksa. Tidak ada aktivitas/XP yang disimpan. Ubah kondisi untuk membatalkan saran lama atau **Bersihkan** untuk menghapus foto/hasil sementara.
 
 Jika izin kamera ditolak atau perangkat tidak mempunyai webcam, gunakan **Pilih foto**. Gambar dinormalisasi sebelum dikirim agar bbox sesuai preview. Katalog di bagian bawah bisa dicari/filter dan dipilih secara manual; hasilnya ditandai pilihan manual, bukan hasil identifikasi YOLO.
@@ -73,7 +97,7 @@ Opsi tambahan:
 
 ```powershell
 # Port alternatif jika 8092 sedang dipakai.
-.\ai\demo-camera.bat --port 8094
+.\demo-camera.bat --port 8094
 # Server saja, tanpa membuka browser otomatis.
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli demo --demo-guides --no-browser
 # Artikel yang sudah ditinjau, tanpa mengizinkan draf.
@@ -146,22 +170,22 @@ Lihat [katalog berversi](src/wastenot_ai/data/catalog.json). Ini cakupan usulan 
 
 ```powershell
 # Gunakan gambar JPEG/PNG yang memang boleh diproses.
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli detect ai/data/local/smoke/bottle.jpg --output ai/artifacts/detection.json
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli detect data/local/smoke/bottle.jpg --output artifacts/detection.json
 
 # Baca object_id pada hasil deteksi; pilih satu objek yang supported_for_review=true.
 # context-glass.json adalah contoh. Ubah sesuai material/kondisi yang benar-benar dikonfirmasi.
 # Pada sampel/runtime yang diuji, bottle adalah object-3; periksa hasil detect terbaru.
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline ai/data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context ai/examples/context-glass.json --provider fixture --demo-guides --output ai/artifacts/pipeline-fixture.json
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context examples/context-glass.json --provider fixture --demo-guides --output artifacts/pipeline-fixture.json
 
 # Ukur cold/first inference serta p50/p95 warm, tanpa menyimpan salinan foto.
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli benchmark ai/data/local/smoke --repeat 5 --output ai/artifacts/baseline.json
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli benchmark data/local/smoke --repeat 5 --output artifacts/baseline.json
 ```
 
 `fixture` adalah simulator kontrak yang dipilih secara eksplisit, selalu `prototype_only=true`; hasilnya bukan keluaran Gemini. `pipeline` menolak object_id yang hilang, kelas yang tidak didukung mapping, atau kandidat terlalu rendah sebelum memanggil provider. Koreksi objek/kondisi memerlukan pemanggilan baru; prototipe tidak mengubah state sesi produksi. Jalur `recommend` menguji konteks manual secara mandiri, tanpa mengklaim provenance deteksi.
 
 ## Gemini API
 
-Salin `ai/.env.example` ke `ai/.env` bila belum ada. Isi secara lokal:
+Salin `ai/.env.example` ke `.env` bila belum ada. Isi secara lokal:
 
 ```dotenv
 GEMINI_API_KEY_1=isi_key_pertama
@@ -173,7 +197,7 @@ GEMINI_MODEL=isi_id_model_yang_tersedia_di_akunmu
 GEMINI_TIMEOUT_SECONDS=15
 ```
 
-Isi satu sampai lima slot yang tersedia; slot kosong dilewati dan nilai duplikat hanya dipakai sekali. Jika ada key bernomor yang terisi, `GEMINI_API_KEY` lama diabaikan. Jika seluruh slot bernomor kosong, key lama tetap bekerja sebagai fallback konfigurasi. File `ai/.env` lokal sudah memiliki lima slot kosong tanpa mengganti key lama; isi key asli sendiri dan mulai ulang server demo setelah mengubahnya.
+Isi satu sampai lima slot yang tersedia; slot kosong dilewati dan nilai duplikat hanya dipakai sekali. Jika ada key bernomor yang terisi, `GEMINI_API_KEY` lama diabaikan. Jika seluruh slot bernomor kosong, key lama tetap bekerja sebagai fallback konfigurasi. File `.env` lokal sudah memiliki lima slot kosong tanpa mengganti key lama; isi key asli sendiri dan mulai ulang server demo setelah mengubahnya.
 
 Pemakaian normal bergiliran **1 → 2 → 3 → 4 → 5 → 1**, sesuai slot terisi. HTTP 429 membuat key tersebut masuk cooldown minimal 60 detik atau lebih lama sesuai `Retry-After`/`RetryInfo` dari Google, lalu mencoba key lain yang tersedia. Setiap key hanya dicoba sekali per permintaan, maksimum lima percobaan dalam satu anggaran timeout. Jika semua sedang cooldown, langsung menghasilkan `LLM_RATE_LIMITED` tanpa request baru. HTTP 401/403 menonaktifkan key sampai proses dimulai ulang; key lain tetap dapat dicoba. Timeout, 5xx, output invalid dan respons terblokir tidak memicu pengulangan generation otomatis.
 
@@ -185,8 +209,8 @@ Jangan tempel key ke chat, commit, argumen CLI, atau laporan. `doctor` hanya men
 
 ```powershell
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli list-gemini-models
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context ai/examples/context-pet.json --provider gemini --demo-guides --output ai/artifacts/gemini-demo.json
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline ai/data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context ai/examples/context-glass.json --provider gemini --demo-guides --output ai/artifacts/pipeline-gemini.json
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context examples/context-pet.json --provider gemini --demo-guides --output artifacts/gemini-demo.json
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context examples/context-glass.json --provider gemini --demo-guides --output artifacts/pipeline-gemini.json
 ```
 
 Endpoint Google HTTPS tetap; key pada header `x-goog-api-key`, bukan query URL. Failover key hanya untuk penolakan 429/401/403 seperti di atas, tanpa retry loop tak terbatas. Foto, nama, email, lokasi, token dan catatan pribadi tidak dikirim. Payload terbatas objek, kategori, kondisi termasuk cleanable/soiling, jenis risiko, niat reuse, fokus saran, akses daur ulang, allowed methods dan evidence panduan. `generationConfig` memakai `responseMimeType=application/json` dan `responseJsonSchema`; refusal/truncation, error HTTP yang tidak dipulihkan, timeout dan schema invalid menjadi fallback tanpa metode.
@@ -228,10 +252,10 @@ Sesudah instalasi dan `fetch-assets`, alur berikut dapat dijalankan terpisah dar
 
 ```powershell
 # YOLO nyata + rekomendasi simulasi; cocok untuk mencoba tanpa key.
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline ai/data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context ai/examples/context-glass.json --provider fixture --demo-guides --output ai/artifacts/pipeline-fixture.json
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context examples/context-glass.json --provider fixture --demo-guides --output artifacts/pipeline-fixture.json
 
 # YOLO nyata + request Gemini; membutuhkan konfigurasi key/model.
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline ai/data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context ai/examples/context-glass.json --provider gemini --demo-guides --output ai/artifacts/pipeline-gemini.json
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli pipeline data/local/smoke/bottle.jpg --object-id object-3 --confirm-object --context examples/context-glass.json --provider gemini --demo-guides --output artifacts/pipeline-gemini.json
 ```
 
 `pipeline` menjalankan deteksi lagi pada foto yang sama; periksa objek terpilih dalam output terbaru sebelum menerima saran. Flag `--confirm-object` menyatakan bahwa context adalah pilihan/koreksi pengguna. Flag itu tidak mengonfirmasi metode dan tidak menyimpan catatan.
@@ -270,7 +294,7 @@ sequenceDiagram
 
 ### 1. Jalankan worker pada host backend
 
-Isi `AI_SERVICE_TOKEN` minimal 24 karakter pada `ai/.env`, lalu jalankan dari root repo:
+Isi `AI_SERVICE_TOKEN` minimal 24 karakter pada `.env`, lalu jalankan dari root repo:
 
 ```powershell
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-worker --port 8091
@@ -285,7 +309,7 @@ Konfigurasi proses Go secara terpisah melalui environment/secret configuration:
 | `AI_RECOMMENDATION_URL` | `http://127.0.0.1:8093`, base URL modul keputusan |
 | `AI_RECOMMENDATION_TOKEN` | Token berbeda dari YOLO, sama dengan konfigurasi modul keputusan |
 
-Pembacaan `ai/.env` oleh CLI Python tidak otomatis mengisi environment terminal, Go atau Android. Worker YOLO menghapus seluruh key Gemini dan token rekomendasi saat diluncurkan lewat CLI. Key Gemini hanya dibutuhkan proses Python keputusan, tidak oleh Go.
+Pembacaan `.env` oleh CLI Python tidak otomatis mengisi environment terminal, Go atau Android. Worker YOLO menghapus seluruh key Gemini dan token rekomendasi saat diluncurkan lewat CLI. Key Gemini hanya dibutuhkan proses Python keputusan, tidak oleh Go.
 
 CLI worker saat ini bind ke `127.0.0.1`; contoh ini memakai Go dan worker pada host yang sama. `127.0.0.1` di container berbeda menunjuk container itu sendiri. Deployment lintas container/host perlu penyesuaian bind dan jaringan privat oleh tim backend; jangan menganggap perintah lokal ini sudah menyediakan deployment Docker.
 
@@ -411,7 +435,7 @@ Urutan smoke integrasi: health worker → deteksi publik memakai akun uji → pi
 | Model tidak ditemukan | Jalankan `fetch-assets`, periksa `ai/artifacts/models/yolo11n.pt`, atau pakai `--model path/to/model.pt` pada detect/benchmark/pipeline |
 | `fetch-assets` gagal mengunduh | Periksa jaringan ke GitHub/Flickr; gunakan gambar milik sendiri jika sampel tidak tersedia. Model yang sudah terunduh dapat dipakai setelah checksum diverifikasi |
 | `MANUAL_REQUIRED` atau `recommendation=null` | Periksa supported_for_review, score, object_id dan label. Object-1 belum tentu botol; pilih kandidat yang benar atau lanjut manual |
-| `LLM_NOT_CONFIGURED` / `LLM_MODEL_NOT_CONFIGURED` | Isi key/model pada `ai/.env`; `doctor` memeriksa status, bukan menampilkan secret |
+| `LLM_NOT_CONFIGURED` / `LLM_MODEL_NOT_CONFIGURED` | Isi key/model pada `.env`; `doctor` memeriksa status, bukan menampilkan secret |
 | Model Gemini tidak dapat diakses / `LLM_UNAVAILABLE` | Jalankan `list-gemini-models`; periksa nama model, akses akun, jaringan, billing/kuota dan dukungan structured output |
 | `NO_REVIEWED_GUIDE` | Untuk demo gunakan `--demo-guides`; penggunaan sesungguhnya memerlukan `--guides` berisi artikel PUBLISHED yang masih valid dan ditinjau |
 | `NO_ALLOWED_METHOD` | Kondisi belum memenuhi evidence panduan; jangan mengubah UNKNOWN/kondisi hanya untuk mendapatkan saran. Lanjut manual atau lengkapi aturan editorial yang ditinjau |
@@ -421,7 +445,7 @@ Urutan smoke integrasi: health worker → deteksi publik memakai akun uji → pi
 | Worker 401 | Header bearer harus berisi token worker, sama dengan AI_SERVICE_TOKEN proses server; JWT pengguna dipakai hanya pada API publik Go |
 | Worker 413/415/422 | Periksa ukuran, format aktual, dimensi dan decoder gambar; mengganti ekstensi file tidak mengubah format |
 | Worker 503/504 | Worker sibuk/model belum siap atau melewati deadline. Native job tetap memegang slot sampai selesai; coba ulang eksplisit setelah tersedia |
-| Terminal Go tidak membaca nilai `ai/.env` | CLI Python memuat file itu untuk prosesnya sendiri. Konfigurasikan environment/secret Go secara terpisah |
+| Terminal Go tidak membaca nilai `.env` | CLI Python memuat file itu untuk prosesnya sendiri. Konfigurasikan environment/secret Go secara terpisah |
 
 Output `UNAVAILABLE` adalah fallback terkontrol dan dapat dikembalikan CLI dengan exit code 0. Untuk memastikan Gemini benar-benar menghasilkan rekomendasi, periksa `status`, `reason_code`, `provider` dan laporan pengujian; jangan memakai exit code saja sebagai bukti sukses LLM.
 
@@ -431,12 +455,12 @@ Output `UNAVAILABLE` adalah fallback terkontrol dan dapat dikembalikan CLI denga
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = '1'
 .\.venv-ai\Scripts\python.exe -m pytest ai/tests -q
 # Uji adapter HTTP privat dengan model nyata dan rekomendasi fixture:
-.\.venv-ai\Scripts\python.exe ai/scripts/verify_runtime.py
+.\.venv-ai\Scripts\python.exe scripts/verify_runtime.py
 # Opsional, hanya untuk pengujian browser otomatis (bukan kebutuhan menjalankan demo):
 .\.venv-ai\Scripts\python.exe -m pip install playwright
 .\.venv-ai\Scripts\python.exe -m playwright install chromium
 # Dengan demo server aktif; menggunakan kamera palsu, YOLO nyata dan rekomendasi fixture:
-.\.venv-ai\Scripts\python.exe ai/scripts/verify_camera_demo.py
+.\.venv-ai\Scripts\python.exe scripts/verify_camera_demo.py
 # Tambahkan --live-gemini untuk tujuh request: empat label, baterai, kaca pecah dan cangkir kotor yang bisa dicuci.
 ```
 
