@@ -6,9 +6,7 @@ Pembaruan aktif: [pilot-policy-06, kondisi kosong dan audit background](CONDITIO
 
 Keputusan 20 Oktober 2026: **Python memiliki satu implementasi aturan AI**.
 Go mengaksesnya melalui HTTP privat. Frontend memakai HTTP publik Go.
-Kontrak bertipe, mock publik dan adapter Python sudah tersedia di repo ini;
-backend Go, penyimpanan sesi produksi dan layar Android belum diimplementasikan
-oleh pekerjaan ini. Pembaruan poin 3-4 menambahkan profil deteksi per kelas dan panduan pilot; lihat [mutu deteksi](DETECTION_QUALITY.md) dan [evaluasi rekomendasi](RECOMMENDATION_EVALUATION.md).
+Kontrak bertipe, mock publik dan adapter Python tersedia di repo ini. Backend Go dan sesi produksi kini tersedia di repo backend; wiring Android berada pada PR integrasi dan penerimaan perangkat masih perlu diselesaikan. Pembaruan poin 3-4 menambahkan profil deteksi per kelas dan panduan pilot; lihat [mutu deteksi](DETECTION_QUALITY.md) dan [evaluasi rekomendasi](RECOMMENDATION_EVALUATION.md).
 
 ## Artifact yang menjadi acuan tim
 

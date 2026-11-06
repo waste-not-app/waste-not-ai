@@ -145,7 +145,7 @@ Jalankan dari root repository. Python 3.11+ diperlukan; lingkungan pengembangan 
 
 ```powershell
 python -m venv .venv-ai
-.\.venv-ai\Scripts\python.exe -m pip install -e "./ai[yolo,worker,test]" -c ai/constraints.txt
+.\.venv-ai\Scripts\python.exe -m pip install -e ".[yolo,worker,test]" -c constraints.txt
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli doctor
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli fetch-assets
 ```
@@ -232,7 +232,7 @@ Policy REUSE: utuh, reusable=YES, reuse_intention=true dan evidence yang sesuai 
 ## Worker privat untuk backend Go
 
 ```powershell
-# Isi AI_SERVICE_TOKEN dengan secret acak minimal 24 karakter di ai/.env.
+# Isi AI_SERVICE_TOKEN dengan secret acak minimal 24 karakter di .env.
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-worker --port 8091
 ```
 
