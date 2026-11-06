@@ -161,13 +161,13 @@ jobs:
           echo "==> Verifying YOLO worker health on loopback 8091..."
           $SSH_CMD "$DEPLOY_USER@$DEPLOY_HOST" '
             TOKEN=$(sudo grep ^AI_SERVICE_TOKEN= /etc/wastenot/ai-detection.env | cut -d= -f2-)
-            curl --fail --silent --show-error -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8091/health/ready
+            curl --retry 10 --retry-connrefused --retry-delay 2 --fail --silent --show-error -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8091/health/ready
           '
 
           echo "==> Verifying Decision worker health on loopback 8093..."
           $SSH_CMD "$DEPLOY_USER@$DEPLOY_HOST" '
             TOKEN=$(sudo grep ^AI_RECOMMENDATION_TOKEN= /etc/wastenot/ai-recommendation.env | cut -d= -f2-)
-            curl --fail --silent --show-error -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8093/health/ready
+            curl --retry 10 --retry-connrefused --retry-delay 2 --fail --silent --show-error -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8093/health/ready
           '
 
       - name: Cleanup Temporary SSH Files
