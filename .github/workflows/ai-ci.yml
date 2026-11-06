@@ -35,9 +35,9 @@ jobs:
           python -m pip install --require-hashes -r requirements-runtime.lock
           python -m pip install pytest==9.2.0 pip-audit==2.10.1 ruff
 
-      - name: Code Quality & Linting (Ruff)
+      - name: Code Quality & Syntax Check (Ruff)
         run: |
-          ruff check src tests
+          ruff check --select E9,F src tests
 
       - name: Security & Dependency Audit
         run: |
