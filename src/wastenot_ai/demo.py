@@ -107,13 +107,20 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
     app = FastAPI(title="WasteNot local camera demo", docs_url=None, redoc_url=None,
                   openapi_url=None, lifespan=lifespan)
     app.state.detector = detector
-    app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "[::1]"])
+    raw_hosts = os.getenv("DEMO_ALLOWED_HOSTS", "127.0.0.1,localhost,[::1],testserver,pred-autoscaler.bccdev.id,proxy.bccdev.id,*.bccdev.id")
+    allowed_hosts = [h.strip() for h in raw_hosts.split(",") if h.strip()]
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts)
 
     @app.middleware("http")
     async def private_local_headers(request, call_next):
         origin = request.headers.get("origin")
-        if origin and origin != f"{request.url.scheme}://{request.headers.get('host')}":
-            return JSONResponse({"error":"ORIGIN_NOT_ALLOWED"}, status_code=403)
+        if origin:
+            scheme = request.headers.get("x-forwarded-proto", request.url.scheme)
+            host = request.headers.get("x-forwarded-host", request.headers.get("host", ""))
+            direct = f"{request.url.scheme}://{request.headers.get('host')}"
+            forwarded = f"{scheme}://{host}"
+            if origin != direct and origin != forwarded:
+                return JSONResponse({"error":"ORIGIN_NOT_ALLOWED"}, status_code=403)
         response = await call_next(request)
         response.headers["Cache-Control"] = "no-store"
         response.headers["X-Content-Type-Options"] = "nosniff"
@@ -171,7 +178,7 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
             clients[owner] = {"expires":monotonic()+TTL,"epoch":0}
         page = files("wastenot_ai").joinpath("web/index.html").read_text("utf-8").replace("__DEMO_NONCE__",nonce)
         response = HTMLResponse(page)
-        response.set_cookie(COOKIE,owner,httponly=True,samesite="strict",max_age=TTL)
+        response.set_cookie(COOKIE,owner,httponly=True,samesite="lax",path="/",max_age=TTL)
         return response
 
     @app.get("/demo-assets/{name}")

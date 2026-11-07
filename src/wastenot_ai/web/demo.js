@@ -58,10 +58,11 @@ function setStep(number) {
     else $(`step-${i}`).removeAttribute('aria-current');
   }
 }
+const apiPrefix = (window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/') + 'demo/api/';
 async function api(path, options = {}) {
   let response;
   try {
-    response = await fetch(`/demo/api/${path}`, {...options,
+    response = await fetch(`${apiPrefix}${path}`, {...options,
       headers: {'X-WasteNot-Demo': nonce, ...options.headers}});
   } catch (error) {
     if (error.name === 'AbortError') throw error;
@@ -425,5 +426,5 @@ $('object-key').addEventListener('change',() => { resetConditions(); clearRecomm
 $('catalog-search').addEventListener('input',renderCatalog);
 $('catalog-filters').addEventListener('click',event => { const button = event.target.closest('button[data-filter]'); if (!button) return; catalogFilter = button.dataset.filter; for (const b of $('catalog-filters').children) b.classList.toggle('active',b === button); renderCatalog(); });
 document.addEventListener('visibilitychange',() => { if (document.hidden) stopCamera(); });
-window.addEventListener('pagehide',() => { stopCamera(); detectController?.abort(); recController?.abort(); if (photoURL) URL.revokeObjectURL(photoURL); fetch('/demo/api/session',{method:'DELETE',headers:{'X-WasteNot-Demo':nonce},keepalive:true}).catch(() => {}); });
+window.addEventListener('pagehide',() => { stopCamera(); detectController?.abort(); recController?.abort(); if (photoURL) URL.revokeObjectURL(photoURL); fetch(`${apiPrefix}session`,{method:'DELETE',headers:{'X-WasteNot-Demo':nonce},keepalive:true}).catch(() => {}); });
 initialize();

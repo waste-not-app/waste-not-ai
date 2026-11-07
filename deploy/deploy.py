@@ -110,6 +110,10 @@ def dropin(service):
 def restart():
     run('systemctl', 'daemon-reload')
     run('systemctl', 'restart', *SERVICES)
+    try:
+        run('systemctl', 'try-restart', 'wastenot-demo')
+    except Exception:
+        pass
 
 
 def ready(commit):
