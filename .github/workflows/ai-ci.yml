@@ -15,8 +15,8 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  verify:
-    name: Verify worker, contracts and model
+  pipeline:
+    name: Verify and Deploy AI Workers
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -47,29 +47,8 @@ jobs:
         run: |
           git diff --exit-code
           python scripts/package_release.py "dist/wastenot-ai-${{ github.sha }}.tar.gz"
-      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        with:
-          name: ai-release-${{ github.sha }}
-          path: dist/wastenot-ai-${{ github.sha }}.tar.gz
-          retention-days: 7
-
-  deploy:
-    name: Activate verified workers with rollback
-    needs: verify
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    concurrency:
-      group: wastenot-ai-deploy
-      cancel-in-progress: false
-    steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
-        with:
-          name: ai-release-${{ github.sha }}
-          path: dist
       - name: Prepare dedicated SSH identity
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:
           DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
@@ -79,6 +58,7 @@ jobs:
           printf '%s\n' "$DEPLOY_KEY" > "$RUNNER_TEMP/wastenot-ai-key"
           printf '%s\n' "$KNOWN_HOSTS" > "$RUNNER_TEMP/wastenot-ai-known-hosts"
       - name: Verify and activate release on host
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         env:
           DEPLOY_HOST: ${{ vars.VM_HOST }}
           DEPLOY_PORT: ${{ vars.VM_PORT }}
