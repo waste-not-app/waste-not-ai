@@ -90,6 +90,11 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
             from .detector import YoloDetector
             app.state.detector = YoloDetector(Path(os.getenv("AI_MODEL_PATH", "ai/artifacts/models/yolo11n.pt")),
                                               os.getenv("AI_DEVICE", "cpu"), os.getenv("AI_INPUT_SHAPE", "adaptive"))
+        try:
+            if hasattr(app.state.detector, "model") and hasattr(app.state.detector.model, "warmup"):
+                app.state.detector.model.warmup(imgsz=(1, 3, 640, 640))
+        except Exception:
+            pass
         task = asyncio.create_task(scavenger())
         if on_ready:
             on_ready()
@@ -249,7 +254,7 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
             detection_id = str(uuid4())
             detections[detection_id] = {"owner":owner,"result":result,"expires":monotonic()+TTL}
             return {"data":{**result,"detection_id":detection_id,"expires_in_seconds":TTL}}
-        return await dedup(owner,"detect",rid,digest,process,12)
+        return await dedup(owner,"detect",rid,digest,process,20)
 
     @app.post("/demo/api/recommend")
     async def recommendation(request: Request):
