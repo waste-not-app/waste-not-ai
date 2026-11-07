@@ -114,7 +114,7 @@ class Recommendation(Contract):
     missing_context: list[str] = Field(default_factory=list)
     recommendation_basis: Literal["CONFIRMED", "CONDITIONAL"] | None = None
     conditions_to_verify: list[str] = Field(default_factory=list)
-    recommendation_version: str = "pilot-policy-06"
+    recommendation_version: str = "pilot-policy-08"
     provider: str
     prototype_only: bool
 

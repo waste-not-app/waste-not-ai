@@ -1,0 +1,95 @@
+{
+  "kind": "exploratory_before_after_on_frozen_camera_replay",
+  "manifest_sha256": "fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa",
+  "control_image_profiles_with_identical_input_and_coco_scores": 234,
+  "profiles": {
+    "browser_jpeg90": {
+      "previous": {
+        "tp": 74,
+        "fp": 48,
+        "fn": 148,
+        "support": 222,
+        "precision": 0.6065573770491803,
+        "recall": 0.3333333333333333,
+        "f1": 0.43023255813953487
+      },
+      "candidate": {
+        "tp": 84,
+        "fp": 44,
+        "fn": 138,
+        "support": 222,
+        "precision": 0.65625,
+        "recall": 0.3783783783783784,
+        "f1": 0.48
+      },
+      "cardboard": {
+        "previous": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 13,
+          "support": 15,
+          "precision": 0.6666666666666666,
+          "recall": 0.13333333333333333,
+          "f1": 0.2222222222222222
+        },
+        "candidate": {
+          "tp": 5,
+          "fp": 5,
+          "fn": 10,
+          "support": 15,
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4
+        }
+      }
+    },
+    "simulated_dim055": {
+      "previous": {
+        "tp": 72,
+        "fp": 35,
+        "fn": 150,
+        "support": 222,
+        "precision": 0.6728971962616822,
+        "recall": 0.32432432432432434,
+        "f1": 0.4376899696048632
+      },
+      "candidate": {
+        "tp": 82,
+        "fp": 35,
+        "fn": 140,
+        "support": 222,
+        "precision": 0.7008547008547008,
+        "recall": 0.36936936936936937,
+        "f1": 0.4837758112094395
+      },
+      "cardboard": {
+        "previous": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 13,
+          "support": 15,
+          "precision": 0.6666666666666666,
+          "recall": 0.13333333333333333,
+          "f1": 0.2222222222222222
+        },
+        "candidate": {
+          "tp": 5,
+          "fp": 5,
+          "fn": 10,
+          "support": 15,
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4
+        }
+      }
+    }
+  },
+  "selection_report": "ai/evaluations/focus-v4-training-selection.json",
+  "limitations": [
+    "Cardboard false positives increase despite higher overall F1.",
+    "Phone and remote detections use the original COCO model because neither fine-tuned candidate improves operational validation F1.",
+    "Previously seen blue-phone diagnostic still predicts remote.",
+    "Control-model latency also changes between runs, so before/after latency is not attributed to training.",
+    "Public replay has been inspected during development and has limited per-class support. Physical camera generalization requires new observations."
+  ]
+}

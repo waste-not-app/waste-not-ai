@@ -54,3 +54,13 @@ data/raw/
 data/processed/
 runs/
 .cache/
+
+# Local research and camera assets
+.env.*
+!.env.example
+.venv-ai-train/
+.venv-ci/
+.cache-ai/
+artifacts/
+data/local/
+.ruff_cache/

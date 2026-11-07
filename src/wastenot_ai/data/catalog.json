@@ -857,6 +857,83 @@
       "baseline_class_id": null,
       "requires_material_confirmation": true,
       "guide_template": "broad_recyclable"
+    },
+    {
+      "object_key": "other_organic",
+      "label": "Barang organik lain",
+      "category": "ORGANIC",
+      "guide_key": "other_organic",
+      "special_handling": false,
+      "baseline_raw_class": null,
+      "baseline_class_id": null,
+      "requires_material_confirmation": true,
+      "guide_template": "general_handling"
+    },
+    {
+      "object_key": "other_plastic",
+      "label": "Barang plastik lain",
+      "category": "PLASTIC",
+      "guide_key": "other_plastic",
+      "special_handling": false,
+      "baseline_raw_class": null,
+      "baseline_class_id": null,
+      "requires_material_confirmation": true,
+      "guide_template": "general_handling"
+    },
+    {
+      "object_key": "other_paper",
+      "label": "Barang kertas / kardus lain",
+      "category": "PAPER",
+      "guide_key": "other_paper",
+      "special_handling": false,
+      "baseline_raw_class": null,
+      "baseline_class_id": null,
+      "requires_material_confirmation": true,
+      "guide_template": "general_handling"
+    },
+    {
+      "object_key": "other_glass",
+      "label": "Barang kaca lain",
+      "category": "GLASS",
+      "guide_key": "other_glass",
+      "special_handling": false,
+      "baseline_raw_class": null,
+      "baseline_class_id": null,
+      "requires_material_confirmation": true,
+      "guide_template": "general_handling"
+    },
+    {
+      "object_key": "other_metal",
+      "label": "Barang logam lain",
+      "category": "METAL",
+      "guide_key": "other_metal",
+      "special_handling": false,
+      "baseline_raw_class": null,
+      "baseline_class_id": null,
+      "requires_material_confirmation": true,
+      "guide_template": "general_handling"
+    },
+    {
+      "object_key": "other_electronic",
+      "label": "Elektronik / baterai lain",
+      "category": "ELECTRONIC",
+      "guide_key": "other_electronic",
+      "special_handling": true,
+      "baseline_raw_class": null,
+      "baseline_class_id": null,
+      "requires_material_confirmation": true,
+      "guide_template": "general_handling"
+    },
+    {
+      "object_key": "other_other",
+      "label": "Barang lain / bahan belum diketahui",
+      "category": "OTHER",
+      "guide_key": "other_other",
+      "special_handling": false,
+      "baseline_raw_class": null,
+      "baseline_class_id": null,
+      "requires_material_confirmation": true,
+      "guide_template": "general_handling"
     }
   ]
 }

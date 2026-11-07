@@ -4,7 +4,7 @@ Pembaruan aktif: [pilot-policy-06, kondisi kosong dan audit background](CONDITIO
 
 Status: prototipe lokal dan kontrak HTTP v1. [Kontrak integrasi terbaru](AI_HTTP_CONTRACT.md) beserta OpenAPI/mock menetapkan Python sebagai pemilik tunggal aturan AI; Go memegang JWT, sesi, dedup dan penyimpanan. Mock publik Python hanya untuk pengujian kontrak, bukan implementasi Go produksi. Gemini memilih REDUCE/REUSE/RECYCLE/TRASH dan evidence; Python menyediakan alasan serta sumber tervalidasi. REDUCE berscope PREVENTION; lainnya HANDLING.
 
-Demo kamera tersedia melalui `ai/demo-camera.bat` atau `python -m wastenot_ai.cli demo --demo-guides` menggunakan interpreter venv. Endpoint `/demo/api/*` khusus loopback menggabungkan YOLO dan rekomendasi untuk eksperimen UI. Endpoint tersebut tidak menggantikan kontrak publik Go. Katalog versi 05 memiliki 78 pilihan benda/material; cakupan COCO tetap 58 kelas visual yang dipetakan. Kandidat broad mempunyai 10 kelas bentuk dengan review wajib, mapping tersendiri dan padding square; lihat [training dan integrasi broad](BROAD_WASTE_TRAINING.md).
+Demo kamera tersedia melalui `demo-camera.bat` atau `python -m wastenot_ai.cli demo --demo-guides` menggunakan interpreter venv. Endpoint `/demo/api/*` khusus loopback menggabungkan YOLO dan rekomendasi untuk eksperimen UI. Endpoint tersebut tidak menggantikan kontrak publik Go. Katalog versi 05 memiliki 78 pilihan benda/material; cakupan COCO tetap 58 kelas visual yang dipetakan. Kandidat broad mempunyai 10 kelas bentuk dengan review wajib, mapping tersendiri dan padding square; lihat [training dan integrasi broad](BROAD_WASTE_TRAINING.md).
 
 ```mermaid
 flowchart LR

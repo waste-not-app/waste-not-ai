@@ -1,0 +1,107 @@
+{
+  "train": {
+    "images": 18800,
+    "annotations": 33350,
+    "class_counts": {
+      "1": 24992,
+      "0": 8358
+    },
+    "geometry_flags": {
+      "class_1_outside_le1px": 842,
+      "class_1_outside_gt1px": 167,
+      "class_0_outside_le1px": 18,
+      "class_0_outside_gt1px": 60,
+      "class_0_nonpositive": 1
+    },
+    "images_with_phone": 8358,
+    "images_without_phone": 10442,
+    "phone_boxes_le_1pct_area": 783,
+    "phone_boxes_le_3pct_area": 6506,
+    "labels_sha256": "7e1ff102d1fb9c0a28ff716254b1866ccf0d2028cce80d5f1e2fbbde1c403960"
+  },
+  "val": {
+    "images": 1730,
+    "annotations": 2113,
+    "class_counts": {
+      "1": 1318,
+      "0": 795
+    },
+    "geometry_flags": {
+      "class_1_outside_le1px": 4,
+      "class_0_outside_le1px": 2
+    },
+    "images_with_phone": 795,
+    "images_without_phone": 935,
+    "phone_boxes_le_1pct_area": 241,
+    "phone_boxes_le_3pct_area": 718,
+    "labels_sha256": "45aae6605c541ed137ea2f6015f2c3cdbc319d546f3fe65ddb5d71ebdb653bf5"
+  },
+  "source": "https://github.com/KvCgRv/FPI-Det",
+  "commit": "83c452d1a1e5b1bac88afe1a6834cb9c25e036eb",
+  "native_classes": {
+    "0": "phone",
+    "1": "face"
+  },
+  "images_acquired": 22879,
+  "status": "RAW_ARCHIVE_AND_NATIVE_AUDIT_SAMPLE_AVAILABLE",
+  "cross_split_filename_overlap": 0,
+  "inspected_publisher_collage": "figure_mopho/datasetsample.png",
+  "published_readme_counts": {
+    "images": 22879,
+    "phone_annotations": 10255
+  },
+  "accessible_annotation_counts": {
+    "images": 20530,
+    "phone_annotations": 9153
+  },
+  "repository_photos": "Publisher example collages; the RAR contains training code, not raw dataset photos.",
+  "limitations": [
+    "Public COCO-converted labels and original YOLO label totals differ; preserve all original five-column records.",
+    "Original publisher splits can share physical sessions. Image/session-level leakage must be audited before training.",
+    "Face/head boxes cannot be substituted for COCO person boxes.",
+    "Native FPI phone/head annotations are incomplete for the full 80-class COCO task.",
+    "Only the 60-photo audit sample has been visually inspected in this batch."
+  ],
+  "raw_archive": {
+    "archive_sha256": "5eea5d8ce0317c3bfabecb29c54eea2845a022bcfd190b4c8ca781b52bf7cb48",
+    "archive_size_bytes": 1162345390,
+    "crc_integrity": "PASS",
+    "image_label_pairs": 22879,
+    "images_per_split": {
+      "test": 2349,
+      "train": 18800,
+      "val": 1730
+    },
+    "native_class_counts": {
+      "train": {
+        "phone": 8567,
+        "head_face": 24993
+      },
+      "val": {
+        "phone": 809,
+        "head_face": 1318
+      },
+      "test": {
+        "phone": 1132,
+        "head_face": 2968
+      }
+    },
+    "geometry_flag_counts": {
+      "train": {
+        "phone": 82,
+        "head_face": 1010
+      },
+      "val": {
+        "phone": 2,
+        "head_face": 4
+      },
+      "test": {
+        "phone": 9,
+        "head_face": 16
+      }
+    },
+    "labels_with_combined_box_lines": 242,
+    "audit_sample_images": 60,
+    "sample_selection": "Deterministic 40 train, 10 val, 10 test with valid geometry and phone box area >= 3%"
+  }
+}

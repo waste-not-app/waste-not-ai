@@ -1,0 +1,91 @@
+{
+  "version": "broad-waste-v3",
+  "target_train_instances_per_class": 300,
+  "baseline_counts": {
+    "train": {
+      "bottle": 1761,
+      "can": 453,
+      "cup": 1333,
+      "plastic_bag": 6,
+      "paper": 7,
+      "cardboard": 17,
+      "drink_carton": 3,
+      "plastic_wrapper": 22,
+      "food_container": 6,
+      "bottle_cap": 23
+    },
+    "val": {
+      "bottle": 684,
+      "can": 169,
+      "cup": 281,
+      "plastic_bag": 1,
+      "paper": 1,
+      "cardboard": 3,
+      "drink_carton": 0,
+      "plastic_wrapper": 4,
+      "food_container": 1,
+      "bottle_cap": 3
+    },
+    "test": {
+      "bottle": 501,
+      "can": 132,
+      "cup": 277,
+      "plastic_bag": 1,
+      "paper": 1,
+      "cardboard": 1,
+      "drink_carton": 0,
+      "plastic_wrapper": 5,
+      "food_container": 1,
+      "bottle_cap": 3
+    }
+  },
+  "train_deficit": {
+    "bottle": 0,
+    "can": 0,
+    "cup": 0,
+    "plastic_bag": 294,
+    "paper": 293,
+    "cardboard": 283,
+    "drink_carton": 297,
+    "plastic_wrapper": 278,
+    "food_container": 294,
+    "bottle_cap": 277
+  },
+  "candidate_images": 825,
+  "candidate_instances_upper_bound": {
+    "bottle": 243,
+    "can": 93,
+    "cup": 74,
+    "plastic_bag": 87,
+    "paper": 97,
+    "cardboard": 185,
+    "drink_carton": 42,
+    "plastic_wrapper": 718,
+    "food_container": 58,
+    "bottle_cap": 260
+  },
+  "limitations": [
+    "Candidate counts are not acquired or approved training examples.",
+    "Counts precede rights checks, download failures, visual review, deduplication and splitting.",
+    "TACO alone cannot necessarily meet the per-class target; additional sources or own photos are needed.",
+    "Do not use classification labels or whole-image boxes as detection ground truth."
+  ],
+  "invalid_annotation_images": [
+    {
+      "source_id": "549",
+      "reason": "Box outside stored pixels"
+    }
+  ],
+  "baseline_manifest_sha256": "4e25d9f20ac99b2a692334db5e6b9b29f8f5dc23df4c5f3e8543d77616a18a62",
+  "source_metadata_sha256": "ac1ec605c9e1fcda767970de3457c69b4a43b62c02aca8c4c80f51d1b5ae8449",
+  "status": "BLOCKED_NETWORK",
+  "new_images_acquired": 147,
+  "ready_for_training": true,
+  "baseline_modified": false,
+  "prepared_dataset": "broad-waste-v3-batch2",
+  "training_scope": "EXPERIMENTAL_ONLY",
+  "new_images_in_dataset": 99,
+  "training_target_met": false,
+  "last_error": "HTTPError: HTTP Error 429: Too Many Requests",
+  "requests_this_run": 126
+}

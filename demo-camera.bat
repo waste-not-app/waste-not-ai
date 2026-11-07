@@ -1,8 +1,8 @@
 @echo off
 setlocal
-pushd "%~dp0.."
+pushd "%~dp0"
 if not exist ".venv-ai\Scripts\python.exe" (
-    echo Virtual environment belum tersedia. Ikuti instalasi di ai\README.md.
+    echo Virtual environment belum tersedia. Ikuti instalasi di README.md.
     popd
     pause
     exit /b 1

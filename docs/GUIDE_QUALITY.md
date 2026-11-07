@@ -41,11 +41,11 @@ Saran Reuse tidak mengubah input DIRTY menjadi CLEAN. Status benda sebelum tinda
 
 ```powershell
 # Cangkir kotor biasa, fixture tanpa biaya API:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context ai/examples/context-dirty-mug.json --provider fixture --demo-guides
-# Gemini sungguhan menggunakan key/model di ai/.env:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context ai/examples/context-dirty-mug.json --provider gemini --demo-guides
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context examples/context-dirty-mug.json --provider fixture --demo-guides
+# Gemini sungguhan menggunakan key/model di .env:
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context examples/context-dirty-mug.json --provider gemini --demo-guides
 # Kasus mutu panduan dan audit seluruh evidence/sumber bawaan:
-.\.venv-ai\Scripts\python.exe -m pytest ai/tests/test_guide_quality.py -q -p no:cacheprovider
+.\.venv-ai\Scripts\python.exe -m pytest tests/test_guide_quality.py -q -p no:cacheprovider
 ```
 
 Tes mencakup beberapa bahan/peralatan, sisa makanan/minuman versus debu, informasi pencucian yang belum diketahui, kontaminasi berbahaya dan risiko ambigu. Hasil fixture menguji kontrak/rule retrieval; evaluasi Gemini live tetap terpisah. Jangan melaporkan hasil tes ini sebagai akurasi klasifikasi dunia nyata.

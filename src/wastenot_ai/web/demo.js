@@ -15,7 +15,7 @@ const messages = {
   DEMO_SESSION_REQUIRED: 'Sesi demo berakhir. Muat ulang halaman untuk memulai lagi.',
   DETECTION_NOT_FOUND: 'Hasil deteksi sudah tidak tersedia. Ambil atau kirim foto lagi.',
   AI_SESSION_EXPIRED: 'Sesi foto berakhir. Mulai scan baru.',
-  DEMO_HOURLY_LIMIT: 'Batas 30 permintaan rekomendasi per jam pada demo ini telah tercapai.',
+  DEMO_HOURLY_LIMIT: 'Batas pembuatan rekomendasi otomatis demo tercapai. Panduan awal tetap tersedia di bawah.',
   DEMO_SESSION_LIMIT: 'Sesi demo penuh. Bersihkan hasil lama atau mulai ulang server.',
   INVALID_CONTEXT: 'Periksa kembali jenis benda, material dan kondisi yang dipilih.',
   OBJECT_CONFIRMATION_REQUIRED: 'Konfirmasikan objek dan kondisi terlebih dahulu.',
@@ -33,7 +33,7 @@ const messages = {
   INVALID_EVIDENCE: 'Saran tidak didukung evidence panduan yang cocok. Pilih penanganan manual.',
   RISK_DETAILS_REQUIRED: 'Jelaskan jenis risiko yang dicentang. Sisa minuman biasa berbeda dari bahan berbahaya.',
   CONTEXT_REQUIRED: 'Lengkapi kondisi, jenis kotoran atau kemampuan dibersihkan yang belum diketahui. Reduce tidak digunakan sebagai pengganti jawaban.',
-  RISK_NOT_COVERED: 'Panduan saat ini belum mencakup kontaminasi ini. Minta arahan pengelola limbah yang sesuai.'
+  RISK_NOT_COVERED: 'Gunakan arahan penanganan khusus di bawah sambil mengonfirmasi jalur pengelola yang sesuai.'
 };
 const rawNames = {'bottle':'Botol','cup':'Gelas / cangkir','bowl':'Mangkuk','wine glass':'Gelas berkaki',
   'aluminium_can':'Kaleng aluminium','glass_bottle':'Botol kaca','hdpe_bottle':'Botol HDPE · konfirmasi isi','plastic_bottle':'Botol plastik · konfirmasi PET',
@@ -70,7 +70,11 @@ async function api(path, options = {}) {
   }
   if (response.status === 204) return null;
   const data = await response.json();
-  if (!response.ok) throw new Error(messages[data.detail] || 'Permintaan belum berhasil. Periksa isian atau mulai scan baru.');
+  if (!response.ok) {
+    const error = new Error(messages[data.detail] || 'Permintaan belum berhasil. Periksa isian atau mulai scan baru.');
+    if (data.data?.status === 'UNAVAILABLE' && Array.isArray(data.data.steps)) error.recommendation = data.data;
+    throw error;
+  }
   return data;
 }
 function stopCamera() {
@@ -161,6 +165,7 @@ function clearAnalysis() {
   $('boxes').replaceChildren(); $('object-list').replaceChildren(); $('detection-section').hidden = true;
   $('detect').textContent = 'Kirim untuk deteksi'; $('detect').disabled = false;
   $('selected-label').textContent = 'Belum dipilih';
+  $('correct-detection').hidden = true;
   resetConditions(); fillObjectOptions([]); clearRecommendation(); setStep(1);
 }
 async function resetServer() {
@@ -256,12 +261,12 @@ function renderDetections() {
     Object.assign(button.style,{left:`${x1*100}%`,top:`${y1*100}%`,width:`${(x2-x1)*100}%`,height:`${(y2-y1)*100}%`,
       zIndex:String(object.supported_for_review ? Math.round((1-(x2-x1)*(y2-y1))*1000)+1 : 0),
       pointerEvents:object.supported_for_review ? 'auto' : 'none'});
-    const span = document.createElement('span'); span.textContent = `${label} · ${score}%`; button.append(span);
+    const span = document.createElement('span'); span.textContent = `Dugaan: ${label} · ${score}%`; button.append(span);
     button.setAttribute('aria-label',`Pilih ${label}, skor deteksi ${score}%`);
     button.addEventListener('click',() => selectObject(object)); $('boxes').append(button);
     const item = document.createElement('button'); item.type = 'button'; item.className = `object-choice ${selected?.object_id === object.object_id ? 'selected' : ''}`;
     item.disabled = !object.supported_for_review; item.setAttribute('aria-pressed',String(selected?.object_id === object.object_id));
-    const title = document.createElement('strong'); title.textContent = label;
+    const title = document.createElement('strong'); title.textContent = `Dugaan: ${label}`;
     const detail = document.createElement('span'); detail.textContent = `${score}% · ${object.ambiguous_with?.length ? 'Kelas bertumpuk · periksa' : object.confidence_band === 'UNCERTAIN' ? 'Perlu ditinjau' : object.supported_for_review ? 'Pilih objek' : 'Pilih manual'}`;
     item.append(title,detail); item.addEventListener('click',() => selectObject(object)); $('object-list').append(item);
   }
@@ -280,8 +285,9 @@ function fillObjectOptions(suggested) {
 }
 function selectObject(object) {
   selected = object; manualMode = false; resetConditions(); clearRecommendation();
+  $('correct-detection').hidden = false;
   fillObjectOptions(object.suggested_object_keys || []);
-  $('selected-label').textContent = rawLabel(object.raw_class);
+  $('selected-label').textContent = 'Dugaan: ' + rawLabel(object.raw_class);
   $('context-help').textContent = object.ambiguous_with?.length ? 'Ada beberapa tebakan kelas pada area yang sama. Bandingkan lewat daftar objek, lalu konfirmasikan material yang benar.' : object.confidence_band === 'UNCERTAIN' ? 'Prediksi ini perlu ditinjau. Skor tinggi belum membuktikan jenis/material benar.' : 'Objek dipilih. Konfirmasikan jenis/material dan kondisi yang kamu ketahui.';
   renderDetections(); setStep(3); updateForm();
 }
@@ -292,6 +298,7 @@ function chooseManual(key = '') {
   $('detect').disabled = false; $('detect').textContent = 'Kirim untuk deteksi';
   $('photo-stage').hidden = !photoBlob; $('camera-placeholder').hidden = !!photoBlob;
   selected = null; manualMode = true; resetConditions(); clearRecommendation(); fillObjectOptions([]);
+  $('correct-detection').hidden = true;
   $('object-key').value = key; $('selected-label').textContent = 'Pilihan manual';
   $('context-help').textContent = 'Objek dipilih dari katalog olehmu. Hasil ini tidak dianggap sebagai identifikasi YOLO.';
   if (detection) renderDetections(); setStep(3); updateMaterialNote(); updateForm();
@@ -300,7 +307,8 @@ function chooseManual(key = '') {
 function updateMaterialNote() {
   const item = config?.catalog.items.find(x => x.object_key === $('object-key').value);
   $('former-contents-field').hidden = !(item?.object_key === 'hdpe_bottle' || item?.guide_template === 'broad_food_container');
-  $('material-note').textContent = item?.special_handling ? 'Saran tetap memilih satu metode. Ikuti peringatan dan rute pengelola khusus untuk benda ini.' :
+  $('material-note').textContent = item?.guide_template === 'general_handling' ? 'Gunakan pilihan ini untuk barang yang belum ada di katalog. Periksa bahan dan risikonya; kamu akan mendapat panduan awal meski metode akhirnya belum dapat ditentukan.' :
+    item?.special_handling ? 'Ikuti peringatan dan rute pengelola khusus untuk benda ini.' :
     item?.object_key === 'hdpe_bottle' ? 'Konfirmasi HDPE/kode 2 dan isi sebelumnya. Kode resin tidak menjamin aman dipakai ulang. Panduan ini hanya mencakup bekas pangan/minuman.' :
     item?.guide_template === 'broad_food_container' ? 'Konfirmasikan isi sebelumnya. Panduan ini hanya mencakup bekas pangan/minuman; kemasan bekas bahan kimia memerlukan pengelola khusus.' :
     item?.guide_template === 'food' ? 'Saran Reduce membantu mencegah sisa makanan berikutnya. Foto tidak memastikan makanan aman dikonsumsi.' :
@@ -317,8 +325,8 @@ function providerNote() {
 function renderRecommendation(result) {
   $('recommendation-empty').hidden = true; $('recommendation-result').hidden = false;
   const methodNames = {REDUCE:'Reduce',REUSE:'Reuse',RECYCLE:'Recycle',TRASH:'Trash'};
-  $('method').textContent = result.status === 'READY' ? methodNames[result.recommended_method] : result.status === 'NEEDS_CONTEXT' ? 'Lengkapi kondisi' : 'Saran belum tersedia';
-  $('recommendation-source').textContent = result.status === 'READY' ? (result.provider === 'fixture' ? 'Simulasi' : 'Gemini langsung') : 'Panduan & kebijakan';
+  $('method').textContent = result.status === 'READY' ? methodNames[result.recommended_method] : result.status === 'NEEDS_CONTEXT' ? 'Lengkapi kondisi · panduan awal' : result.special_handling ? 'Panduan penanganan khusus' : 'Panduan penanganan awal';
+  $('recommendation-source').textContent = result.status === 'READY' ? (result.provider === 'fixture' ? 'Simulasi' : 'Gemini langsung') : 'Panduan umum bersumber';
   $('reason').textContent = result.reason;
   $('recommendation-basis').hidden = result.status !== 'READY';
   $('recommendation-basis').textContent = result.recommendation_basis === 'CONDITIONAL' ?
@@ -354,7 +362,7 @@ function renderRecommendation(result) {
     }
     $('source-list').append(li);
   }
-  $('evidence-note').textContent = `${result.guide_status === 'DRAFT' ? 'Panduan draf untuk demo; belum review lokal. ' : ''}${result.evidence_ids.length ? 'Evidence: '+result.evidence_ids.join(', ') : 'Tidak ada metode otomatis yang dipilih.'}`;
+  $('evidence-note').textContent = `${result.guide_status === 'DRAFT' ? 'Panduan draf untuk demo; belum review lokal. ' : ''}${result.evidence_ids.length ? 'Evidence: '+result.evidence_ids.join(', ') : 'Arahan awal dari panduan umum; metode akhir perlu dikonfirmasi sesuai kondisi dan penerima lokal.'}`;
   setStep(4);
 }
 async function requestRecommendation(event) {
@@ -378,8 +386,14 @@ async function requestRecommendation(event) {
     renderRecommendation(response.data);
     if (response.data.status !== 'READY') recRequestId = null;
     message(response.data.status === 'READY' ? 'Saran siap ditinjau. Periksa sumber dan pastikan sesuai dengan tindakan yang akan kamu lakukan.' :
-      (messages[response.data.reason_code] || 'Saran otomatis belum tersedia. Kamu tetap bisa melihat panduan dan melanjutkan manual.'),response.data.status === 'READY' ? '' : 'warning');
-  } catch (error) { if (version === recVersion && error.name !== 'AbortError') message(error.message,'error'); }
+      'Panduan awal tersedia di bawah. '+(messages[response.data.reason_code] || 'Periksa kondisi dan konfirmasikan jalur pengelola sebelum menentukan metode akhir.'),response.data.status === 'READY' ? '' : 'warning');
+  } catch (error) {
+    if (version === recVersion && error.name !== 'AbortError') {
+      if (error.recommendation) renderRecommendation(error.recommendation);
+      recRequestId = null;
+      message(error.message,'error');
+    }
+  }
   finally { if (version === recVersion) { recommending = false; $('recommend').innerHTML = 'Minta rekomendasi <span aria-hidden="true">↗</span>'; updateForm(); } }
 }
 function renderCatalog() {
@@ -402,6 +416,10 @@ async function initialize() {
     const supported = config.supported_visual_classes;
     $('engine-status').textContent = 'YOLO siap · '+(config.gemini_configured ? 'Gemini dikonfigurasi' : 'Gemini perlu konfigurasi');
     $('catalog-summary').textContent = `${supported} kelas visual aktif mendukung ${Object.keys(config.supported_object_labels).length} dari ${config.catalog.items.length} pilihan benda/material. Pilihan lainnya tersedia secara manual.`;
+    $('model-coverage').textContent = `Model aktif: ${config.model_version}. ` +
+      (config.combined_models ? 'Sampah v3 + benda umum (termasuk ponsel). Semua dugaan tetap perlu dikonfirmasi; pilih jenis yang benar jika tebakan keliru.' :
+       config.supported_object_labels.cardboard ? 'Model khusus sampah: kardus didukung, ponsel dan benda umum lain belum tentu. Pilih manual atau gunakan launcher v3 dengan model pendamping.' :
+        'Model ini tidak mempunyai kelas kardus. Untuk kardus pilih jenis secara manual atau jalankan demo-camera-v3.bat.');
     $('draft-label').textContent = config.demo_guides ? 'Panduan draf · demo' : 'Panduan ditinjau saja';
     fillObjectOptions([]); renderCatalog(); providerNote(); updateForm();
     // Running the demo opens the camera permission flow; upload still needs a click.
@@ -418,6 +436,7 @@ $('file').addEventListener('change',() => filePhoto($('file').files[0]));
 $('manual').addEventListener('click',() => chooseManual());
 $('context-form').addEventListener('submit',requestRecommendation);
 $('object-key').addEventListener('change',() => { resetConditions(); clearRecommendation(); updateMaterialNote(); setStep(3); });
+$('correct-detection').addEventListener('click',() => chooseManual($('object-key').value));
 ['cleanliness','integrity','reusable','cleanable','soiling','former-contents','reuse-intention','recommendation-goal','recycling-access','risk','risk-type','confirmed','provider'].forEach(id => $(id).addEventListener('change',() => {
   if (id === 'soiling' && $('soiling').value === 'HAZARDOUS') { $('risk').checked = true; $('risk-type').value = 'CHEMICAL'; }
   if (id === 'former-contents' && $('former-contents').value === 'CHEMICAL') { $('risk').checked = true; $('risk-type').value = 'CHEMICAL'; }

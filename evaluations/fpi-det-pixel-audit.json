@@ -1,0 +1,300 @@
+{
+  "archive_sha256": "5eea5d8ce0317c3bfabecb29c54eea2845a022bcfd190b4c8ca781b52bf7cb48",
+  "decoded_images": 22879,
+  "protected_waste_manifest_sha256": "0aba2cc181ccd4ddf041d517ce25cbc348f8dbbe84b74921de05608ac1c22729",
+  "pixel_cache_sha256": "34a5da964e9b5f4f5788bb971c2a73c65c2283ba9040723bf344fe4f2916ba48",
+  "phash_distance_max": 5,
+  "exact_duplicate_photos": 62,
+  "exact_hash_groups_spanning_splits": 1,
+  "exact_image_groups_with_different_annotations": 60,
+  "annotation_comparison": "Order-independent boxes rounded to six normalized decimal places",
+  "near_pairs_cross_publisher_split": 78,
+  "near_pairs_within_publisher_split": 495,
+  "protected_dataset_match_pairs": 0,
+  "examples": [
+    {
+      "kind": "cross_publisher_split",
+      "a": "5Ix6hz9vTPDnFCE3MKG8SagfHqOlmJpV",
+      "b": "fVB7qntgmylaT6cHe2SJwKi08RGZI4Eb",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "6p8WPf0R3t9Tm5bX4CQFhuYxcnLivGZd",
+      "b": "bJpmtasoj8DTv1xKR9NzIkAUyeQn2FWS",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "9ZdhgakY453Ey7GNqBF8SMIcv6Q12rCX",
+      "b": "09BTo5nQiYSKvyejXCZMtEFOAhr7WLcR",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "9wK3yJV2LW6d8mFAoTkBhjsp15bx0qSn",
+      "b": "fLOXgh4AWVFEZzlkBcr2PNqo0sTCdG6e",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "AkjNcmxCzLe25Vhf6ZoFs1RgDQtBvw4r",
+      "b": "fUi5GIn0dEL3Qhq6t7VDXZRu9coTekjN",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "DfaKpxI5ShnZkLo9V0Rqs7veiOBXCG6J",
+      "b": "3OCiQ425JMpDWxb1we7r6csqgoIdhNVm",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "F1quJxygOTEwa6GhYrNbH7sDefLXUvWA",
+      "b": "7AzthBDp0n4JMoWbd5SwmcI6NuEXe8kK",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "Fx6kTgqnedso70ZPMIvAL3hXr2aOVmRY",
+      "b": "DCcrTA4V9XLosbG0kYjvKBf5FaePH2IJ",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "GqW3gJULn5SRtuVerAmQxKzo0IMdkZwB",
+      "b": "buFq7vkaiSgMTHw1LRIQo6pWXcmJE0yf",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "IAqCgPRFcNYolypMdJ246wjQ1frnUBx3",
+      "b": "Lca4r5wOCY0AzBgl2utbZqsIR9iepQUE",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "JHZU6CGjlTB5ImSQpnq1Ffzowcb4uaWO",
+      "b": "fLOXgh4AWVFEZzlkBcr2PNqo0sTCdG6e",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "Jk9T3g4jIoB7bOPzRxMqnmVfrYs0U8wc",
+      "b": "9Vf0oAdC7eagRnZu3BPTUyMYbzOWmEcX",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "LVfa1dxIUYMQgJWtHFsr86bzyC0Eohi3",
+      "b": "6qMaUfHxphXTveizYCQmn8yASgFokWVR",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "LgsARfYvC9wUphWBkrnEKHx0FXDa2e5t",
+      "b": "iNLG02lnSxmzjZvaPcf9g74M5sObwFy8",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "LxSHKaOpk1l5CqZXurB72neNjmcYPIdg",
+      "b": "fAc86BIp0hbNmOueDQ3xHYv5KECGXSJR",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "M90RK52qgWtTVYvhoFz1sHCiLGEukANy",
+      "b": "B9quEFmH41rNcStaGPzvnw2j5yVoCOdp",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "OMIB3E2eD4p8moX9HFschxA60kaTVuig",
+      "b": "KxVWCaZF9XHdnei4cuMlvqoTBbItQmG3",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "RMDy6Oq7nLfuBkshlC1vUN0xbjQW5Ed2",
+      "b": "4eqvPGBmMtOsAjFEXoCzNpxnV9b836wi",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "VUguxR3fbAlEIejH8k1d5MYqNP2DBncz",
+      "b": "80ZfUbytrKu4BE7R9MVTnlm51gCeQvFG",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "X5maz8SH1MNjyRKeuUhk2gZGtnq4pTYI",
+      "b": "EFTt1pz9vIVXaCJue5BU7hPnxidbkM4l",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "Xl9EG13KA6vsNupxQkL8dBm7VUPDSoYz",
+      "b": "Lca4r5wOCY0AzBgl2utbZqsIR9iepQUE",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "YP5IZjF9H1mtAMXVgyfGJkpsKCEnN0Dz",
+      "b": "4kbcDGe2amgYJ1IUViQH69LZoPTvOBFd",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "daERTrfSpcDx8Q9BOwAg1GozZjXPeWs0",
+      "b": "d0yvFs67MNoOXDPZTJS1wzWYUbeVapB2",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "eZgGTKoQfCO6AwMbdVDNiE2Inq7HRSsm",
+      "b": "buFq7vkaiSgMTHw1LRIQo6pWXcmJE0yf",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "fn7tb9egYcM8TQ6o5Oa01uWL4NvhszPH",
+      "b": "dEbqIYNyFfuTResgKjv0cUt5ZXmpzxrO",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "hFKq81nNsWxVrCfpjSXO0o64uDTdtHUM",
+      "b": "HLImKrBupVNZYnG8yhTWXsQwfi3kJqv9",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "iKGmBDbAXcU3a28Vyev5dSLR6olufTZY",
+      "b": "Jn2qvWTYifI8wrMyACdXglSox5HtZNms",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "nXeywx8dO7qN4ADTaCV2hfYSJMrPEt9c",
+      "b": "80ZfUbytrKu4BE7R9MVTnlm51gCeQvFG",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "oAchQxR80ULSlipV9dXj135BIWePTJCZ",
+      "b": "Lca4r5wOCY0AzBgl2utbZqsIR9iepQUE",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "oGW54LVU8iJKvmxrdphR0EnqDw6ZgCc1",
+      "b": "d9E36TapKrLwGAfWl7zoXIBQiSJOqVs8",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "rVNvzXPLwkOdDQ0Co8gGqHuJjMT245Al",
+      "b": "Hkq6i7daXMyU3JlGIvTQhROFZ1oxYBbp",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "rv3bucfEtAO7K1nHkUXC8S2TN0ZRV5yd",
+      "b": "GzQurPBJcCdHAlL3xXIoea2YkgV681pE",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "tyY32El4MLoW6da08f1BhiSQbvKkI7GV",
+      "b": "8bzsBn3rfZ527eIdDk4AojtyO1ScaMTU",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "uetasLnQ4r1FOpD5fdKCZTbRlG6kzYiV",
+      "b": "f9A2u1hbF4ERTdvUsHrK673IYl0PiSqt",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "xafRslnuHY1JGz9ZOcDQqbg5ej4VkSyF",
+      "b": "4eqvPGBmMtOsAjFEXoCzNpxnV9b836wi",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "yKzvBuidpEfjtAJ82Pw9Sxg3MVnklbeW",
+      "b": "0VZHdN3c12mklKbPCUIaGuheR8B4F6ij",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "ykYpN5W1d4zh8coLDS30nVbaBxErejfQ",
+      "b": "ax08cOpSK43B5P9o1Y2FlNRHMtzehjV7",
+      "a_split": "train",
+      "b_split": "test"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "Q6FBmf1s0zRVcxXo8eWjbnwqTlkKC52G",
+      "b": "F8veQApbqGo4kK6OnZdfVz2XjNL7UPRx",
+      "a_split": "val",
+      "b_split": "train"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "Q94tgGVFXISsz7NYhKLDyd0HlkJ5wOvP",
+      "b": "qJRDAftGbHQj8PLlSuBKoVU92vX7dOM3",
+      "a_split": "val",
+      "b_split": "train"
+    },
+    {
+      "kind": "cross_publisher_split",
+      "a": "QW2RIPltNe9kF8ixSTrJAGCzbj4sD5da",
+      "b": "FVSpDuaEBbfGk2o0YhZ154rAN79lz3e8",
+      "a_split": "val",
+      "b_split": "train"
+    }
+  ],
+  "limitations": [
+    "pHash is a proxy for visual duplication, not proof of physical-session independence.",
+    "Match counts are pairs and may include multiple references to the same protected photograph."
+  ]
+}

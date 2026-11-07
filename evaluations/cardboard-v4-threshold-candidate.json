@@ -1,0 +1,19 @@
+{
+  "id": "v4-cardboard-val-01",
+  "status": "REJECTED_ON_TEST",
+  "artifacts": {
+    "broad": {
+      "sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+      "model_version": "candidate-3fc8b7a0baf1-square640"
+    },
+    "combined": {
+      "sha256": "0b06663cfd8de5027adfae2f759320f8f92b6eab7a65ceb6366197fcd3d846c3",
+      "model_version": "broad-coco-0b06663cfd8d"
+    }
+  },
+  "classes": {
+    "cardboard": {"lower": 0.65, "offered": 0.7, "offered_enabled": false}
+  },
+  "evaluation": "ai/evaluations/cardboard-v4-calibration.json",
+  "scope": "Evaluation-only candidate. Rejected after held-out test cardboard F1 decreased."
+}

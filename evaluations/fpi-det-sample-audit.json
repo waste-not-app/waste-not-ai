@@ -1,0 +1,26 @@
+{
+  "status": "AUDIT_ONLY_NATIVE_PHONE_FACE",
+  "usage": "Manual inspection and taxonomy/split audit. Not a ready 80-class COCO training package.",
+  "labels": [
+    "phone",
+    "face"
+  ],
+  "review_file": "ai/annotations/fpi-det-sample-v1.json",
+  "archive_sha256": "5eea5d8ce0317c3bfabecb29c54eea2845a022bcfd190b4c8ca781b52bf7cb48",
+  "scope": "Phone target screening. Head/face completeness, physical-session independence and full COCO annotation scope require further work.",
+  "review_counts": {
+    "PHONE_SCOPE_SCREENED": 45,
+    "DEFERRED": 15
+  },
+  "publisher_splits_are_provisional": true,
+  "images": 60,
+  "images_per_publisher_split": {
+    "train": 40,
+    "val": 10,
+    "test": 10
+  },
+  "rear_visible_screened": 13,
+  "sample_path": "ai/data/local/fpi-det-audit-sample-v1",
+  "sample_files_verified": true,
+  "prepared_manifest_sha256": "9a4bbfe9d455bc94a9713defc1c40d6c2b616a5434744d1479c977fc2c522fd6"
+}

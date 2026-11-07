@@ -23,7 +23,7 @@ from .catalog import confirm_context, detection_capabilities, load_catalog, pres
 from .contracts import Context, Contract
 from .media import MAX_BYTES, MediaError
 from .providers import FixtureProvider, GeminiProvider
-from .recommendation import is_reviewed, load_guides
+from .recommendation import ProviderError, is_reviewed, load_guides
 from .decisions import Decisions
 from .wire import DecisionInput
 
@@ -87,9 +87,11 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
     @asynccontextmanager
     async def lifespan(app):
         if app.state.detector is None:
-            from .detector import YoloDetector
-            app.state.detector = YoloDetector(Path(os.getenv("AI_MODEL_PATH", "ai/artifacts/models/yolo11n.pt")),
-                                              os.getenv("AI_DEVICE", "cpu"), os.getenv("AI_INPUT_SHAPE", "adaptive"))
+            from .detector import load_detector
+            general_path = os.getenv("AI_GENERAL_MODEL_PATH")
+            app.state.detector = load_detector(Path(os.getenv("AI_MODEL_PATH", "artifacts/models/yolo11n.pt")),
+                os.getenv("AI_DEVICE", "cpu"), os.getenv("AI_INPUT_SHAPE", "adaptive"),
+                Path(general_path) if general_path else None)
         try:
             if hasattr(app.state.detector, "model") and hasattr(app.state.detector.model, "warmup"):
                 app.state.detector.model.warmup(imgsz=(1, 3, 640, 640))
@@ -213,7 +215,8 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
         return {"catalog":catalog,"model_labels":detector.labels,
                 **detection_capabilities(detector.labels, model_version=detector.artifact["model_version"],
                                          model_sha256=detector.artifact.get("sha256")),
-                "model_version":detector.artifact["model_version"],"demo_guides":demo_guides,
+                "model_version":detector.artifact["model_version"],
+                "combined_models":bool(detector.artifact.get("components")),"demo_guides":demo_guides,
                 "gemini_configured":bool(getattr(providers["gemini"],"api_key",None) and
                                            getattr(providers["gemini"],"model",None)),
                 "gemini_model":getattr(providers["gemini"],"model",None),
@@ -287,15 +290,17 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
         async def process():
             if not provider_lock.acquire(blocking=False):
                 raise HTTPException(503,detail="AI_BUSY")
-            # A process-wide ceiling bounds repeated live demo calls. Policy-only
-            # and fixture paths have no external cost, but share the same ceiling.
-            if len(rate_calls) >= 30:
-                provider_lock.release()
-                raise HTTPException(429,detail="DEMO_HOURLY_LIMIT")
-            rate_calls.append(monotonic())
+            underlying = providers[value.provider]
+            class BudgetedProvider:
+                name = underlying.name
+                def generate(self, payload):
+                    if len(rate_calls) >= 30:
+                        raise ProviderError("DEMO_HOURLY_LIMIT")
+                    rate_calls.append(monotonic())
+                    return underlying.generate(payload)
             def generate():
                 try:
-                    return Decisions(providers[value.provider],guides,demo_guides=demo_guides).evaluate(DecisionInput(context=value.context))
+                    return Decisions(BudgetedProvider(),guides,demo_guides=demo_guides).evaluate(DecisionInput(context=value.context))
                 finally:
                     provider_lock.release()
             result = await asyncio.to_thread(generate)
@@ -307,6 +312,8 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
                             guide_status=guide.publication_status if guide else None,
                             input_source="manual_confirmation" if value.manual else "yolo_user_confirmation",
                             saved_log=False)
+            if result.reason_code == "DEMO_HOURLY_LIMIT":
+                return JSONResponse({"detail":"DEMO_HOURLY_LIMIT", "data":response}, status_code=429)
             return {"data":response}
         return await dedup(owner,"recommend",rid,digest,process,20)
 

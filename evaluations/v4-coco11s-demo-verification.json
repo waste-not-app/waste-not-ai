@@ -1,0 +1,10 @@
+{
+  "kind": "real_demo_http_verification",
+  "url": "http://127.0.0.1:8100",
+  "model_version": "broad-coco-b0f633193403",
+  "combined_labels": 88,
+  "cardboard_threshold": 0.5,
+  "cardboard_example_selectable": true,
+  "general_model_sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+  "session_deleted": true
+}

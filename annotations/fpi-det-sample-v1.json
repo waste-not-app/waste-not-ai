@@ -1,0 +1,748 @@
+[
+  {
+    "source_id": "u31hkb8DnJBvyZsNT547fR9impwVPctI",
+    "raw_sha256": "50a92a82a2b50fe8af5ac7c7266a173e344d50c71a5f827a4208c099f795c2a6",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395590+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "eDgGTXa8SzR5flt1vuVBwC043IK79MLY",
+    "raw_sha256": "a90636edc05abd946384f4508a051514104618a3882383d726a451a3867a0b1c",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395603+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "ROr08ghfxoyq1Y5iLAsG6bpWFZtj4aT7",
+    "raw_sha256": "80e7aa6ae7dccc2c22b9097f343297d82e3208af30dcdbcf55385304665976ac",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395605+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "YSwHrVChf9e38ox6dcXtvGD0UM5kEzJO",
+    "raw_sha256": "5fa59ba436aea24c51f6cc7f46983f941180ff7e2b39d9a4058af189560ea033",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395607+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "3qHAMVjLkZf7oPG8e2sxXnpTKyhvSBRE",
+    "raw_sha256": "65baab3948e3206301624aaacabe061710452a630956e9b9a85993ca8563c231",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395611+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Xa4NPgclh6tRS5FJC3fEkeBQrqpjTM71",
+    "raw_sha256": "ab75b52219c17c504a78294f403938a5f3d6adba7cfa9a2b2a07434ef63971a3",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395613+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "yMKlW0T6JfHaeGAXD8FqLxUEg1oNP9s4",
+    "raw_sha256": "6cae6458eb650079b61af12ee404bc6c2769e81ddef6e0561b534c740bb9945e",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395614+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "ou2bLOcDFlQ3aAS8IvmwECpedgrNtq5H",
+    "raw_sha256": "3b36c68759a65be9303454a95875947a213b39319cc5c2d02db9417050989bc5",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395616+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "i0YoG5ty98mU2L3dA4QucWPVhebNFOpw",
+    "raw_sha256": "e40ac8918768f2a6a421ad7b39018ab85c207569164f55c0b5ea9e8ceeda4125",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395617+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "4EhK8UiSnfPZO5l9CvmxkNbwg6TQ7qBd",
+    "raw_sha256": "0bd25d08d4c95b425d745301e49ad8f49f43fce6f1fe96231e931ee324749b0a",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395619+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "cLmi2wQbOY9NkhjyzG3ICqgeTRdAvrUx",
+    "raw_sha256": "7736f2d8c11f819da4b0bbf977cebf2c0f55982208d32d26e45d077c2c24a78e",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395620+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "wHGiUfW9d7TZ6gmkpj0PIcARNSsF1qB2",
+    "raw_sha256": "2aef1e87541afb140eb0160adbe96ce06ceeb2a30099c8eb256b00a335fceb74",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395622+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "yFMnjRm8IXdlt4ZHi5Tk70PUKebNqC2z",
+    "raw_sha256": "86b01f18ec64f6fb885f130d9e23074f5ffbdab1cecda141b68ce0fabb0ae931",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395623+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "cju0EXHYRyGnJAWOFfskPewzlmq3Zptv",
+    "raw_sha256": "a4b499d23de00aba696d9f51768de264e487a459b2dc2397b1cbf36e9ab714eb",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395625+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "ATgLntK6FrMWSHRbfkpuEaUG27zviDyo",
+    "raw_sha256": "504c0f85fbe8d1610085a61087f451a4412f79b116f21437907884b31ace4be9",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395626+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "WLp6ZKgP0HTrUeEkoInYzdyAcbw83O5h",
+    "raw_sha256": "06bf29352858755081ed2c9661add22d7b27d2a4b59ffd9c6ff149bf881ef6f8",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395627+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "AwIYku1tXF7H4hnqzPVmJy2rCbRjWT9Z",
+    "raw_sha256": "699c21aed1b2b73952913a82d9279c02c82ed8a8c4e963e95b770ca46bca948e",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395629+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "193ecWFfjd8SYqT6OVvbE0BiwDaHLRrX",
+    "raw_sha256": "c949e8273ab3077b63c519636b7df87038f7d5950ca50eba19f2e30e2dfa7d92",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395630+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "0WPJivpyt75ZHDh6AQUYLbmIkF1Caxcs",
+    "raw_sha256": "b3a9a7ec285f23a66a37a86e7d7f7b0ae2b132ff8a791c1948929efe253e5bae",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395632+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "mt1h5aBONbE3HkJfM8cAUdxP6pqngz4D",
+    "raw_sha256": "e10953abcac343075032b8fd2470e73f96e8514a76fb52d46ce5e8750e5021f6",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395633+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "yTAo7pmsKIDXPqtB4b0ZSJkalMcv2jUd",
+    "raw_sha256": "b08386cfb50f92eb965e6a3f878c25adf20ca6dceb2f5d7f28499e56a4cb9fc6",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395635+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "gRIZSh8qOKP7tpXe4jEwcyvU6si9JVGo",
+    "raw_sha256": "e4df39d5548669f4d9c83caaa63007360cd36af7c9d4953207c92053bee69923",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395637+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "WC25H8xskE9qhB36DtIrciFTKZbOyVUL",
+    "raw_sha256": "914d3e93035c6d49a400c51f0f5e8049a5fd65d8214dfda28f4415e42d34bbe5",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395638+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "fgxbqCWZirzU8FGkdcThnAHPESXOVw0D",
+    "raw_sha256": "d756baecdb3c5ae23c54ca1c74200914d8f3a63bd26e45c50f4c0916f870e294",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395640+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "71O4MSXULntEjyJP9BihdTZwzWqDeaAG",
+    "raw_sha256": "8981071e7288645fc89052b96ca3bfd059a8273b0546b7e3663b0e30f058d596",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395641+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "QrjGozb18hFnulBktNi6pDXamevI3SwY",
+    "raw_sha256": "608cd385d2f8a88480602425ac4d9c0d0c3f80d6ea1bbec72aee84b2dda8d16a",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395643+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "lbXsLBqmjKdoOG7UCaFvgwu9tVe2YrzS",
+    "raw_sha256": "193aaf89508b4edf69572238015a61a097b1c95642ad1dfd5e6a0e33365a9c28",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395645+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "xVZ1NAFrjyMebtLf35nGhRU9vpCEdOwq",
+    "raw_sha256": "c1c1db602d5cf0359f2ef1b5ce899bc5eaf460cc09ceeccf94df1b913bb8e398",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395647+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "yEjhH9FM2pROKJm8DL30tW5V7YkUnCsz",
+    "raw_sha256": "b80dcf4c5106b5482910d9032deff4e1ab95a60229684dddbf1822338c0a0625",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395648+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "qIWXLkQcerEZBlNtjfACKy6M2vis9m31",
+    "raw_sha256": "102187f199dc14190143bb4ef494326a673e0521bcd1f0f5cb74a6684663e147",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395649+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cdi1OoM6QWlUPsbHBAyRcxK8gDq3nLkh",
+    "raw_sha256": "7274170099d46e1e995399b8cfc597793e0728872b7585fabe512216604bbabe",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395651+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Qft4VwjaixR2dZc1p7oLPzCv5GglY0yK",
+    "raw_sha256": "b3607290df265a9615aaccf593ffbc419885e1505e83b4d3295c77c9c1b921e3",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395652+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "rwDMkdAcUjxGKE398QlqX61tOVyHmhg7",
+    "raw_sha256": "a88d56b75f8945b98996234bcbbce1202da20fa795d4bdb5644cf2794e18e011",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395653+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "G7ENfWrU64SVRzdqkKpiuMxPhaATQLIm",
+    "raw_sha256": "346d27d03d35bfacfb7c6232c45e78bf248b783360e7917d704ef4da57b04347",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395655+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "9EoJAmVOtrbwLM6lcGTPgDX7pUvB8k2W",
+    "raw_sha256": "c59fb711c416e409fc0347f5199f304dcb90c1df55bcf33a645a31005a84bf41",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395656+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "N4dtZ9Bl8fHoMxqmF2zJRcCueArp0gDP",
+    "raw_sha256": "b7c5ccdd3ca89b9a3b982eff70920ad4ac5a13690443bcc61896d63a190e1099",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395658+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "1dDmaRnWKYG9eJt8koOS4zwFXhC7bBgs",
+    "raw_sha256": "6105692fd0bf4a462fcab5bfc0f8b17f5d5c130d220404f42479429684e8c053",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395659+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "6UBjCmtAyc8P0Wn4l7KNJifHTIovrQO5",
+    "raw_sha256": "593a311b1821ae283f6c20a5f2f25a7bc2282b368663b1d5c03a64f6d06a4e14",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395661+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "usMWX1FSy4DREhLixHJm9bd3UzPQe0r5",
+    "raw_sha256": "f9faff73b98a722bdd99dd4396838bfce9d36e31f745870e2bb2a3494fb32956",
+    "source_split": "train",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395662+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "qwMkZRgFfLIQ4XpsBix3AnuyTb72WHUE",
+    "raw_sha256": "e855c5df0bb111b9a53c145cf124ef619b39255f20fabd9b97807160ff9891a0",
+    "source_split": "train",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395663+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "TN4c10umLIRQGW8ZPw7F2D3yh6eHOAlv",
+    "raw_sha256": "6a8cfde02ed9fa65aecec6c4b3d095440b449ac067134380776c009dd6436bbd",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395666+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "VxrDBNqdPQ8kiuHG1w0RmvXosMC2naKt",
+    "raw_sha256": "1e68fe2743cf356ae550171ea40df100eed36cd8f88faac5371f9eb96a8356e5",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395667+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "w4Bf5eUbDvkMSTKoiCxtzZumI8pg9hAs",
+    "raw_sha256": "2f490c90e9b87b7ab23ac15e98cc2aeee55b85186b8223557cbad1373da43c3b",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395669+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "wjWKXP8BTxn2SJpuvQ64bF0VrkqDNmZM",
+    "raw_sha256": "03b00514c95492e1e6e9495c9798af20c0cb07d27b5b15cea2d974e370f36d0b",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395670+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "ZA5younQUKvm2CVzBYgbwiphrt8feH0J",
+    "raw_sha256": "31371b165bc35c1aba07dd9e8ede97c0057124bff4de83ad31defc8fb3e54a9c",
+    "source_split": "val",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395671+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "WqAGSytpXZaQb7R8CFfnKBTvdYED0xwP",
+    "raw_sha256": "92ae3efff92a2ad604aa7176e2b1b19b37934871d723ffb635b7dc1ff72910c2",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395673+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "rz2wFMcBx9HIe6WhGLYtRfoZSgDT1nQb",
+    "raw_sha256": "82c7539ca4bdcb61178a79fb797f2535d59cd4e9a0f90f6e035f218d821f74b1",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395674+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "QvH7zntgEws0j3mGcSLqN49W5TCiVdkY",
+    "raw_sha256": "a1b83d29fc15c2989ce846e6f13ae7a33074399fd7cdb185a6e089fbab67509a",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395687+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "pehxCalS2sjFG9oPX8cIQLriy0Hfz17g",
+    "raw_sha256": "85ca6a9b180017d3fc891df78ff2a5ebe5a484c047a9670a3458df60e0b5e525",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395689+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "uAWj8ZiQafr7sP3OhHVTd9g54Yk6XBeI",
+    "raw_sha256": "25bc8862d6b31b8d9ef8083e18caf8f42fcaaf113b7be36990cdec69d1287f2d",
+    "source_split": "val",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395691+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "iVbeBJZP6MFcx81aRmGCdtYAsELTDq43",
+    "raw_sha256": "a539388dac317dfffe89f8f2c8c11b6325146af80faf099518e2d11cc9e4c375",
+    "source_split": "test",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395692+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "JMIGQ0ApV9tUqCBdfwaOLrxXcFiNY6Z1",
+    "raw_sha256": "483c5121129441c1eb9bf28c2b21f0c499f7fa66c7b3108e3ded87dcc0a89882",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395694+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "80ZfUbytrKu4BE7R9MVTnlm51gCeQvFG",
+    "raw_sha256": "de669da662b6af7b722dc4eb9cf7b659966a0e99ef7773a833ca784a469f1f12",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395695+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "bLA12hjuBwQ7t6DY4iVOnKgNEaGfWsoe",
+    "raw_sha256": "fc498f01dd74b93395119ada9e7f96c555426b4b856f1d28994342c480990fc1",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395698+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "erZivWn6zfV89H0OT5IRBuxMkSP2waUc",
+    "raw_sha256": "1bcfc103f872bc65844c9aefbdfe6506d4bee8fa21ee031155f7f8db3441c4a6",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395699+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "jTlUMkD1GBRYiInSQxtaP5rLgsW4w32c",
+    "raw_sha256": "cbaff2803e966f4760862ee305088a5541c7529a14a9c4b8dd8e26ceef904aaf",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395701+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "IMr3Zf5eLQqECxYmau1AWbSXzKn6c8R4",
+    "raw_sha256": "1e01ead925ff1f6fb6019dc030341c94f444e66b985dc5727704ce4e145cf6e7",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395703+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "HrBthds1POlVLQCo8ycEYg35jADkpqzF",
+    "raw_sha256": "9206e32a23e341ee9795fc72ea832f36dbc2cc13b789bff17fb754af85fdaff5",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395704+00:00",
+    "view_tags": [
+      "rear_visible"
+    ],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "LQ8AuGD5CmZBWIPiYxRqhndjF9zKJXsv",
+    "raw_sha256": "b1c041e76152073a735b033c53560c1a01c82eb56d9a09d540cbdd6ac9a145b2",
+    "source_split": "test",
+    "decision": "PHONE_SCOPE_SCREENED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395706+00:00",
+    "view_tags": [],
+    "reason": "Visible phone corresponds to publisher class-0 box. Other classes and physical-session grouping need separate review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Ly5CTw7oXrKPp9cWGkIlmqJuefEHiDY0",
+    "raw_sha256": "63b940e7ea70fff855f99e35133671e2fdee385c1bb2a364cd74c15863feefc9",
+    "source_split": "test",
+    "decision": "DEFERRED",
+    "reviewer": "Codex visual phone-bbox screening",
+    "reviewed_at": "2026-11-07T10:37:46.395707+00:00",
+    "view_tags": [],
+    "reason": "Target identity/visibility or video-overlay domain requires further review.",
+    "annotation_source": "Original publisher YOLO records, normalized to one five-column record per line without clipping",
+    "independent_human_review": "PENDING"
+  }
+]

@@ -24,11 +24,27 @@ Pilot memakai YOLO11n COCO (`candidate-0ebbc80d4a76`) dan Gemini 3.1 Flash-Lite.
 
 Bagian berikut mempertahankan penjelasan riset/demo. Hasilnya bukan klaim penerimaan Android atau deployment checkpoint fine-tuning. Source sekarang berada langsung di root repo AI; prefix direktori `ai/` pada laporan historis merujuk lokasi sebelum ekstraksi.
 
+[Audit FPI-Det dan RealWaste selesai](docs/EXTERNAL_DATASET_AUDIT_V5.md). Batch riset v5 menambah **15 foto kardus dengan bbox manual**, menaikkan anotasi kardus train aktif **93 menjadi 108**. Arsip FPI berisi **22.879 foto** berhasil diunduh dan diaudit. Ditemukan label multi-bbox satu baris, duplikasi lintas split dan perbedaan cakupan label dengan COCO. Sampel 60 foto FPI tersedia untuk audit. RealWaste memakai ketentuan penulis CC BY-NC-SA 4.0 karena berbeda dengan metadata UCI. Seluruh 255 tes lulus.
+
+[Evaluasi kalibrasi dan COCO11s selesai](docs/V4_CALIBRATION_AND_COCO11S.md). Threshold kardus 0,65 ditolak karena F1 test turun 44,9% menjadi 36,4%. Pendamping yang lebih besar meningkatkan F1 benchmark gabungan **48,0% menjadi 53,2%**, dengan ponsel benar **6 menjadi 12 dari 23**. Launcher `.\demo-camera-v4.bat` kini memakai COCO11s pada **port 8100**. Salah deteksi total naik 44 menjadi 46 dan median CPU sekitar 211 ms. Kasus ponsel biru masih terbaca remote. Seluruh 250 tes lulus.
+
+[Training fokus v4 dan benchmark ulang selesai](docs/FOCUS_V4_RESULTS.md). F1 gabungan naik **43,0% menjadi 48,0%** pada 117 foto yang sama. Kardus benar naik **2 menjadi 5 dari 15**, dengan salah deteksi kardus naik **1 menjadi 5**. Dua kandidat fine-tuning ponsel belum memberi peningkatan validation, sehingga komponen umum memakai COCO awal. Kasus ponsel biru masih terbaca remote. Coba eksperimen melalui `.\demo-camera-v4.bat` pada port 8099.
+
+[Dataset fokus kardus dan ponsel](docs/DATASET_V4_FOCUS.md) sudah disiapkan dari hasil benchmark. Paket Broad Waste v4 menambah 95 foto dan menaikkan anotasi kardus train aktif **29 menjadi 93**. Paket model umum menyediakan 620 foto dengan **322 anotasi ponsel, 204 remote dan 79 kulkas pada train**, termasuk 14 contoh negatif kardus. Audit split/benchmark dan 245 tes lulus. Dataset masih eksperimen dan memerlukan fine-tuning serta benchmark ulang untuk mengukur akurasi.
+
+[Benchmark replay kamera pertama](docs/CAMERA_BENCHMARK.md) membandingkan v3, COCO, dan gabungan pada 117 foto serta 222 anotasi. Pada input standar, F1 masing-masing **36,6% / 26,7% / 43,0%**, dengan median CPU **177 / 87 / 266 ms**. [Laporan per kelas dan kesalahan](evaluations/camera-replay-v1-comparison.md) juga mencakup input redup simulasi. Dataset kamera fisik baru masih perlu dikumpulkan.
+
+Perbaikan cakupan kamera: `demo-camera-v3.bat` sekarang menjalankan **v3 + model benda umum COCO**. Checkpoint v3 sendiri hanya mempunyai sepuluh kelas sampah sehingga tidak dapat mendeteksi ponsel. [Diagnosis, cara mencoba dan batas model gabungan](docs/CAMERA_COVERAGE.md). Belum ada klaim akurasi gabungan; semua dugaan memerlukan konfirmasi.
+
+Pembaruan `pilot-policy-08`: botol kaca utuh dengan risiko tajam dan penerima terkonfirmasi kini memperoleh **Recycle disertai peringatan**. [Audit bug dan hasil verifikasi](docs/DEBUG_20261107.md) mencakup 226 tes, 21.420 kombinasi kondisi dan 25 pemeriksaan browser. Model aktif/cakupan kardus terlihat di layar; tersedia koreksi manual untuk salah deteksi. [Panduan awal bersumber](docs/HANDLING_GUIDANCE.md) tetap tampil saat metode belum dapat ditentukan atau batas generation demo tercapai.
+
+Perluasan dataset: [audit dan pipeline dataset v3](docs/DATASET_V3.md). Status 7 November 2026: **147 foto baru diunduh, 99 lolos screening awal**, dataset eksperimen `broad-waste-v3-batch2` tersedia dengan 3.798 gambar. [Training kandidat YOLO11s selesai](docs/BROAD_WASTE_V3_RESULTS.md): pada test identik mAP50 **28,28%→35,18%**, dengan tradeoff precision/recall per kelas. Coba `.\demo-camera-v3.bat`. Target data dan seluruh gate kelas belum terpenuhi; model default belum diganti.
+
 Pembaruan `pilot-policy-06`: kebersihan, keutuhan, kelayakan, niat pakai ulang, fokus dan akses boleh dibiarkan belum tahu. Gemini memberi **saran sementara bersyarat**, tanpa mengisi kondisi sebagai fakta. [Cara mencoba dan hasil audit/training background](docs/CONDITIONAL_AND_BACKGROUND.md).
 
 Kontrak integrasi tim tersedia pada [HTTP AI v1](docs/AI_HTTP_CONTRACT.md): [OpenAPI publik](contracts/v1/public.openapi.json), dua OpenAPI privat, contoh request/response, daftar error dan mock server. **Python memiliki aturan AI/Gemini; Go memiliki JWT, sesi, dedup dan penyimpanan.**
 
-Poin 3-4: [mutu keputusan YOLO](docs/DETECTION_QUALITY.md) dan [panduan/evaluasi rekomendasi](docs/RECOMMENDATION_EVALUATION.md). Profil kandidat `dw-val-01` memakai threshold per kelas dan menandai hipotesis bertumpuk; botol kaca tetap UNCERTAIN. Katalog kini 78 pilihan, dengan panduan HDPE tersendiri. Semua panduan masih DRAFT.
+Poin 3-4: [mutu keputusan YOLO](docs/DETECTION_QUALITY.md) dan [panduan/evaluasi rekomendasi](docs/RECOMMENDATION_EVALUATION.md). Profil kandidat `dw-val-01` memakai threshold per kelas dan menandai hipotesis bertumpuk; botol kaca tetap UNCERTAIN. Katalog kini 85 pilihan, dengan panduan HDPE tersendiri. Semua panduan masih DRAFT.
 
 ```powershell
 # Demo checkpoint yang sudah ditrain, membuka kamera browser:
@@ -61,7 +77,7 @@ Eksperimen fine-tuning botol/kaleng menggunakan dataset publik beranotasi tersed
 
 Kandidat dengan data lebih bervariasi tersedia melalui [training Broad Waste](docs/BROAD_WASTE_TRAINING.md): 10 kelas visual, data/split aktual, batas kelas langka, hasil evaluasi, integrasi worker dan `.\demo-camera-broad.bat --port 8095`. Semua hasil kandidat broad perlu ditinjau; model default tetap COCO.
 
-Setelah training selesai, `ai/demo-camera-trained.bat` membuka demo checkpoint botol/kaleng melalui environment demo awal (CPU). Perintah GPU tersedia pada panduan tersebut.
+Setelah training selesai, `demo-camera-trained.bat` membuka demo checkpoint botol/kaleng melalui environment demo awal (CPU). Perintah GPU tersedia pada panduan tersebut.
 
 Run pertama sudah selesai pada 30 epoch (early stopping). [Laporan hasil](docs/FINETUNING_RESULTS.md) memuat evaluasi per kelas, perbandingan dengan baseline, batas dataset, dan uji checkpoint final dengan Gemini langsung.
 
@@ -123,7 +139,7 @@ Katalog versi `demo-catalog-05` mempunyai **78 pilihan benda/material**; sebagia
 | Sikat gigi | Toothbrush | Konfirmasi plastik manual tanpa listrik/baterai; TRASH hanya saat tidak layak dan akses daur ulang khusus sudah diperiksa tidak ada |
 | Katalog manual | Kaleng aluminium, botol HDPE, kardus, baterai | Belum punya kelas khusus pada checkpoint ini; bukan klaim kemampuan deteksi baru |
 
-Semua 78 panduan merupakan **draf demo**, sebagian dibuat dari template bersama. Perluasan COCO memanfaatkan label pretrained yang sudah ada. Kandidat botol/kaleng telah difine-tune dan dievaluasi terpisah; ia tidak mengenali semua kelas COCO. Perluasan katalog tidak menambah kelas visual baru pada bobot. Template tersedia pada [guide_templates.json](src/wastenot_ai/data/guide_templates.json); katalog pada [catalog.json](src/wastenot_ai/data/catalog.json). Script `ai/scripts/expand_demo_catalog.py` memperbarui data extension secara idempotent jika tabel sumber diubah.
+Semua 78 panduan merupakan **draf demo**, sebagian dibuat dari template bersama. Perluasan COCO memanfaatkan label pretrained yang sudah ada. Kandidat botol/kaleng telah difine-tune dan dievaluasi terpisah; ia tidak mengenali semua kelas COCO. Perluasan katalog tidak menambah kelas visual baru pada bobot. Template tersedia pada [guide_templates.json](src/wastenot_ai/data/guide_templates.json); katalog pada [catalog.json](src/wastenot_ai/data/catalog.json). Script `scripts/expand_demo_catalog.py` memperbarui data extension secara idempotent jika tabel sumber diubah.
 
 ### Batas layanan demo
 
@@ -185,7 +201,7 @@ Lihat [katalog berversi](src/wastenot_ai/data/catalog.json). Ini cakupan usulan 
 
 ## Gemini API
 
-Salin `ai/.env.example` ke `.env` bila belum ada. Isi secara lokal:
+Salin `.env.example` ke `.env` bila belum ada. Isi secara lokal:
 
 ```dotenv
 GEMINI_API_KEY_1=isi_key_pertama
@@ -242,11 +258,11 @@ Satu job aktif; overload langsung 503 + Retry-After. Batas gambar 5 MiB, 12 MP, 
 
 ## Percobaan langkah demi langkah
 
-Sesudah instalasi dan `fetch-assets`, alur berikut dapat dijalankan terpisah dari Go/Android. Perintah membuat laporan JSON pada `ai/artifacts`, folder lokal yang diabaikan Git.
+Sesudah instalasi dan `fetch-assets`, alur berikut dapat dijalankan terpisah dari Go/Android. Perintah membuat laporan JSON pada `artifacts`, folder lokal yang diabaikan Git.
 
-1. **Deteksi foto.** Jalankan `detect` seperti contoh di atas. Untuk gambar sendiri, ganti `ai/data/local/smoke/bottle.jpg` dengan path JPEG/PNG milikmu. Foto harus ≤5 MiB, ≤12 MP, sisi ≤4096 piksel.
-2. **Pilih satu objek.** Buka `ai/artifacts/detection.json` dan cari `objects` dengan `supported_for_review=true`. Catat `object_id`; ID hanya berlaku pada hasil deteksi itu. Pada sampel yang diuji, botol adalah `object-3`, tetapi urutan dapat berubah. Jika tidak ada kandidat yang dapat ditinjau, pilih input manual atau foto ulang.
-3. **Konfirmasi material dan kondisi.** Gunakan `ai/examples/context-glass.json` untuk skenario botol kaca atau `context-pet.json` untuk botol PET. Buat salinan JSON dan ubah field sesuai konfirmasi pengguna, bukan tebakan dari confidence. `UNKNOWN` adalah jawaban yang valid. Katalog tersedia lewat `python -m wastenot_ai.cli catalog` menggunakan interpreter venv.
+1. **Deteksi foto.** Jalankan `detect` seperti contoh di atas. Untuk gambar sendiri, ganti `data/local/smoke/bottle.jpg` dengan path JPEG/PNG milikmu. Foto harus ≤5 MiB, ≤12 MP, sisi ≤4096 piksel.
+2. **Pilih satu objek.** Buka `artifacts/detection.json` dan cari `objects` dengan `supported_for_review=true`. Catat `object_id`; ID hanya berlaku pada hasil deteksi itu. Pada sampel yang diuji, botol adalah `object-3`, tetapi urutan dapat berubah. Jika tidak ada kandidat yang dapat ditinjau, pilih input manual atau foto ulang.
+3. **Konfirmasi material dan kondisi.** Gunakan `examples/context-glass.json` untuk skenario botol kaca atau `context-pet.json` untuk botol PET. Buat salinan JSON dan ubah field sesuai konfirmasi pengguna, bukan tebakan dari confidence. `UNKNOWN` adalah jawaban yang valid. Katalog tersedia lewat `python -m wastenot_ai.cli catalog` menggunakan interpreter venv.
 4. **Coba LLM secara mandiri.** Jalankan `recommend` dengan `--provider fixture --demo-guides` untuk simulasi tanpa key, atau `--provider gemini --demo-guides` untuk request Gemini sungguhan. `recommend` hanya memerlukan context JSON, sehingga dapat dipakai saat pengembangan LLM tanpa mengulang YOLO.
 5. **Jalankan gabungan.** Gunakan perintah `pipeline` berikut setelah memeriksa object_id dan context.
 
@@ -432,7 +448,7 @@ Urutan smoke integrasi: health worker → deteksi publik memakai akun uji → pi
 | Gejala / reason_code | Pemeriksaan / langkah berikutnya |
 |---|---|
 | `No module named wastenot_ai` atau dependency hilang | Jalankan instalasi dari root dan gunakan `.venv-ai\Scripts\python.exe` untuk semua perintah |
-| Model tidak ditemukan | Jalankan `fetch-assets`, periksa `ai/artifacts/models/yolo11n.pt`, atau pakai `--model path/to/model.pt` pada detect/benchmark/pipeline |
+| Model tidak ditemukan | Jalankan `fetch-assets`, periksa `artifacts/models/yolo11n.pt`, atau pakai `--model path/to/model.pt` pada detect/benchmark/pipeline |
 | `fetch-assets` gagal mengunduh | Periksa jaringan ke GitHub/Flickr; gunakan gambar milik sendiri jika sampel tidak tersedia. Model yang sudah terunduh dapat dipakai setelah checksum diverifikasi |
 | `MANUAL_REQUIRED` atau `recommendation=null` | Periksa supported_for_review, score, object_id dan label. Object-1 belum tentu botol; pilih kandidat yang benar atau lanjut manual |
 | `LLM_NOT_CONFIGURED` / `LLM_MODEL_NOT_CONFIGURED` | Isi key/model pada `.env`; `doctor` memeriksa status, bukan menampilkan secret |
@@ -453,7 +469,7 @@ Output `UNAVAILABLE` adalah fallback terkontrol dan dapat dikembalikan CLI denga
 
 ```powershell
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = '1'
-.\.venv-ai\Scripts\python.exe -m pytest ai/tests -q
+.\.venv-ai\Scripts\python.exe -m pytest tests -q
 # Uji adapter HTTP privat dengan model nyata dan rekomendasi fixture:
 .\.venv-ai\Scripts\python.exe scripts/verify_runtime.py
 # Opsional, hanya untuk pengujian browser otomatis (bukan kebutuhan menjalankan demo):

@@ -8,7 +8,7 @@ import shutil
 
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("YOLO_CONFIG_DIR", str(ROOT / ".cache-ai/ultralytics"))
 os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache-ai/matplotlib"))
 os.environ["YOLO_AUTOINSTALL"] = "false"
@@ -29,9 +29,9 @@ def safe_crop_regions(size, boxes, margin=.04):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data", type=Path, default=ROOT / "ai/data/local/drinking-waste-v2")
-    parser.add_argument("--output", type=Path, default=ROOT / "ai/data/local/drinking-waste-background-v1")
-    parser.add_argument("--model", type=Path, default=ROOT / "ai/artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt")
+    parser.add_argument("--data", type=Path, default=ROOT / "data/local/drinking-waste-v2")
+    parser.add_argument("--output", type=Path, default=ROOT / "data/local/drinking-waste-background-v1")
+    parser.add_argument("--model", type=Path, default=ROOT / "artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt")
     parser.add_argument("--limit", type=int, default=600)
     parser.add_argument("--device", default="0")
     args = parser.parse_args()
@@ -98,7 +98,7 @@ def main():
     config = {"path": str(output), "train": "train.txt", "val": str((args.data / "images/val").resolve()),
               "test": str((args.data / "images/test").resolve()), "names": model.names}
     (output / "data.yaml").write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
-    shutil.copyfile(ROOT / "ai/docs/DATASET_NOTICES.md", output / "DATASET_NOTICES.md")
+    shutil.copyfile(ROOT / "docs/DATASET_NOTICES.md", output / "DATASET_NOTICES.md")
     # Contact sheets expose the hardest crops for visual review before any training.
     for page, start in enumerate(range(0, min(120, len(selected)), 40)):
         sheet = Image.new("RGB", (1000, 800), "white")

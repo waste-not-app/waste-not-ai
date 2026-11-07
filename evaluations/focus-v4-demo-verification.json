@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:8099",
+  "config_status": 200,
+  "detect_status": 200,
+  "combined_labels": 88,
+  "model_version": "broad-coco-0b06663cfd8d",
+  "waste_sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+  "known_cardboard_detected": true,
+  "session_deleted": true
+}

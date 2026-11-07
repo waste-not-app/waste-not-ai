@@ -1,0 +1,13 @@
+{
+  "cases": 21420,
+  "catalog_items": 85,
+  "status_counts": {
+    "READY": 10388,
+    "UNAVAILABLE": 9461,
+    "NEEDS_CONTEXT": 1571
+  },
+  "failures": [],
+  "provider": "fixture",
+  "live_provider_calls": 0,
+  "scope": "Policy invariants, not visual detection accuracy or expert review of every item."
+}

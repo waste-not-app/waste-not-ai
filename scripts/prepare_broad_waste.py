@@ -16,9 +16,9 @@ import zipfile
 
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[2]
-CACHE = ROOT / "ai/data/local/downloads/broad-waste-v1"
-OUTPUT = ROOT / "ai/data/local/broad-waste-v1"
+ROOT = Path(__file__).resolve().parents[1]
+CACHE = ROOT / "data/local/downloads/broad-waste-v1"
+OUTPUT = ROOT / "data/local/broad-waste-v1"
 LABELS = ["bottle", "can", "cup", "plastic_bag", "paper", "cardboard",
           "drink_carton", "plastic_wrapper", "food_container", "bottle_cap"]
 TACO_MAP = {4: 0, 5: 0, 6: 0, 10: 1, 12: 1, 20: 2, 21: 2, 22: 2, 23: 2, 24: 2,
@@ -209,7 +209,7 @@ def prepare(coco_limit):
         fetched = list(pool.map(fetch_record, rows))
     rejected = [r for r in fetched if "rejected" in r]
     rows = [r for r in fetched if "rejected" not in r]
-    old = ROOT / "ai/data/local/drinking-waste-v2"
+    old = ROOT / "data/local/drinking-waste-v2"
     manifest = json.loads((old / "manifest.json").read_text("utf-8"))
     old_rows = manifest["records"]
     train_budget = Counter()
@@ -314,7 +314,7 @@ def prepare(coco_limit):
         "COCO: Lin et al., Microsoft COCO: Common Objects in Context; https://cocodataset.org/ .\n"
         "Photo source URLs and publisher-declared (COCO) or live-checked (TACO) licenses are recorded per image in manifest.json.\n"
         "Original Drinking Waste / TrashNet attribution and MIT terms follow the original notice below.\n\n" +
-        (ROOT / "ai/docs/DATASET_NOTICES.md").read_text("utf-8"), encoding="utf-8")
+        (ROOT / "docs/DATASET_NOTICES.md").read_text("utf-8"), encoding="utf-8")
     # Contact sheets are local audit aids, never published as dataset redistribution.
     external = [r for r in records if r["source"] != "DrinkingWasteV2"]
     for page in range((len(external) + 59) // 60):

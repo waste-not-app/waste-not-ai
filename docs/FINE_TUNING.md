@@ -38,7 +38,7 @@ dibuat otomatis dari label klasifikasi.
 Ke-62 duplikat memiliki ID kelas yang sama tetapi koordinat bbox yang sedikit
 berbeda (IoU minimum 0,751; median 0,947 pada audit pasangan). Eksperimen mempertahankan anotasi valid pertama menurut urutan nama
 file, tidak merata-ratakan bbox. Audit perbandingan lokal disimpan pada
-`ai/artifacts/dataset-inspect/duplicate-label-audit.json`. Script menolak
+`artifacts/dataset-inspect/duplicate-label-audit.json`. Script menolak
 duplikat dengan kelas yang bertentangan untuk ditinjau, bukan memilih label
 secara otomatis.
 
@@ -68,11 +68,11 @@ Dari root repo, PowerShell:
 ```powershell
 python -m venv .venv-ai-train
 .\.venv-ai-train\Scripts\python.exe -m pip install torch==2.9.1 torchvision==0.24.1 --index-url https://download.pytorch.org/whl/cu128
-.\.venv-ai-train\Scripts\python.exe -m pip install -e "./ai[yolo,worker,test]" -c ai/constraints-training.txt
+.\.venv-ai-train\Scripts\python.exe -m pip install -e "./ai[yolo,worker,test]" -c constraints-training.txt
 .\.venv-ai-train\Scripts\python.exe -c "import torch; print(torch.__version__, torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
 ```
 
-Jangan memakai constraint CPU `ai/constraints.txt` untuk instalasi CUDA ini.
+Jangan memakai constraint CPU `constraints.txt` untuk instalasi CUDA ini.
 Lingkungan lokal saat pengerjaan memakai `--system-site-packages`; torch dan
 torchvision CUDA dipasang di venv tersebut. `.venv-ai` demo awal tetap terpisah.
 Resep instalasi CUDA mengacu pada [pasangan versi resmi PyTorch](https://pytorch.org/get-started/previous-versions/).
@@ -81,8 +81,8 @@ Resep instalasi CUDA mengacu pada [pasangan versi resmi PyTorch](https://pytorch
 
 ```powershell
 .\.venv-ai-train\Scripts\python.exe -m wastenot_ai.cli fetch-assets
-.\.venv-ai-train\Scripts\python.exe ai/scripts/prepare_drinking_waste.py --download
-.\.venv-ai-train\Scripts\python.exe ai/scripts/train_waste_yolo.py --epochs 40 --batch 16 --device 0
+.\.venv-ai-train\Scripts\python.exe scripts/prepare_drinking_waste.py --download
+.\.venv-ai-train\Scripts\python.exe scripts/train_waste_yolo.py --epochs 40 --batch 16 --device 0
 ```
 
 Script prepare menolak output yang sudah ada; gunakan `--output` baru untuk
@@ -100,16 +100,16 @@ pada test tetap. Detail final tersedia di `args.yaml` dan `results.csv` run.
 
 ```powershell
 # Lanjutkan training yang benar-benar terputus, termasuk optimizer/epoch:
-.\.venv-ai-train\Scripts\python.exe ai/scripts/train_waste_yolo.py --resume ai/artifacts/training/drinking-waste-v2-yolo11n/weights/last.pt
+.\.venv-ai-train\Scripts\python.exe scripts/train_waste_yolo.py --resume artifacts/training/drinking-waste-v2-yolo11n/weights/last.pt
 ```
 
 Hasil lokal:
 
-- `ai/data/local/drinking-waste-v2/manifest.json`: inventaris, penolakan dan split.
-- `ai/artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt`: kandidat pilihan validation.
-- `ai/artifacts/training/drinking-waste-v2-yolo11n/results.csv`: kurva metrik training/validation.
-- `ai/artifacts/training/drinking-waste-v2-yolo11n/test/`: evaluasi/confusion matrix test.
-- `ai/artifacts/training/drinking-waste-v2-yolo11n/evaluation.json`: per kelas, hash, runtime dan perbandingan baseline.
+- `data/local/drinking-waste-v2/manifest.json`: inventaris, penolakan dan split.
+- `artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt`: kandidat pilihan validation.
+- `artifacts/training/drinking-waste-v2-yolo11n/results.csv`: kurva metrik training/validation.
+- `artifacts/training/drinking-waste-v2-yolo11n/test/`: evaluasi/confusion matrix test.
+- `artifacts/training/drinking-waste-v2-yolo11n/evaluation.json`: per kelas, hash, runtime dan perbandingan baseline.
 
 Perbandingan dengan COCO dibatasi pada **lokalisasi botol**: tiga kelas botol
 kandidat digabung dan dibandingkan dengan kelas COCO `bottle`, conf 0,25,
@@ -125,17 +125,17 @@ Jika environment demo awal `.venv-ai` sudah terpasang, launcher ini memakai
 checkpoint hasil training dengan inference CPU:
 
 ```powershell
-.\ai\demo-camera-trained.bat
+.\demo-camera-trained.bat
 ```
 
 Untuk inference GPU, gunakan interpreter CUDA secara langsung:
 
 ```powershell
-.\.venv-ai-train\Scripts\python.exe -m wastenot_ai.cli demo --demo-guides --device 0 --model ai/artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt
+.\.venv-ai-train\Scripts\python.exe -m wastenot_ai.cli demo --demo-guides --device 0 --model artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt
 ```
 
 Kamera, pemilihan objek, konfirmasi kondisi, dan Gemini tetap memakai alur
-yang sama. `ai/.env` hanya diperlukan untuk rekomendasi Gemini. Mapping
+yang sama. `.env` hanya diperlukan untuk rekomendasi Gemini. Mapping
 `drinking-waste-reviewed-02` aktif hanya jika **seluruh** taksonomi checkpoint
 sesuai; ID 0 tidak diperlakukan sebagai `person` COCO. HDPE mempunyai panduan tersendiri dengan konfirmasi isi/penerima.
 
@@ -150,7 +150,7 @@ Uji integrasi browser untuk model khusus, dengan server pada port 8095 dan
 foto yang memang berisi kelas target:
 
 ```powershell
-.\.venv-ai\Scripts\python.exe ai/scripts/verify_finetuned_demo.py --url http://127.0.0.1:8095 --image path/to/can.jpg --object-key aluminium_can
+.\.venv-ai\Scripts\python.exe scripts/verify_finetuned_demo.py --url http://127.0.0.1:8095 --image path/to/can.jpg --object-key aluminium_can
 # Tambahkan --live-gemini untuk satu request Gemini nyata; default memakai fixture.
 ```
 

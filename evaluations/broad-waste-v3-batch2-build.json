@@ -1,0 +1,109 @@
+{
+  "version": "broad-waste-v3",
+  "labels": [
+    "bottle",
+    "can",
+    "cup",
+    "plastic_bag",
+    "paper",
+    "cardboard",
+    "drink_carton",
+    "plastic_wrapper",
+    "food_container",
+    "bottle_cap"
+  ],
+  "seed": 42,
+  "status": "EXPERIMENTAL",
+  "baseline_manifest_sha256": "4e25d9f20ac99b2a692334db5e6b9b29f8f5dc23df4c5f3e8543d77616a18a62",
+  "instances_per_split": {
+    "train": {
+      "bottle": 1774,
+      "can": 457,
+      "cup": 1334,
+      "plastic_bag": 20,
+      "paper": 17,
+      "cardboard": 29,
+      "drink_carton": 10,
+      "plastic_wrapper": 47,
+      "food_container": 28,
+      "bottle_cap": 31
+    },
+    "val": {
+      "bottle": 691,
+      "can": 182,
+      "cup": 281,
+      "plastic_bag": 8,
+      "paper": 4,
+      "cardboard": 9,
+      "drink_carton": 2,
+      "plastic_wrapper": 10,
+      "food_container": 7,
+      "bottle_cap": 8
+    },
+    "test": {
+      "bottle": 504,
+      "can": 139,
+      "cup": 277,
+      "plastic_bag": 15,
+      "paper": 4,
+      "cardboard": 15,
+      "drink_carton": 5,
+      "plastic_wrapper": 17,
+      "food_container": 7,
+      "bottle_cap": 6
+    }
+  },
+  "active_instances_per_split": {
+    "train": {
+      "bottle": 600,
+      "can": 457,
+      "cup": 913,
+      "plastic_bag": 20,
+      "paper": 17,
+      "cardboard": 29,
+      "drink_carton": 10,
+      "plastic_wrapper": 47,
+      "food_container": 28,
+      "bottle_cap": 31
+    },
+    "val": {
+      "bottle": 691,
+      "can": 182,
+      "cup": 281,
+      "plastic_bag": 8,
+      "paper": 4,
+      "cardboard": 9,
+      "drink_carton": 2,
+      "plastic_wrapper": 10,
+      "food_container": 7,
+      "bottle_cap": 8
+    },
+    "test": {
+      "bottle": 504,
+      "can": 139,
+      "cup": 277,
+      "plastic_bag": 15,
+      "paper": 4,
+      "cardboard": 15,
+      "drink_carton": 5,
+      "plastic_wrapper": 17,
+      "food_container": 7,
+      "bottle_cap": 6
+    }
+  },
+  "train_instance_cap_per_class": 600,
+  "new_images": 99,
+  "selected_train_images": 901,
+  "limitations": [
+    "Whole-image selection: a co-occurring class can exceed the instance cap.",
+    "Selection does not create new images or guarantee the target count.",
+    "All old split assignments are preserved; test was inspected in previous experiments.",
+    "TACO filename groups and pHash are proxies, not independently verified physical-object identities."
+  ],
+  "prepared_manifest_sha256": "78e78d1fd37806b5179cab2434602994755755fbd396dbcd3acd382802b20022",
+  "review_sha256": "00b01585470678043d9aea1621d99805b808f6c46fb8da293e9657e5af8ca2b8",
+  "acquisition_sha256": "4305828e05e6cac8090d1c78666f0389a7246aa55b8bfd78836c794eac66c2a7",
+  "acquisition_snapshot_sha256": "4305828e05e6cac8090d1c78666f0389a7246aa55b8bfd78836c794eac66c2a7",
+  "review_snapshot_sha256": "00b01585470678043d9aea1621d99805b808f6c46fb8da293e9657e5af8ca2b8",
+  "dataset": "broad-waste-v3-batch2"
+}

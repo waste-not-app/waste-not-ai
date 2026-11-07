@@ -1,0 +1,246 @@
+{
+  "dataset": "broad-waste-v3-batch2",
+  "manifest_sha256": "78e78d1fd37806b5179cab2434602994755755fbd396dbcd3acd382802b20022",
+  "split_list_sha256": {
+    "train": "1923ad2f253cd58510285e30a44bc21887b3ed891bc5626ff6d385fe4967a45b",
+    "val": "34bc48332d8dfca5880a924cd215eddd5a1b746a73a20ca591c8bb90121320e8",
+    "test": "e2db22bffe207dfaf0cc2170aeee2a8226c531458bbbf9c1106e55b1099a1bd6"
+  },
+  "candidate_sha256": "cd8db14b189a8195278694aac07bbf4ae972467c663c1f6aebb72fc5b7bc71f0",
+  "previous_sha256": "a3f34225287ad8dd01fe9082488db3f9c40dea5b7a90b8a19f1e6bc77d69a069",
+  "training": {
+    "epochs_completed": 28,
+    "best_epoch": 18,
+    "last_csv_time_seconds": 421.016
+  },
+  "test_protocol": {
+    "split": "test",
+    "imgsz": 640,
+    "rect": false,
+    "conf": 0.001,
+    "iou": 0.7,
+    "max_det": 50
+  },
+  "candidate_test_metrics": {
+    "metrics/precision(B)": 0.347105370207028,
+    "metrics/recall(B)": 0.38099024398126724,
+    "metrics/mAP50(B)": 0.35179293792389277,
+    "metrics/mAP50-95(B)": 0.22783727376758503,
+    "fitness": 0.22783727376758503
+  },
+  "previous_test_metrics": {
+    "metrics/precision(B)": 0.8197079285938209,
+    "metrics/recall(B)": 0.24304132971896814,
+    "metrics/mAP50(B)": 0.2827966775202685,
+    "metrics/mAP50-95(B)": 0.18746085627628584,
+    "fitness": 0.18746085627628584
+  },
+  "fixed_validation_protocol": {
+    "split": "val",
+    "confidence": 0.5,
+    "matching_iou": 0.5,
+    "nms_iou": 0.7,
+    "imgsz": 640,
+    "rect": false,
+    "max_det": 50
+  },
+  "per_class_validation": {
+    "bottle": {
+      "previous": {
+        "tp": 563,
+        "fp": 149,
+        "fn": 128,
+        "precision": 0.7907303370786517,
+        "recall": 0.8147612156295224
+      },
+      "candidate": {
+        "tp": 517,
+        "fp": 74,
+        "fn": 174,
+        "precision": 0.8747884940778342,
+        "recall": 0.748191027496382
+      },
+      "validation_support": 691,
+      "common_usability_gate": {
+        "precision_min": 0.85,
+        "recall_min": 0.6,
+        "passed": true
+      }
+    },
+    "can": {
+      "previous": {
+        "tp": 94,
+        "fp": 8,
+        "fn": 88,
+        "precision": 0.9215686274509803,
+        "recall": 0.5164835164835165
+      },
+      "candidate": {
+        "tp": 107,
+        "fp": 22,
+        "fn": 75,
+        "precision": 0.8294573643410853,
+        "recall": 0.5879120879120879
+      },
+      "validation_support": 182,
+      "common_usability_gate": {
+        "precision_min": 0.8,
+        "recall_min": 0.65,
+        "passed": false
+      }
+    },
+    "cup": {
+      "previous": {
+        "tp": 156,
+        "fp": 48,
+        "fn": 125,
+        "precision": 0.7647058823529411,
+        "recall": 0.5551601423487544
+      },
+      "candidate": {
+        "tp": 163,
+        "fp": 44,
+        "fn": 118,
+        "precision": 0.7874396135265701,
+        "recall": 0.5800711743772242
+      },
+      "validation_support": 281,
+      "common_usability_gate": {
+        "precision_min": 0.8,
+        "recall_min": 0.4,
+        "passed": false
+      }
+    },
+    "plastic_bag": {
+      "previous": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "precision": null,
+        "recall": 0.0
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 8,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "validation_support": 8
+    },
+    "paper": {
+      "previous": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 4,
+        "precision": null,
+        "recall": 0.0
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 4,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "validation_support": 4
+    },
+    "cardboard": {
+      "previous": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 8,
+        "precision": 0.5,
+        "recall": 0.1111111111111111
+      },
+      "candidate": {
+        "tp": 2,
+        "fp": 4,
+        "fn": 7,
+        "precision": 0.3333333333333333,
+        "recall": 0.2222222222222222
+      },
+      "validation_support": 9
+    },
+    "drink_carton": {
+      "previous": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.0
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "precision": null,
+        "recall": 0.0
+      },
+      "validation_support": 2
+    },
+    "plastic_wrapper": {
+      "previous": {
+        "tp": 0,
+        "fp": 5,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "candidate": {
+        "tp": 1,
+        "fp": 7,
+        "fn": 9,
+        "precision": 0.125,
+        "recall": 0.1
+      },
+      "validation_support": 10
+    },
+    "food_container": {
+      "previous": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "precision": null,
+        "recall": 0.0
+      },
+      "candidate": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 7,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "validation_support": 7
+    },
+    "bottle_cap": {
+      "previous": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "precision": null,
+        "recall": 0.0
+      },
+      "candidate": {
+        "tp": 2,
+        "fp": 7,
+        "fn": 6,
+        "precision": 0.2222222222222222,
+        "recall": 0.25
+      },
+      "validation_support": 8
+    }
+  },
+  "promoted": false,
+  "limitations": [
+    "Whole-image selection: a co-occurring class can exceed the instance cap.",
+    "Selection does not create new images or guarantee the target count.",
+    "All old split assignments are preserved; test was inspected in previous experiments.",
+    "TACO filename groups and pHash are proxies, not independently verified physical-object identities.",
+    "COCO subset is from train2017 seen during baseline pretraining; its evaluation is not independent of pretraining.",
+    "Rare new classes have very limited supervision; per-class validation support must be inspected.",
+    "No default detector or existing checkpoint replaced.",
+    "Both test evaluations use the same images and ten-class taxonomy; do not compare old nine-class aggregate AP.",
+    "Common-class usability gates are not a release gate; sparse classes and local-camera generalization remain unproven."
+  ]
+}

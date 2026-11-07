@@ -27,16 +27,16 @@ Yang diperiksa: status, satu metode/scope, alasan fallback, missing_context, spe
 
 ```powershell
 # Tanpa key, tanpa YOLO/GPU; juga dijalankan CI.
-.\.venv-ai\Scripts\python.exe ai/scripts/evaluate_recommendations.py
-# Memakai key/model di ai/.env; 12 logical generate calls untuk satu putaran saat ini.
-.\.venv-ai\Scripts\python.exe ai/scripts/evaluate_recommendations.py --provider gemini --max-calls 12
+.\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py
+# Memakai key/model di .env; 12 logical generate calls untuk satu putaran saat ini.
+.\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py --provider gemini --max-calls 12
 # Uji variasi beberapa putaran dengan batas panggilan eksplisit.
-.\.venv-ai\Scripts\python.exe ai/scripts/evaluate_recommendations.py --provider gemini --repeat 2 --max-calls 24
+.\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py --provider gemini --repeat 2 --max-calls 24
 # HDPE langsung melalui CLI:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context ai/examples/context-hdpe.json --provider gemini --demo-guides
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context examples/context-hdpe.json --provider gemini --demo-guides
 ```
 
-`--max-calls` membatasi generate logis, bukan jumlah percobaan HTTP internal ketika provider melakukan failover key. Preflight menolak anggaran yang kurang sebelum API dipanggil; kasus tidak dilewati diam-diam. Report percobaan baru default di `ai/artifacts/`, terpisah dari bukti run tersimpan.
+`--max-calls` membatasi generate logis, bukan jumlah percobaan HTTP internal ketika provider melakukan failover key. Preflight menolak anggaran yang kurang sebelum API dipanggil; kasus tidak dilewati diam-diam. Report percobaan baru default di `artifacts/`, terpisah dari bukti run tersimpan.
 
 Contoh context-glass/PET/battery/HDPE memakai akses YES sebagai **asumsi skenario demo**, bukan hasil verifikasi fasilitas nyata. Saat memakai benda sendiri, isi hanya sesuai penerima yang benar-benar diperiksa. Gunakan UNKNOWN untuk melihat NEEDS_CONTEXT.
 
@@ -50,4 +50,4 @@ Ambil band/profile/mapping dari Python sesuai [kontrak HTTP](AI_HTTP_CONTRACT.md
 
 169 tes Python lulus; 32 artifact kontrak cocok dengan generator dan contoh divalidasi terhadap OpenAPI. Empat belas pemeriksaan browser baseline lulus, ditambah tiga pemeriksaan kandidat kaleng dan lima pemeriksaan HDPE (termasuk isi UNKNOWN/kimia dan pembatalan saran lama), tanpa error JavaScript. YOLO nyata juga diuji melalui dua adapter HTTP privat hingga keputusan fixture READY/RECYCLE. Wheel memuat modul/data/web yang diperlukan dan tidak memuat key, gambar atau bobot.
 
-Kamera pengujian browser menggunakan perangkat simulasi Chromium atau unggah gambar validation yang eksplisit. Kamera fisik, Go/Android produksi, serta holdout kamera nyata belum dibuktikan oleh pemeriksaan ini. Screenshot dan laporan browser lokal tersedia di `ai/artifacts/`.
+Kamera pengujian browser menggunakan perangkat simulasi Chromium atau unggah gambar validation yang eksplisit. Kamera fisik, Go/Android produksi, serta holdout kamera nyata belum dibuktikan oleh pemeriksaan ini. Screenshot dan laporan browser lokal tersedia di `artifacts/`.

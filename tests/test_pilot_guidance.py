@@ -53,7 +53,7 @@ def test_bad_guide_conditions_are_rejected_at_load_boundary(requirement):
 
 def test_builtin_claim_audit_has_explicit_pilot_sources_and_no_fabricated_publication():
     audit = audit_builtin_guides(load_guides(), load_sources())
-    assert audit["guides"] == 78 and audit["publication"]["DRAFT"] == 78
+    assert audit["guides"] == 85 and audit["publication"]["DRAFT"] == 85
     hdpe = next(guide for guide in audit["pilot_claims"] if guide["object_key"] == "hdpe_bottle")
     assert hdpe["version"] == 5
     recycle = next(rule for rule in hdpe["evidence"] if rule["method"] == "RECYCLE")
