@@ -6,7 +6,7 @@ Hanya worker AI yang dikelola repo ini. Go blue-green dan PostgreSQL dikelola ba
 
 - SSH `proxy.bccdev.id:11049`, alias operator `cp-bcc`; deployment memerlukan hak administrator untuk helper/systemd.
 - Python3.12 CPU venv `/opt/wastenot-ai/venv`, dipasang dengan `--require-hashes -r requirements-cpu.lock` dan pemeriksaan dependency. Fingerprint yang ditinjau tersimpan root-only di `/etc/wastenot/ai-requirements.sha256`.
-- Bobot resmi di `/opt/wastenot-ai/models/yolo11n.pt`; path/checksum pada `/etc/wastenot/ai-detection.env` harus cocok dengan `model.json`. `scripts/fetch_model.py` memeriksa isi bobot, bukan hanya format manifest.
+- Direktori model `/opt/wastenot-ai/models` memuat setiap checkpoint yang dipatok `model.json`. Isi `AI_MODEL_DIRECTORY=/opt/wastenot-ai/models` pada konfigurasi worker untuk memilih bundle sesuai manifest release. Runtime dan helper deployment memeriksa checksum setiap komponen serta identitas model gabungan. Konfigurasi lama dengan `AI_MODEL_PATH` dan `AI_MODEL_SHA256` tetap didukung untuk release satu model.
 - Akun OS `wastenot-yolo` dan `wastenot-decisions`, unit hardened dari [deploy/systemd](../deploy/systemd/), serta rilis awal valid pada `/opt/wastenot-ai/current`. Helper menolak first install tanpa rilis pemulihan; provisioning host baru adalah langkah operator terpisah.
 - `/etc/wastenot/ai-detection.env` dan `ai-recommendation.env` root:root0600. Dua token layanan berbeda; key/model Gemini hanya di file rekomendasi. Jangan menaruh key di repo, log atau parameter command.
 - File policy guide operator di luar direktori release tetap read-only dan tidak ditimpa CD. Source draf di repo tidak otomatis diterbitkan.
@@ -42,3 +42,11 @@ cat wastenot-ai-<full-sha>.tar.gz | ssh cp-bcc 'sudo -n /usr/local/sbin/wastenot
 ```
 
 Secrets GitHub: SSH_PRIVATE_KEY/SSH_KNOWN_HOSTS. Variables: VM_HOST/VM_PORT/VM_USER. Tidak memakai OAuth pribadi untuk membaca peer repo privat. Health proses tidak membuktikan key/model Google sedang tersedia atau kualitas panduan; lakukan smoke melalui Go setelah perubahan operasional yang relevan.
+
+## Bundle pilot v4 dan COCO11s
+
+Manifest memilih `broad-coco-b0f633193403`, square640, dengan 88 label gabungan. Checkpoint waste dan atribusi dataset tersedia pada GitHub Release `models-v4-coco11s-20261107`. Pendamping COCO11s berasal dari rilis resmi Ultralytics. `scripts/fetch_model.py` memverifikasi kedua hash. Unduhan aset release privat memerlukan `GITHUB_TOKEN` dengan akses baca repo. Token hanya dikirim ke API GitHub melalui HTTPS dan dihapus dari request redirect lintas origin. CI memakai token job dengan permission contents read.
+
+Sebelum merge manifest, operator memasang kedua file model sebagai root-owned/read-only di direktori model. `AI_MODEL_DIRECTORY` memungkinkan pemilihan model mengikuti source release sehingga rollback ke manifest sebelumnya juga memilih checkpoint sebelumnya. Simpan checkpoint yang diperlukan release pemulihan.
+
+Uji staging pada VM dua CPU menggunakan satu thread, kuota CPU75% dan batas memori1280MiB. Tiga foto publik menghasilkan waktu hangat 6,4–6,6 detik per foto dan peak RSS sekitar570MiB. Panggilan pertama sekitar15detik. Entrypoint menjalankan inferensi pemanasan kedua komponen sebelum server HTTP menerima request. Pengukuran ini mencakup sembilan inferensi eksploratif. Kapasitas paralel dan beban pengguna masih memerlukan pengujian terpisah.

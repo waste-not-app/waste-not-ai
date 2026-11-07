@@ -41,6 +41,8 @@ jobs:
       - name: Run tests including failed deployment recovery
         run: python -m pytest tests -q -p no:cacheprovider
       - name: Verify actual model bytes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/fetch_model.py "$RUNNER_TEMP/wastenot-model"
       - name: Package runtime release
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
