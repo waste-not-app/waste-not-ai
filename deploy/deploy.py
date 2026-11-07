@@ -88,8 +88,18 @@ def verify_runtime(files):
         input=json.dumps(versions).encode())
     model = json.loads(files['model.json'])
     detection = environment('ai-detection.env')
-    if (detection['AI_MODEL_SHA256'] != model['sha256']
-            or hashlib.sha256(Path(detection['AI_MODEL_PATH']).read_bytes()).hexdigest() != model['sha256']):
+    if detection.get('AI_MODEL_DIRECTORY'):
+        artifacts = [model]
+        if model.get('general_model'):
+            artifacts.append(model['general_model'])
+        for artifact in artifacts:
+            if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*\.pt', artifact['filename']):
+                raise ValueError('Invalid model filename in release manifest')
+            path = Path(detection['AI_MODEL_DIRECTORY']) / artifact['filename']
+            if hashlib.sha256(path.read_bytes()).hexdigest() != artifact['sha256']:
+                raise ValueError('Installed model differs from release manifest')
+    elif (model.get('general_model') or detection['AI_MODEL_SHA256'] != model['sha256']
+          or hashlib.sha256(Path(detection['AI_MODEL_PATH']).read_bytes()).hexdigest() != model['sha256']):
         raise ValueError('Installed model differs from release manifest')
 
 

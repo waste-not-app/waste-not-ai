@@ -41,6 +41,6 @@ Provider17s → worker18s → Android read20s → Go header23s/total25s. Budget 
 
 ## Batas pilot
 
-Model aktif tetap baseline COCO, bukan checkpoint kandidat fine-tuning. Empat policy guide versi6 (PET, HDPE, kaleng aluminium non-aerosol, kardus) diperiksa sumber otomatis, berlaku sampai 4 Desember2026 dan memerlukan konfirmasi penerima lokal. Tujuh puluh empat draf lain bukan panduan produksi. Artikel panduan umum Go memakai schema terpisah dan masih kosong.
+Manifest rollout memilih bundle v4 + COCO11s dengan versi `broad-coco-b0f633193403`, 88 label dan input square640. Aktivasi memerlukan kedua checkpoint terverifikasi pada `AI_MODEL_DIRECTORY`. Snapshot model/kelas dari worker aktif tetap menjadi acuan Go. Empat policy guide versi6 (PET, HDPE, kaleng aluminium non-aerosol, kardus) diperiksa sumber otomatis, berlaku sampai 4 Desember2026 dan memerlukan konfirmasi penerima lokal. Panduan pilot yang tersedia menentukan cakupan rekomendasi produksi. Artikel panduan umum Go memakai schema terpisah dan masih kosong.
 
 Unit/schema/HTTP tests tidak membuktikan akurasi material, independent holdout, keselamatan manusia, kapasitas/SLA provider, kamera perangkat atau penerimaan visual. Uji Android minimal API30 dan runtime terbaru; catatan TLS API24 tidak lagi menjadi baseline rilis.

@@ -6,6 +6,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 
 
 def application(kind):
@@ -15,16 +16,39 @@ def application(kind):
     if kind == 'detection':
         for name in ('GEMINI_API_KEY', *(f'GEMINI_API_KEY_{i}' for i in range(1, 6)), 'AI_RECOMMENDATION_TOKEN'):
             os.environ.pop(name, None)
-        model = Path(os.environ['AI_MODEL_PATH'])
-        if hashlib.sha256(model.read_bytes()).hexdigest() != os.environ['AI_MODEL_SHA256']:
-            raise ValueError('Model checksum does not match the configured artifact')
+        model_directory = os.getenv('AI_MODEL_DIRECTORY')
+        general_model = None
+        input_shape = 'adaptive'
+        manifest = None
+        if model_directory:
+            manifest = json.loads((Path(__file__).resolve().parent / 'model.json').read_text('utf-8'))
+            artifacts = [manifest]
+            if manifest.get('general_model'):
+                artifacts.append(manifest['general_model'])
+            paths = []
+            for artifact in artifacts:
+                if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*\.pt', artifact['filename']):
+                    raise ValueError('Invalid model filename in release manifest')
+                path = Path(model_directory) / artifact['filename']
+                if hashlib.sha256(path.read_bytes()).hexdigest() != artifact['sha256']:
+                    raise ValueError('Model checksum does not match the release manifest')
+                paths.append(path)
+            model = paths[0]
+            general_model = paths[1] if len(paths) == 2 else None
+            input_shape = manifest.get('input_shape', 'adaptive')
+        else:
+            model = Path(os.environ['AI_MODEL_PATH'])
+            if hashlib.sha256(model.read_bytes()).hexdigest() != os.environ['AI_MODEL_SHA256']:
+                raise ValueError('Model checksum does not match the configured artifact')
         import torch
         torch.set_num_threads(1)
         torch.set_num_interop_threads(1)
         from PIL import Image
-        from wastenot_ai.detector import YoloDetector
+        from wastenot_ai.detector import load_detector
         from wastenot_ai.worker import create_app
-        detector = YoloDetector(model, device='cpu', input_shape='adaptive')
+        detector = load_detector(model, device='cpu', input_shape=input_shape, general_model_path=general_model)
+        if manifest and detector.artifact['model_version'] != manifest['model_version']:
+            raise ValueError('Loaded model identity differs from the release manifest')
         blank = io.BytesIO()
         Image.new('RGB', (64, 64)).save(blank, 'PNG')
         detector.detect(blank.getvalue())

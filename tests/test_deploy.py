@@ -140,3 +140,24 @@ def test_installed_versions_are_checked_even_with_matching_marker(tmp_path):
         with pytest.raises(subprocess.CalledProcessError):
             deploy.verify_runtime({'requirements-cpu.lock': lock})
         assert json.loads(run.call_args.kwargs['input']) == {'httpx': '0.28.1'}
+
+
+def test_installed_model_bundle_is_verified_before_activation(tmp_path):
+    lock = b'httpx==0.28.1\n'
+    (tmp_path / 'ai-requirements.sha256').write_text(hashlib.sha256(lock).hexdigest())
+    primary, general = tmp_path / 'waste.pt', tmp_path / 'general.pt'
+    primary.write_bytes(b'waste')
+    general.write_bytes(b'general')
+    manifest = {'filename': primary.name, 'sha256': hashlib.sha256(primary.read_bytes()).hexdigest(),
+                'general_model': {'filename': general.name, 'sha256': hashlib.sha256(general.read_bytes()).hexdigest()}}
+    files = {'requirements-cpu.lock': lock, 'model.json': json.dumps(manifest).encode()}
+    with patch.object(deploy, 'CONFIG', tmp_path), patch.object(deploy, 'run'), \
+         patch.object(deploy, 'environment', return_value={'AI_MODEL_DIRECTORY': str(tmp_path)}):
+        deploy.verify_runtime(files)
+        general.write_bytes(b'changed')
+        with pytest.raises(ValueError, match='Installed model'):
+            deploy.verify_runtime(files)
+        manifest['general_model']['filename'] = '../outside.pt'
+        files['model.json'] = json.dumps(manifest).encode()
+        with pytest.raises(ValueError, match='Invalid model filename'):
+            deploy.verify_runtime(files)
