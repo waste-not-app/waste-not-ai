@@ -5,7 +5,7 @@ from pathlib import Path
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 RUNS = (("broad-waste-v1-yolo11n", "broad-waste-v1-20261020.json"),
         ("broad-waste-v2-yolo11s", "broad-waste-v2-yolo11s-20261020.json"))
 
@@ -13,8 +13,8 @@ RUNS = (("broad-waste-v1-yolo11n", "broad-waste-v1-20261020.json"),
 def main():
     rows = []
     for name, filename in RUNS:
-        run = ROOT / "ai/artifacts/training" / name
-        target = ROOT / "ai/evaluations" / filename
+        run = ROOT / "artifacts/training" / name
+        target = ROOT / "evaluations" / filename
         report = json.loads(target.read_text("utf-8"))
         history = list(csv.DictReader((run / "results.csv").open(encoding="utf-8")))
         best = max(history, key=lambda r: float(r["metrics/mAP50-95(B)"]))
@@ -53,7 +53,7 @@ def main():
     output = {"dataset": "broad-waste-v1", "runs": rows, "default_changed": False,
               "gate_scope": "Common bottle/can/cup validation usability only; sparse classes remain experimental and no field holdout exists",
               "test_independence": "Public-data exploration; COCO pretraining and previous DW test inspection preclude an untouched-field claim"}
-    path = ROOT / "ai/evaluations/broad-waste-comparison-20261020.json"
+    path = ROOT / "evaluations/broad-waste-comparison-20261020.json"
     path.write_text(json.dumps(output, indent=2)+"\n", encoding="utf-8")
     print(json.dumps({"report": str(path), "runs": [{"name": r["run"], "common_gates": r["common_class_gates"]} for r in rows]}))
 

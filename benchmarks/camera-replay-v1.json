@@ -1,0 +1,5358 @@
+{
+  "version": "camera-replay-v1",
+  "usage": "EVALUATION_ONLY",
+  "kind": "public_camera_proxy_replay",
+  "seed": "camera-replay-v1-20261107",
+  "target_classes": [
+    "bottle",
+    "can",
+    "cup",
+    "plastic_bag",
+    "paper",
+    "cardboard",
+    "drink_carton",
+    "plastic_wrapper",
+    "food_container",
+    "bottle_cap",
+    "cell phone",
+    "remote"
+  ],
+  "source_manifest_sha256": "78e78d1fd37806b5179cab2434602994755755fbd396dbcd3acd382802b20022",
+  "coco_val_annotations_sha256": "e8c7f7908f1d7278341fae127d0da654f102f11bd7b21d8aeefa635b8c810b6f",
+  "selection": "all 32 held-out TACO images; 3 hash-ranked images per DrinkingWaste test sequence; hash-ranked COCO val quotas before inference",
+  "duplicate_check": "COCO candidate pHash Hamming distance >5 from Broad Waste train/val and selected images",
+  "annotation_review": "publisher annotations; Codex contact-sheet screening; no independent human bbox review",
+  "limitations": [
+    "Public replay approximates browser preprocessing; local physical-camera capture holdout is pending.",
+    "COCO val may have informed pretrained model development; it is not a new unseen deployment population.",
+    "Per-image evaluated_classes restrict scoring to classes covered by that source's annotations.",
+    "DW frames share physical objects and sessions; image counts exceed independent object counts.",
+    "TACO rare classes have limited support; rankings describe this frozen sample."
+  ],
+  "records": [
+    {
+      "id": "DrinkingWasteV2-1140e4df903590e9ff0d",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-1140e4df903590e9ff0d.jpg",
+      "sha256": "1104dcca2b2da0a40a2d624e03145dd02d011a4a9dad0f86c2c8cd58c7db3dd1",
+      "group": "HDPEM-5",
+      "phash": 1429978234269855212,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.4765625,
+            0.2708638360175695,
+            0.68359375,
+            0.5578330893118595
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "1140e4df903590e9ff0d"
+    },
+    {
+      "id": "DrinkingWasteV2-128edc1e2b924e4d2986",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-128edc1e2b924e4d2986.jpg",
+      "sha256": "feda81762e4022579d5f0ae9050b6cd153cd247eece23def8da7f7d207f8e1df",
+      "group": "mix-0",
+      "phash": 7507927837507163551,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.09765625,
+            0.2459736456808199,
+            0.279296875,
+            0.5944363103953147
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.498046875,
+            0.44363103953147875,
+            0.73046875,
+            0.5929721815519765
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.7109375,
+            0.30161054172767204,
+            0.96484375,
+            0.5358711566617862
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.525390625,
+            0.7203513909224012,
+            0.748046875,
+            0.8682284040995608
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "128edc1e2b924e4d2986"
+    },
+    {
+      "id": "DrinkingWasteV2-1b2f0933102da721aba8",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-1b2f0933102da721aba8.jpg",
+      "sha256": "66d511febf24d4acb8217ccb14e8a53f4b49884c376c62476a8c51d5cf805bff",
+      "group": "AluCan-5",
+      "phash": 5337790688575320093,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "can",
+          "bbox": [
+            0.541015625,
+            0.6325036603221084,
+            0.8046875,
+            0.9019033674963397
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "1b2f0933102da721aba8"
+    },
+    {
+      "id": "DrinkingWasteV2-1cb0aebecec5c7af27d3",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-1cb0aebecec5c7af27d3.jpg",
+      "sha256": "3a250cd000b0a8691fa563e49ccfb27139829cd0f72d5234f914ff4daea6ac0d",
+      "group": "AluCan-5",
+      "phash": 3104362682875758825,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "can",
+          "bbox": [
+            0.537109375,
+            0.554904831625183,
+            0.9140625,
+            0.7862371888726207
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "1cb0aebecec5c7af27d3"
+    },
+    {
+      "id": "DrinkingWasteV2-1ce6947a390285b96c13",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-1ce6947a390285b96c13.jpg",
+      "sha256": "7ae342b713b1d721992d4f5b4ff7a39be7e53ba3ec54b2affd7c81ca748858cb",
+      "group": "mix-0",
+      "phash": 5063651164131807914,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "can",
+          "bbox": [
+            0.330078125,
+            0.6149341142020498,
+            0.65234375,
+            0.7789165446559297
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.2578125,
+            0.4128843338213763,
+            0.4765625,
+            0.5519765739385066
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.10546875,
+            0.575402635431918,
+            0.3203125,
+            0.7086383601756955
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.287109375,
+            0.16398243045387995,
+            0.724609375,
+            0.2986822840409956
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "1ce6947a390285b96c13"
+    },
+    {
+      "id": "DrinkingWasteV2-28a7c46e444982d8645c",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-28a7c46e444982d8645c.jpg",
+      "sha256": "8021fec8ad1ce73ff1b0f8cd515e33591fe2cdcb8157c5041ce4d91f4cf3badb",
+      "group": "HDPEM-5",
+      "phash": 7972977564963090609,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.62109375,
+            0.18887262079062958,
+            0.80078125,
+            0.4948755490483162
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "28a7c46e444982d8645c"
+    },
+    {
+      "id": "DrinkingWasteV2-36f03c310901937a2d07",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-36f03c310901937a2d07.jpg",
+      "sha256": "bc1d6ef84b491684562384f6fa4237a98ad50041a6aba2ba9a3b6d38386d58ad",
+      "group": "mix-0",
+      "phash": 3631171247632209646,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "can",
+          "bbox": [
+            0.349609375,
+            0.16251830161054173,
+            0.57421875,
+            0.30014641288433386
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.455078125,
+            0.6017569546120058,
+            0.775390625,
+            0.7789165446559296
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.05859375,
+            0.4143484626647145,
+            0.255859375,
+            0.5783308931185944
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "36f03c310901937a2d07"
+    },
+    {
+      "id": "DrinkingWasteV2-3faa0e6327ba4ce7b7be",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-3faa0e6327ba4ce7b7be.jpg",
+      "sha256": "b83f9b4aa5a893047e7dbdc9f5b141d25bdbd4e1e03710c9efcdf3dd37450db0",
+      "group": "PET-7",
+      "phash": 3572003685382262379,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.513671875,
+            0.4099560761346998,
+            0.64453125,
+            0.7086383601756954
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "3faa0e6327ba4ce7b7be"
+    },
+    {
+      "id": "DrinkingWasteV2-703440e99853ad204abf",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-703440e99853ad204abf.jpg",
+      "sha256": "8e51c79a9c60fb5a37a12567d9cc3c7e4b025ec95d53221039904e93e7aad857",
+      "group": "HDPEM-5",
+      "phash": 3647438392879276481,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.48828125,
+            0.3074670571010249,
+            0.6328125,
+            0.5534407027818449
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "703440e99853ad204abf"
+    },
+    {
+      "id": "DrinkingWasteV2-7045385acd99b1ccd0b4",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-7045385acd99b1ccd0b4.jpg",
+      "sha256": "be109502a4598c99624875892a4397ae30ddcdf4b3d8ba400fa2ec2fee9433de",
+      "group": "AluCan-5",
+      "phash": 1880759777432756847,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "can",
+          "bbox": [
+            0.3671875,
+            0.21815519765739386,
+            0.634765625,
+            0.4143484626647145
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "7045385acd99b1ccd0b4"
+    },
+    {
+      "id": "DrinkingWasteV2-b0b252804483f0bc2a6a",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-b0b252804483f0bc2a6a.jpg",
+      "sha256": "b61d7847483858dec2c981bfe39667f63b89bab18526556304167ffabbdd7d39",
+      "group": "Glass-1",
+      "phash": 2069794649798139079,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.244140625,
+            0.24479166666666669,
+            0.998046875,
+            0.875
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "b0b252804483f0bc2a6a"
+    },
+    {
+      "id": "DrinkingWasteV2-c9be8cce671a82570080",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-c9be8cce671a82570080.jpg",
+      "sha256": "24bd67f3365047e7634b8d352b5709c3244e80f598a374c16dc880de6414cedd",
+      "group": "Glass-1",
+      "phash": 7272319467701533307,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.08203125,
+            0.04166666666666666,
+            0.84375,
+            0.48958333333333337
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "c9be8cce671a82570080"
+    },
+    {
+      "id": "DrinkingWasteV2-c9ef43257a507a8017f2",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-c9ef43257a507a8017f2.jpg",
+      "sha256": "c253fa1e39fc065a8106fa4463ee1b1b81290fc4f64d513918f53ec678d4883e",
+      "group": "PET-7",
+      "phash": 6375253412083684786,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.22395833333333331,
+            0.1953125,
+            0.6380208333333333,
+            0.703125
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "c9ef43257a507a8017f2"
+    },
+    {
+      "id": "DrinkingWasteV2-ce15a391aaa2bfe903d1",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-ce15a391aaa2bfe903d1.jpg",
+      "sha256": "17f7130b33b2db42a7f632fe83d3370176f6372b147dfd15fc913f97ba9debfc",
+      "group": "PET-7",
+      "phash": 3713444119027142911,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.01822916666666663,
+            0,
+            0.6796875,
+            0.544921875
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "ce15a391aaa2bfe903d1"
+    },
+    {
+      "id": "DrinkingWasteV2-d7e92c0bf35bbd89e620",
+      "source": "DrinkingWasteV2",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/DrinkingWasteV2-d7e92c0bf35bbd89e620.jpg",
+      "sha256": "7cd23482ea28fc790c66dea66d0820315ef842aab5c4d19e2dc77b40d1d2300d",
+      "group": "Glass-1",
+      "phash": 554496968280353439,
+      "evaluated_classes": [
+        "bottle",
+        "can"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.14453125,
+            0.35937500000000006,
+            0.998046875,
+            0.9947916666666667
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "license": "CC0 publisher / MIT acknowledged TrashNet",
+        "source": "DrinkingWasteV2"
+      },
+      "original_source_id": "d7e92c0bf35bbd89e620"
+    },
+    {
+      "id": "TACO-100",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-100.jpg",
+      "sha256": "f2a37d30079cedfae62dd2bcdbd9379da488c48a79e751ab6e1aff6e27d2383a",
+      "group": "TACO-batch_1-6",
+      "phash": 6205056362933263116,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "cardboard",
+          "bbox": [
+            0,
+            0.3489583333333333,
+            0.9779411764705882,
+            0.9503676470588236
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.25245098039215685,
+            0.375,
+            0.35416666666666663,
+            0.44914215686274506
+          ]
+        },
+        {
+          "label": "drink_carton",
+          "bbox": [
+            0.40196078431372545,
+            0.27604166666666663,
+            0.5816993464052287,
+            0.4699754901960784
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.4142156862745098,
+            0.2466299019607843,
+            0.5968137254901961,
+            0.35753676470588236
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.48856209150326796,
+            0.16819852941176472,
+            0.5955882352941176,
+            0.25275735294117646
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.6041666666666666,
+            0.23651960784313725,
+            0.8476307189542484,
+            0.3370098039215686
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.13684640522875818,
+            0.19638480392156862,
+            0.3901143790849673,
+            0.3529411764705882
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47803377832/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:21:38.420438+00:00"
+      },
+      "original_source_id": "100"
+    },
+    {
+      "id": "TACO-109",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-109.jpg",
+      "sha256": "f9740179295fd22a9e3aaf81a9947859d7eb0f20b459063b2e4aa25272efbe89",
+      "group": "TACO-batch_10-0",
+      "phash": 4802568742485407351,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.2214912280701754,
+            0.4735,
+            0.375,
+            0.622
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.27905701754385964,
+            0.22349999999999998,
+            0.40131578947368424,
+            0.293
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.549890350877193,
+            0,
+            0.981359649122807,
+            0.1025
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/184336765@N06/48700806358/",
+        "creator_page": "https://www.flickr.com/photos/184336765@N06/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "tacobaco10000",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "109"
+    },
+    {
+      "id": "TACO-1158",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1158.jpg",
+      "sha256": "39b417512c4cd3ce5fef5ccb7f61eda6ff458f64ceb587ad999c4ec725a2d772",
+      "group": "TACO-batch_6-0",
+      "phash": 1065928627035519881,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "food_container",
+          "bbox": [
+            0.3472222222222222,
+            0.7043504901960784,
+            0.5964052287581699,
+            0.757046568627451
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47066802814/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:23:12.547814+00:00"
+      },
+      "original_source_id": "1158"
+    },
+    {
+      "id": "TACO-1159",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1159.jpg",
+      "sha256": "a28c00de455d873f40997aa96e529bf963081078b3404ca44564c3f97df099e3",
+      "group": "TACO-batch_6-0",
+      "phash": 913305448120722709,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "drink_carton",
+          "bbox": [
+            0.1437908496732026,
+            0.2931985294117647,
+            0.36928104575163395,
+            0.4751838235294118
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.5134803921568628,
+            0.3229166666666667,
+            0.8443627450980392,
+            0.5735294117647058
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.15890522875816993,
+            0.17769607843137256,
+            0.4440359477124183,
+            0.25612745098039214
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.4256535947712418,
+            0.11274509803921569,
+            0.5408496732026143,
+            0.3354779411764706
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/46939990835/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:21:42.667936+00:00"
+      },
+      "original_source_id": "1159"
+    },
+    {
+      "id": "TACO-1165",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1165.jpg",
+      "sha256": "a3e164005b1ec6af9ebe10cb6e005f79d85bd3a9a42d246357d2a2dd52999126",
+      "group": "TACO-batch_6-0",
+      "phash": 1001237926664479572,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.23468137254901963,
+            0.23325163398692808,
+            0.6792279411764706,
+            0.6809640522875817
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47066807424/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "1165"
+    },
+    {
+      "id": "TACO-1169",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1169.jpg",
+      "sha256": "71e6f9fe1886a0b67efa2479bf7befa92ee8faa600eb044bb5a8a57364905a54",
+      "group": "TACO-batch_6-0",
+      "phash": 3514820047990453177,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.383578431372549,
+            0.5076593137254901,
+            0.5261437908496732,
+            0.5756740196078431
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 1169,
+        "photo_id": "32912132277",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/32912132277/",
+        "checked_at": "2026-10-20T11:11:33.501390+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "1169"
+    },
+    {
+      "id": "TACO-120",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-120.jpg",
+      "sha256": "e7077ed7304364dbfbe5e3e199a7afec1ed6c37d4a4d6ce9f7c434b05ea8a83b",
+      "group": "TACO-batch_10-0",
+      "phash": 2680899671963055855,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "paper",
+          "bbox": [
+            0.36348684210526316,
+            0.608,
+            0.4665570175438597,
+            0.6845
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/184336765@N06/48694147321/",
+        "creator_page": "https://www.flickr.com/photos/184336765@N06/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:26:10.807098+00:00"
+      },
+      "original_source_id": "120"
+    },
+    {
+      "id": "TACO-1201",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1201.jpg",
+      "sha256": "271ac604605890c175b2a4be6defb3da9121e3bac22dbba624cd1b64ac3aae14",
+      "group": "TACO-batch_7-1",
+      "phash": 8892824022954858344,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "bottle_cap",
+          "bbox": [
+            0.33415032679738566,
+            0.3860294117647059,
+            0.37826797385620914,
+            0.4129901960784314
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 1201,
+        "photo_id": "40889667643",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/40889667643/",
+        "checked_at": "2026-10-20T11:11:36.318551+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "1201"
+    },
+    {
+      "id": "TACO-1203",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1203.jpg",
+      "sha256": "ed30e5bf5a1e45e904e8b349a5072db2cfd071949668dcd5217665a280d026cf",
+      "group": "TACO-batch_7-1",
+      "phash": 414828057495724770,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "drink_carton",
+          "bbox": [
+            0.31525735294117646,
+            0.38112745098039214,
+            0.40257352941176466,
+            0.49387254901960786
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.34681372549019607,
+            0.576797385620915,
+            0.4411764705882353,
+            0.7005718954248366
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.4224877450980392,
+            0.4554738562091503,
+            0.5413602941176471,
+            0.622140522875817
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.5150122549019608,
+            0.3888888888888889,
+            0.6780024509803922,
+            0.5220588235294118
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.4938725490196078,
+            0.35294117647058826,
+            0.6072303921568627,
+            0.5171568627450981
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.5762867647058824,
+            0.47303921568627455,
+            0.6737132352941176,
+            0.6343954248366014
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/40889669113/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:21:56.199167+00:00"
+      },
+      "original_source_id": "1203"
+    },
+    {
+      "id": "TACO-1204",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1204.jpg",
+      "sha256": "d3f59c0e0278e6307d37c963a2c6354ef0c9814f51326eed54a8876a8981c9dd",
+      "group": "TACO-batch_7-1",
+      "phash": 980549333249792409,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.551062091503268,
+            0.6430759803921569,
+            0.6209150326797386,
+            0.6850490196078431
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 1204,
+        "photo_id": "47856299771",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47856299771/",
+        "checked_at": "2026-10-20T11:11:36.798521+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "1204"
+    },
+    {
+      "id": "TACO-1206",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1206.jpg",
+      "sha256": "80a597d290a33ff909b97ea45cf1ed46edfc8e35e07e25c805dcedc1320812d2",
+      "group": "TACO-batch_7-1",
+      "phash": 7039357362948058330,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "food_container",
+          "bbox": [
+            0.24673202614379086,
+            0.5110294117647058,
+            0.4575163398692811,
+            0.6534926470588236
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.4795751633986928,
+            0.47610294117647056,
+            0.5151143790849674,
+            0.49264705882352944
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.1801470588235294,
+            0.9178921568627451,
+            0.2785947712418301,
+            0.9595588235294118
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47066840034/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:24:00.028904+00:00"
+      },
+      "original_source_id": "1206"
+    },
+    {
+      "id": "TACO-1233",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1233.jpg",
+      "sha256": "093f8862286173ecad1e2bfebbe7498489ae1b706c8e7b7a80988f67ff5d750c",
+      "group": "TACO-batch_7-3",
+      "phash": 2508427366607733976,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.477328431372549,
+            0.32965686274509803,
+            0.5520833333333333,
+            0.36233660130718953
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 1233,
+        "photo_id": "32912177517",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/32912177517/",
+        "checked_at": "2026-10-20T11:11:39.990885+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "1233"
+    },
+    {
+      "id": "TACO-1235",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1235.jpg",
+      "sha256": "05bd924d1d49eb915598a29414d36298d606c9a3d937ecc2ef28058d1792a287",
+      "group": "TACO-batch_7-3",
+      "phash": 8939588151628419576,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "drink_carton",
+          "bbox": [
+            0.42524509803921573,
+            0.4065563725490196,
+            0.5330882352941176,
+            0.45955882352941174
+          ]
+        },
+        {
+          "label": "bottle_cap",
+          "bbox": [
+            0.5857843137254902,
+            0.5814950980392157,
+            0.6037581699346405,
+            0.5940563725490196
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47804078612/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:21:30.733206+00:00"
+      },
+      "original_source_id": "1235"
+    },
+    {
+      "id": "TACO-1343",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1343.jpg",
+      "sha256": "b65223b649fc55b7643b098d4502288f06878bd6237f4351654c8b0f5e6ee642",
+      "group": "TACO-batch_8-2",
+      "phash": 3860222655261039627,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.5042892156862745,
+            0.4424019607843137,
+            0.6317401960784313,
+            0.49468954248366015
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 1343,
+        "photo_id": "48580362116",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/48580362116/",
+        "checked_at": "2026-10-20T11:11:50.458009+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "1343"
+    },
+    {
+      "id": "TACO-1349",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1349.jpg",
+      "sha256": "fb9b63cc5edcc7b7a45067df13ff933dbf5c53a150fed42a8c29a11769875cb4",
+      "group": "TACO-batch_8-2",
+      "phash": 8290149891854732306,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.22150735294117646,
+            0.5020424836601307,
+            0.3247549019607843,
+            0.6184640522875817
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 1349,
+        "photo_id": "48580502787",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/48580502787/",
+        "checked_at": "2026-10-20T11:11:51.043658+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "1349"
+    },
+    {
+      "id": "TACO-1354",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1354.jpg",
+      "sha256": "28ce07c2de33e01e7bb3223dd48751f522ed6b5fbda92e48c9260ffa24f42228",
+      "group": "TACO-batch_8-2",
+      "phash": 4951622044745516239,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.14375,
+            0.5458333333333333,
+            0.465625,
+            0.9010416666666666
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.47421875,
+            0.3333333333333333,
+            0.6648437500000001,
+            0.540625
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.315625,
+            0.365625,
+            0.36796875,
+            0.55625
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.4828125,
+            0.42083333333333334,
+            0.7671875,
+            0.8208333333333333
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.634375,
+            0.3135416666666667,
+            0.740625,
+            0.453125
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.2734375,
+            0.5260416666666666,
+            0.33906250000000004,
+            0.5916666666666667
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/48575542246/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "1354"
+    },
+    {
+      "id": "TACO-1355",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1355.jpg",
+      "sha256": "4f7b05f6dcb94a8c0cb607a7409262c039f39f0b89534c1da513a1d7c6f15cb9",
+      "group": "TACO-batch_8-2",
+      "phash": 5412383693660925742,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.325,
+            0.609375,
+            0.46328125000000003,
+            0.7604166666666667
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.45625000000000004,
+            0.6083333333333333,
+            0.5546875,
+            0.7166666666666667
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.446875,
+            0.7041666666666667,
+            0.5484375,
+            0.8458333333333333
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/48575538676/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:25:19.523758+00:00"
+      },
+      "original_source_id": "1355"
+    },
+    {
+      "id": "TACO-1452",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-1452.jpg",
+      "sha256": "56132fae454c2f0de2904cf26312d74547e0f028b650d0ebf83197dafbd52907",
+      "group": "TACO-batch_9-2",
+      "phash": 7404886120468415239,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "paper",
+          "bbox": [
+            0.46783088235294124,
+            0.47263071895424835,
+            0.8419117647058824,
+            0.6584967320261438
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/48661146636/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "1452"
+    },
+    {
+      "id": "TACO-705",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-705.jpg",
+      "sha256": "efb5f5df49401c73ad476334904998025a93be2034597eb389adb788cee82447",
+      "group": "TACO-batch_2-1",
+      "phash": 345927393453168517,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.4745710784313726,
+            0.4415849673202614,
+            0.6056985294117647,
+            0.5379901960784313
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.5824142156862745,
+            0.43300653594771243,
+            0.6893382352941176,
+            0.5285947712418301
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.35018382352941174,
+            0.306781045751634,
+            0.7619485294117647,
+            0.5923202614379085
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/40889049683/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:25:01.248650+00:00"
+      },
+      "original_source_id": "705"
+    },
+    {
+      "id": "TACO-711",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-711.jpg",
+      "sha256": "409e8ac0a776e3e2e85ff3bc0c036894b1e0e1b9a0a133184c3e6743d131ff13",
+      "group": "TACO-batch_2-1",
+      "phash": 8071646532597479559,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "food_container",
+          "bbox": [
+            0.5490196078431373,
+            0.5995710784313726,
+            0.6895424836601307,
+            0.6884191176470589
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47855689771/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:24:16.124543+00:00"
+      },
+      "original_source_id": "711"
+    },
+    {
+      "id": "TACO-712",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-712.jpg",
+      "sha256": "ec5728048d00088dd828ed138c2743b068cf88d8e1c767fac90ec98bf43b8519",
+      "group": "TACO-batch_2-1",
+      "phash": 5635100773293950857,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "food_container",
+          "bbox": [
+            0.25163398692810457,
+            0.41513480392156854,
+            0.6552287581699346,
+            0.7861519607843137
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/40889052653/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "712"
+    },
+    {
+      "id": "TACO-763",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-763.jpg",
+      "sha256": "d37216d19e27a3135e1dba8ce5fa256a26ce1eaa27e030747f250ddf386862e8",
+      "group": "TACO-batch_2-1",
+      "phash": 377530305213582920,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "food_container",
+          "bbox": [
+            0.46025293586269195,
+            0.41942401960784315,
+            0.6224028906955736,
+            0.5419730392156863
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.34823848238482386,
+            0.4666053921568627,
+            0.4286359530261969,
+            0.5361519607843137
+          ]
+        },
+        {
+          "label": "paper",
+          "bbox": [
+            0.9046973803071364,
+            0.6875,
+            0.9963866305329719,
+            0.7935049019607843
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 763,
+        "photo_id": "46939452025",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/46939452025/",
+        "checked_at": "2026-10-20T11:10:58.769893+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "763"
+    },
+    {
+      "id": "TACO-799",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-799.jpg",
+      "sha256": "6543fb1f5f1ae686e69fc56896a2999172ca9353b2efa55853da643e236124aa",
+      "group": "TACO-batch_3-252",
+      "phash": 2449809266487107152,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.05923202614379086,
+            0.08762254901960786,
+            0.6446078431372549,
+            0.7319240196078431
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47803603292/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "799"
+    },
+    {
+      "id": "TACO-802",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-802.jpg",
+      "sha256": "b1a624054462f462490fcb04344074682997d5eb8fe90de0b096008c7cabbf03",
+      "group": "TACO-batch_3-252",
+      "phash": 5435162174393160884,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.5465686274509804,
+            0.3431372549019608,
+            0.8308823529411764,
+            0.7613357843137255
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 802,
+        "photo_id": "47855767551",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47855767551/",
+        "checked_at": "2026-10-20T11:11:02.437145+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "802"
+    },
+    {
+      "id": "TACO-890",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-890.jpg",
+      "sha256": "962567420cecbb9a57a57225257fc128414150fcab46a0d6fcc4b5682e577fcc",
+      "group": "TACO-batch_4-0",
+      "phash": 6462874434240884107,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "bottle_cap",
+          "bbox": [
+            0.28227124183006536,
+            0.4053308823529412,
+            0.3970588235294118,
+            0.48927696078431376
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47856078131/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "890"
+    },
+    {
+      "id": "TACO-891",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-891.jpg",
+      "sha256": "b8410d750bfc036739b9f3a04ca43baa1f292616931c74751200ce8828b6a81e",
+      "group": "TACO-batch_4-0",
+      "phash": 4244938135650705607,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "bottle_cap",
+          "bbox": [
+            0.6760620915032679,
+            0.5912990196078431,
+            0.7132352941176471,
+            0.617953431372549
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 891,
+        "photo_id": "40889460883",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/40889460883/",
+        "checked_at": "2026-10-20T11:11:10.503800+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "891"
+    },
+    {
+      "id": "TACO-913",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-913.jpg",
+      "sha256": "5b0939a344b6ff17897ac51a9f0dbc8ad9b418981f164d23413ad2245e77b7fa",
+      "group": "TACO-batch_4-2",
+      "phash": 8653719045296131478,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "paper",
+          "bbox": [
+            0.068218954248366,
+            0.4286151960784314,
+            0.25163398692810457,
+            0.5327818627450981
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/32911974187/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "913"
+    },
+    {
+      "id": "TACO-915",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-915.jpg",
+      "sha256": "a87abf01977a63b24377da018fbc609f87ff6e9049abb3b8b6ea633a04d960ad",
+      "group": "TACO-batch_4-2",
+      "phash": 4499203071995419890,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.18474264705882354,
+            0.6707516339869282,
+            0.3936887254901961,
+            0.9995915032679739
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.8054534313725491,
+            0.2569444444444444,
+            0.8912377450980392,
+            0.3055555555555556
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 915,
+        "photo_id": "47066643124",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47066643124/",
+        "checked_at": "2026-10-20T11:11:12.031666+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "915"
+    },
+    {
+      "id": "TACO-928",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-928.jpg",
+      "sha256": "b62c648df2c15d9e5dce3dcaa498c610f98e0479901136df90556c67af758641",
+      "group": "TACO-batch_4-2",
+      "phash": 4680644222462824598,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.6090686274509804,
+            0.48080065359477125,
+            0.8848039215686274,
+            0.6348039215686274
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.2800245098039216,
+            0.6368464052287581,
+            0.3486519607843137,
+            0.7054738562091503
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/40889487943/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": "2026-11-07T04:24:55.947609+00:00"
+      },
+      "original_source_id": "928"
+    },
+    {
+      "id": "TACO-95",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-95.jpg",
+      "sha256": "4f7272efd9d853844a296781eebc3dd208b37af74f71a720089a8fc25b4fd432",
+      "group": "TACO-batch_1-6",
+      "phash": 418140224018067918,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "bottle_cap",
+          "bbox": [
+            0.26715686274509803,
+            0.5462622549019608,
+            0.3186274509803922,
+            0.5811887254901961
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "taco_image_id": 95,
+        "photo_id": "46939286705",
+        "source_page": "https://www.flickr.com/photos/161647545@N08/46939286705/",
+        "checked_at": "2026-10-20T11:10:39.555310+00:00",
+        "accepted": true,
+        "license_id": 4,
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/"
+      },
+      "original_source_id": "95"
+    },
+    {
+      "id": "TACO-98",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-98.jpg",
+      "sha256": "a8b7713420ee5f755dfb69d4e75ddd117390366a530414159f4d4259e27455a4",
+      "group": "TACO-batch_1-6",
+      "phash": 5161885525421076020,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "can",
+          "bbox": [
+            0.00040849673202614234,
+            0.5291053921568628,
+            0.3472222222222222,
+            0.9019607843137255
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.3137254901960784,
+            0.38419117647058826,
+            0.7066993464052287,
+            0.5909926470588236
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0,
+            0.21507352941176472,
+            0.3582516339869281,
+            0.6443014705882353
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0.08169934640522875,
+            0.49050245098039214,
+            1,
+            1
+          ]
+        },
+        {
+          "label": "plastic_bag",
+          "bbox": [
+            0.00040849673202614234,
+            0,
+            1,
+            0.33609068627450983
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.27001633986928103,
+            0.029718137254901966,
+            1,
+            0.4010416666666667
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.698937908496732,
+            0.39368872549019607,
+            0.9995915032679739,
+            0.6871936274509803
+          ]
+        },
+        {
+          "label": "food_container",
+          "bbox": [
+            0,
+            0.048406862745098034,
+            0.6258169934640523,
+            0.4025735294117647
+          ]
+        },
+        {
+          "label": "food_container",
+          "bbox": [
+            0.25898692810457513,
+            0.021752450980392156,
+            0.46854575163398693,
+            0.07169117647058823
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/47066101834/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "98"
+    },
+    {
+      "id": "TACO-99",
+      "source": "TACO",
+      "split": "test",
+      "image": "ai/data/local/broad-waste-v3-batch2/images/test/TACO-99.jpg",
+      "sha256": "87deff2491e43c03938ac1b9ebea94ceaedd9b5aa4030c7ae0124aa4d3ee4f7a",
+      "group": "TACO-batch_1-6",
+      "phash": 2365294620590607701,
+      "evaluated_classes": [
+        "bottle",
+        "can",
+        "cup",
+        "plastic_bag",
+        "paper",
+        "cardboard",
+        "drink_carton",
+        "plastic_wrapper",
+        "food_container",
+        "bottle_cap"
+      ],
+      "truth": [
+        {
+          "label": "cardboard",
+          "bbox": [
+            0,
+            0,
+            0.6241830065359477,
+            0.5168504901960784
+          ]
+        },
+        {
+          "label": "drink_carton",
+          "bbox": [
+            0.021241830065359485,
+            0.02175245098039215,
+            0.3308823529411765,
+            0.22212009803921567
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0,
+            0.3348651960784314,
+            0.7908496732026143,
+            0.8728553921568627
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.4501633986928104,
+            0.26378676470588236,
+            0.6997549019607843,
+            0.36764705882352944
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.6147875816993464,
+            0.12285539215686275,
+            0.8366013071895424,
+            0.2965686274509804
+          ]
+        },
+        {
+          "label": "can",
+          "bbox": [
+            0.755718954248366,
+            0.30851715686274506,
+            1,
+            0.47120098039215685
+          ]
+        },
+        {
+          "label": "cardboard",
+          "bbox": [
+            0.6919934640522876,
+            0.22273284313725494,
+            0.9379084967320261,
+            0.38756127450980393
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.3897058823529411,
+            0.48468137254901955,
+            0.9991830065359477,
+            0.8799019607843137
+          ]
+        },
+        {
+          "label": "bottle_cap",
+          "bbox": [
+            0.38929738562091504,
+            0.8158700980392156,
+            0.4599673202614379,
+            0.8805147058823529
+          ]
+        },
+        {
+          "label": "plastic_wrapper",
+          "bbox": [
+            0,
+            0.796875,
+            0.3545751633986928,
+            0.985906862745098
+          ]
+        }
+      ],
+      "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+      "rights": {
+        "source_page": "https://www.flickr.com/photos/161647545@N08/40888924973/",
+        "creator_page": "https://www.flickr.com/photos/161647545@N08/",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "author": "pproenxa",
+        "checked_at": "2026-11-07",
+        "accepted": true,
+        "verification": "Flickr image license and attribution observed in browser DOM"
+      },
+      "original_source_id": "99"
+    },
+    {
+      "id": "COCO-val-527427",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000527427.jpg",
+      "sha256": "c5e3f3f5bbd1990de2cae0d0a81e50a09db5963eb79c609b925959eb84a183ab",
+      "group": "COCO-val-527427",
+      "phash": 8975454652209064772,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.7969375000000001,
+            0.4706666666666666,
+            0.8245156250000001,
+            0.5230625
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3564/3470619108_19b4bd67d1_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000527427.jpg"
+      },
+      "original_source_id": 527427
+    },
+    {
+      "id": "COCO-val-549674",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000549674.jpg",
+      "sha256": "2ca0a6559f0796623dbe3dc2848a3df4a0683b8038b6d49541ca730df02285de",
+      "group": "COCO-val-549674",
+      "phash": 6510109500921783724,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.3094375,
+            0.6475000000000001,
+            0.37221875,
+            0.7402083333333334
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.49610937499999996,
+            0.5495,
+            0.596125,
+            0.7143125
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm1.staticflickr.com/149/369153773_9508076aab_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000549674.jpg"
+      },
+      "original_source_id": 549674
+    },
+    {
+      "id": "COCO-val-389109",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000389109.jpg",
+      "sha256": "5f4e587d77e6d06cebb9a14ebf378bff1c9212b8e771d192e22b4ae48ab58e09",
+      "group": "COCO-val-389109",
+      "phash": 7400138275496858936,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.6764168618266978,
+            0.56540625,
+            0.8803044496487119,
+            0.601953125
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm3.staticflickr.com/2755/4130351505_1e5188021f_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000389109.jpg"
+      },
+      "original_source_id": 389109
+    },
+    {
+      "id": "COCO-val-351530",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000351530.jpg",
+      "sha256": "c0dd4c7912f49996c6db70407078f13642da6239661294dc27bf190b2e1669f7",
+      "group": "COCO-val-351530",
+      "phash": 2960672366709815921,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.371765625,
+            0.4170634920634921,
+            0.393140625,
+            0.4351587301587302
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm9.staticflickr.com/8334/8125752591_b7f7b8da3b_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000351530.jpg"
+      },
+      "original_source_id": 351530
+    },
+    {
+      "id": "COCO-val-147729",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000147729.jpg",
+      "sha256": "782dad235c2987b86e846f5578ba997f4388b37d57ebd35e85a1e5e87424c1b4",
+      "group": "COCO-val-147729",
+      "phash": 4682189502414875259,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.50896,
+            0.31344,
+            0.6088,
+            0.51344
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3512/3228843052_e471f8bd46_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000147729.jpg"
+      },
+      "original_source_id": 147729
+    },
+    {
+      "id": "COCO-val-229358",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000229358.jpg",
+      "sha256": "2c8d100ab71de8b3ef22f3d0999aec2174bf10a911712e1d7bb3de1e2def6eb7",
+      "group": "COCO-val-229358",
+      "phash": 3722952443138264276,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.31046874999999996,
+            0.17884160756501183,
+            0.337171875,
+            0.28120567375886524
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.706140625,
+            0.7630023640661938,
+            0.753984375,
+            0.8543735224586287
+          ]
+        },
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.5249375,
+            0.3560756501182033,
+            0.5535937499999999,
+            0.4064539007092199
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3300/3512771461_b79b84be7d_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000229358.jpg"
+      },
+      "original_source_id": 229358
+    },
+    {
+      "id": "COCO-val-325838",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000325838.jpg",
+      "sha256": "2753bdbf9c6240d1b6a640aa79276132fb3e52a20df86091813377df38cb788b",
+      "group": "COCO-val-325838",
+      "phash": 3590925449302487084,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.84940625,
+            0.5064583333333333,
+            0.8813124999999999,
+            0.5371041666666667
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm3.staticflickr.com/2247/3539996132_28696cbbf5_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000325838.jpg"
+      },
+      "original_source_id": 325838
+    },
+    {
+      "id": "COCO-val-537270",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000537270.jpg",
+      "sha256": "82072a4304dd9f8cd22887e60c0b1b910d75175a74ba504e5de82e370f94d0ca",
+      "group": "COCO-val-537270",
+      "phash": 977745977055439314,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.5630625,
+            0.44762500000000005,
+            0.6430156250000001,
+            0.5885833333333333
+          ]
+        },
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.76015625,
+            0.35864583333333333,
+            0.826546875,
+            0.43975000000000003
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.843125,
+            0.48004166666666664,
+            0.962109375,
+            0.6518541666666666
+          ]
+        },
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.52540625,
+            0.8435625000000001,
+            0.71009375,
+            1
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3548/3507935487_6704d43ce0_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000537270.jpg"
+      },
+      "original_source_id": 537270
+    },
+    {
+      "id": "COCO-val-194724",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000194724.jpg",
+      "sha256": "ef3c018f96fdab2b7bfb28ffd8b952535c8c1084d2a39eb5133c14e585c137c4",
+      "group": "COCO-val-194724",
+      "phash": 7101558453794390473,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.653578125,
+            0.000625,
+            0.814265625,
+            0.5387708333333333
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.804328125,
+            0.277125,
+            0.951953125,
+            0.5464166666666667
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.298234375,
+            0.004708333333333333,
+            0.335296875,
+            0.10822916666666665
+          ]
+        },
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.8996562499999999,
+            0.461875,
+            1,
+            0.6031458333333333
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.26709375,
+            0,
+            0.301359375,
+            0.11339583333333333
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.409296875,
+            0,
+            0.43801562499999996,
+            0.110125
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.43820312499999997,
+            0.00010416666666666667,
+            0.46809375,
+            0.11208333333333333
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.46854687500000003,
+            0,
+            0.501109375,
+            0.10858333333333332
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.327265625,
+            0.0026041666666666665,
+            0.36428125,
+            0.1065
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.530953125,
+            0.00575,
+            0.558734375,
+            0.10697916666666667
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm7.staticflickr.com/6155/6165978029_81ac06fbe3_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000194724.jpg"
+      },
+      "original_source_id": 194724
+    },
+    {
+      "id": "COCO-val-465718",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000465718.jpg",
+      "sha256": "23e5ecf15fc6651e6ec95dbc096565ad3e0acaa6434b9bca8d7c6e832c1041b9",
+      "group": "COCO-val-465718",
+      "phash": 2821587953372347696,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.8472031250000001,
+            0.8487412587412587,
+            0.9135468750000001,
+            0.960979020979021
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3523/3750770006_56fa24a8f7_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000465718.jpg"
+      },
+      "original_source_id": 465718
+    },
+    {
+      "id": "COCO-val-561366",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000561366.jpg",
+      "sha256": "33ac2fba03d5242761676658dce8d0b0a68ea508bfdf17258e643221834f445a",
+      "group": "COCO-val-561366",
+      "phash": 4168447753099777462,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.5509375000000001,
+            0.18658333333333335,
+            0.938859375,
+            0.5406041666666667
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm1.staticflickr.com/198/459435907_bb6c8c82c9_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000561366.jpg"
+      },
+      "original_source_id": 561366
+    },
+    {
+      "id": "COCO-val-286523",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000286523.jpg",
+      "sha256": "909be1226454ad633c9a15237b6a86806452c77b40c0d478afaed61a54fd05fc",
+      "group": "COCO-val-286523",
+      "phash": 970569281184203486,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.660734375,
+            0.6204474708171207,
+            0.7541875,
+            0.8817704280155643
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3272/2646617772_52272c12bf_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000286523.jpg"
+      },
+      "original_source_id": 286523
+    },
+    {
+      "id": "COCO-val-441543",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000441543.jpg",
+      "sha256": "200948918a4f8136c1040174e80ab80e7bc6e6d904487ef656e89854374e8ea7",
+      "group": "COCO-val-441543",
+      "phash": 2637403054943440276,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.8601093750000001,
+            0.6775434243176179,
+            0.8960000000000001,
+            0.7268238213399504
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm6.staticflickr.com/5461/9168165820_0a3b383210_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000441543.jpg"
+      },
+      "original_source_id": 441543
+    },
+    {
+      "id": "COCO-val-459272",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000459272.jpg",
+      "sha256": "86fcc50b7b87ac6fb66e75e2158d0017730a1f05c5e6351c0d3e87bb760223f9",
+      "group": "COCO-val-459272",
+      "phash": 5204604921156058806,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.654,
+            0.7350156250000001,
+            0.8478333333333334,
+            0.824453125
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm3.staticflickr.com/2448/3675278938_d31af5d707_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000459272.jpg"
+      },
+      "original_source_id": 459272
+    },
+    {
+      "id": "COCO-val-266768",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000266768.jpg",
+      "sha256": "9bf52870172cba87d8917809be3ddd2432862adfd5c8aff310fb4851f50c1ac4",
+      "group": "COCO-val-266768",
+      "phash": 3704152593724010676,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.516062091503268,
+            0.6094607843137255,
+            0.5508660130718954,
+            0.6493300653594771
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.3311764705882353,
+            0.5847875816993464,
+            0.3599509803921569,
+            0.6316339869281046
+          ]
+        },
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.31006535947712416,
+            0.6740359477124183,
+            0.3719444444444444,
+            0.6898202614379085
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3712/9631334222_f91803a60d_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000266768.jpg"
+      },
+      "original_source_id": 266768
+    },
+    {
+      "id": "COCO-val-446207",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000446207.jpg",
+      "sha256": "ddef57e0ea54ff2eca3729558f951451037e183eadaed9c1913264a389e925b1",
+      "group": "COCO-val-446207",
+      "phash": 4273246552808785572,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.169515625,
+            0.5883958333333333,
+            0.78296875,
+            0.9786041666666667
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3121/3160251864_87bc5a4273_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000446207.jpg"
+      },
+      "original_source_id": 446207
+    },
+    {
+      "id": "COCO-val-1268",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000001268.jpg",
+      "sha256": "8e85a2e71ee512fe748a3a3be9bb40b8591e8c501c0f3896efcb5be5999ec236",
+      "group": "COCO-val-1268",
+      "phash": 32789195902045645,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.826421875,
+            0.4227634660421546,
+            0.8727968749999999,
+            0.4666744730679157
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm6.staticflickr.com/5454/9413846304_881d5e5c3b_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000001268.jpg"
+      },
+      "original_source_id": 1268
+    },
+    {
+      "id": "COCO-val-288391",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000288391.jpg",
+      "sha256": "9143a1cce1ad90bf5b1a4b3801e32c57a93a8ab1227e6f54fb915aecd75d2439",
+      "group": "COCO-val-288391",
+      "phash": 6807304439217477248,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.023512880562060887,
+            0.073984375,
+            0.386463700234192,
+            0.5425937500000001
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm5.staticflickr.com/4148/5202601512_b2b9399204_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000288391.jpg"
+      },
+      "original_source_id": 288391
+    },
+    {
+      "id": "COCO-val-53909",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000053909.jpg",
+      "sha256": "80df4444d544c27440621d44cc8726f9b49fe26f55550f0690861a0ec73c620e",
+      "group": "COCO-val-53909",
+      "phash": 6224161831871799006,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.17079166666666667,
+            0.042703124999999995,
+            0.7550625,
+            0.9123593750000001
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm8.staticflickr.com/7402/8714966583_f0853928b4_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000053909.jpg"
+      },
+      "original_source_id": 53909
+    },
+    {
+      "id": "COCO-val-411817",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000411817.jpg",
+      "sha256": "586beec9cea94bff35cc953ae63f759cfe3a354073565ab8cb6e7467cc93584e",
+      "group": "COCO-val-411817",
+      "phash": 2991444787840027733,
+      "selection_stratum": "cell phone",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.883125,
+            0.36991666666666667,
+            0.9045468750000001,
+            0.4081666666666667
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.610078125,
+            0.7338541666666667,
+            0.68703125,
+            0.7902916666666666
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm2.staticflickr.com/1159/1436355646_15eb51d0b1_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000411817.jpg"
+      },
+      "original_source_id": 411817
+    },
+    {
+      "id": "COCO-val-147415",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000147415.jpg",
+      "sha256": "60c9ab0896a3e8fc69f0bf72fa951ee98b2e99d155688abb18eb631e63805bbb",
+      "group": "COCO-val-147415",
+      "phash": 2423321661895810673,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.040640625,
+            0.8775625,
+            0.11292187499999999,
+            0.9989791666666666
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.6061875,
+            0.6303958333333333,
+            0.6243593749999999,
+            0.7273541666666666
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.625078125,
+            0.6247083333333333,
+            0.669625,
+            0.7304999999999999
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.724421875,
+            0.5914166666666667,
+            0.7874218749999999,
+            0.6848958333333334
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3660/3306226020_d7f6dcd2f9_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000147415.jpg"
+      },
+      "original_source_id": 147415
+    },
+    {
+      "id": "COCO-val-556000",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000556000.jpg",
+      "sha256": "346e603474857f6750d0f946eb80a76b104d600195c40cadca91b9f36f9ad84d",
+      "group": "COCO-val-556000",
+      "phash": 84830349260986295,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.3455625,
+            0.34015533980582524,
+            0.399078125,
+            0.42524271844660194
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3127/3157863995_c27c0cacfb_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000556000.jpg"
+      },
+      "original_source_id": 556000
+    },
+    {
+      "id": "COCO-val-448076",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000448076.jpg",
+      "sha256": "7237c864fef7a8fa702e095b4b84f38631f41ba2cd7fc94d9c3d1d77c8b303fd",
+      "group": "COCO-val-448076",
+      "phash": 357065901604457450,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.171609375,
+            0.5903541666666666,
+            0.20021874999999997,
+            0.6069791666666667
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm3.staticflickr.com/2125/2260856815_0c9c098fdd_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000448076.jpg"
+      },
+      "original_source_id": 448076
+    },
+    {
+      "id": "COCO-val-23899",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000023899.jpg",
+      "sha256": "b7ef13fe4d8ab47a77e55dadd30295110ca97b7b3c3b8c85603009e7dc497983",
+      "group": "COCO-val-23899",
+      "phash": 6532873435219333328,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.690875,
+            0.6818588235294119,
+            0.724546875,
+            0.7210117647058824
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.8448437500000001,
+            0.7955058823529411,
+            0.9349375,
+            0.9243294117647058
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.311,
+            0.2852705882352941,
+            0.394109375,
+            0.3247764705882353
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.776765625,
+            0.7268,
+            0.8243124999999999,
+            0.7767764705882353
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.9491250000000001,
+            0.5671058823529412,
+            0.9906562500000001,
+            0.6049882352941176
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm2.staticflickr.com/1419/4598390017_b554e5d29b_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000023899.jpg"
+      },
+      "original_source_id": 23899
+    },
+    {
+      "id": "COCO-val-75612",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000075612.jpg",
+      "sha256": "ad55b7fe3105db47f033892e97ffe87a92c3545ae303f129d4bd59c5f211148a",
+      "group": "COCO-val-75612",
+      "phash": 6474935252156685536,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.688,
+            0.5957083333333333,
+            0.70234375,
+            0.6033541666666667
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.311765625,
+            0.39177083333333335,
+            0.354875,
+            0.4200416666666667
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.58103125,
+            0.6168958333333333,
+            0.60065625,
+            0.6424375
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm3.staticflickr.com/2579/4191595324_3c1f160567_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000075612.jpg"
+      },
+      "original_source_id": 75612
+    },
+    {
+      "id": "COCO-val-110449",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000110449.jpg",
+      "sha256": "b4f1012183b47482a31955ac38bbad9b7711b018ff20e2cb60b355033f323dc6",
+      "group": "COCO-val-110449",
+      "phash": 1749527594522095385,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.02196,
+            0.24122666666666664,
+            0.07584,
+            0.4350666666666666
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3189/2947274789_a1a35b33c3_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000110449.jpg"
+      },
+      "original_source_id": 110449
+    },
+    {
+      "id": "COCO-val-520531",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000520531.jpg",
+      "sha256": "2ba4713ac86fef08a8b150861b289f27fa4263d4522cd3fa74bc94aa6fd0af51",
+      "group": "COCO-val-520531",
+      "phash": 7449496462029215772,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.17679687500000002,
+            0.7172083333333333,
+            0.41809375000000004,
+            0.8358125
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.033421875000000004,
+            0.6470416666666666,
+            0.152984375,
+            0.7298958333333333
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm5.staticflickr.com/4062/4340091694_248849448e_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000520531.jpg"
+      },
+      "original_source_id": 520531
+    },
+    {
+      "id": "COCO-val-430286",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000430286.jpg",
+      "sha256": "d823325d523c74b0a270f1830fe4527ffa63e0518ad3062367ec1faebc35f665",
+      "group": "COCO-val-430286",
+      "phash": 6822052923836532113,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.247640625,
+            0.03194503171247357,
+            0.40462500000000007,
+            0.335031712473573
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.62225,
+            0.048435517970401694,
+            0.7754375,
+            0.3620295983086681
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.47196875,
+            0.07126849894291755,
+            0.5992968750000001,
+            0.33630021141649047
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3246/3010660611_42210e398c_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000430286.jpg"
+      },
+      "original_source_id": 430286
+    },
+    {
+      "id": "COCO-val-532690",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000532690.jpg",
+      "sha256": "351e9f13f945d031fb6a17669b91c0fddffaaf92b057bd1b25ef094e763e4a27",
+      "group": "COCO-val-532690",
+      "phash": 2554740706874088154,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.12244318181818183,
+            0.772765625,
+            0.21494318181818184,
+            0.92346875
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm1.staticflickr.com/155/353485795_d364074053_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000532690.jpg"
+      },
+      "original_source_id": 532690
+    },
+    {
+      "id": "COCO-val-491366",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000491366.jpg",
+      "sha256": "e8b01653f4ef3eace69310ede3a0a31311b2fb4cb5f0d63ef560ac01e91acd26",
+      "group": "COCO-val-491366",
+      "phash": 24016816885314490,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.30910000000000004,
+            0.6530133333333333,
+            0.36138,
+            0.7285333333333333
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.43964,
+            0.6969333333333334,
+            0.50154,
+            0.72832
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.4909,
+            0.6797333333333333,
+            0.5512999999999999,
+            0.7290666666666666
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3031/2548567657_4f81a39e0f_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000491366.jpg"
+      },
+      "original_source_id": 491366
+    },
+    {
+      "id": "COCO-val-234607",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000234607.jpg",
+      "sha256": "d7c0ea1fd165bb9f10a7b2795d6b3f6701446cc30ac5b59d611e33c9ed560653",
+      "group": "COCO-val-234607",
+      "phash": 3682473612640740292,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.33941333333333334,
+            0.53242,
+            0.4563466666666667,
+            0.5619799999999999
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.4464,
+            0.501,
+            0.48088000000000003,
+            0.5222
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.4691466666666667,
+            0.52516,
+            0.49008,
+            0.55856
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm2.staticflickr.com/1437/559863781_93c23c76d0_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000234607.jpg"
+      },
+      "original_source_id": 234607
+    },
+    {
+      "id": "COCO-val-157046",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000157046.jpg",
+      "sha256": "cadd4ed7b812dd75964015ba1879c6c94c5de1c32e077b9fe4498bc16aa007f4",
+      "group": "COCO-val-157046",
+      "phash": 1648673107608284388,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.5897,
+            0.40682666666666667,
+            0.89476,
+            1
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm1.staticflickr.com/155/371334465_59e28f5469_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000157046.jpg"
+      },
+      "original_source_id": 157046
+    },
+    {
+      "id": "COCO-val-539883",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000539883.jpg",
+      "sha256": "46e9b79b4028ca35bff2af9afbdcf7e2305dd67988357746af4f485d4e35fa8c",
+      "group": "COCO-val-539883",
+      "phash": 3952544094851172819,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.641390625,
+            0.7933489461358314,
+            0.71803125,
+            0.8537704918032787
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.39582812500000003,
+            0.6396252927400469,
+            0.43423437500000006,
+            0.6701170960187354
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.69309375,
+            0.8161826697892272,
+            0.71675,
+            0.8765807962529274
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm1.staticflickr.com/185/484993836_8915a65714_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000539883.jpg"
+      },
+      "original_source_id": 539883
+    },
+    {
+      "id": "COCO-val-66635",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000066635.jpg",
+      "sha256": "0969fb5fb163065ac5f0a8ee922db3339a3e099086a40f6d4da4b3254fc1a422",
+      "group": "COCO-val-66635",
+      "phash": 7611722023199843982,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.637296875,
+            0.6086666666666667,
+            0.70740625,
+            0.6495625
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm1.staticflickr.com/101/256415658_3e03393dd5_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000066635.jpg"
+      },
+      "original_source_id": 66635
+    },
+    {
+      "id": "COCO-val-367569",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000367569.jpg",
+      "sha256": "0bf18d631eee0bb297484c5ced6deeeced2d886461e37334cf297fe238202497",
+      "group": "COCO-val-367569",
+      "phash": 5596911472775223724,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.40136460554371006,
+            0.75909375,
+            0.4672921108742005,
+            0.777359375
+          ]
+        },
+        {
+          "label": "cell phone",
+          "bbox": [
+            0.26957356076759065,
+            0.791453125,
+            0.3164605543710022,
+            0.8073124999999999
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm6.staticflickr.com/5333/7409214738_e99f75d461_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000367569.jpg"
+      },
+      "original_source_id": 367569
+    },
+    {
+      "id": "COCO-val-222317",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000222317.jpg",
+      "sha256": "578a6e929caa3bb20a211d0b0fcb8a7b018d2532e0695fcdb046155c48dc8c40",
+      "group": "COCO-val-222317",
+      "phash": 4018777321511605177,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0,
+            0.8910833333333333,
+            0.030890624999999998,
+            0.9195625000000001
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3009/3098419724_89827f6fd7_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000222317.jpg"
+      },
+      "original_source_id": 222317
+    },
+    {
+      "id": "COCO-val-96493",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000096493.jpg",
+      "sha256": "cecec146af7564d8229b996b99d25289924c039bf41475b0c533909699b39351",
+      "group": "COCO-val-96493",
+      "phash": 7359500899361024843,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.2672769953051643,
+            0.541671875,
+            0.5296244131455399,
+            0.6044218750000001
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3226/3076742158_8615337d86_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000096493.jpg"
+      },
+      "original_source_id": 96493
+    },
+    {
+      "id": "COCO-val-222735",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000222735.jpg",
+      "sha256": "818d0d0aa38c5f14ab15e3bae79a729c4dec8a41c7c383efd61cd82d146eb496",
+      "group": "COCO-val-222735",
+      "phash": 8233507343834066236,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.021244725738396624,
+            0.49887499999999996,
+            0.8313713080168776,
+            0.9483124999999999
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3212/2749561795_4c25c5a576_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000222735.jpg"
+      },
+      "original_source_id": 222735
+    },
+    {
+      "id": "COCO-val-383842",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000383842.jpg",
+      "sha256": "de9e05f37d8b3dd2c025ce80be273e364c6ad95dd337dacd7cd811f17db91e7b",
+      "group": "COCO-val-383842",
+      "phash": 1782130625404792512,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.8073593750000001,
+            0.7500691244239631,
+            0.8929375,
+            0.8720506912442396
+          ]
+        },
+        {
+          "label": "remote",
+          "bbox": [
+            0.389453125,
+            0.5524193548387096,
+            0.475265625,
+            0.6605299539170507
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm5.staticflickr.com/4023/4536776986_0e75095fcb_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000383842.jpg"
+      },
+      "original_source_id": 383842
+    },
+    {
+      "id": "COCO-val-233825",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000233825.jpg",
+      "sha256": "5706c6d49efd3a03346964ce2ca877d217c40b54e710272dbfabf32ea250af41",
+      "group": "COCO-val-233825",
+      "phash": 2288038899999441101,
+      "selection_stratum": "remote",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "remote",
+          "bbox": [
+            0.45528124999999997,
+            0.914875,
+            0.51746875,
+            0.9361458333333332
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm5.staticflickr.com/4006/4421796357_62f0208d59_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000233825.jpg"
+      },
+      "original_source_id": 233825
+    },
+    {
+      "id": "COCO-val-571857",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000571857.jpg",
+      "sha256": "d8771d52ba37b5ebfff1a5dee278d11dfed9c4b3e67a19c89e21fc8000a148c0",
+      "group": "COCO-val-571857",
+      "phash": 1908230529194468686,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.203203125,
+            0.5790845070422536,
+            0.21328125,
+            0.6021361502347418
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.606171875,
+            0.6331455399061033,
+            0.621953125,
+            0.6771596244131456
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.62590625,
+            0.6408450704225352,
+            0.634,
+            0.6729107981220658
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.6475,
+            0.6301643192488262,
+            0.661828125,
+            0.6740845070422534
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm7.staticflickr.com/6179/6199221017_d5f37ecb01_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000571857.jpg"
+      },
+      "original_source_id": 571857
+    },
+    {
+      "id": "COCO-val-90108",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000090108.jpg",
+      "sha256": "3a9a862c237d03ab32d8b455de68ffcd4fd094f2ddd4355b95048243f59a781a",
+      "group": "COCO-val-90108",
+      "phash": 873196090540884417,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.33503125,
+            0.4671875,
+            0.35993749999999997,
+            0.5345625
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3511/5818186852_061520ff7a_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000090108.jpg"
+      },
+      "original_source_id": 90108
+    },
+    {
+      "id": "COCO-val-7574",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000007574.jpg",
+      "sha256": "4f26c847c2f49574978e96733efaec720dd1d1ba95a8220d0de012b7317eed47",
+      "group": "COCO-val-7574",
+      "phash": 3133557270828029874,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.7831875,
+            0.6385208333333333,
+            0.8331250000000001,
+            0.8106875
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.7552187499999999,
+            0.6230416666666667,
+            0.797875,
+            0.7947291666666667
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm8.staticflickr.com/7054/6924897347_7266fd119c_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000007574.jpg"
+      },
+      "original_source_id": 7574
+    },
+    {
+      "id": "COCO-val-287714",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000287714.jpg",
+      "sha256": "41b8b958c98da54bb4eb03b5cf5838d192b83763995f5bb40ce771811e0b0041",
+      "group": "COCO-val-287714",
+      "phash": 1362640752158166233,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.686703125,
+            0.44316666666666665,
+            0.72496875,
+            0.6323749999999999
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.655296875,
+            0.4374791666666667,
+            0.6892968749999999,
+            0.6202500000000001
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.949859375,
+            0.7293125,
+            1,
+            0.8417708333333334
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.6399843749999999,
+            0.6010208333333333,
+            0.6800937499999999,
+            0.67425
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm9.staticflickr.com/8300/7810400652_ca6a6a78aa_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000287714.jpg"
+      },
+      "original_source_id": 287714
+    },
+    {
+      "id": "COCO-val-241319",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000241319.jpg",
+      "sha256": "86e9949e3dbaa94b1543f585375f1d8ef1b05aa8411fca298bc4c13e53d29c1d",
+      "group": "COCO-val-241319",
+      "phash": 8837486972955376924,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.164296875,
+            0.07899159663865546,
+            0.223921875,
+            0.27630252100840336
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.166765625,
+            0.4656302521008403,
+            0.27515625000000005,
+            0.6629201680672268
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.798453125,
+            0.4505042016806723,
+            0.9190781250000001,
+            0.6454201680672269
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.734484375,
+            0.4816386554621849,
+            0.7991406249999999,
+            0.5141806722689075
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm5.staticflickr.com/4110/5030334212_7d75b72d07_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000241319.jpg"
+      },
+      "original_source_id": 241319
+    },
+    {
+      "id": "COCO-val-572620",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000572620.jpg",
+      "sha256": "e2cf936c71429fe653a8885bb7868f3c28317b78ed5cfbe9142272db21852e04",
+      "group": "COCO-val-572620",
+      "phash": 2750401892244905168,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.8599062500000001,
+            0.8533489461358313,
+            0.8967031249999999,
+            0.8774473067915691
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm7.staticflickr.com/6041/5915075988_a0ea460639_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000572620.jpg"
+      },
+      "original_source_id": 572620
+    },
+    {
+      "id": "COCO-val-66231",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000066231.jpg",
+      "sha256": "9f4fe7d747ae0d163c865e6478afc0a39822817b650b11094bbcb4fe37b46680",
+      "group": "COCO-val-66231",
+      "phash": 8366428577247741033,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.135671875,
+            0.6449414519906322,
+            0.15821875,
+            0.7499531615925059
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.276421875,
+            0.582552693208431,
+            0.29203125,
+            0.6317798594847774
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.288,
+            0.5808430913348946,
+            0.298828125,
+            0.6305152224824356
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.331296875,
+            0.5379625292740047,
+            0.35328125,
+            0.6317798594847774
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm9.staticflickr.com/8352/8375313873_80051bc3e2_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000066231.jpg"
+      },
+      "original_source_id": 66231
+    },
+    {
+      "id": "COCO-val-336356",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000336356.jpg",
+      "sha256": "0b9315fe0e6c212f070a1bd4e5589bacf038a4791c4882472609b2351339bbe5",
+      "group": "COCO-val-336356",
+      "phash": 9063297530795315264,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.753231850117096,
+            0.365609375,
+            0.9017096018735362,
+            0.50084375
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm5.staticflickr.com/4096/5050400852_d12877ae4a_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000336356.jpg"
+      },
+      "original_source_id": 336356
+    },
+    {
+      "id": "COCO-val-80949",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000080949.jpg",
+      "sha256": "b61281d7ad2ca043eb4a6066becd42586ab66394757171ee2f31277241b4bc51",
+      "group": "COCO-val-80949",
+      "phash": 1917133439543180544,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.858734375,
+            0,
+            0.994953125,
+            0.3923744292237443
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.8247187500000001,
+            0,
+            0.8946406250000001,
+            0.16662100456621007
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm3.staticflickr.com/2221/2232846153_5eee9c75fc_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000080949.jpg"
+      },
+      "original_source_id": 80949
+    },
+    {
+      "id": "COCO-val-32038",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000032038.jpg",
+      "sha256": "5afb15a7ca2105d97e1f3a095dcbb1bdbe92232b1aaad9b7ab3bca63ee8adc3d",
+      "group": "COCO-val-32038",
+      "phash": 2625403724353902977,
+      "selection_stratum": "bottle",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.44552552552552555,
+            0.12042,
+            0.5997897897897898,
+            0.22190000000000001
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm3.staticflickr.com/2692/4423705330_3ca7e5f6ca_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000032038.jpg"
+      },
+      "original_source_id": 32038
+    },
+    {
+      "id": "COCO-val-182417",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000182417.jpg",
+      "sha256": "688c4a3bf75a7dd19a9401d7f105f9675d50b2b1bc01a1355320878500e4d1fd",
+      "group": "COCO-val-182417",
+      "phash": 4075323059370464741,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.8084374999999999,
+            0.0018125,
+            0.9993437499999999,
+            0.37583333333333335
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm3.staticflickr.com/2151/2100467664_2703dd9ff2_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000182417.jpg"
+      },
+      "original_source_id": 182417
+    },
+    {
+      "id": "COCO-val-240250",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000240250.jpg",
+      "sha256": "fb37c81f0e4a91f28ac009ce2ca5316e9070486afa76888548637e141d74b40a",
+      "group": "COCO-val-240250",
+      "phash": 4219085265679153476,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.9148039215686274,
+            0.5013398692810458,
+            1,
+            0.7547058823529411
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm9.staticflickr.com/8063/8171843756_30f1374f1b_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000240250.jpg"
+      },
+      "original_source_id": 240250
+    },
+    {
+      "id": "COCO-val-35682",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000035682.jpg",
+      "sha256": "1844cfa76d23a9768578f2c27306ecbad99326d2d374b070af9c56d50058c155",
+      "group": "COCO-val-35682",
+      "phash": 341084881394509319,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.13533333333333333,
+            0.584796875,
+            0.39906250000000004,
+            0.7758437499999999
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.20875000000000002,
+            0.43359375,
+            0.33956250000000004,
+            0.5938125000000001
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm5.staticflickr.com/4062/4666441455_b9bac3570c_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000035682.jpg"
+      },
+      "original_source_id": 35682
+    },
+    {
+      "id": "COCO-val-371677",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000371677.jpg",
+      "sha256": "8db67d13aac1ef8f1a6c24fa7a542c794c4155343f0b9f8a9527dc4ffa9a405a",
+      "group": "COCO-val-371677",
+      "phash": 5072221107035825638,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.478015625,
+            0.4894375,
+            0.650984375,
+            0.7754791666666667
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3596/3462811561_4af8a2ecff_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000371677.jpg"
+      },
+      "original_source_id": 371677
+    },
+    {
+      "id": "COCO-val-311303",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000311303.jpg",
+      "sha256": "bce26964fc249081299c7ecfbfa59fedf79f5430a4f274472312d71b86a249c0",
+      "group": "COCO-val-311303",
+      "phash": 5898390987706551474,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.5519999999999999,
+            0.13004683840749415,
+            0.9723593749999999,
+            0.9574004683840748
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3372/3178812639_f6e31bec0b_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000311303.jpg"
+      },
+      "original_source_id": 311303
+    },
+    {
+      "id": "COCO-val-29596",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000029596.jpg",
+      "sha256": "b8e8d8f5fb32fb90cc1c064bbc0fad3846b3a6c1fc6773fe74700a86b184c315",
+      "group": "COCO-val-29596",
+      "phash": 1113555340004246477,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.638296875,
+            0.6006074766355141,
+            0.6579375,
+            0.6203271028037384
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.510421875,
+            0.5921728971962616,
+            0.5274062500000001,
+            0.6092056074766355
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm2.staticflickr.com/1174/4724268948_f93c2cb404_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000029596.jpg"
+      },
+      "original_source_id": 29596
+    },
+    {
+      "id": "COCO-val-157601",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000157601.jpg",
+      "sha256": "c6bebe830e7a12afdb30c9fe497cf8d37c705a730d1bc02cd6efef9743cd067c",
+      "group": "COCO-val-157601",
+      "phash": 2052262540813229292,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.3146078431372549,
+            0.49887254901960787,
+            0.6494444444444444,
+            0.9550490196078432
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm9.staticflickr.com/8478/8239498722_1b6cb129fd_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000157601.jpg"
+      },
+      "original_source_id": 157601
+    },
+    {
+      "id": "COCO-val-92053",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000092053.jpg",
+      "sha256": "b31ae99dde64c615138636ae6f3c3d139d7d398e830126594532a701da146ac3",
+      "group": "COCO-val-92053",
+      "phash": 5857810296900689572,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.48371875,
+            0,
+            0.6120625,
+            0.42199063231850115
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.42762500000000003,
+            0,
+            0.48704687500000005,
+            0.22463700234192038
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm6.staticflickr.com/5244/5375419008_044fb14543_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000092053.jpg"
+      },
+      "original_source_id": 92053
+    },
+    {
+      "id": "COCO-val-318114",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000318114.jpg",
+      "sha256": "8e6da930dbb9d44c5674f231ecc190c69679139ae97967e953860c3bc12b9725",
+      "group": "COCO-val-318114",
+      "phash": 6345967102340667583,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "cup",
+          "bbox": [
+            0.037298701298701296,
+            0.02746753246753247,
+            0.3627012987012987,
+            0.6673701298701299
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm9.staticflickr.com/8231/8594007784_8ce364d236_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000318114.jpg"
+      },
+      "original_source_id": 318114
+    },
+    {
+      "id": "COCO-val-578922",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000578922.jpg",
+      "sha256": "e8bdc69a8a58ae37aa4289191102f54585bc9dcf96202e061ff574c607c21b6b",
+      "group": "COCO-val-578922",
+      "phash": 7097480265991306755,
+      "selection_stratum": "cup",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [
+        {
+          "label": "bottle",
+          "bbox": [
+            0.7058193979933111,
+            0.84825,
+            0.8788628762541805,
+            1
+          ]
+        },
+        {
+          "label": "bottle",
+          "bbox": [
+            0.8990635451505017,
+            0.9223125,
+            0.9989464882943144,
+            0.99825
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.5310702341137123,
+            0.78034375,
+            0.7169063545150501,
+            1
+          ]
+        },
+        {
+          "label": "cup",
+          "bbox": [
+            0.6291973244147157,
+            0.45821875,
+            0.7529933110367892,
+            0.6112656249999999
+          ]
+        }
+      ],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3185/3072908271_08764c732a_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000578922.jpg"
+      },
+      "original_source_id": 578922
+    },
+    {
+      "id": "COCO-val-397639",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000397639.jpg",
+      "sha256": "e2751406ae7a706ce0a33a477f12909db46228dd32d63e9314b26bb21a6e90c1",
+      "group": "COCO-val-397639",
+      "phash": 1827138413485892819,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm6.staticflickr.com/5102/5743641461_08040c4012_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000397639.jpg"
+      },
+      "original_source_id": 397639
+    },
+    {
+      "id": "COCO-val-528524",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000528524.jpg",
+      "sha256": "eee6dd8b3e9d3ad9d00280fcbe305da2fbe8142c621859602bb76eafd68aaa2b",
+      "group": "COCO-val-528524",
+      "phash": 1109604711904303252,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm9.staticflickr.com/8180/8069316186_791b37c4e1_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000528524.jpg"
+      },
+      "original_source_id": 528524
+    },
+    {
+      "id": "COCO-val-68765",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000068765.jpg",
+      "sha256": "0c7e7e080936a8120fccf67e21f6142ed8a452e1e9411454b0900923dac247f0",
+      "group": "COCO-val-68765",
+      "phash": 6374972298608923857,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm3.staticflickr.com/2131/1501351467_a73502f414_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000068765.jpg"
+      },
+      "original_source_id": 68765
+    },
+    {
+      "id": "COCO-val-416991",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000416991.jpg",
+      "sha256": "939f11f245c93ee8d06b8f09c5d5029b076b81147e03e062f9982ac6ed57dc44",
+      "group": "COCO-val-416991",
+      "phash": 7558347377142078636,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm6.staticflickr.com/5263/5666449288_225b0e85dd_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000416991.jpg"
+      },
+      "original_source_id": 416991
+    },
+    {
+      "id": "COCO-val-192871",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000192871.jpg",
+      "sha256": "3b01c2d37f4e03a559a45270a5b06b290823bf71bc713c615a01300e899375a7",
+      "group": "COCO-val-192871",
+      "phash": 754359928464833045,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm4.staticflickr.com/3115/3164630720_5de3a5f1da_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000192871.jpg"
+      },
+      "original_source_id": 192871
+    },
+    {
+      "id": "COCO-val-13004",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000013004.jpg",
+      "sha256": "09d489992329d2a17186a82781c7d23d8c687ee580567babc7494f9bc8b1220a",
+      "group": "COCO-val-13004",
+      "phash": 820190625423840192,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm5.staticflickr.com/4049/4208826429_3432119060_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000013004.jpg"
+      },
+      "original_source_id": 13004
+    },
+    {
+      "id": "COCO-val-202339",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000202339.jpg",
+      "sha256": "9b1d63dff953ffb99953a9c7073ba01772810928f3b22a205b267f9ae0fa7ed5",
+      "group": "COCO-val-202339",
+      "phash": 4406119110809780869,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm9.staticflickr.com/8070/8204757796_ce9fd630a2_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000202339.jpg"
+      },
+      "original_source_id": 202339
+    },
+    {
+      "id": "COCO-val-430056",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000430056.jpg",
+      "sha256": "9753b0001fe8bf21bcb0271569e438188fcc2112f80e9efbf1cbce51fa8e7d7f",
+      "group": "COCO-val-430056",
+      "phash": 2830994728647229942,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm4.staticflickr.com/3152/2286746912_8954bfabea_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000430056.jpg"
+      },
+      "original_source_id": 430056
+    },
+    {
+      "id": "COCO-val-269632",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000269632.jpg",
+      "sha256": "eacd77dd985fd0c0ea4a761c6087956a885394240033649296cb015e4469485e",
+      "group": "COCO-val-269632",
+      "phash": 7138437900757821716,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by-sa/2.0/",
+        "id": 5,
+        "name": "Attribution-ShareAlike License",
+        "source_page": "http://farm8.staticflickr.com/7287/9106564326_f1af288935_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000269632.jpg"
+      },
+      "original_source_id": 269632
+    },
+    {
+      "id": "COCO-val-98392",
+      "source": "COCO2017-val",
+      "split": "val2017",
+      "image": "ai/data/local/downloads/camera-benchmark-v1/000000098392.jpg",
+      "sha256": "c976adf7599725c1bab7fbae692611501e7a33fb5e182c3e301f985205340ecf",
+      "group": "COCO-val-98392",
+      "phash": 4200949763024663527,
+      "selection_stratum": "empty-targets",
+      "evaluated_classes": [
+        "bottle",
+        "cup",
+        "cell phone",
+        "remote"
+      ],
+      "truth": [],
+      "annotation_source": "COCO Consortium instances_val2017.json",
+      "rights": {
+        "url": "http://creativecommons.org/licenses/by/2.0/",
+        "id": 4,
+        "name": "Attribution License",
+        "source_page": "http://farm3.staticflickr.com/2502/4159425709_43b95a16d7_z.jpg",
+        "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/000000098392.jpg"
+      },
+      "original_source_id": 98392
+    }
+  ],
+  "rejected": [
+    {
+      "id": 76416,
+      "reason": "Annotated device is a printed iPod advertisement on a bus; physical-object benchmark scope"
+    },
+    {
+      "id": 147518,
+      "reason": "Visible cup on right counter lacks target annotation; unsuitable empty-target negative"
+    }
+  ],
+  "summary": {
+    "images": 117,
+    "by_source": {
+      "DrinkingWasteV2": 15,
+      "TACO": 32,
+      "COCO2017-val": 70
+    },
+    "truth_instances": {
+      "bottle": 45,
+      "can": 19,
+      "cardboard": 15,
+      "drink_carton": 5,
+      "plastic_wrapper": 17,
+      "food_container": 7,
+      "paper": 4,
+      "bottle_cap": 6,
+      "plastic_bag": 15,
+      "cup": 29,
+      "cell phone": 23,
+      "remote": 37
+    }
+  }
+}

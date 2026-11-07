@@ -5,12 +5,12 @@ from pathlib import Path
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "ai/data/local/broad-waste-v1"
+ROOT = Path(__file__).resolve().parents[1]
+DATA = ROOT / "data/local/broad-waste-v1"
 
 
 def main():
-    audit = json.loads((ROOT / "ai/evaluations/broad-waste-v1-data-audit.json").read_text("utf-8"))
+    audit = json.loads((ROOT / "evaluations/broad-waste-v1-data-audit.json").read_text("utf-8"))
     manifest = json.loads((DATA / "manifest.json").read_text("utf-8"))
     excluded = {str(i) for i in audit["excluded_coco_ids"]}
     records = []

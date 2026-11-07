@@ -35,14 +35,14 @@ OpenAPI dan [contoh conditional-cup](../contracts/v1/examples/conditional-cup-re
 
 ```powershell
 # Kamera dengan model terlatih:
-.\ai\demo-camera-trained.bat --port 8095
+.\demo-camera-trained.bat --port 8095
 # Coba tanpa mengisi kondisi, offline:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context ai/examples/context-unknown-cup.json --provider fixture --demo-guides
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context examples/context-unknown-cup.json --provider fixture --demo-guides
 # Gemini nyata menggunakan key/model lokal:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context ai/examples/context-unknown-cup.json --provider gemini --demo-guides
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli recommend --context examples/context-unknown-cup.json --provider gemini --demo-guides
 # Evaluasi skenario terbaru:
-.\.venv-ai\Scripts\python.exe ai/scripts/evaluate_recommendations.py --provider fixture
-.\.venv-ai\Scripts\python.exe ai/scripts/evaluate_recommendations.py --provider gemini --max-calls 16
+.\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py --provider fixture
+.\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py --provider gemini --max-calls 16
 ```
 
 44/44 skenario offline lulus. Empat kasus baru membiarkan seluruh field opsional kosong (cangkir, PET, kaleng, baterai) dan lulus pada Gemini nyata. Run live penuh menghasilkan 42/44: dua kasus gagal karena LLM_UNAVAILABLE, kemudian dua kasus tersebut lulus pada percobaan eksplisit terpisah. Ini tidak dilaporkan sebagai 44/44 dalam satu run. Laporan [run penuh](../evaluations/recommendation-policy06-gemini-20261020.json), [percobaan ulang dua kasus](../evaluations/recommendation-policy06-provider-recheck-20261020.json), dan [fixture](../evaluations/recommendation-policy06-fixture-20261020.json). Enam kasus adversarial tetap output fixture yang disuntikkan; tidak dihitung sebagai panggilan Gemini.
@@ -71,10 +71,10 @@ Kandidat ini **ditolak untuk mengganti model demo**. Kaleng membaik precision-ny
 Script reproduksi (memerlukan environment training dan dataset lokal):
 
 ```powershell
-.\.venv-ai-train\Scripts\python.exe ai/scripts/prepare_background_training.py
-.\.venv-ai-train\Scripts\python.exe ai/scripts/train_background_candidate.py
-.\.venv-ai-train\Scripts\python.exe ai/scripts/calibrate_yolo.py --model ai/artifacts/training/drinking-waste-background-v1/weights/best.pt --output ai/artifacts/calibration-background
-.\.venv-ai-train\Scripts\python.exe ai/scripts/compare_background_candidate.py --candidate-cache ai/artifacts/calibration-background/validation-predictions.json
+.\.venv-ai-train\Scripts\python.exe scripts/prepare_background_training.py
+.\.venv-ai-train\Scripts\python.exe scripts/train_background_candidate.py
+.\.venv-ai-train\Scripts\python.exe scripts/calibrate_yolo.py --model artifacts/training/drinking-waste-background-v1/weights/best.pt --output artifacts/calibration-background
+.\.venv-ai-train\Scripts\python.exe scripts/compare_background_candidate.py --candidate-cache artifacts/calibration-background/validation-predictions.json
 ```
 
 Preparation menolak output yang sudah ada agar hasil lama tidak tertimpa. Training menulis run terpisah dan tidak mengganti checkpoint utama. Gate yang ditetapkan sebelum evaluasi: FP turun minimal 25% pada batas 0,50 dengan recall turun paling banyak 3 poin persentase. Pemilihan dan pengujian kandidat ini memakai val; hasilnya bukan akurasi kamera Indonesia atau holdout dunia nyata.
@@ -102,15 +102,15 @@ Runtime sekarang menyediakan `--input-shape adaptive|square` untuk detect, demo,
 
 ```powershell
 # Reproduksi training kedua:
-.\.venv-ai-train\Scripts\python.exe ai/scripts/train_background_candidate.py --name drinking-waste-background-shape-v2 --epochs 20 --lr0 0.0001 --mosaic 0 --degrees 30 --flipud 0.2 --scale 0.25
+.\.venv-ai-train\Scripts\python.exe scripts/train_background_candidate.py --name drinking-waste-background-shape-v2 --epochs 20 --lr0 0.0001 --mosaic 0 --degrees 30 --flipud 0.2 --scale 0.25
 # Kalibrasi/perbandingan dengan padding yang dinyatakan eksplisit:
-.\.venv-ai-train\Scripts\python.exe ai/scripts/calibrate_yolo.py --square --model ai/artifacts/training/drinking-waste-background-shape-v2/weights/best.pt --output ai/artifacts/calibration-shape-square
+.\.venv-ai-train\Scripts\python.exe scripts/calibrate_yolo.py --square --model artifacts/training/drinking-waste-background-shape-v2/weights/best.pt --output artifacts/calibration-shape-square
 # Mencoba kandidat kedua secara eksplisit, bukan model default:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli demo --model ai/artifacts/training/drinking-waste-background-shape-v2/weights/best.pt --input-shape square --demo-guides --port 8095
+.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli demo --model artifacts/training/drinking-waste-background-shape-v2/weights/best.pt --input-shape square --demo-guides --port 8095
 ```
 
 Peningkatan model berikutnya membutuhkan variasi positif yang sesuai kesalahan teramati: kaleng dari atas/bawah, penyok, rebah, label hijau dan close-up; serta botol PET/kaca yang bentuknya mirip. Ini usulan pengumpulan berdasarkan audit visual, bukan dataset baru yang diklaim sudah tersedia. Holdout kamera dengan benda/sesi baru tetap diperlukan. Dua percobaan di atas menunjukkan mengapa menambah latar atau mengubah augmentasi saja tidak cukup untuk mengklaim peningkatan.
 
 ## Verifikasi pembaruan
 
-183 tes Python lulus, 44/44 skenario fixture, 34 artifact kontrak cocok dengan generator, 16 pemeriksaan browser offline lulus. Satu pemeriksaan browser tambahan memakai Gemini langsung dengan seluruh kondisi opsional tetap UNKNOWN/null dan berhasil menghasilkan Reuse bersyarat tanpa error JavaScript. Deteksi square juga dijalankan pada model nyata; model_version dan profil default sesuai mode yang dipilih. Kamera fisik tidak dipakai untuk pengujian otomatis. Screenshot/laporan demo berada di `ai/artifacts/conditional-live-browser.*`.
+183 tes Python lulus, 44/44 skenario fixture, 34 artifact kontrak cocok dengan generator, 16 pemeriksaan browser offline lulus. Satu pemeriksaan browser tambahan memakai Gemini langsung dengan seluruh kondisi opsional tetap UNKNOWN/null dan berhasil menghasilkan Reuse bersyarat tanpa error JavaScript. Deteksi square juga dijalankan pada model nyata; model_version dan profil default sesuai mode yang dipilih. Kamera fisik tidak dipakai untuk pengujian otomatis. Screenshot/laporan demo berada di `artifacts/conditional-live-browser.*`.

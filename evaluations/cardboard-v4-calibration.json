@@ -1,0 +1,3846 @@
+{
+  "kind": "validation_selected_cardboard_review_threshold",
+  "old_threshold": 0.5,
+  "new_threshold": 0.65,
+  "selection": "0.65 chosen using v4 validation before evaluating held-out test and cached camera replay",
+  "decision": "REJECTED_ON_TEST",
+  "active_cardboard_threshold": 0.5,
+  "validation": {
+    "before": {
+      "images": 975,
+      "overall": {
+        "tp": 807,
+        "fp": 193,
+        "fn": 448,
+        "support": 1255,
+        "precision": 0.807,
+        "recall": 0.6430278884462152,
+        "f1": 0.7157427937915742
+      },
+      "per_class": {
+        "bottle": {
+          "tp": 507,
+          "fp": 68,
+          "fn": 186,
+          "support": 693,
+          "precision": 0.8817391304347826,
+          "recall": 0.7316017316017316,
+          "f1": 0.7996845425867508
+        },
+        "can": {
+          "tp": 115,
+          "fp": 20,
+          "fn": 67,
+          "support": 182,
+          "precision": 0.8518518518518519,
+          "recall": 0.6318681318681318,
+          "f1": 0.7255520504731862
+        },
+        "cup": {
+          "tp": 162,
+          "fp": 63,
+          "fn": 119,
+          "support": 281,
+          "precision": 0.72,
+          "recall": 0.5765124555160143,
+          "f1": 0.6403162055335968
+        },
+        "plastic_bag": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 6,
+          "support": 8,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4
+        },
+        "paper": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 5,
+          "support": 5,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cardboard": {
+          "tp": 17,
+          "fp": 23,
+          "fn": 34,
+          "support": 51,
+          "precision": 0.425,
+          "recall": 0.3333333333333333,
+          "f1": 0.37362637362637363
+        },
+        "drink_carton": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 2,
+          "support": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "plastic_wrapper": {
+          "tp": 1,
+          "fp": 9,
+          "fn": 16,
+          "support": 17,
+          "precision": 0.1,
+          "recall": 0.058823529411764705,
+          "f1": 0.07407407407407407
+        },
+        "food_container": {
+          "tp": 2,
+          "fp": 6,
+          "fn": 5,
+          "support": 7,
+          "precision": 0.25,
+          "recall": 0.2857142857142857,
+          "f1": 0.26666666666666666
+        },
+        "bottle_cap": {
+          "tp": 1,
+          "fp": 3,
+          "fn": 8,
+          "support": 9,
+          "precision": 0.25,
+          "recall": 0.1111111111111111,
+          "f1": 0.15384615384615385
+        }
+      },
+      "wrong_label_instances": 78,
+      "no_overlapping_candidate_instances": 374,
+      "same_class_duplicate_pairs": 4,
+      "conflicting_label_pairs": 11,
+      "images_without_reviewable_candidate": 146,
+      "empty_target_images": 0,
+      "images_with_false_positive_on_empty": 0,
+      "confusion": [
+        {
+          "truth": "bottle",
+          "predicted": "__missed__",
+          "count": 154
+        },
+        {
+          "truth": "bottle",
+          "predicted": "bottle",
+          "count": 507
+        },
+        {
+          "truth": "bottle",
+          "predicted": "can",
+          "count": 10
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cardboard",
+          "count": 3
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cup",
+          "count": 16
+        },
+        {
+          "truth": "bottle",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "bottle",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "__missed__",
+          "count": 7
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "bottle_cap",
+          "count": 1
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "can",
+          "predicted": "__missed__",
+          "count": 41
+        },
+        {
+          "truth": "can",
+          "predicted": "bottle",
+          "count": 25
+        },
+        {
+          "truth": "can",
+          "predicted": "can",
+          "count": 113
+        },
+        {
+          "truth": "can",
+          "predicted": "cup",
+          "count": 2
+        },
+        {
+          "truth": "can",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "__missed__",
+          "count": 31
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "cardboard",
+          "count": 15
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        },
+        {
+          "truth": "cup",
+          "predicted": "__missed__",
+          "count": 119
+        },
+        {
+          "truth": "cup",
+          "predicted": "cup",
+          "count": 162
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "cardboard",
+          "count": 2
+        },
+        {
+          "truth": "food_container",
+          "predicted": "__missed__",
+          "count": 3
+        },
+        {
+          "truth": "food_container",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "food_container",
+          "predicted": "cup",
+          "count": 1
+        },
+        {
+          "truth": "food_container",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "paper",
+          "predicted": "__missed__",
+          "count": 2
+        },
+        {
+          "truth": "paper",
+          "predicted": "bottle",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "__missed__",
+          "count": 4
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "plastic_bag",
+          "count": 2
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "__missed__",
+          "count": 13
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "bottle",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        }
+      ]
+    },
+    "after": {
+      "images": 975,
+      "overall": {
+        "tp": 806,
+        "fp": 184,
+        "fn": 449,
+        "support": 1255,
+        "precision": 0.8141414141414142,
+        "recall": 0.6422310756972112,
+        "f1": 0.7180400890868597
+      },
+      "per_class": {
+        "bottle": {
+          "tp": 507,
+          "fp": 68,
+          "fn": 186,
+          "support": 693,
+          "precision": 0.8817391304347826,
+          "recall": 0.7316017316017316,
+          "f1": 0.7996845425867508
+        },
+        "can": {
+          "tp": 115,
+          "fp": 20,
+          "fn": 67,
+          "support": 182,
+          "precision": 0.8518518518518519,
+          "recall": 0.6318681318681318,
+          "f1": 0.7255520504731862
+        },
+        "cup": {
+          "tp": 162,
+          "fp": 63,
+          "fn": 119,
+          "support": 281,
+          "precision": 0.72,
+          "recall": 0.5765124555160143,
+          "f1": 0.6403162055335968
+        },
+        "plastic_bag": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 6,
+          "support": 8,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4
+        },
+        "paper": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 5,
+          "support": 5,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cardboard": {
+          "tp": 16,
+          "fp": 14,
+          "fn": 35,
+          "support": 51,
+          "precision": 0.5333333333333333,
+          "recall": 0.3137254901960784,
+          "f1": 0.3950617283950617
+        },
+        "drink_carton": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 2,
+          "support": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "plastic_wrapper": {
+          "tp": 1,
+          "fp": 9,
+          "fn": 16,
+          "support": 17,
+          "precision": 0.1,
+          "recall": 0.058823529411764705,
+          "f1": 0.07407407407407407
+        },
+        "food_container": {
+          "tp": 2,
+          "fp": 6,
+          "fn": 5,
+          "support": 7,
+          "precision": 0.25,
+          "recall": 0.2857142857142857,
+          "f1": 0.26666666666666666
+        },
+        "bottle_cap": {
+          "tp": 1,
+          "fp": 3,
+          "fn": 8,
+          "support": 9,
+          "precision": 0.25,
+          "recall": 0.1111111111111111,
+          "f1": 0.15384615384615385
+        }
+      },
+      "wrong_label_instances": 76,
+      "no_overlapping_candidate_instances": 377,
+      "same_class_duplicate_pairs": 4,
+      "conflicting_label_pairs": 10,
+      "images_without_reviewable_candidate": 151,
+      "empty_target_images": 0,
+      "images_with_false_positive_on_empty": 0,
+      "confusion": [
+        {
+          "truth": "bottle",
+          "predicted": "__missed__",
+          "count": 156
+        },
+        {
+          "truth": "bottle",
+          "predicted": "bottle",
+          "count": 507
+        },
+        {
+          "truth": "bottle",
+          "predicted": "can",
+          "count": 10
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cup",
+          "count": 16
+        },
+        {
+          "truth": "bottle",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "bottle",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "__missed__",
+          "count": 7
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "bottle_cap",
+          "count": 1
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "can",
+          "predicted": "__missed__",
+          "count": 41
+        },
+        {
+          "truth": "can",
+          "predicted": "bottle",
+          "count": 25
+        },
+        {
+          "truth": "can",
+          "predicted": "can",
+          "count": 113
+        },
+        {
+          "truth": "can",
+          "predicted": "cup",
+          "count": 2
+        },
+        {
+          "truth": "can",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "__missed__",
+          "count": 32
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "cardboard",
+          "count": 14
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        },
+        {
+          "truth": "cup",
+          "predicted": "__missed__",
+          "count": 119
+        },
+        {
+          "truth": "cup",
+          "predicted": "cup",
+          "count": 162
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "cardboard",
+          "count": 2
+        },
+        {
+          "truth": "food_container",
+          "predicted": "__missed__",
+          "count": 3
+        },
+        {
+          "truth": "food_container",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "food_container",
+          "predicted": "cup",
+          "count": 1
+        },
+        {
+          "truth": "food_container",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "paper",
+          "predicted": "__missed__",
+          "count": 2
+        },
+        {
+          "truth": "paper",
+          "predicted": "bottle",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "__missed__",
+          "count": 4
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "plastic_bag",
+          "count": 2
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "__missed__",
+          "count": 13
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "bottle",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "test": {
+    "before": {
+      "images": 690,
+      "overall": {
+        "tp": 675,
+        "fp": 154,
+        "fn": 346,
+        "support": 1021,
+        "precision": 0.8142340168878166,
+        "recall": 0.6611165523996082,
+        "f1": 0.7297297297297297
+      },
+      "per_class": {
+        "bottle": {
+          "tp": 374,
+          "fp": 54,
+          "fn": 134,
+          "support": 508,
+          "precision": 0.8738317757009346,
+          "recall": 0.7362204724409449,
+          "f1": 0.7991452991452992
+        },
+        "can": {
+          "tp": 116,
+          "fp": 16,
+          "fn": 26,
+          "support": 142,
+          "precision": 0.8787878787878788,
+          "recall": 0.8169014084507042,
+          "f1": 0.8467153284671532
+        },
+        "cup": {
+          "tp": 166,
+          "fp": 51,
+          "fn": 113,
+          "support": 279,
+          "precision": 0.7649769585253456,
+          "recall": 0.5949820788530465,
+          "f1": 0.6693548387096774
+        },
+        "plastic_bag": {
+          "tp": 2,
+          "fp": 3,
+          "fn": 13,
+          "support": 15,
+          "precision": 0.4,
+          "recall": 0.13333333333333333,
+          "f1": 0.2
+        },
+        "paper": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "support": 4,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cardboard": {
+          "tp": 11,
+          "fp": 8,
+          "fn": 19,
+          "support": 30,
+          "precision": 0.5789473684210527,
+          "recall": 0.36666666666666664,
+          "f1": 0.4489795918367347
+        },
+        "drink_carton": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 5,
+          "support": 5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "plastic_wrapper": {
+          "tp": 2,
+          "fp": 12,
+          "fn": 20,
+          "support": 22,
+          "precision": 0.14285714285714285,
+          "recall": 0.09090909090909091,
+          "f1": 0.1111111111111111
+        },
+        "food_container": {
+          "tp": 3,
+          "fp": 7,
+          "fn": 4,
+          "support": 7,
+          "precision": 0.3,
+          "recall": 0.42857142857142855,
+          "f1": 0.35294117647058826
+        },
+        "bottle_cap": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 8,
+          "support": 9,
+          "precision": 0.3333333333333333,
+          "recall": 0.1111111111111111,
+          "f1": 0.16666666666666666
+        }
+      },
+      "wrong_label_instances": 58,
+      "no_overlapping_candidate_instances": 295,
+      "same_class_duplicate_pairs": 5,
+      "conflicting_label_pairs": 9,
+      "images_without_reviewable_candidate": 97,
+      "empty_target_images": 0,
+      "images_with_false_positive_on_empty": 0,
+      "confusion": [
+        {
+          "truth": "bottle",
+          "predicted": "__missed__",
+          "count": 111
+        },
+        {
+          "truth": "bottle",
+          "predicted": "bottle",
+          "count": 371
+        },
+        {
+          "truth": "bottle",
+          "predicted": "can",
+          "count": 9
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cup",
+          "count": 12
+        },
+        {
+          "truth": "bottle",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "bottle",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "__missed__",
+          "count": 7
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "bottle_cap",
+          "count": 1
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "cup",
+          "count": 1
+        },
+        {
+          "truth": "can",
+          "predicted": "__missed__",
+          "count": 14
+        },
+        {
+          "truth": "can",
+          "predicted": "bottle",
+          "count": 12
+        },
+        {
+          "truth": "can",
+          "predicted": "can",
+          "count": 114
+        },
+        {
+          "truth": "can",
+          "predicted": "food_container",
+          "count": 1
+        },
+        {
+          "truth": "can",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "__missed__",
+          "count": 15
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "cardboard",
+          "count": 10
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "cup",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "drink_carton",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "food_container",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        },
+        {
+          "truth": "cup",
+          "predicted": "__missed__",
+          "count": 111
+        },
+        {
+          "truth": "cup",
+          "predicted": "bottle",
+          "count": 2
+        },
+        {
+          "truth": "cup",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "cup",
+          "predicted": "cup",
+          "count": 165
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "__missed__",
+          "count": 2
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "food_container",
+          "predicted": "__missed__",
+          "count": 3
+        },
+        {
+          "truth": "food_container",
+          "predicted": "food_container",
+          "count": 3
+        },
+        {
+          "truth": "food_container",
+          "predicted": "plastic_bag",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "__missed__",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "plastic_wrapper",
+          "count": 3
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "__missed__",
+          "count": 13
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "plastic_bag",
+          "count": 2
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "__missed__",
+          "count": 18
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "plastic_bag",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        }
+      ]
+    },
+    "after": {
+      "images": 690,
+      "overall": {
+        "tp": 672,
+        "fp": 152,
+        "fn": 349,
+        "support": 1021,
+        "precision": 0.8155339805825242,
+        "recall": 0.6581782566111655,
+        "f1": 0.7284552845528456
+      },
+      "per_class": {
+        "bottle": {
+          "tp": 374,
+          "fp": 54,
+          "fn": 134,
+          "support": 508,
+          "precision": 0.8738317757009346,
+          "recall": 0.7362204724409449,
+          "f1": 0.7991452991452992
+        },
+        "can": {
+          "tp": 116,
+          "fp": 16,
+          "fn": 26,
+          "support": 142,
+          "precision": 0.8787878787878788,
+          "recall": 0.8169014084507042,
+          "f1": 0.8467153284671532
+        },
+        "cup": {
+          "tp": 166,
+          "fp": 51,
+          "fn": 113,
+          "support": 279,
+          "precision": 0.7649769585253456,
+          "recall": 0.5949820788530465,
+          "f1": 0.6693548387096774
+        },
+        "plastic_bag": {
+          "tp": 2,
+          "fp": 3,
+          "fn": 13,
+          "support": 15,
+          "precision": 0.4,
+          "recall": 0.13333333333333333,
+          "f1": 0.2
+        },
+        "paper": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 4,
+          "support": 4,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "cardboard": {
+          "tp": 8,
+          "fp": 6,
+          "fn": 22,
+          "support": 30,
+          "precision": 0.5714285714285714,
+          "recall": 0.26666666666666666,
+          "f1": 0.36363636363636365
+        },
+        "drink_carton": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 5,
+          "support": 5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "plastic_wrapper": {
+          "tp": 2,
+          "fp": 12,
+          "fn": 20,
+          "support": 22,
+          "precision": 0.14285714285714285,
+          "recall": 0.09090909090909091,
+          "f1": 0.1111111111111111
+        },
+        "food_container": {
+          "tp": 3,
+          "fp": 7,
+          "fn": 4,
+          "support": 7,
+          "precision": 0.3,
+          "recall": 0.42857142857142855,
+          "f1": 0.35294117647058826
+        },
+        "bottle_cap": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 8,
+          "support": 9,
+          "precision": 0.3333333333333333,
+          "recall": 0.1111111111111111,
+          "f1": 0.16666666666666666
+        }
+      },
+      "wrong_label_instances": 58,
+      "no_overlapping_candidate_instances": 297,
+      "same_class_duplicate_pairs": 5,
+      "conflicting_label_pairs": 6,
+      "images_without_reviewable_candidate": 97,
+      "empty_target_images": 0,
+      "images_with_false_positive_on_empty": 0,
+      "confusion": [
+        {
+          "truth": "bottle",
+          "predicted": "__missed__",
+          "count": 111
+        },
+        {
+          "truth": "bottle",
+          "predicted": "bottle",
+          "count": 371
+        },
+        {
+          "truth": "bottle",
+          "predicted": "can",
+          "count": 9
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "bottle",
+          "predicted": "cup",
+          "count": 12
+        },
+        {
+          "truth": "bottle",
+          "predicted": "food_container",
+          "count": 2
+        },
+        {
+          "truth": "bottle",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "__missed__",
+          "count": 7
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "bottle_cap",
+          "count": 1
+        },
+        {
+          "truth": "bottle_cap",
+          "predicted": "cup",
+          "count": 1
+        },
+        {
+          "truth": "can",
+          "predicted": "__missed__",
+          "count": 14
+        },
+        {
+          "truth": "can",
+          "predicted": "bottle",
+          "count": 12
+        },
+        {
+          "truth": "can",
+          "predicted": "can",
+          "count": 114
+        },
+        {
+          "truth": "can",
+          "predicted": "food_container",
+          "count": 1
+        },
+        {
+          "truth": "can",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "__missed__",
+          "count": 17
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "cardboard",
+          "count": 8
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "cup",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "drink_carton",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "food_container",
+          "count": 1
+        },
+        {
+          "truth": "cardboard",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        },
+        {
+          "truth": "cup",
+          "predicted": "__missed__",
+          "count": 111
+        },
+        {
+          "truth": "cup",
+          "predicted": "bottle",
+          "count": 2
+        },
+        {
+          "truth": "cup",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "cup",
+          "predicted": "cup",
+          "count": 165
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "__missed__",
+          "count": 2
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "cardboard",
+          "count": 1
+        },
+        {
+          "truth": "drink_carton",
+          "predicted": "plastic_wrapper",
+          "count": 1
+        },
+        {
+          "truth": "food_container",
+          "predicted": "__missed__",
+          "count": 3
+        },
+        {
+          "truth": "food_container",
+          "predicted": "food_container",
+          "count": 3
+        },
+        {
+          "truth": "food_container",
+          "predicted": "plastic_bag",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "__missed__",
+          "count": 1
+        },
+        {
+          "truth": "paper",
+          "predicted": "plastic_wrapper",
+          "count": 3
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "__missed__",
+          "count": 13
+        },
+        {
+          "truth": "plastic_bag",
+          "predicted": "plastic_bag",
+          "count": 2
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "__missed__",
+          "count": 18
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "can",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "plastic_bag",
+          "count": 1
+        },
+        {
+          "truth": "plastic_wrapper",
+          "predicted": "plastic_wrapper",
+          "count": 2
+        }
+      ]
+    }
+  },
+  "camera_replay": {
+    "browser_jpeg90": {
+      "v4": {
+        "before": {
+          "images": 117,
+          "overall": {
+            "tp": 71,
+            "fp": 34,
+            "fn": 151,
+            "support": 222,
+            "precision": 0.6761904761904762,
+            "recall": 0.31981981981981983,
+            "f1": 0.43425076452599387
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 25,
+              "fp": 7,
+              "fn": 20,
+              "support": 45,
+              "precision": 0.78125,
+              "recall": 0.5555555555555556,
+              "f1": 0.6493506493506493
+            },
+            "can": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.7058823529411765,
+              "recall": 0.631578947368421,
+              "f1": 0.6666666666666666
+            },
+            "cup": {
+              "tp": 20,
+              "fp": 5,
+              "fn": 9,
+              "support": 29,
+              "precision": 0.8,
+              "recall": 0.6896551724137931,
+              "f1": 0.7407407407407407
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.6,
+              "recall": 0.2,
+              "f1": 0.3
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 6,
+              "fp": 5,
+              "fn": 9,
+              "support": 15,
+              "precision": 0.5454545454545454,
+              "recall": 0.4,
+              "f1": 0.46153846153846156
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 7,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.125,
+              "recall": 0.058823529411764705,
+              "f1": 0.08
+            },
+            "food_container": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 4,
+              "support": 7,
+              "precision": 0.6,
+              "recall": 0.42857142857142855,
+              "f1": 0.5
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 23,
+              "support": 23,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "remote": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 37,
+              "support": 37,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "wrong_label_instances": 18,
+          "no_overlapping_candidate_instances": 134,
+          "same_class_duplicate_pairs": 1,
+          "conflicting_label_pairs": 4,
+          "images_without_reviewable_candidate": 54,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 18
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 25
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 7
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 11
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 7
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 6
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 23
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 8
+            },
+            {
+              "truth": "cup",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 20
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 3
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 15
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 34
+            },
+            {
+              "truth": "remote",
+              "predicted": "can",
+              "count": 3
+            }
+          ]
+        },
+        "after": {
+          "images": 117,
+          "overall": {
+            "tp": 69,
+            "fp": 32,
+            "fn": 153,
+            "support": 222,
+            "precision": 0.6831683168316832,
+            "recall": 0.3108108108108108,
+            "f1": 0.42724458204334365
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 25,
+              "fp": 7,
+              "fn": 20,
+              "support": 45,
+              "precision": 0.78125,
+              "recall": 0.5555555555555556,
+              "f1": 0.6493506493506493
+            },
+            "can": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.7058823529411765,
+              "recall": 0.631578947368421,
+              "f1": 0.6666666666666666
+            },
+            "cup": {
+              "tp": 20,
+              "fp": 5,
+              "fn": 9,
+              "support": 29,
+              "precision": 0.8,
+              "recall": 0.6896551724137931,
+              "f1": 0.7407407407407407
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.6,
+              "recall": 0.2,
+              "f1": 0.3
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 4,
+              "fp": 3,
+              "fn": 11,
+              "support": 15,
+              "precision": 0.5714285714285714,
+              "recall": 0.26666666666666666,
+              "f1": 0.36363636363636365
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 7,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.125,
+              "recall": 0.058823529411764705,
+              "f1": 0.08
+            },
+            "food_container": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 4,
+              "support": 7,
+              "precision": 0.6,
+              "recall": 0.42857142857142855,
+              "f1": 0.5
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 23,
+              "support": 23,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "remote": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 37,
+              "support": 37,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "wrong_label_instances": 18,
+          "no_overlapping_candidate_instances": 136,
+          "same_class_duplicate_pairs": 1,
+          "conflicting_label_pairs": 2,
+          "images_without_reviewable_candidate": 54,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 18
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 25
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 7
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 11
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 9
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 4
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 23
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 8
+            },
+            {
+              "truth": "cup",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 20
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 3
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 15
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 34
+            },
+            {
+              "truth": "remote",
+              "predicted": "can",
+              "count": 3
+            }
+          ]
+        }
+      },
+      "combined": {
+        "before": {
+          "images": 117,
+          "overall": {
+            "tp": 84,
+            "fp": 44,
+            "fn": 138,
+            "support": 222,
+            "precision": 0.65625,
+            "recall": 0.3783783783783784,
+            "f1": 0.48
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 27,
+              "fp": 10,
+              "fn": 18,
+              "support": 45,
+              "precision": 0.7297297297297297,
+              "recall": 0.6,
+              "f1": 0.6585365853658537
+            },
+            "can": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.7058823529411765,
+              "recall": 0.631578947368421,
+              "f1": 0.6666666666666666
+            },
+            "cup": {
+              "tp": 21,
+              "fp": 6,
+              "fn": 8,
+              "support": 29,
+              "precision": 0.7777777777777778,
+              "recall": 0.7241379310344828,
+              "f1": 0.75
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.6,
+              "recall": 0.2,
+              "f1": 0.3
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 5,
+              "fp": 5,
+              "fn": 10,
+              "support": 15,
+              "precision": 0.5,
+              "recall": 0.3333333333333333,
+              "f1": 0.4
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 7,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.125,
+              "recall": 0.058823529411764705,
+              "f1": 0.08
+            },
+            "food_container": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 4,
+              "support": 7,
+              "precision": 0.6,
+              "recall": 0.42857142857142855,
+              "f1": 0.5
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 6,
+              "fp": 4,
+              "fn": 17,
+              "support": 23,
+              "precision": 0.6,
+              "recall": 0.2608695652173913,
+              "f1": 0.36363636363636365
+            },
+            "remote": {
+              "tp": 5,
+              "fp": 2,
+              "fn": 32,
+              "support": 37,
+              "precision": 0.7142857142857143,
+              "recall": 0.13513513513513514,
+              "f1": 0.22727272727272727
+            }
+          },
+          "wrong_label_instances": 22,
+          "no_overlapping_candidate_instances": 120,
+          "same_class_duplicate_pairs": 0,
+          "conflicting_label_pairs": 18,
+          "images_without_reviewable_candidate": 18,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 15
+            },
+            {
+              "truth": "bottle",
+              "predicted": "book",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 26
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "surfboard",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "frisbee",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 6
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 10
+            },
+            {
+              "truth": "can",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 8
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 5
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 17
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "cell phone",
+              "count": 6
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 7
+            },
+            {
+              "truth": "cup",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 21
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "toilet",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 3
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 15
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 31
+            },
+            {
+              "truth": "remote",
+              "predicted": "cell phone",
+              "count": 2
+            },
+            {
+              "truth": "remote",
+              "predicted": "remote",
+              "count": 4
+            }
+          ]
+        },
+        "after": {
+          "images": 117,
+          "overall": {
+            "tp": 82,
+            "fp": 42,
+            "fn": 140,
+            "support": 222,
+            "precision": 0.6612903225806451,
+            "recall": 0.36936936936936937,
+            "f1": 0.47398843930635837
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 27,
+              "fp": 10,
+              "fn": 18,
+              "support": 45,
+              "precision": 0.7297297297297297,
+              "recall": 0.6,
+              "f1": 0.6585365853658537
+            },
+            "can": {
+              "tp": 12,
+              "fp": 5,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.7058823529411765,
+              "recall": 0.631578947368421,
+              "f1": 0.6666666666666666
+            },
+            "cup": {
+              "tp": 21,
+              "fp": 6,
+              "fn": 8,
+              "support": 29,
+              "precision": 0.7777777777777778,
+              "recall": 0.7241379310344828,
+              "f1": 0.75
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.6,
+              "recall": 0.2,
+              "f1": 0.3
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 3,
+              "fp": 3,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.5,
+              "recall": 0.2,
+              "f1": 0.2857142857142857
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 7,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.125,
+              "recall": 0.058823529411764705,
+              "f1": 0.08
+            },
+            "food_container": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 4,
+              "support": 7,
+              "precision": 0.6,
+              "recall": 0.42857142857142855,
+              "f1": 0.5
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 6,
+              "fp": 4,
+              "fn": 17,
+              "support": 23,
+              "precision": 0.6,
+              "recall": 0.2608695652173913,
+              "f1": 0.36363636363636365
+            },
+            "remote": {
+              "tp": 5,
+              "fp": 2,
+              "fn": 32,
+              "support": 37,
+              "precision": 0.7142857142857143,
+              "recall": 0.13513513513513514,
+              "f1": 0.22727272727272727
+            }
+          },
+          "wrong_label_instances": 22,
+          "no_overlapping_candidate_instances": 122,
+          "same_class_duplicate_pairs": 0,
+          "conflicting_label_pairs": 16,
+          "images_without_reviewable_candidate": 18,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 15
+            },
+            {
+              "truth": "bottle",
+              "predicted": "book",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 26
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "surfboard",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "frisbee",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 6
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 10
+            },
+            {
+              "truth": "can",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 10
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 3
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 17
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "cell phone",
+              "count": 6
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 7
+            },
+            {
+              "truth": "cup",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 21
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "toilet",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 3
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 15
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 31
+            },
+            {
+              "truth": "remote",
+              "predicted": "cell phone",
+              "count": 2
+            },
+            {
+              "truth": "remote",
+              "predicted": "remote",
+              "count": 4
+            }
+          ]
+        }
+      }
+    },
+    "simulated_dim055": {
+      "v4": {
+        "before": {
+          "images": 117,
+          "overall": {
+            "tp": 64,
+            "fp": 29,
+            "fn": 158,
+            "support": 222,
+            "precision": 0.6881720430107527,
+            "recall": 0.2882882882882883,
+            "f1": 0.40634920634920635
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 22,
+              "fp": 4,
+              "fn": 23,
+              "support": 45,
+              "precision": 0.8461538461538461,
+              "recall": 0.4888888888888889,
+              "f1": 0.6197183098591549
+            },
+            "can": {
+              "tp": 12,
+              "fp": 3,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.8,
+              "recall": 0.631578947368421,
+              "f1": 0.7058823529411765
+            },
+            "cup": {
+              "tp": 18,
+              "fp": 6,
+              "fn": 11,
+              "support": 29,
+              "precision": 0.75,
+              "recall": 0.6206896551724138,
+              "f1": 0.6792452830188679
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 3,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.5,
+              "recall": 0.2,
+              "f1": 0.2857142857142857
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 5,
+              "fp": 6,
+              "fn": 10,
+              "support": 15,
+              "precision": 0.45454545454545453,
+              "recall": 0.3333333333333333,
+              "f1": 0.38461538461538464
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.16666666666666666,
+              "recall": 0.058823529411764705,
+              "f1": 0.08695652173913043
+            },
+            "food_container": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 5,
+              "support": 7,
+              "precision": 0.6666666666666666,
+              "recall": 0.2857142857142857,
+              "f1": 0.4
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 23,
+              "support": 23,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "remote": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 37,
+              "support": 37,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "wrong_label_instances": 17,
+          "no_overlapping_candidate_instances": 142,
+          "same_class_duplicate_pairs": 1,
+          "conflicting_label_pairs": 2,
+          "images_without_reviewable_candidate": 58,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 22
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 22
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 7
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 11
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 8
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 5
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 23
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 11
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 18
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 2
+            },
+            {
+              "truth": "food_container",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "paper",
+              "predicted": "food_container",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 14
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 34
+            },
+            {
+              "truth": "remote",
+              "predicted": "can",
+              "count": 3
+            }
+          ]
+        },
+        "after": {
+          "images": 117,
+          "overall": {
+            "tp": 64,
+            "fp": 27,
+            "fn": 158,
+            "support": 222,
+            "precision": 0.7032967032967034,
+            "recall": 0.2882882882882883,
+            "f1": 0.40894568690095845
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 22,
+              "fp": 4,
+              "fn": 23,
+              "support": 45,
+              "precision": 0.8461538461538461,
+              "recall": 0.4888888888888889,
+              "f1": 0.6197183098591549
+            },
+            "can": {
+              "tp": 12,
+              "fp": 3,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.8,
+              "recall": 0.631578947368421,
+              "f1": 0.7058823529411765
+            },
+            "cup": {
+              "tp": 18,
+              "fp": 6,
+              "fn": 11,
+              "support": 29,
+              "precision": 0.75,
+              "recall": 0.6206896551724138,
+              "f1": 0.6792452830188679
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 3,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.5,
+              "recall": 0.2,
+              "f1": 0.2857142857142857
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 5,
+              "fp": 4,
+              "fn": 10,
+              "support": 15,
+              "precision": 0.5555555555555556,
+              "recall": 0.3333333333333333,
+              "f1": 0.4166666666666667
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.16666666666666666,
+              "recall": 0.058823529411764705,
+              "f1": 0.08695652173913043
+            },
+            "food_container": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 5,
+              "support": 7,
+              "precision": 0.6666666666666666,
+              "recall": 0.2857142857142857,
+              "f1": 0.4
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 23,
+              "support": 23,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "remote": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 37,
+              "support": 37,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "wrong_label_instances": 16,
+          "no_overlapping_candidate_instances": 143,
+          "same_class_duplicate_pairs": 1,
+          "conflicting_label_pairs": 2,
+          "images_without_reviewable_candidate": 59,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 22
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 22
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 7
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 11
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 8
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 5
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 23
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 11
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 18
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 2
+            },
+            {
+              "truth": "food_container",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "paper",
+              "predicted": "food_container",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 14
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 34
+            },
+            {
+              "truth": "remote",
+              "predicted": "can",
+              "count": 3
+            }
+          ]
+        }
+      },
+      "combined": {
+        "before": {
+          "images": 117,
+          "overall": {
+            "tp": 82,
+            "fp": 35,
+            "fn": 140,
+            "support": 222,
+            "precision": 0.7008547008547008,
+            "recall": 0.36936936936936937,
+            "f1": 0.4837758112094395
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 25,
+              "fp": 7,
+              "fn": 20,
+              "support": 45,
+              "precision": 0.78125,
+              "recall": 0.5555555555555556,
+              "f1": 0.6493506493506493
+            },
+            "can": {
+              "tp": 12,
+              "fp": 3,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.8,
+              "recall": 0.631578947368421,
+              "f1": 0.7058823529411765
+            },
+            "cup": {
+              "tp": 20,
+              "fp": 7,
+              "fn": 9,
+              "support": 29,
+              "precision": 0.7407407407407407,
+              "recall": 0.6896551724137931,
+              "f1": 0.7142857142857143
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 3,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.5,
+              "recall": 0.2,
+              "f1": 0.2857142857142857
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 5,
+              "fp": 5,
+              "fn": 10,
+              "support": 15,
+              "precision": 0.5,
+              "recall": 0.3333333333333333,
+              "f1": 0.4
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.16666666666666666,
+              "recall": 0.058823529411764705,
+              "f1": 0.08695652173913043
+            },
+            "food_container": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 5,
+              "support": 7,
+              "precision": 0.6666666666666666,
+              "recall": 0.2857142857142857,
+              "f1": 0.4
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 7,
+              "fp": 2,
+              "fn": 16,
+              "support": 23,
+              "precision": 0.7777777777777778,
+              "recall": 0.30434782608695654,
+              "f1": 0.4375
+            },
+            "remote": {
+              "tp": 6,
+              "fp": 1,
+              "fn": 31,
+              "support": 37,
+              "precision": 0.8571428571428571,
+              "recall": 0.16216216216216217,
+              "f1": 0.2727272727272727
+            }
+          },
+          "wrong_label_instances": 19,
+          "no_overlapping_candidate_instances": 125,
+          "same_class_duplicate_pairs": 0,
+          "conflicting_label_pairs": 14,
+          "images_without_reviewable_candidate": 19,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 19
+            },
+            {
+              "truth": "bottle",
+              "predicted": "book",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 23
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "surfboard",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "frisbee",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 6
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 10
+            },
+            {
+              "truth": "can",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 8
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 5
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 16
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "cell phone",
+              "count": 7
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 9
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 20
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 2
+            },
+            {
+              "truth": "food_container",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "toilet",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "paper",
+              "predicted": "food_container",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 14
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 30
+            },
+            {
+              "truth": "remote",
+              "predicted": "cell phone",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "remote",
+              "count": 6
+            }
+          ]
+        },
+        "after": {
+          "images": 117,
+          "overall": {
+            "tp": 82,
+            "fp": 33,
+            "fn": 140,
+            "support": 222,
+            "precision": 0.7130434782608696,
+            "recall": 0.36936936936936937,
+            "f1": 0.486646884272997
+          },
+          "per_class": {
+            "bottle": {
+              "tp": 25,
+              "fp": 7,
+              "fn": 20,
+              "support": 45,
+              "precision": 0.78125,
+              "recall": 0.5555555555555556,
+              "f1": 0.6493506493506493
+            },
+            "can": {
+              "tp": 12,
+              "fp": 3,
+              "fn": 7,
+              "support": 19,
+              "precision": 0.8,
+              "recall": 0.631578947368421,
+              "f1": 0.7058823529411765
+            },
+            "cup": {
+              "tp": 20,
+              "fp": 7,
+              "fn": 9,
+              "support": 29,
+              "precision": 0.7407407407407407,
+              "recall": 0.6896551724137931,
+              "f1": 0.7142857142857143
+            },
+            "plastic_bag": {
+              "tp": 3,
+              "fp": 3,
+              "fn": 12,
+              "support": 15,
+              "precision": 0.5,
+              "recall": 0.2,
+              "f1": 0.2857142857142857
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 4,
+              "support": 4,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "cardboard": {
+              "tp": 5,
+              "fp": 3,
+              "fn": 10,
+              "support": 15,
+              "precision": 0.625,
+              "recall": 0.3333333333333333,
+              "f1": 0.43478260869565216
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 5,
+              "support": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 16,
+              "support": 17,
+              "precision": 0.16666666666666666,
+              "recall": 0.058823529411764705,
+              "f1": 0.08695652173913043
+            },
+            "food_container": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 5,
+              "support": 7,
+              "precision": 0.6666666666666666,
+              "recall": 0.2857142857142857,
+              "f1": 0.4
+            },
+            "bottle_cap": {
+              "tp": 1,
+              "fp": 0,
+              "fn": 5,
+              "support": 6,
+              "precision": 1.0,
+              "recall": 0.16666666666666666,
+              "f1": 0.2857142857142857
+            },
+            "cell phone": {
+              "tp": 7,
+              "fp": 2,
+              "fn": 16,
+              "support": 23,
+              "precision": 0.7777777777777778,
+              "recall": 0.30434782608695654,
+              "f1": 0.4375
+            },
+            "remote": {
+              "tp": 6,
+              "fp": 1,
+              "fn": 31,
+              "support": 37,
+              "precision": 0.8571428571428571,
+              "recall": 0.16216216216216217,
+              "f1": 0.2727272727272727
+            }
+          },
+          "wrong_label_instances": 19,
+          "no_overlapping_candidate_instances": 125,
+          "same_class_duplicate_pairs": 0,
+          "conflicting_label_pairs": 13,
+          "images_without_reviewable_candidate": 19,
+          "empty_target_images": 10,
+          "images_with_false_positive_on_empty": 0,
+          "confusion": [
+            {
+              "truth": "bottle",
+              "predicted": "__missed__",
+              "count": 19
+            },
+            {
+              "truth": "bottle",
+              "predicted": "book",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "bottle",
+              "count": 23
+            },
+            {
+              "truth": "bottle",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "bottle",
+              "predicted": "surfboard",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "__missed__",
+              "count": 4
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "bottle_cap",
+              "count": 1
+            },
+            {
+              "truth": "bottle_cap",
+              "predicted": "frisbee",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "__missed__",
+              "count": 6
+            },
+            {
+              "truth": "can",
+              "predicted": "bottle",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "can",
+              "count": 10
+            },
+            {
+              "truth": "can",
+              "predicted": "cup",
+              "count": 1
+            },
+            {
+              "truth": "can",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "__missed__",
+              "count": 8
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "cardboard",
+              "count": 5
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "drink_carton",
+              "count": 1
+            },
+            {
+              "truth": "cardboard",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "__missed__",
+              "count": 16
+            },
+            {
+              "truth": "cell phone",
+              "predicted": "cell phone",
+              "count": 7
+            },
+            {
+              "truth": "cup",
+              "predicted": "__missed__",
+              "count": 9
+            },
+            {
+              "truth": "cup",
+              "predicted": "cup",
+              "count": 20
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "cardboard",
+              "count": 1
+            },
+            {
+              "truth": "drink_carton",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "__missed__",
+              "count": 3
+            },
+            {
+              "truth": "food_container",
+              "predicted": "food_container",
+              "count": 2
+            },
+            {
+              "truth": "food_container",
+              "predicted": "kite",
+              "count": 1
+            },
+            {
+              "truth": "food_container",
+              "predicted": "toilet",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "__missed__",
+              "count": 2
+            },
+            {
+              "truth": "paper",
+              "predicted": "food_container",
+              "count": 1
+            },
+            {
+              "truth": "paper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "__missed__",
+              "count": 12
+            },
+            {
+              "truth": "plastic_bag",
+              "predicted": "plastic_bag",
+              "count": 3
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "__missed__",
+              "count": 14
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "can",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_bag",
+              "count": 1
+            },
+            {
+              "truth": "plastic_wrapper",
+              "predicted": "plastic_wrapper",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "__missed__",
+              "count": 30
+            },
+            {
+              "truth": "remote",
+              "predicted": "cell phone",
+              "count": 1
+            },
+            {
+              "truth": "remote",
+              "predicted": "remote",
+              "count": 6
+            }
+          ]
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "camera_report": "33fcc8309dec5b48ca96e3ef4c094141a97b4b9e46330b3823d78a6f57fe1a34",
+    "benchmark": "fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa",
+    "validation_predictions": "50445b0b62e59a0ece64e19488057ea1d01bc758890e08f8c787b0c0ebd37f4e",
+    "test_predictions": "b6bb9f4973a4dcd83985bf0caa4b07f8d4cb9a393d62d52f449bf67417d4bac9",
+    "manifest": "846f9a112db657c0352582acaa25aa935eed32ea18ec6a6a626373d790816c8a",
+    "candidate_profile": "dd594a014cafc028ddd1e97a49df37e343ee876218a149ab0313b880e929f47d"
+  },
+  "limitations": [
+    "Review threshold changes candidate eligibility. Model weights and probability scores are identical.",
+    "Predictions below 0.5 were not retained by the fixed validation/test cache, which is sufficient for this upward threshold change.",
+    "Camera predictions are replayed through the actual review policy. Inference latency is not remeasured.",
+    "The public replay has already been inspected during development. Physical-camera generalization is unverified.",
+    "This policy does not resolve phone versus remote classification."
+  ]
+}

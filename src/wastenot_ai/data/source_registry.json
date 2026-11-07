@@ -134,5 +134,13 @@
     "region": "DKI Jakarta, Indonesia",
     "checked_at": "2026-10-20",
     "scope_note": "Contoh jalur baterai melalui dropbox. Konfirmasi jenis dan kondisi yang diterima; penjemputan memiliki syarat tersendiri, bukan jaminan layanan nasional."
+  },
+  {
+    "url": "https://www.who.int/news-room/fact-sheets/detail/health-care-waste",
+    "title": "Health-care waste",
+    "publisher": "World Health Organization",
+    "region": "Global; penerapan dan penerima mengikuti aturan setempat",
+    "checked_at": "2026-11-07",
+    "scope_note": "Prinsip pemisahan limbah infeksius/medis dan risiko penanganannya; bukan janji penerimaan fasilitas kesehatan tertentu."
   }
 ]

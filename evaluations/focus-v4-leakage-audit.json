@@ -1,0 +1,286 @@
+{
+  "status": "PASS",
+  "benchmark_sha256": "fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa",
+  "inherited_images_preserved": 3798,
+  "new_waste_images": 95,
+  "general_images": 620,
+  "existing_waste_test_benchmark_matches": [
+    {
+      "image": "images/test/DrinkingWasteV2-c9ef43257a507a8017f2.jpg",
+      "benchmark_id": "DrinkingWasteV2-c9ef43257a507a8017f2"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-ce15a391aaa2bfe903d1.jpg",
+      "benchmark_id": "DrinkingWasteV2-ce15a391aaa2bfe903d1"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-3faa0e6327ba4ce7b7be.jpg",
+      "benchmark_id": "DrinkingWasteV2-3faa0e6327ba4ce7b7be"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-c9be8cce671a82570080.jpg",
+      "benchmark_id": "DrinkingWasteV2-c9be8cce671a82570080"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-d7e92c0bf35bbd89e620.jpg",
+      "benchmark_id": "DrinkingWasteV2-d7e92c0bf35bbd89e620"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-b0b252804483f0bc2a6a.jpg",
+      "benchmark_id": "DrinkingWasteV2-b0b252804483f0bc2a6a"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-1cb0aebecec5c7af27d3.jpg",
+      "benchmark_id": "DrinkingWasteV2-1cb0aebecec5c7af27d3"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-7045385acd99b1ccd0b4.jpg",
+      "benchmark_id": "DrinkingWasteV2-7045385acd99b1ccd0b4"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-1b2f0933102da721aba8.jpg",
+      "benchmark_id": "DrinkingWasteV2-1b2f0933102da721aba8"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-28a7c46e444982d8645c.jpg",
+      "benchmark_id": "DrinkingWasteV2-28a7c46e444982d8645c"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-703440e99853ad204abf.jpg",
+      "benchmark_id": "DrinkingWasteV2-703440e99853ad204abf"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-1140e4df903590e9ff0d.jpg",
+      "benchmark_id": "DrinkingWasteV2-1140e4df903590e9ff0d"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-1ce6947a390285b96c13.jpg",
+      "benchmark_id": "DrinkingWasteV2-1ce6947a390285b96c13"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-36f03c310901937a2d07.jpg",
+      "benchmark_id": "DrinkingWasteV2-36f03c310901937a2d07"
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-128edc1e2b924e4d2986.jpg",
+      "benchmark_id": "DrinkingWasteV2-128edc1e2b924e4d2986"
+    },
+    {
+      "image": "images/test/TACO-1201.jpg",
+      "benchmark_id": "TACO-1201"
+    },
+    {
+      "image": "images/test/TACO-1204.jpg",
+      "benchmark_id": "TACO-1204"
+    },
+    {
+      "image": "images/test/TACO-1343.jpg",
+      "benchmark_id": "TACO-1343"
+    },
+    {
+      "image": "images/test/TACO-1349.jpg",
+      "benchmark_id": "TACO-1349"
+    },
+    {
+      "image": "images/test/TACO-915.jpg",
+      "benchmark_id": "TACO-915"
+    },
+    {
+      "image": "images/test/TACO-1233.jpg",
+      "benchmark_id": "TACO-1233"
+    },
+    {
+      "image": "images/test/TACO-1169.jpg",
+      "benchmark_id": "TACO-1169"
+    },
+    {
+      "image": "images/test/TACO-763.jpg",
+      "benchmark_id": "TACO-763"
+    },
+    {
+      "image": "images/test/TACO-891.jpg",
+      "benchmark_id": "TACO-891"
+    },
+    {
+      "image": "images/test/TACO-802.jpg",
+      "benchmark_id": "TACO-802"
+    },
+    {
+      "image": "images/test/TACO-95.jpg",
+      "benchmark_id": "TACO-95"
+    },
+    {
+      "image": "images/test/TACO-1203.jpg",
+      "benchmark_id": "TACO-1203"
+    },
+    {
+      "image": "images/test/TACO-1206.jpg",
+      "benchmark_id": "TACO-1206"
+    },
+    {
+      "image": "images/test/TACO-1354.jpg",
+      "benchmark_id": "TACO-1354"
+    },
+    {
+      "image": "images/test/TACO-1355.jpg",
+      "benchmark_id": "TACO-1355"
+    },
+    {
+      "image": "images/test/TACO-913.jpg",
+      "benchmark_id": "TACO-913"
+    },
+    {
+      "image": "images/test/TACO-928.jpg",
+      "benchmark_id": "TACO-928"
+    },
+    {
+      "image": "images/test/TACO-1235.jpg",
+      "benchmark_id": "TACO-1235"
+    },
+    {
+      "image": "images/test/TACO-1165.jpg",
+      "benchmark_id": "TACO-1165"
+    },
+    {
+      "image": "images/test/TACO-1159.jpg",
+      "benchmark_id": "TACO-1159"
+    },
+    {
+      "image": "images/test/TACO-1158.jpg",
+      "benchmark_id": "TACO-1158"
+    },
+    {
+      "image": "images/test/TACO-712.jpg",
+      "benchmark_id": "TACO-712"
+    },
+    {
+      "image": "images/test/TACO-711.jpg",
+      "benchmark_id": "TACO-711"
+    },
+    {
+      "image": "images/test/TACO-705.jpg",
+      "benchmark_id": "TACO-705"
+    },
+    {
+      "image": "images/test/TACO-890.jpg",
+      "benchmark_id": "TACO-890"
+    },
+    {
+      "image": "images/test/TACO-799.jpg",
+      "benchmark_id": "TACO-799"
+    },
+    {
+      "image": "images/test/TACO-98.jpg",
+      "benchmark_id": "TACO-98"
+    },
+    {
+      "image": "images/test/TACO-99.jpg",
+      "benchmark_id": "TACO-99"
+    },
+    {
+      "image": "images/test/TACO-100.jpg",
+      "benchmark_id": "TACO-100"
+    },
+    {
+      "image": "images/test/TACO-1452.jpg",
+      "benchmark_id": "TACO-1452"
+    },
+    {
+      "image": "images/test/TACO-109.jpg",
+      "benchmark_id": "TACO-109"
+    },
+    {
+      "image": "images/test/TACO-120.jpg",
+      "benchmark_id": "TACO-120"
+    }
+  ],
+  "cross_model_shared_or_near_images": [
+    {
+      "general_image": "images/train/OpenImages-a17f85e33b8bbeb5.jpg",
+      "waste_image": "images/train/OpenImages-a17f85e33b8bbeb5.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-92b35794b20fe67d.jpg",
+      "waste_image": "images/train/OpenImages-92b35794b20fe67d.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-98ba97deb0feb657.jpg",
+      "waste_image": "images/train/OpenImages-98ba97deb0feb657.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-92a0a6e90840355f.jpg",
+      "waste_image": "images/train/OpenImages-92a0a6e90840355f.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-5563f792d702bdbd.jpg",
+      "waste_image": "images/train/OpenImages-5563f792d702bdbd.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-93761b495f38db5a.jpg",
+      "waste_image": "images/train/OpenImages-93761b495f38db5a.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-04e310af546ec9d0.jpg",
+      "waste_image": "images/train/OpenImages-04e310af546ec9d0.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-f187717e68a02c4b.jpg",
+      "waste_image": "images/train/OpenImages-f187717e68a02c4b.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-16374cbdb62f53de.jpg",
+      "waste_image": "images/train/OpenImages-16374cbdb62f53de.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-5feee9cc4477d5bd.jpg",
+      "waste_image": "images/train/OpenImages-5feee9cc4477d5bd.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-3244bcda9de87cdf.jpg",
+      "waste_image": "images/train/OpenImages-3244bcda9de87cdf.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-2e402ae4b2addb7e.jpg",
+      "waste_image": "images/train/OpenImages-2e402ae4b2addb7e.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-fef817805b4d939b.jpg",
+      "waste_image": "images/train/OpenImages-fef817805b4d939b.jpg",
+      "split": "train",
+      "identical_sha256": true
+    },
+    {
+      "general_image": "images/train/OpenImages-0c9c9ebe5c9aff0b.jpg",
+      "waste_image": "images/train/OpenImages-0c9c9ebe5c9aff0b.jpg",
+      "split": "train",
+      "identical_sha256": true
+    }
+  ],
+  "new_data_benchmark_matches": 0,
+  "cross_model_split_conflicts": 0,
+  "scope": "Manifest identity and proxy-group/pHash leakage checks. Pair with verify_broad_data.py for file and label checks."
+}

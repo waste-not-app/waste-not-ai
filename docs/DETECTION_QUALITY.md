@@ -1,6 +1,6 @@
 # Mutu keputusan YOLO
 
-20 Oktober 2026. Checkpoint tetap `af1446f33338…`; pembaruan ini mengubah cara meninjau prediksi, bukan melatih bobot baru. Model COCO tetap default. Kandidat empat kelas digunakan melalui `ai/demo-camera-trained.bat` atau `--model`.
+20 Oktober 2026. Checkpoint tetap `af1446f33338…`; pembaruan ini mengubah cara meninjau prediksi, bukan melatih bobot baru. Model COCO tetap default. Kandidat empat kelas digunakan melalui `demo-camera-trained.bat` atau `--model`.
 
 ## Pengukuran dan keputusan
 
@@ -43,20 +43,20 @@ Go menyimpan snapshot penuh dan mengirim `model_sha256` dari respons privat seba
 
 ```powershell
 # Venv training/CUDA yang sudah disiapkan, ~681 inference; selanjutnya menggunakan cache terikat hash.
-.\.venv-ai-train\Scripts\python.exe ai/scripts/calibrate_yolo.py --device 0
+.\.venv-ai-train\Scripts\python.exe scripts/calibrate_yolo.py --device 0
 # Enam pola sintetis, tidak mengakses kamera atau Gemini.
-.\.venv-ai-train\Scripts\python.exe ai/scripts/evaluate_detection_quality.py --synthetic --device 0
+.\.venv-ai-train\Scripts\python.exe scripts/evaluate_detection_quality.py --synthetic --device 0
 # Tes perilaku threshold, konflik dan provenance tanpa model/GPU.
-.\.venv-ai\Scripts\python.exe -m pytest ai/tests/test_detection_quality.py -q
+.\.venv-ai\Scripts\python.exe -m pytest tests/test_detection_quality.py -q
 ```
 
-Cache raw prediksi berada di `ai/artifacts/calibration/validation-predictions.json`, diabaikan Git. Script tidak otomatis mengganti profil distribusi; perubahan profil memerlukan pemeriksaan report, pembaruan JSON, regenerasi kontrak dan tes.
+Cache raw prediksi berada di `artifacts/calibration/validation-predictions.json`, diabaikan Git. Script tidak otomatis mengganti profil distribusi; perubahan profil memerlukan pemeriksaan report, pembaruan JSON, regenerasi kontrak dan tes.
 
 ## Negatif, OOD dan holdout kamera
 
 Enam gambar sintetis (empat warna polos, dua checkerboard) menghasilkan nol kandidat tinjau/OFFERED pada checkpoint ini; [laporan](../evaluations/detection-synthetic-20261020.json). **Ini sanity check, bukan pengukuran penolakan objek nyata di luar cakupan.** Belum ada holdout kamera Indonesia berlabel atau negative/OOD terverifikasi; tidak ada angka akurasi dunia nyata yang dibuat dari pola tersebut.
 
-Gunakan template [camera-holdout-manifest.json](../examples/camera-holdout-manifest.json), salin ke `ai/data/local/camera-holdout/manifest.json`, lalu isi foto sendiri yang memang boleh digunakan. Ambil sesi dan benda fisik baru, pisahkan dari training/val. Target awal pengumpulan: ≥20 benda fisik per kelas dalam beberapa latar/pencahayaan, ≥50 foto negatif (ruang kosong, orang, meja tanpa target), dan ≥50 OOD (cangkir, keramik, mainan, baterai/kardus tanpa empat target). Angka tersebut adalah rencana pengumpulan, bukan dataset yang sudah ada atau ukuran release gate statistik.
+Gunakan template [camera-holdout-manifest.json](../examples/camera-holdout-manifest.json), salin ke `data/local/camera-holdout/manifest.json`, lalu isi foto sendiri yang memang boleh digunakan. Ambil sesi dan benda fisik baru, pisahkan dari training/val. Target awal pengumpulan: ≥20 benda fisik per kelas dalam beberapa latar/pencahayaan, ≥50 foto negatif (ruang kosong, orang, meja tanpa target), dan ≥50 OOD (cangkir, keramik, mainan, baterai/kardus tanpa empat target). Angka tersebut adalah rencana pengumpulan, bukan dataset yang sudah ada atau ukuran release gate statistik.
 
 Setiap record:
 
@@ -77,7 +77,7 @@ Setiap record:
 `kind=POSITIVE` memerlukan physical_object_ids dan seluruh bbox target `{class_id:0..3,bbox:[xmin,ymin,xmax,ymax]}` 0..1 sesuai foto setelah EXIF transpose. NEGATIVE/OOD memerlukan anotasi target kosong yang sudah diperiksa, termasuk latar. Jalankan tanpa menyetel threshold terhadap hasilnya:
 
 ```powershell
-.\.venv-ai-train\Scripts\python.exe ai/scripts/evaluate_detection_quality.py --manifest ai/data/local/camera-holdout/manifest.json --device 0 --output ai/artifacts/camera-holdout-report.json
+.\.venv-ai-train\Scripts\python.exe scripts/evaluate_detection_quality.py --manifest data/local/camera-holdout/manifest.json --device 0 --output artifacts/camera-holdout-report.json
 ```
 
 Evaluator memeriksa review/session, hash, duplikat dan kelas, lalu melaporkan TP/FP/FN serta jumlah gambar kosong yang mendapat kandidat salah, dipisahkan per kind dan band. Template kosong ditolak. Audit independensi benda/sesi tetap perlu dilakukan peninjau; program tidak dapat membuktikannya hanya dari nama ID. Simpan gambar di folder lokal yang diabaikan Git.

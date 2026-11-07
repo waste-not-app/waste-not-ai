@@ -14,15 +14,15 @@ Gemini kini **sudah diuji langsung** memakai konfigurasi lokal pengguna: adapter
 
 Pengujian Python terbaru: **114 tes lulus** untuk policy, mapping, worker serta API demo lokal, termasuk rotasi key, klasifikasi risiko, koreksi objek berisiko, deadline Gemini dan mutu panduan. Pengujian browser: **15 pemeriksaan lulus, tanpa error JavaScript**, menggunakan kamera palsu Chromium, YOLO nyata, empat label Gemini live, konteks pencucian, risiko ambigu/berbahaya, sumber berwilayah, perubahan kondisi, viewport 390 px dan kamera ditolak. Kamera fisik tetap perlu dicoba oleh pengguna.
 
-Policy-04 memperbaiki kasus pengguna: cangkir keramik DIRTY/INTACT/YES dengan niat reuse=true, cleanable=YES dan soiling=FOOD_DRINK berhasil mendapat **READY/REUSE setelah dicuci** melalui Gemini di browser. Input tetap DIRTY. Checkbox risiko tanpa jenis menghasilkan NEEDS_CONTEXT tanpa Gemini; kontaminasi kimia tidak menghasilkan Reuse/Trash/Reduce otomatis. Screenshot lokal: `ai/artifacts/camera-demo-washable-mug.png`. Registri sumber kini meliputi penerbit, wilayah dan batas cakupan, termasuk rujukan Pemkab Banjarnegara. Rincian dan batas evaluasi: [GUIDE_QUALITY](GUIDE_QUALITY.md).
+Policy-04 memperbaiki kasus pengguna: cangkir keramik DIRTY/INTACT/YES dengan niat reuse=true, cleanable=YES dan soiling=FOOD_DRINK berhasil mendapat **READY/REUSE setelah dicuci** melalui Gemini di browser. Input tetap DIRTY. Checkbox risiko tanpa jenis menghasilkan NEEDS_CONTEXT tanpa Gemini; kontaminasi kimia tidak menghasilkan Reuse/Trash/Reduce otomatis. Screenshot lokal: `artifacts/camera-demo-washable-mug.png`. Registri sumber kini meliputi penerbit, wilayah dan batas cakupan, termasuk rujukan Pemkab Banjarnegara. Rincian dan batas evaluasi: [GUIDE_QUALITY](GUIDE_QUALITY.md).
 
 Review sebelum publikasi menemukan dan memperbaiki dua masalah: CLI sekarang mempertahankan risiko dari objek deteksi meskipun material/jenis dikoreksi; Gemini kini memiliki deadline keseluruhan yang dapat membatalkan request, dan menolak respons terlambat. Kedua jalur mendapat tes regresi. Smoke worker dengan YOLO nyata, browser dengan Gemini live, dan build wheel beserta resource/exclusion verifier kembali lulus. Workflow AI CI menjalankan tes offline tanpa key/model/foto pengguna.
 
-Policy-03 diverifikasi live melalui browser: gelas kaca dengan integrity=DAMAGED menghasilkan **READY/TRASH**, alasan, sumber pecahan kaca Cornwall, langkah pengemasan tanpa langkah reuse, serta caution penanganan khusus di bawah label. Baterai menghasilkan **READY/RECYCLE** dengan rute pengumpul khusus dan caution. Penanganan khusus tidak lagi mengganti label utama atau menghentikan Gemini. Screenshot lokal: `ai/artifacts/camera-demo-special-classification.png`.
+Policy-03 diverifikasi live melalui browser: gelas kaca dengan integrity=DAMAGED menghasilkan **READY/TRASH**, alasan, sumber pecahan kaca Cornwall, langkah pengemasan tanpa langkah reuse, serta caution penanganan khusus di bawah label. Baterai menghasilkan **READY/RECYCLE** dengan rute pengumpul khusus dan caution. Penanganan khusus tidak lagi mengganti label utama atau menghentikan Gemini. Screenshot lokal: `artifacts/camera-demo-special-classification.png`.
 
-Rotasi lima key diverifikasi dengan transport HTTP palsu: urutan round-robin, request bersamaan, skip key cooldown, Retry-After/RetryInfo, semua key dibatasi, key ditolak 401/403, satu anggaran timeout, tanpa retry untuk timeout/5xx/output rusak, pemilihan env, redaksi doctor dan pembersihan secret worker. Kelima slot lokal masih kosong saat verifikasi. Smoke Gemini live setelah perubahan berhasil READY/RECYCLE menggunakan key tunggal lama; tidak menguji lima kredensial nyata atau sengaja menghabiskan kuota. Hasil lokal: `ai/artifacts/gemini-rotation-legacy-smoke.json`.
+Rotasi lima key diverifikasi dengan transport HTTP palsu: urutan round-robin, request bersamaan, skip key cooldown, Retry-After/RetryInfo, semua key dibatasi, key ditolak 401/403, satu anggaran timeout, tanpa retry untuk timeout/5xx/output rusak, pemilihan env, redaksi doctor dan pembersihan secret worker. Kelima slot lokal masih kosong saat verifikasi. Smoke Gemini live setelah perubahan berhasil READY/RECYCLE menggunakan key tunggal lama; tidak menguji lima kredensial nyata atau sengaja menghabiskan kuota. Hasil lokal: `artifacts/gemini-rotation-legacy-smoke.json`.
 
-Laporan lokal: `ai/artifacts/camera-demo-browser.json`; screenshot: `camera-demo-desktop.png`, `camera-demo-gemini.png`, `camera-demo-mobile.png`. Script reproduksi: `ai/scripts/verify_camera_demo.py --live-gemini` dengan server demo aktif. Foto mentah dan key tidak disertakan dalam Git.
+Laporan lokal: `artifacts/camera-demo-browser.json`; screenshot: `camera-demo-desktop.png`, `camera-demo-gemini.png`, `camera-demo-mobile.png`. Script reproduksi: `scripts/verify_camera_demo.py --live-gemini` dengan server demo aktif. Foto mentah dan key tidak disertakan dalam Git.
 
 ## Lingkungan dan artifact
 
@@ -49,19 +49,19 @@ SHA-256 sampel: `2107981d12851a3205d008483ab8b5f150183c0939359bd9902f170aecd65de
 | Ukuran pengukuran | Satu gambar, satu warm-up + lima pengulangan; tidak termasuk waktu load model/proses CLI |
 | Akurasi pilot / mAP / recall | BELUM DIUKUR |
 
-JSON lengkap hasil lokal berada di `ai/artifacts/detection.json` dan `ai/artifacts/baseline.json`. Timing hanya berlaku untuk sampel/runtime/perangkat ini dan tidak menjanjikan performa endpoint Android.
+JSON lengkap hasil lokal berada di `artifacts/detection.json` dan `artifacts/baseline.json`. Timing hanya berlaku untuk sampel/runtime/perangkat ini dan tidak menjanjikan performa endpoint Android.
 
 ## Alur lengkap yang sudah dicoba
 
 YOLO nyata → object-3/bottle → konteks uji glass_bottle/CLEAN/INTACT → panduan draf → provider **fixture** → validasi → RECYCLE, evidence `glass-intact-recycle-v1` → menunggu konfirmasi metode/jumlah. Tidak ada waste log atau XP yang dibuat. Konteks adalah input skenario uji, bukan fakta kondisi hasil kamera. Respons `prototype_only=true` dan `provider=fixture`.
 
-`ai/artifacts/pipeline-fixture.json` memuat hasil lokal. Nama object_id mengikuti hasil request; jangan selalu memilih object-1, yang pada sampel ini adalah kelas nonpilot.
+`artifacts/pipeline-fixture.json` memuat hasil lokal. Nama object_id mengikuti hasil request; jangan selalu memilih object-1, yang pada sampel ini adalah kelas nonpilot.
 
 ## Pengujian otomatis
 
-**52 tes lulus** (`pytest ai/tests -q`, 0,88 detik pada pengujian terakhir). Meliputi batas 0,49/0,50/0,699/0,70, NaN/bbox invalid, taxonomy mismatch, spoof category, draf/expired/no guide, kondisi UNKNOWN, special handling, enum dan evidence palsu, REUSE dengan konteks positif, prosa LLM yang tidak diteruskan, HTTP Gemini/timeout/truncation/missing key/model, batas media/orientasi/EXIF, worker auth/overload/deadline, dan alur tanpa autosave.
+**52 tes lulus** (`pytest tests -q`, 0,88 detik pada pengujian terakhir). Meliputi batas 0,49/0,50/0,699/0,70, NaN/bbox invalid, taxonomy mismatch, spoof category, draf/expired/no guide, kondisi UNKNOWN, special handling, enum dan evidence palsu, REUSE dengan konteks positif, prosa LLM yang tidak diteruskan, HTTP Gemini/timeout/truncation/missing key/model, batas media/orientasi/EXIF, worker auth/overload/deadline, dan alur tanpa autosave.
 
-`ai/scripts/verify_runtime.py` juga lulus dengan **model YOLO nyata melalui adapter HTTP privat** (TestClient, bukan server publik): auth wajib, deteksi berhasil, satu objek dipilih, rekomendasi fixture READY, saved_log=false. Ringkasan lokal: `ai/artifacts/runtime-smoke.json`.
+`scripts/verify_runtime.py` juga lulus dengan **model YOLO nyata melalui adapter HTTP privat** (TestClient, bukan server publik): auth wajib, deteksi berhasil, satu objek dipilih, rekomendasi fixture READY, saved_log=false. Ringkasan lokal: `artifacts/runtime-smoke.json`.
 
 ## Yang belum dibuktikan
 

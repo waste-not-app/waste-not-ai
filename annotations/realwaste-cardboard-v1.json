@@ -1,0 +1,662 @@
+[
+  {
+    "source_id": "Cardboard_323",
+    "decision": "APPROVED",
+    "raw_sha256": "672535768180543a6bfd89e65bb923fa0526b7fe95adea7cea0ca681728df22d",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393666+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      49,
+      105,
+      486,
+      442
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_455",
+    "decision": "APPROVED",
+    "raw_sha256": "a6c5876255b9c445c41efc208f71cf61a0e04797f06ec614c60abeb17eac58c6",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393686+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      85,
+      40,
+      382,
+      411
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_237",
+    "decision": "APPROVED",
+    "raw_sha256": "6535f65ed6cf7b680f5a59c06b92d48d58025adbaade642d18bde53c29269292",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393691+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      72,
+      72,
+      478,
+      475
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_446",
+    "decision": "APPROVED",
+    "raw_sha256": "c1325421d602f488e0b00ccfd04eb72df2834ba22a74b2ae252ddbb80e457538",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393694+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      0,
+      24,
+      519,
+      492
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_351",
+    "decision": "DEFERRED",
+    "raw_sha256": "5bf0e058d3b619191bf9ca0e8e7ebd7f6361238d7630d7313b17d9d9c156f99f",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393697+00:00",
+    "reason": "Material or source cardboard classification remains ambiguous.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_317",
+    "decision": "DEFERRED",
+    "raw_sha256": "7e02c5a767de26405c010322d38ad7d9a798572e203d119a40866cfd761018dc",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393700+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_67",
+    "decision": "DEFERRED",
+    "raw_sha256": "52f501bd2f2939e2fa408e0726f648ccc87d906e674f2d1215dccc8b2fda487c",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393703+00:00",
+    "reason": "Possible overlapping packaging requires instance-completeness review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_179",
+    "decision": "DEFERRED",
+    "raw_sha256": "e86a52a065454f285ffbd4d7e40bbc2436b6e9d2a1fff1623d52249ac570ec8c",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393705+00:00",
+    "reason": "Food container / molded pulp taxonomy requires separate review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_36",
+    "decision": "DEFERRED",
+    "raw_sha256": "3500180bc384be18a43aed14c979ca3d54fb32d9f596713ee608bfc886dc061c",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393708+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_401",
+    "decision": "APPROVED",
+    "raw_sha256": "ca8db81ab8b83592a61af87370825d89fc4a03b0750886e4f10052475035a6b4",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393710+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      72,
+      0,
+      469,
+      425
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_14",
+    "decision": "DEFERRED",
+    "raw_sha256": "410d2740f4a20ee98533389b818f0fc9b5e793ae9dbb49759b9d2b96c31187c2",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393713+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_447",
+    "decision": "APPROVED",
+    "raw_sha256": "a6ec757b29cdd3cc63fc06eae3a32032736c9c8248fd1e635c0af0cb54d9d536",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393716+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      8,
+      20,
+      484,
+      520
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_9",
+    "decision": "APPROVED",
+    "raw_sha256": "2f50c4e54802a85f4e982ba5352b4b4e12fbafe464f6d944577fdb227bd3f998",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393718+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      48,
+      96,
+      507,
+      472
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_89",
+    "decision": "DEFERRED",
+    "raw_sha256": "183a1c0e7651e4cf69f6bf92a8c702219c640b6b497973633c5954a7a3891e30",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393721+00:00",
+    "reason": "Beverage packaging needs separate drink_carton mapping review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_359",
+    "decision": "DEFERRED",
+    "raw_sha256": "5e86783544ba6bbb11db7ad48f94847cf7fe12b096f1d115277b668e36baa7ef",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393723+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_145",
+    "decision": "DEFERRED",
+    "raw_sha256": "aa625161ae8a2c0a0771ce37117e574449f7c1afc40ce4f7522af9d27b760eb3",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393726+00:00",
+    "reason": "Food container / molded pulp taxonomy requires separate review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_388",
+    "decision": "DEFERRED",
+    "raw_sha256": "ce842f9fa79cc7c00c27d3439b6fb3db274d1fe3a40deab6dd78943735565b3a",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393728+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_42",
+    "decision": "APPROVED",
+    "raw_sha256": "6118c8e71e9472cb37db3f9eba73b56982b5c8c2e072e4f8e15147a01115d4f9",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393730+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      116,
+      11,
+      504,
+      510
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_316",
+    "decision": "DEFERRED",
+    "raw_sha256": "a7c972ceb0a03467ad01e6f0b33becb8192b5d1aa8ce5a51a7dbafe2d6dc0861",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393734+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_406",
+    "decision": "DEFERRED",
+    "raw_sha256": "9867ab628851c73edc4155a3125e7851606efbb40bd5547df1e103b7b22ca900",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393737+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_236",
+    "decision": "DEFERRED",
+    "raw_sha256": "fc3c361adc1c54e36b404643338bdb8610db9a39641922e1cc48626d314fb6da",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393739+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_76",
+    "decision": "DEFERRED",
+    "raw_sha256": "d49d45ab440d4c3e92f1b32ce7b7f6bd05b1995dd2d03e1705a22c81abc0ad63",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393742+00:00",
+    "reason": "Beverage packaging needs separate drink_carton mapping review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_373",
+    "decision": "DEFERRED",
+    "raw_sha256": "38109f0ff79718a944384056bcc3d22d4ee3e655e901c466ede481ada1eebd36",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393744+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_347",
+    "decision": "DEFERRED",
+    "raw_sha256": "245f6a9cf4560e468ef05c1dabb443d7fe4152d8ea3e42e51d220b0b126def8b",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393746+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_84",
+    "decision": "DEFERRED",
+    "raw_sha256": "a5532c38dad61ab8c5ea37470fc875024648f67c7a6c53e29e33c45daf0313b2",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393748+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_218",
+    "decision": "APPROVED",
+    "raw_sha256": "f67f8a81c16968ce17a6f8bb4c81404150e5e75d271e515deac60072e0678d2e",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393751+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      20,
+      0,
+      516,
+      515
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_140",
+    "decision": "DEFERRED",
+    "raw_sha256": "f1c811fe1fecc4132615ccba4cf924682cf22e36a12ab298399798a8cf948fc8",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393753+00:00",
+    "reason": "Beverage packaging needs separate drink_carton mapping review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_281",
+    "decision": "APPROVED",
+    "raw_sha256": "52beaa5a3b30c4aa2af9fe21e54566ef8561d8a69eaec299e9310a802178f3d9",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393756+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      82,
+      158,
+      449,
+      386
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_92",
+    "decision": "DEFERRED",
+    "raw_sha256": "03fe6ba983dfc3f1dc1a2001dd77c9a125b9fae07527b10d998da5b6a3d99522",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393758+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_93",
+    "decision": "DEFERRED",
+    "raw_sha256": "ff7680c1db3fd00a878d5b5c6b60070814855b67b26d34a1921aa5facea68a78",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393761+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_27",
+    "decision": "APPROVED",
+    "raw_sha256": "2064828fa765c17e6be06e527d3bf3f34247315cedff57659a942763df58f5fd",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393763+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      43,
+      8,
+      477,
+      524
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_327",
+    "decision": "DEFERRED",
+    "raw_sha256": "248f08ee1928ab00d28bce6f85a2f43a4bca10f21d4b1ff0342b73e79f5f1106",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393765+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_330",
+    "decision": "DEFERRED",
+    "raw_sha256": "19ee6f63eb9dba8d1863c20977c5bc60a0e2c01efa9db602d36a31a38cae8d53",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393768+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_309",
+    "decision": "DEFERRED",
+    "raw_sha256": "132fedc360504ce2517aacc1e0f4ccf3944e19c643ed7cbd572cc6b5ff9faeb4",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393771+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_130",
+    "decision": "DEFERRED",
+    "raw_sha256": "fa6eaaaba62703b4aaeccb7cf5d976435610f04cea5836ffd01c3b4fc61e523e",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393773+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_454",
+    "decision": "DEFERRED",
+    "raw_sha256": "b914e6c15c6a9979f664c941534d0c2bc6f802699fec0fbcbced9cdeea815fad",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393776+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_119",
+    "decision": "DEFERRED",
+    "raw_sha256": "588e56832a0f3dcb920ff9dee2fe228f48812baf1110800185a7baf983d23ebd",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393778+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_150",
+    "decision": "DEFERRED",
+    "raw_sha256": "3f6f7a482f5b02f6276469a739c76e0fad3f943f50bf3520bff105ad71902210",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393780+00:00",
+    "reason": "Material or source cardboard classification remains ambiguous.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_167",
+    "decision": "APPROVED",
+    "raw_sha256": "ca0ed6786cbac69ff8715671aefc8f4a1a7df04fc2bacdb42dc2f5db19221cc0",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393784+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      168,
+      177,
+      405,
+      388
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_435",
+    "decision": "DEFERRED",
+    "raw_sha256": "f8b45e340c214cf646197661307a55db19428737b020263771f7c8a47b4969e6",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393787+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_445",
+    "decision": "APPROVED",
+    "raw_sha256": "1389292b83ddc081d0284c38f0f5ecf04c3fa877e661ff00389df31ddcd32971",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393789+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      11,
+      0,
+      524,
+      499
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_398",
+    "decision": "APPROVED",
+    "raw_sha256": "33b0776b4ebafcd9c8a28a4a150ce278e4bc608c5896f50be1039afa3c647ea9",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393792+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      96,
+      45,
+      420,
+      458
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_320",
+    "decision": "DEFERRED",
+    "raw_sha256": "07d2389ea8877acde39e70388216a66d9cb6c08def4825fe261d634e1543bc2d",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393794+00:00",
+    "reason": "Material or source cardboard classification remains ambiguous.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_429",
+    "decision": "DEFERRED",
+    "raw_sha256": "dd3abd1b6c1fa71cee9deed10a155746b82a545ad8f20deb1bac2042af540993",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393796+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_133",
+    "decision": "DEFERRED",
+    "raw_sha256": "3e1188d9be152fd471d1c35a6ef275ff7a0b85d38f6c42d8b4e56888067414b6",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393799+00:00",
+    "reason": "Source cardboard label conflicts with apparent plastic-container shape/material; deferred.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_70",
+    "decision": "DEFERRED",
+    "raw_sha256": "2ea45be3c1937f49d81c56d97a4e1fdd9f9e78351abce98e2fbd8ea2861ed27d",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393801+00:00",
+    "reason": "Material or source cardboard classification remains ambiguous.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_97",
+    "decision": "DEFERRED",
+    "raw_sha256": "b3fcc6930bba54cfdc5a57d1b10e0b7636a601024c1920dcf51d4288ddc4782d",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393803+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_53",
+    "decision": "DEFERRED",
+    "raw_sha256": "bf47fdbd02609914e1cbf57bd78e2d6976d22321ff5b6c09b4bb1866f53613f7",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393805+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_264",
+    "decision": "DEFERRED",
+    "raw_sha256": "ddd13e0a8f5eca6dc90ed4741519bfd409c1e891ff07fe0001c18e0276efb106",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393807+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_72",
+    "decision": "DEFERRED",
+    "raw_sha256": "c886862e8b324d64148a0d6a34876ba8fcb1dc31b0efc29ce71ab2dac96bd961",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393809+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_302",
+    "decision": "DEFERRED",
+    "raw_sha256": "2f4c9147935b487b201a5c53c40b834813482be657f3fad16ceaba46a57583f5",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393812+00:00",
+    "reason": "Food container / molded pulp taxonomy requires separate review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_217",
+    "decision": "DEFERRED",
+    "raw_sha256": "4365d3f8a7846d2a1c0fa617ba494eb5123a995749a8f01a71345274112dfd71",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393814+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_360",
+    "decision": "DEFERRED",
+    "raw_sha256": "9338459c0af756f7aca6d88b8273812101fd0e19dc19fbe80b01f483d0f3d0b3",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393816+00:00",
+    "reason": "Beverage packaging needs separate drink_carton mapping review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_297",
+    "decision": "APPROVED",
+    "raw_sha256": "6efbc61da180969f1c0b48ee35f6775d816a5aafa250aa9f65221e1d3cc1b2b9",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393819+00:00",
+    "reason": "Full-resolution visual review confirms one cardboard object; manual pixel box covers visible extent.",
+    "independent_human_review": "PENDING",
+    "pixel_bbox_xyxy": [
+      151,
+      27,
+      371,
+      491
+    ],
+    "annotation_class": "cardboard",
+    "annotation_format": "pixel XYXY on 524x524 source photo"
+  },
+  {
+    "source_id": "Cardboard_381",
+    "decision": "DEFERRED",
+    "raw_sha256": "745c7386c9cdd418297e59ac0bbf769b24fa186015cb639fb90af89754197be7",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393821+00:00",
+    "reason": "Material or source cardboard classification remains ambiguous.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_91",
+    "decision": "DEFERRED",
+    "raw_sha256": "cb30171220656966273d3e135028f41789b2d6237a7f1f5b164d20a81983d767",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393824+00:00",
+    "reason": "Food container / molded pulp taxonomy requires separate review.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_75",
+    "decision": "DEFERRED",
+    "raw_sha256": "57b92ee839d4bfceee5448b8e543d9a410381e455d780cadf927e29371306c70",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393826+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_457",
+    "decision": "DEFERRED",
+    "raw_sha256": "b33b7890ff155d0137a6b227eb0c3aaec0c86673f6011aa6eed88766d60e1de0",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393829+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_242",
+    "decision": "DEFERRED",
+    "raw_sha256": "5b98291c926f13e67226e32d6fa87158794e5833f222dc1fa68e2342aeb1b2a3",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393832+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  },
+  {
+    "source_id": "Cardboard_334",
+    "decision": "DEFERRED",
+    "raw_sha256": "176cf55ca3eea1b7d5fe731932fce20a6a8921e04556f0c0607253963bef1349",
+    "reviewer": "Codex visual screening and manual pixel bbox annotation",
+    "reviewed_at": "2026-11-07T10:14:08.393834+00:00",
+    "reason": "Contact-sheet screening only; full-resolution bbox review deferred for this batch.",
+    "independent_human_review": "PENDING"
+  }
+]

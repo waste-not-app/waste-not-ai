@@ -571,5 +571,15 @@
         ]
       }
     ]
+  },
+  "general_handling": {
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "steps": [
+      "Periksa bahan, kondisi dan risiko sebelum menentukan jalur penanganan."
+    ],
+    "caution": "Panduan awal; jenis barang dan penerima lokal masih perlu dikonfirmasi.",
+    "evidence": []
   }
 }

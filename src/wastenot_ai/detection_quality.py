@@ -1,7 +1,7 @@
 """Checkpoint-bound review policy; confidence never confirms material or safety."""
 import json
 from importlib.resources import files
-from .taxonomy import BROAD_LABELS
+from .taxonomy import BROAD_LABELS, COMBINED_LABELS
 
 DEFAULT_PROFILE = "catalog-default-01"
 
@@ -13,8 +13,9 @@ def box_iou(a, b):
 
 
 def review_profile(labels, model_version=None, model_sha256=None):
-    if labels == dict(enumerate(BROAD_LABELS)):
-        return {"id": "broad-experimental-01", "overlap_iou": .65,
+    combined = labels == dict(enumerate(COMBINED_LABELS))
+    if combined or labels == dict(enumerate(BROAD_LABELS)):
+        return {"id": "broad-coco-experimental-01" if combined else "broad-experimental-01", "overlap_iou": .65,
                 "classes": {name: {"lower": .5, "offered": .7, "offered_enabled": False}
                             for name in BROAD_LABELS}}
     profile = json.loads(files("wastenot_ai").joinpath("data/detection_profile.json").read_text("utf-8"))

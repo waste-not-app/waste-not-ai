@@ -1,8 +1,12 @@
 # Kontrak rekomendasi empat metode
 
+Pembaruan 7 November 2026, `pilot-policy-08`: botol kaca CLEAN/INTACT dengan risiko SHARP memperoleh RECYCLE bila penerima menerima jenis serta kondisi tajamnya; akses UNKNOWN hanya menghasilkan saran bersyarat, akses NO tidak menghasilkan RECYCLE. Risiko tidak mengubah keutuhan secara otomatis dan tidak membolehkan REUSE biasa. Risiko ELECTRICAL tidak boleh memakai evidence residu kaca; BIOLOGICAL tetap memperoleh arahan biologis walau soiling=HAZARDOUS. Batas generation hanya dihitung saat provider dipanggil; HTTP 429 `DEMO_HOURLY_LIMIT` pada demo menyertakan `data` berupa rekomendasi UNAVAILABLE dengan langkah/sumber agar client tetap merender panduan. [Laporan audit](DEBUG_20261107.md).
+
+Pembaruan 7 November 2026, `pilot-policy-07`: seluruh status juga menyediakan [panduan awal bersumber](HANDLING_GUIDANCE.md). `NEEDS_CONTEXT`/`UNAVAILABLE` tetap tidak mengarang metode, tetapi mempunyai langkah penanganan; UI tidak berhenti di “Saran belum tersedia”. Tujuh pilihan “barang lain” mencakup barang yang belum disebut namanya di katalog. Perilaku policy-06 di bawah tetap berlaku untuk pemilihan empat metode.
+
 Pembaruan 20 Oktober 2026 mengikuti keputusan pengguna: Gemini memilih **tepat satu** dari `REDUCE`, `REUSE`, `RECYCLE`, `TRASH`, beserta alasan dan sumber panduan. Implementasi tunggal berada di Python, termasuk adapter HTTP privat. Go/Android mengintegrasikan [kontrak HTTP/OpenAPI](AI_HTTP_CONTRACT.md); tidak menyalin policy atau prompt ke Go.
 
-Policy terbaru `pilot-policy-06`: penanganan khusus adalah peringatan tambahan. Cangkir kotor biasa bisa mendapat Reuse setelah dicuci; risiko yang belum jelas meminta informasi tambahan. REDUCE hanya untuk fokus PREVENTION yang dipilih pengguna. Dasar sumber dan evaluasinya dijelaskan pada [mutu panduan](GUIDE_QUALITY.md).
+Policy `pilot-policy-06`: penanganan khusus adalah peringatan tambahan. Cangkir kotor biasa bisa mendapat Reuse setelah dicuci; risiko yang belum jelas meminta informasi tambahan. REDUCE hanya untuk fokus PREVENTION yang dipilih pengguna. Dasar sumber dan evaluasinya dijelaskan pada [mutu panduan](GUIDE_QUALITY.md).
 
 ## Input konteks
 
@@ -60,7 +64,7 @@ Pada objek berisiko, hanya evidence dengan `risk_compatible=true` yang boleh dip
 
 ## Mencoba keempat hasil
 
-Jalankan `ai/demo-camera.bat` dari root repo. Pilih Gemini untuk model sungguhan atau Simulasi untuk uji offline. Semua contoh tetap harus sesuai kondisi benda yang diperiksa.
+Jalankan `demo-camera.bat` dari root repo. Pilih Gemini untuk model sungguhan atau Simulasi untuk uji offline. Semua contoh tetap harus sesuai kondisi benda yang diperiksa.
 
 | Hasil yang dicoba | Pilihan objek dan konteks |
 |---|---|

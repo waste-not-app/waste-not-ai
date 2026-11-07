@@ -132,7 +132,7 @@ def test_manual_path_and_draft_content_gate():
         headers = bootstrap(client)
         result = client.post("/demo/api/recommend",json=rec_payload(),headers=headers).json()["data"]
         assert result["reason_code"] == "NO_REVIEWED_GUIDE"
-        assert result["steps"] == [] and result["source_urls"] == [] and provider.calls == 0
+        assert result["steps"] and result["source_urls"] and result["guide_refs"] == [] and provider.calls == 0
         assert result["input_source"] == "manual_confirmation"
 
 
@@ -150,7 +150,7 @@ def test_detected_sharp_object_cannot_bypass_policy_with_category_correction():
 def test_expanded_catalog_and_guides_cover_every_item_without_claiming_manual_detection():
     catalog = load_catalog()
     guides = load_guides()
-    assert len(catalog["items"]) == 78 and len(guides) == 78
+    assert len(catalog["items"]) == 85 and len(guides) == 85
     assert len({x["baseline_class_id"] for x in catalog["items"] if x["baseline_class_id"] is not None}) == 58
     assert all(g.publication_status == "DRAFT" for g in guides)
     for key in ("battery","aluminium_can","cardboard"):
@@ -171,3 +171,39 @@ def test_demo_limit_caps_provider_calls_and_invalid_media_is_rejected_early():
             assert client.post("/demo/api/recommend",json=rec_payload(),headers=headers).status_code == 200
         assert client.post("/demo/api/recommend",json=rec_payload(),headers=headers).status_code == 429
         assert provider.calls == 30
+
+
+def test_generation_budget_does_not_block_policy_only_guidance_and_429_keeps_steps():
+    app, _, provider = make_client()
+    with TestClient(app, base_url="http://127.0.0.1") as client:
+        headers = bootstrap(client)
+        for _ in range(30):
+            assert client.post("/demo/api/recommend", json=rec_payload(), headers=headers).status_code == 200
+        blocked = client.post("/demo/api/recommend", json=rec_payload(), headers=headers)
+        assert blocked.status_code == 429 and blocked.json()["data"]["steps"]
+        value = rec_payload()
+        value["context"] = {"object_key": "other_other", "category": "OTHER"}
+        result = client.post("/demo/api/recommend", json=value, headers=headers)
+        assert result.status_code == 200 and result.json()["data"]["steps"]
+        assert provider.calls == 30
+
+
+def test_false_refrigerator_can_be_explicitly_corrected_to_manual_cardboard(monkeypatch):
+    app, detector, _ = make_client()
+    labels = {72: "refrigerator"}
+    raw = RawDetection(class_id=72, raw_class="refrigerator", confidence=.9, bbox=(.1,.1,.9,.9))
+    monkeypatch.setattr(detector, "detect", lambda image: {**review_detections([raw], labels),
+        "image": {"width": 100, "height": 100}, "timing_ms": {"total": 1}})
+    with TestClient(app, base_url="http://127.0.0.1") as client:
+        headers = bootstrap(client)
+        detection_id = detect(client, headers).json()["data"]["detection_id"]
+        value = rec_payload(detection_id)
+        value["context"] = {"object_key":"cardboard", "category":"PAPER",
+            "condition":{"cleanliness":"CLEAN"}, "recycling_access":"YES"}
+        detected = client.post("/demo/api/recommend", json=value, headers=headers).json()["data"]
+        assert detected["special_handling"] and detected["recommended_method"] is None
+        manual = rec_payload()
+        manual["context"] = value["context"]
+        corrected = client.post("/demo/api/recommend", json=manual, headers=headers).json()["data"]
+        assert corrected["recommended_method"] == "RECYCLE" and not corrected["special_handling"]
+        assert corrected["input_source"] == "manual_confirmation"

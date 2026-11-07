@@ -10,7 +10,7 @@ import platform
 import shutil
 from time import perf_counter
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("YOLO_CONFIG_DIR", str(ROOT / ".cache-ai/ultralytics"))
 os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache-ai/matplotlib"))
 os.environ["YOLO_AUTOINSTALL"] = "false"
@@ -58,8 +58,8 @@ def bottle_comparison(model, dataset, classes, device):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data", type=Path, default=ROOT / "ai/data/local/drinking-waste-v2/data.yaml")
-    parser.add_argument("--model", type=Path, default=ROOT / "ai/artifacts/models/yolo11n.pt")
+    parser.add_argument("--data", type=Path, default=ROOT / "data/local/drinking-waste-v2/data.yaml")
+    parser.add_argument("--model", type=Path, default=ROOT / "artifacts/models/yolo11n.pt")
     parser.add_argument("--epochs", type=int, default=40)
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--workers", type=int, default=4)
@@ -73,7 +73,7 @@ def main():
     from ultralytics import YOLO, settings
     settings.update({key: False for key in ("sync", "wandb", "mlflow", "clearml", "comet", "hub",
                                            "neptune", "tensorboard", "dvc", "raytune") if key in settings})
-    settings.update({"weights_dir": str(ROOT / "ai/artifacts/models")})
+    settings.update({"weights_dir": str(ROOT / "artifacts/models")})
     if args.device != "cpu" and not torch.cuda.is_available():
         raise ValueError("CUDA unavailable; use dedicated training environment or explicitly --device cpu")
     if not args.data.is_file() or not args.model.is_file():
@@ -82,7 +82,7 @@ def main():
     manifest = json.loads((dataset / "manifest.json").read_text())
     if manifest["labels"] != ["aluminium_can", "glass_bottle", "hdpe_bottle", "plastic_bottle"]:
         raise ValueError("Evaluation mappings require the audited four-class taxonomy")
-    run_dir = ROOT / "ai/artifacts/training" / args.name
+    run_dir = ROOT / "artifacts/training" / args.name
     if args.evaluate_only:
         best = args.evaluate_only.resolve()
     else:
@@ -135,7 +135,7 @@ def main():
                 "completed_epochs": len(rows), "best_validation_epoch": int(selected["epoch"]),
                 "elapsed_training_seconds": float(rows[-1]["time"]),
                 "configuration": yaml.safe_load((checkpoint_run / "args.yaml").read_text())}
-    shutil.copyfile(ROOT / "ai/docs/DATASET_NOTICES.md", run_dir / "DATASET_NOTICES.md")
+    shutil.copyfile(ROOT / "docs/DATASET_NOTICES.md", run_dir / "DATASET_NOTICES.md")
     (run_dir / "dataset-summary.json").write_text(json.dumps(
         {key: value for key, value in manifest.items() if key not in {"records", "rejected"}}, indent=2), encoding="utf-8")
     (run_dir / "evaluation.json").write_text(json.dumps(report, indent=2), encoding="utf-8")

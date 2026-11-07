@@ -21,9 +21,11 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
     @asynccontextmanager
     async def lifespan(app):
         if app.state.detector is None:
-            from .detector import YoloDetector
-            app.state.detector = YoloDetector(Path(os.getenv("AI_MODEL_PATH", "ai/artifacts/models/yolo11n.pt")),
-                                              os.getenv("AI_DEVICE", "cpu"), os.getenv("AI_INPUT_SHAPE", "adaptive"))
+            from .detector import load_detector
+            general_path = os.getenv("AI_GENERAL_MODEL_PATH")
+            app.state.detector = load_detector(Path(os.getenv("AI_MODEL_PATH", "artifacts/models/yolo11n.pt")),
+                os.getenv("AI_DEVICE", "cpu"), os.getenv("AI_INPUT_SHAPE", "adaptive"),
+                Path(general_path) if general_path else None)
         yield
 
     app = FastAPI(title="WasteNot private YOLO worker", docs_url=None, redoc_url=None,

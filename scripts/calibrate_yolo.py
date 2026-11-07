@@ -5,7 +5,7 @@ import json
 import os
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("YOLO_CONFIG_DIR", str(ROOT / ".cache-ai/ultralytics"))
 os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache-ai/matplotlib"))
 os.environ["YOLO_AUTOINSTALL"] = "false"
@@ -51,9 +51,9 @@ def score(records, thresholds, *, unambiguous=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", type=Path, default=ROOT / "ai/artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt")
-    parser.add_argument("--data", type=Path, default=ROOT / "ai/data/local/drinking-waste-v2")
-    parser.add_argument("--output", type=Path, default=ROOT / "ai/artifacts/calibration")
+    parser.add_argument("--model", type=Path, default=ROOT / "artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt")
+    parser.add_argument("--data", type=Path, default=ROOT / "data/local/drinking-waste-v2")
+    parser.add_argument("--output", type=Path, default=ROOT / "artifacts/calibration")
     parser.add_argument("--device", default="0")
     parser.add_argument("--square", action="store_true", help="Force 640x640 padding instead of adaptive rectangular inference")
     args = parser.parse_args()

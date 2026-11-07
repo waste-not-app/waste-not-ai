@@ -1,0 +1,156 @@
+{
+  "kind": "exploratory_selection_from_validation_before_camera_replay",
+  "camera_benchmark_sha256": "fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa",
+  "general_selection_rule": "Choose a new general checkpoint only if validation phone F1 or remote F1 at confidence .5 improves while neither decreases. Otherwise retain the pretrained general model. Camera replay is for final exploratory reporting.",
+  "general_trials": [
+    {
+      "name": "general-confusion-v1-yolo11n",
+      "sha256": "d7be6f0279bc678e619ed0487b31f7d30f93140effc8222d9322d6583c069e66",
+      "validation": {
+        "baseline": {
+          "cell phone": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 17,
+            "precision": 1.0,
+            "recall": 0.10526315789473684,
+            "f1": 0.19047619047619047
+          },
+          "remote": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.1111111111111111,
+            "f1": 0.2
+          },
+          "refrigerator": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.6363636363636364,
+            "f1": 0.7777777777777778
+          }
+        },
+        "candidate": {
+          "cell phone": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 17,
+            "precision": 1.0,
+            "recall": 0.10526315789473684,
+            "f1": 0.19047619047619047
+          },
+          "remote": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.1111111111111111,
+            "f1": 0.2
+          },
+          "refrigerator": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.6363636363636364,
+            "f1": 0.7777777777777778
+          }
+        }
+      },
+      "selected": false,
+      "reason": "No operational validation F1 gain for phone or remote at confidence 0.5"
+    },
+    {
+      "name": "general-confusion-v1-head-yolo11n",
+      "sha256": "3488185ca96f0e7909de1fe751de01988192936970501df97f683a720e96c3b4",
+      "validation": {
+        "baseline": {
+          "cell phone": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 17,
+            "precision": 1.0,
+            "recall": 0.10526315789473684,
+            "f1": 0.19047619047619047
+          },
+          "remote": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.1111111111111111,
+            "f1": 0.2
+          },
+          "refrigerator": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.6363636363636364,
+            "f1": 0.7777777777777778
+          }
+        },
+        "candidate": {
+          "cell phone": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 17,
+            "precision": 1.0,
+            "recall": 0.10526315789473684,
+            "f1": 0.19047619047619047
+          },
+          "remote": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.1111111111111111,
+            "f1": 0.2
+          },
+          "refrigerator": {
+            "tp": 5,
+            "fp": 0,
+            "fn": 6,
+            "precision": 1.0,
+            "recall": 0.45454545454545453,
+            "f1": 0.625
+          }
+        }
+      },
+      "selected": false,
+      "reason": "No operational validation F1 gain for phone or remote at confidence 0.5"
+    }
+  ],
+  "selected_general": {
+    "path": "ai/artifacts/models/yolo11n.pt",
+    "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+    "reason": "Neither fine-tuned trial improves validation phone/remote F1"
+  },
+  "selected_waste": {
+    "path": "ai/artifacts/training/broad-waste-v4-focus-yolo11s/weights/best.pt",
+    "sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+    "cardboard_validation": {
+      "previous": {
+        "tp": 7,
+        "fp": 4,
+        "fn": 44,
+        "precision": 0.6363636363636364,
+        "recall": 0.13725490196078433,
+        "f1": 0.22580645161290322
+      },
+      "candidate": {
+        "tp": 17,
+        "fp": 23,
+        "fn": 34,
+        "precision": 0.425,
+        "recall": 0.3333333333333333,
+        "f1": 0.37362637362637363
+      }
+    },
+    "reason": "Cardboard validation F1 improves with additional false positives. Retain experimental status."
+  },
+  "promoted": false
+}

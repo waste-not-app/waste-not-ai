@@ -127,14 +127,14 @@ HTTP 429 + `Retry-After: 30`. Flag scenario bukan bagian API produksi.
 
 Isi token berbeda dan acak, minimal 24 karakter, pada konfigurasi lokal:
 `AI_SERVICE_TOKEN` untuk YOLO, `AI_RECOMMENDATION_TOKEN` untuk keputusan.
-`ai/.env.example` menyediakan nama variabelnya; jangan commit nilainya.
+`.env.example` menyediakan nama variabelnya; jangan commit nilainya.
 
 ```powershell
 # Terminal 1, hanya perlu untuk deteksi nyata:
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-worker --port 8091
 # Terminal 2, tanpa key untuk uji aturan dan draft yang diberi label:
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-recommendations --port 8093 --provider fixture --demo-guides
-# Atau Gemini nyata memakai ai/.env:
+# Atau Gemini nyata memakai .env:
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-recommendations --port 8093 --demo-guides
 ```
 
@@ -244,13 +244,13 @@ Smoke tersebut melalui ASGI TestClient, bukan backend Go.
 
 Demo kamera lama juga kembali lulus 14 pemeriksaan browser (kamera palsu,
 YOLO nyata, rekomendasi fixture), tanpa error JavaScript. Kamera fisik belum
-diuji. Seluruh hasil lokal tersimpan di `ai/artifacts`, tidak memuat key.
+diuji. Seluruh hasil lokal tersimpan di `artifacts`, tidak memuat key.
 
 ```powershell
 # Smoke memakai model/sampel lokal; default provider fixture:
-.\.venv-ai\Scripts\python.exe ai/scripts/verify_http_integration.py
+.\.venv-ai\Scripts\python.exe scripts/verify_http_integration.py
 # Satu request Gemini nyata, tetap dengan guide draft berlabel demo:
-.\.venv-ai\Scripts\python.exe ai/scripts/verify_http_integration.py --live-gemini
+.\.venv-ai\Scripts\python.exe scripts/verify_http_integration.py --live-gemini
 ```
 
 ## Pembaruan kualitas policy-05

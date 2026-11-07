@@ -1,0 +1,80 @@
+{
+  "images": 3908,
+  "splits": {
+    "train": 2243,
+    "val": 975,
+    "test": 690
+  },
+  "image_sha256": "all match manifest",
+  "label_geometry": "normalized centers/sizes valid; original DW edge tolerance .002 retained",
+  "legacy_edge_rounding": [
+    {
+      "image": "images/train/DrinkingWasteV2-218239996721a3051f1d.jpg",
+      "excursion": 0.001953125
+    },
+    {
+      "image": "images/train/DrinkingWasteV2-b5571838740feace7413.jpg",
+      "excursion": 0.0019531299999999696
+    },
+    {
+      "image": "images/train/DrinkingWasteV2-ee413b0249aae0915a76.jpg",
+      "excursion": 0.0019531299999999974
+    },
+    {
+      "image": "images/train/DrinkingWasteV2-b6b198e868689c751758.jpg",
+      "excursion": 0.0019531200000000304
+    },
+    {
+      "image": "images/train/DrinkingWasteV2-9dca9a4402278bef23c3.jpg",
+      "excursion": 0.0019531299999999974
+    },
+    {
+      "image": "images/val/DrinkingWasteV2-4b3329a4acd418e0bcc8.jpg",
+      "excursion": 0.0019531299999999696
+    },
+    {
+      "image": "images/val/DrinkingWasteV2-297060838f7d1c26eaff.jpg",
+      "excursion": 0.001953125
+    },
+    {
+      "image": "images/val/DrinkingWasteV2-726b624ca2206fa9a82d.jpg",
+      "excursion": 0.0019531199999999749
+    },
+    {
+      "image": "images/val/DrinkingWasteV2-483cfb5199c8caade8ec.jpg",
+      "excursion": 0.0019531299999999696
+    },
+    {
+      "image": "images/val/DrinkingWasteV2-1f7c0e7670491a0bde24.jpg",
+      "excursion": 0.0019531299999999696
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-6338f6ad207d3a9b1a71.jpg",
+      "excursion": 0.0019531200000000304
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-164810ae1e213437a55f.jpg",
+      "excursion": 0.0019531200000000026
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-d53ad6e2e26c9bd3321a.jpg",
+      "excursion": 0.0019531200000000304
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-2708cbc2f48bce065aa5.jpg",
+      "excursion": 0.0019531200000000026
+    },
+    {
+      "image": "images/test/DrinkingWasteV2-2708cbc2f48bce065aa5.jpg",
+      "excursion": 0.0019531200000000304
+    }
+  ],
+  "proxy_group_and_phash_split_overlap": "none",
+  "split_lists": "match manifest",
+  "active_images": {
+    "train": 958,
+    "val": 975,
+    "test": 690
+  },
+  "scope": "Data consistency, not independent field accuracy or full annotation completeness"
+}

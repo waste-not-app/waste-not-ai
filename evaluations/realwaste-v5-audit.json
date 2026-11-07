@@ -1,0 +1,31 @@
+{
+  "source": "RealWaste",
+  "sample_photos_downloaded": 60,
+  "bbox_approved_photos": 15,
+  "deferred_photos": 45,
+  "images": 3908,
+  "images_per_split": {
+    "train": 2243,
+    "val": 975,
+    "test": 690
+  },
+  "train_active_images": 958,
+  "cardboard_train_active_before": 93,
+  "cardboard_train_active_after": 108,
+  "inherited_records_preserved": 3893,
+  "new_photo_matches_existing_datasets_or_benchmark": 0,
+  "new_photo_cross_split_conflicts": 0,
+  "sample_near_duplicate_pairs": [],
+  "sample_exact_duplicate_count": 0,
+  "benchmark_sha256": "fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa",
+  "grouping": "All new photos share one conservative train capture-family group",
+  "rights_status": "EXPERIMENTAL_NONCOMMERCIAL_RESEARCH",
+  "license_conflict": {
+    "uci": "CC BY 4.0",
+    "author": "CC BY-NC-SA 4.0",
+    "retained": "CC BY-NC-SA 4.0"
+  },
+  "annotation_review": "Manual pixel bbox by Codex after full-resolution review; independent human review pending",
+  "inherited_active_train_images_preserved": 943,
+  "new_active_train_images": 15
+}

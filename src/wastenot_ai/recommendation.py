@@ -10,6 +10,7 @@ from .catalog import confirm_context, load_catalog
 from .contracts import Context, Guide, ModelSuggestion, Recommendation
 from .sources import describe_sources
 from .guide_audit import validate_guides
+from .handling_guidance import handling_guidance
 
 
 class ProviderError(Exception):
@@ -62,7 +63,7 @@ def is_reviewed(guide: Guide, today: date) -> bool:
 def eligible_evidence(context: Context, guide: Guide, *, risk: bool = False):
     values = {**context.condition.model_dump(), "reuse_intention": context.reuse_intention,
               "recycling_access": context.recycling_access, "category": context.category.value,
-              "object_key": context.object_key}
+              "object_key": context.object_key, "risk_type": context.risk_type}
     washable = (context.condition.cleanliness == "DIRTY" and context.condition.cleanable == "YES"
                 and context.condition.soiling in {"FOOD_DRINK","DUST"})
     reusable = ((context.condition.cleanliness == "CLEAN" or washable) and context.condition.integrity == "INTACT"
@@ -80,7 +81,8 @@ def eligible_evidence(context: Context, guide: Guide, *, risk: bool = False):
 
 def missing_context(context: Context, guide: Guide, *, risk: bool) -> list[str]:
     values = {**context.condition.model_dump(), "reuse_intention":context.reuse_intention,
-              "recycling_access":context.recycling_access,"category":context.category.value,"object_key":context.object_key}
+              "recycling_access":context.recycling_access,"category":context.category.value,"object_key":context.object_key,
+              "risk_type":context.risk_type}
     options = []
     for evidence in guide.evidence:
         if evidence.method == "REDUCE" or (risk and not evidence.risk_compatible):
@@ -102,7 +104,8 @@ def missing_context(context: Context, guide: Guide, *, risk: bool) -> list[str]:
 
 def conditional_evidence(context: Context, guide: Guide, *, risk: bool):
     values = {**context.condition.model_dump(), "reuse_intention": context.reuse_intention,
-              "recycling_access": context.recycling_access, "category": context.category.value, "object_key": context.object_key}
+              "recycling_access": context.recycling_access, "category": context.category.value, "object_key": context.object_key,
+              "risk_type": context.risk_type}
     possible = []
     for evidence in guide.evidence:
         if evidence.method == "REDUCE" or (risk and not evidence.risk_compatible):
@@ -117,7 +120,8 @@ def conditional_evidence(context: Context, guide: Guide, *, risk: bool):
             continue
         unknown = {key: expected for key, expected in requirements.items() if values.get(key) in {None, "UNKNOWN"}}
         # Unknown former chemical contents and unknown sharp damage remain safety gates.
-        if "former_contents" in unknown or unknown.get("integrity") == "DAMAGED":
+        if ("former_contents" in unknown or "risk_type" in unknown or unknown.get("integrity") == "DAMAGED"
+                or (risk and context.risk_type == "SHARP" and "integrity" in unknown)):
             continue
         if unknown:
             possible.append((evidence, unknown))
@@ -168,12 +172,10 @@ def recommend(context: Context, provider: Provider, guides: list[Guide], *,
         caution = " ".join(filter(None, ["Ada risiko khusus. Ikuti petunjuk pengemasan dan pengelola yang sesuai; jangan membuang benda berbahaya sembarangan.", caution]))
 
     def unavailable(code: str, *, missing=None, reason=None):
-        urls = guide.source_urls if permitted_guide else []
-        if code == "RISK_NOT_COVERED" and (context.risk_type == "CHEMICAL" or context.condition.soiling == "HAZARDOUS"
-                                          or context.condition.former_contents == "CHEMICAL"):
-            urls = ["https://www.epa.gov/hw/household-hazardous-waste-hhw"]
+        guidance = handling_guidance(context, item, risk=bool(risk))
+        urls = guidance["source_urls"]
         return Recommendation(status="NEEDS_CONTEXT" if missing else "UNAVAILABLE",
-                              reason=reason or "Rekomendasi otomatis belum tersedia; periksa panduan dan coba lagi setelah konteks atau layanan siap.",
+                              reason=reason or guidance["reason"], steps=guidance["steps"],
                               reason_code=code, special_handling=bool(risk), caution=caution,
                               guide_refs=[{"guide_id":guide.id,"version":guide.version}] if permitted_guide else [],
                               source_urls=urls, source_details=describe_sources(urls),
@@ -184,6 +186,9 @@ def recommend(context: Context, provider: Provider, guides: list[Guide], *,
     if context.recommendation_goal != "PREVENTION" and context.risk_flag and context.risk_type == "UNKNOWN":
         return unavailable("RISK_DETAILS_REQUIRED", missing=["risk_type"],
                            reason="Risiko khusus dicentang, tetapi jenisnya belum dijelaskan. Pilih jenis risiko agar kotor biasa tidak disamakan dengan kontaminasi berbahaya.")
+    if (context.recommendation_goal != "PREVENTION" and context.risk_type == "ELECTRICAL"
+            and context.category != "ELECTRONIC"):
+        return unavailable("RISK_NOT_COVERED", reason="Risiko listrik/baterai memerlukan jalur elektronik khusus. Panduan bahan biasa tidak digunakan; periksa jenis barang dan ikuti arahan khusus di bawah.")
     evidence = eligible_evidence(context, guide, risk=bool(risk))
     conditional = []
     hazardous = (context.risk_type in {"CHEMICAL", "BIOLOGICAL", "OTHER"} or context.condition.soiling == "HAZARDOUS"

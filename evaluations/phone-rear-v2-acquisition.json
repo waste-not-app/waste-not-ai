@@ -1,0 +1,36 @@
+{
+  "kind": "modern_phone_data_acquisition_attempt",
+  "searches": [
+    {
+      "file": "flickr-0.json",
+      "rows": 20
+    },
+    {
+      "file": "flickr-1.json",
+      "rows": 20
+    },
+    {
+      "file": "flickr-2.json",
+      "rows": 20
+    },
+    {
+      "file": "search-0.json",
+      "rows": 17
+    },
+    {
+      "file": "search-1.json",
+      "rows": 20
+    },
+    {
+      "file": "search-2.json",
+      "rows": 20
+    }
+  ],
+  "original_wikimedia_download_status": 403,
+  "flickr_candidates_attempted": 6,
+  "flickr_download_status": 502,
+  "downloaded_training_photos": 0,
+  "approved_training_photos": 0,
+  "reason": "Original photo endpoints inaccessible during this attempt. Search results are discovery metadata and require per-photo primary-source license verification and visual annotation.",
+  "next_input": "Consented physical-camera photographs showing phone backs, hand-held angles and remote controls in separate capture groups."
+}

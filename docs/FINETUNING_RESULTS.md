@@ -15,7 +15,7 @@ Sumber/lisensi dan reproduksi: [fine-tuning](FINE_TUNING.md),
   **epoch 18**, dipilih memakai validation. Training sekitar 28,2 menit.
 - RTX 4070 Laptop 8 GB; Python 3.13.1, torch 2.9.1+cu128, torchvision
   0.24.1+cu128, Ultralytics 8.4.183.
-- Bobot lokal: `ai/artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt`
+- Bobot lokal: `artifacts/training/drinking-waste-v2-yolo11n/weights/best.pt`
   (5.491.866 byte).
 - SHA-256: `af1446f3333806b0aba3b4618846fe8f95cf5ab3269e2730629b090702498bcf`.
 - Model version adapter: `candidate-af1446f33338`; mapping pada evaluasi awal
@@ -23,7 +23,7 @@ Sumber/lisensi dan reproduksi: [fine-tuning](FINE_TUNING.md),
   `drinking-waste-reviewed-02+dw-val-01`, dijelaskan di bagian pembaruan bawah.
 
 Dataset dan bobot tidak masuk Git. Laporan mentah lokal berada pada
-`ai/artifacts/training/drinking-waste-v2-yolo11n/evaluation.json`, kurva pada
+`artifacts/training/drinking-waste-v2-yolo11n/evaluation.json`, kurva pada
 `results.csv`, dan confusion matrix/PR curves pada subfolder `test`.
 
 ## Evaluasi test empat kelas
@@ -73,7 +73,7 @@ Checkpoint final diuji pada browser melalui unggah foto validation, bbox
 nyata, pilihan kaleng dari daftar, konfirmasi kondisi eksplisit, **Gemini API
 langsung → Recycle**, alasan dan sumber EPA. Tiga pemeriksaan integrasi
 lulus, tanpa error JavaScript. Foto tidak dikirim ke Gemini. Screenshot:
-`ai/artifacts/finetuned-demo.png`; laporan: `finetuned-demo-browser.json`.
+`artifacts/finetuned-demo.png`; laporan: `finetuned-demo-browser.json`.
 Pada sampel tersebut, hipotesis kaleng 58% dan kaca 63% bertumpuk; pengguna
 memilih kaleng lewat daftar. Ini bukti alur dan contoh ambiguitas, bukan
 bukti model pasti benar. Kamera fisik belum diuji.
@@ -96,7 +96,7 @@ penerimaan fasilitas tetap dikonfirmasi pengguna.
 Untuk mencoba dari root repository:
 
 ```powershell
-.\ai\demo-camera-trained.bat
+.\demo-camera-trained.bat
 ```
 
 Launcher memakai environment demo awal dan CPU. Setup GPU, training/resume,

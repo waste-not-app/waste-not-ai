@@ -3,7 +3,7 @@ from importlib.resources import files
 
 from .contracts import Context, RawDetection
 from .detection_quality import DEFAULT_PROFILE, annotate_ambiguity, review_profile
-from .taxonomy import BROAD_LABELS, BROAD_OBJECT_KEYS
+from .taxonomy import BROAD_LABELS, BROAD_OBJECT_KEYS, COMBINED_LABELS
 
 
 def load_catalog() -> dict:
@@ -33,16 +33,17 @@ def _detection_mapping(labels: dict[int, str], catalog: dict):
     waste_labels = {0: "aluminium_can", 1: "glass_bottle", 2: "hdpe_bottle", 3: "plastic_bottle"}
     waste_profile = labels == waste_labels
     broad_profile = labels == dict(enumerate(BROAD_LABELS))
+    combined_profile = labels == dict(enumerate(COMBINED_LABELS))
     waste_keys = {0: ["aluminium_can"], 1: ["glass_bottle"], 2: ["hdpe_bottle"], 3: ["pet_bottle"]}
     mapping = {}
     for cls, raw in labels.items():
-        if broad_profile:
+        if broad_profile or (combined_profile and raw in BROAD_OBJECT_KEYS):
             mapping[cls] = [item for item in catalog["items"] if item["object_key"] in BROAD_OBJECT_KEYS[raw]]
             continue
         mapping[cls] = [item for item in catalog["items"] if (
             item["object_key"] in waste_keys[cls] if waste_profile else
             item["baseline_class_id"] == cls and item["baseline_raw_class"] == raw)]
-    version = "broad-waste-objects-01" if broad_profile else (
+    version = "broad-coco-objects-01" if combined_profile else "broad-waste-objects-01" if broad_profile else (
         "drinking-waste-reviewed-02" if waste_profile else catalog["mapping_version"])
     return version, mapping
 

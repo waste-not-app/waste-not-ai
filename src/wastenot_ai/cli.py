@@ -38,8 +38,8 @@ def read_image(path: Path) -> bytes:
 
 
 def detector_for(args):
-    from .detector import YoloDetector
-    return YoloDetector(args.model, args.device, args.input_shape)
+    from .detector import load_detector
+    return load_detector(args.model, args.device, args.input_shape, args.general_model)
 
 
 def recommendation_for(args, context):
@@ -133,6 +133,9 @@ def main():
     demo = sub.add_parser("demo", help="Buka demo kamera lokal dengan pemilihan objek dan Gemini.")
     for command in (detect, bench, pipe, demo, worker):
         command.add_argument("--model", type=Path, default=AI_DIR / "artifacts/models/yolo11n.pt")
+        command.add_argument("--general-model", type=Path,
+                             default=Path(os.environ["AI_GENERAL_MODEL_PATH"]) if os.getenv("AI_GENERAL_MODEL_PATH") else None,
+                             help="Pendamping COCO untuk checkpoint Broad Waste; kedua model memeriksa foto.")
         command.add_argument("--device", default=os.getenv("AI_DEVICE", "cpu"))
         command.add_argument("--input-shape", choices=["adaptive", "square"], default=os.getenv("AI_INPUT_SHAPE", "adaptive"))
     for command in (detect, bench, rec, pipe):
@@ -148,6 +151,8 @@ def main():
             os.environ["AI_MODEL_PATH"] = str(args.model.resolve())
         os.environ["AI_DEVICE"] = args.device
         os.environ["AI_INPUT_SHAPE"] = args.input_shape
+        if args.general_model is not None:
+            os.environ["AI_GENERAL_MODEL_PATH"] = str(args.general_model.resolve())
     try:
         if args.command == "export-contracts":
             from .openapi_export import export_contracts
@@ -187,7 +192,7 @@ def main():
         elif args.command == "list-gemini-models":
             keys = load_gemini_api_keys()
             if not keys:
-                raise ValueError("Isi API key Gemini di ai/.env terlebih dahulu.")
+                raise ValueError("Isi API key Gemini di .env terlebih dahulu.")
             with httpx.Client(timeout=15, follow_redirects=False) as client:
                 response = client.get("https://generativelanguage.googleapis.com/v1beta/models",
                                       headers={"x-goog-api-key": keys[0]})

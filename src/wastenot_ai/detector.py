@@ -1,5 +1,6 @@
 import hashlib
 import importlib.metadata
+import json
 import os
 from pathlib import Path
 from time import perf_counter
@@ -7,6 +8,8 @@ from time import perf_counter
 from .catalog import review_detections
 from .contracts import RawDetection
 from .media import decode_image
+from .detection_quality import box_iou
+from .taxonomy import BROAD_LABELS, COCO_LABELS, COMBINED_LABELS
 
 
 class YoloDetector:
@@ -73,3 +76,48 @@ class YoloDetector:
             }
         finally:
             image.close()
+
+
+class CombinedDetector:
+    """Waste and general checkpoints with one versioned label space for review."""
+    def __init__(self, waste, general):
+        if waste.labels != dict(enumerate(BROAD_LABELS)) or general.labels != dict(enumerate(COCO_LABELS)):
+            raise ValueError("Model pendamping memerlukan checkpoint Broad Waste dan COCO lengkap.")
+        self.waste, self.general = waste, general
+        self.labels = dict(enumerate(COMBINED_LABELS))
+        components = [{key: detector.artifact[key] for key in ("model_version", "sha256", "input_shape")}
+                      for detector in (waste, general)]
+        identity = {"components": components, "merge": "same-class-iou065-max50-v1", "labels": COMBINED_LABELS}
+        checksum = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+        self.artifact = {"model_version": f"broad-coco-{checksum[:12]}", "sha256": checksum,
+                         "labels": self.labels, "scope": "broad-waste-plus-coco-experimental",
+                         "components": components, "merge_policy": identity["merge"]}
+
+    def detect(self, image_bytes: bytes) -> dict:
+        started = perf_counter()
+        waste = self.waste.detect(image_bytes)
+        general = self.general.detect(image_bytes)
+        if waste["image"] != general["image"]:
+            raise ValueError("Dimensi gambar kedua checkpoint tidak cocok.")
+        # Only equivalent labels compete here; conflicting classes remain visible.
+        objects = []
+        for obj in sorted(waste["objects"] + general["objects"], key=lambda obj: obj["confidence"], reverse=True):
+            candidate = RawDetection(class_id=COMBINED_LABELS.index(obj["raw_class"]), raw_class=obj["raw_class"],
+                                     confidence=obj["confidence"], bbox=tuple(obj["bbox"]))
+            if not any(other.class_id == candidate.class_id and box_iou(other.bbox, candidate.bbox) >= .65
+                       for other in objects):
+                objects.append(candidate)
+            if len(objects) == 50:
+                break
+        return {**review_detections(objects, self.labels, model_version=self.artifact["model_version"],
+                                    model_sha256=self.artifact["sha256"]),
+                "model": self.artifact, "image": waste["image"],
+                "timing_ms": {"total": round((perf_counter() - started) * 1000, 2)}}
+
+
+def load_detector(model_path: Path, device="cpu", input_shape="adaptive", general_model_path: Path | None = None):
+    primary = YoloDetector(model_path, device, input_shape)
+    if general_model_path is None:
+        return primary
+    general = YoloDetector(general_model_path, device, input_shape)
+    return CombinedDetector(primary, general)

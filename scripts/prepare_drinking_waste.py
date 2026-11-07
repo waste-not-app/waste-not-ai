@@ -15,9 +15,9 @@ from PIL import Image
 
 SOURCE = "https://www.kaggle.com/datasets/arkadiyhacks/drinking-waste-classification"
 DOWNLOAD = "https://www.kaggle.com/api/v1/datasets/download/arkadiyhacks/drinking-waste-classification?datasetVersionNumber=2"
-ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_ARCHIVE = ROOT / "ai/data/local/downloads/drinking-waste.zip"
-DEFAULT_OUTPUT = ROOT / "ai/data/local/drinking-waste-v2"
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_ARCHIVE = ROOT / "data/local/downloads/drinking-waste.zip"
+DEFAULT_OUTPUT = ROOT / "data/local/drinking-waste-v2"
 ARCHIVE_SHA256 = "2231be78c398a8606b29399ccc8797be0586d5c4894d610d4ff5e84494dd1449"
 
 
@@ -206,7 +206,7 @@ def prepare(archive, output, seed):
               "records": records}
     (output / "manifest.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     import shutil
-    shutil.copyfile(ROOT / "ai/docs/DATASET_NOTICES.md", output / "DATASET_NOTICES.md")
+    shutil.copyfile(ROOT / "docs/DATASET_NOTICES.md", output / "DATASET_NOTICES.md")
     print(json.dumps({k: v for k, v in report.items() if k not in {"records", "rejected"}}, indent=2), flush=True)
 
 

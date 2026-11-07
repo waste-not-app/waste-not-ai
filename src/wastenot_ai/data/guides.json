@@ -53,7 +53,7 @@
   },
   {
     "id": "pilot-glass-bottle",
-    "version": 5,
+    "version": 6,
     "object_key": "glass_bottle",
     "category": "GLASS",
     "publication_status": "DRAFT",
@@ -117,6 +117,28 @@
           "Jangan gunakan kembali kaca yang retak atau pecah dan hindari kontak langsung dengan tepi tajam.",
           "Gunakan pembungkus pelindung atau wadah kokoh dan beri label berisi pecahan kaca; minta bantuan petugas bila tidak aman.",
           "Serahkan melalui jalur residu sesuai petunjuk pengelola setempat; jangan campur pecahan lepas dengan daur ulang biasa."
+        ]
+      },
+      {
+        "id": "glass-sharp-intact-recycle-v1",
+        "method": "RECYCLE",
+        "risk_compatible": true,
+        "requires": {
+          "category": "GLASS",
+          "cleanliness": "CLEAN",
+          "integrity": "INTACT",
+          "risk_type": "SHARP",
+          "recycling_access": "YES"
+        },
+        "text": "Botol kaca dikonfirmasi utuh dan pengelola menerima jenis serta kondisi tajam yang kamu laporkan. Arahkan ke Recycle mengikuti petunjuk pengemasan penerima; jangan gunakan ulang bagian yang tajam.",
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables",
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+        ],
+        "steps": [
+          "Konfirmasikan kepada pengelola bahwa botol tetap utuh tetapi memiliki risiko tepi tajam; pastikan kondisi ini memang diterima.",
+          "Hindari kontak langsung dengan tepi tajam dan ikuti pengemasan pelindung serta label sesuai arahan penerima; jangan memecahkan botol.",
+          "Serahkan melalui jalur daur ulang yang telah dikonfirmasi. Jika ternyata retak/pecah atau ada kontaminasi, perbarui kondisi sebelum mengikuti saran."
         ]
       }
     ]

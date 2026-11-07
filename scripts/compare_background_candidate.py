@@ -7,7 +7,7 @@ from pathlib import Path
 
 from calibrate_yolo import LABELS, score
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("YOLO_CONFIG_DIR", str(ROOT / ".cache-ai/ultralytics"))
 os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache-ai/matplotlib"))
 os.environ["YOLO_AUTOINSTALL"] = "false"
@@ -34,8 +34,8 @@ def confusion(records, confidence, output):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate-cache", type=Path, required=True)
-    parser.add_argument("--baseline-cache", type=Path, default=ROOT / "ai/artifacts/calibration/validation-predictions.json")
-    parser.add_argument("--output", type=Path, default=ROOT / "ai/artifacts/background-comparison")
+    parser.add_argument("--baseline-cache", type=Path, default=ROOT / "artifacts/calibration/validation-predictions.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "artifacts/background-comparison")
     args = parser.parse_args()
     old = json.loads(args.baseline_cache.read_text("utf-8"))
     new = json.loads(args.candidate_cache.read_text("utf-8"))
