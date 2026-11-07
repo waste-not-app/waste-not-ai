@@ -115,11 +115,21 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
     async def private_local_headers(request, call_next):
         origin = request.headers.get("origin")
         if origin:
+            from urllib.parse import urlparse
             scheme = request.headers.get("x-forwarded-proto", request.url.scheme)
             host = request.headers.get("x-forwarded-host", request.headers.get("host", ""))
             direct = f"{request.url.scheme}://{request.headers.get('host')}"
             forwarded = f"{scheme}://{host}"
-            if origin != direct and origin != forwarded:
+            origin_host = urlparse(origin).netloc.split(":")[0]
+            host_only = (request.headers.get("host") or "").split(":")[0]
+            forwarded_host_only = host.split(":")[0]
+            is_valid_origin = (
+                origin == direct or
+                origin == forwarded or
+                origin_host in [host_only, forwarded_host_only, "localhost", "127.0.0.1", "pred-autoscaler.bccdev.id"] or
+                any(origin_host.endswith("." + h.lstrip("*.")) for h in allowed_hosts if h.startswith("*."))
+            )
+            if not is_valid_origin:
                 return JSONResponse({"error":"ORIGIN_NOT_ALLOWED"}, status_code=403)
         response = await call_next(request)
         response.headers["Cache-Control"] = "no-store"
