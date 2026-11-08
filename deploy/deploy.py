@@ -111,9 +111,10 @@ def link(name, target):
 
 
 def dropin(service):
-    kind = 'detection' if service == 'wastenot-yolo' else 'recommendation'
+    kind = {'wastenot-yolo': 'detection', 'wastenot-decisions': 'recommendation', 'wastenot-demo': 'demo'}[service]
+    model_environment = f'Environment=AI_MODEL_DIRECTORY={ROOT}/models\n' if kind == 'demo' else ''
     return (f'[Service]\nWorkingDirectory={ROOT}/current\n'
-            f'Environment=PYTHONPATH={ROOT}/current/src\nExecStart=\n'
+            f'Environment=PYTHONPATH={ROOT}/current/src\n{model_environment}ExecStart=\n'
             f'ExecStart={ROOT}/venv/bin/python {ROOT}/current/serve.py {kind}\n').encode()
 
 
@@ -177,7 +178,8 @@ def deploy(raw):
                 shutil.rmtree(stage)
     before = {}
     try:
-        for service in SERVICES:
+        services = SERVICES + (('wastenot-demo',) if (UNITS / 'wastenot-demo.service').is_file() else ())
+        for service in services:
             path = UNITS / (service + '.service.d') / '20-ai-release.conf'
             before[path] = path.read_bytes() if path.exists() else None
             path.parent.mkdir(parents=True, exist_ok=True)

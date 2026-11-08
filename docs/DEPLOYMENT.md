@@ -47,6 +47,8 @@ Secrets GitHub: SSH_PRIVATE_KEY/SSH_KNOWN_HOSTS. Variables: VM_HOST/VM_PORT/VM_U
 
 Manifest memilih `broad-coco-b0f633193403`, square640, dengan 88 label gabungan. Checkpoint waste dan atribusi dataset tersedia pada GitHub Release `models-v4-coco11s-20261107`. Pendamping COCO11s berasal dari rilis resmi Ultralytics. `scripts/fetch_model.py` memverifikasi kedua hash. Unduhan aset release privat memerlukan `GITHUB_TOKEN` dengan akses baca repo. Token hanya dikirim ke API GitHub melalui HTTPS dan dihapus dari request redirect lintas origin. CI memakai token job dengan permission contents read.
 
+Service demo yang sudah terpasang juga menerima drop-in release untuk menjalankan `serve.py demo` pada port8092 dengan `AI_MODEL_DIRECTORY`. Entrypoint membaca manifest dan menjalankan pemanasan yang sama seperti worker deteksi. Deployment menyimpan serta mengembalikan override demo sebelumnya bila aktivasi gagal. Mode panduan draf mengikuti pengaturan demo yang sudah tersedia.
+
 Sebelum merge manifest, operator memasang kedua file model sebagai root-owned/read-only di direktori model. `AI_MODEL_DIRECTORY` memungkinkan pemilihan model mengikuti source release sehingga rollback ke manifest sebelumnya juga memilih checkpoint sebelumnya. Simpan checkpoint yang diperlukan release pemulihan.
 
 Uji staging pada VM dua CPU menggunakan satu thread, kuota CPU75% dan batas memori1280MiB. Tiga foto publik menghasilkan waktu hangat 6,4–6,6 detik per foto dan peak RSS sekitar570MiB. Panggilan pertama sekitar15detik. Entrypoint menjalankan inferensi pemanasan kedua komponen sebelum server HTTP menerima request. Pengukuran ini mencakup sembilan inferensi eksploratif. Kapasitas paralel dan beban pengguna masih memerlukan pengujian terpisah.

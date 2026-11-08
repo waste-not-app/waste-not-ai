@@ -13,9 +13,12 @@ def application(kind):
     release = Path(__file__).resolve().parent / 'release.json'
     if release.is_file():
         os.environ['WASTENOT_AI_RELEASE'] = json.loads(release.read_text())['commit']
-    if kind == 'detection':
-        for name in ('GEMINI_API_KEY', *(f'GEMINI_API_KEY_{i}' for i in range(1, 6)), 'AI_RECOMMENDATION_TOKEN'):
-            os.environ.pop(name, None)
+    if kind in {'detection', 'demo'}:
+        if kind == 'detection':
+            for name in ('GEMINI_API_KEY', *(f'GEMINI_API_KEY_{i}' for i in range(1, 6)), 'AI_RECOMMENDATION_TOKEN'):
+                os.environ.pop(name, None)
+        else:
+            os.environ.pop('AI_SERVICE_TOKEN', None)
         model_directory = os.getenv('AI_MODEL_DIRECTORY')
         general_model = None
         input_shape = 'adaptive'
@@ -52,6 +55,9 @@ def application(kind):
         blank = io.BytesIO()
         Image.new('RGB', (64, 64)).save(blank, 'PNG')
         detector.detect(blank.getvalue())
+        if kind == 'demo':
+            from wastenot_ai.demo import create_demo_app
+            return create_demo_app(detector=detector, demo_guides=True)
         return create_app(detector=detector)
     os.environ.pop('AI_SERVICE_TOKEN', None)
     from wastenot_ai.providers import GeminiProvider
@@ -69,18 +75,19 @@ def application(kind):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('service', choices=('detection', 'recommendation'))
+    parser.add_argument('service', choices=('detection', 'recommendation', 'demo'))
     args = parser.parse_args()
     import uvicorn
     backend = nullcontext()
-    if args.service == 'detection':
+    if args.service in {'detection', 'demo'}:
         import torch
         if torch.backends.cpu.get_cpu_capability() in {'DEFAULT', 'NO AVX'}:
             # The VM CPU cannot run NNPACK; avoid repeating unsupported-kernel initialization for every layer.
             backend = torch.backends.nnpack.flags(enabled=False)
     with backend:
         app = application(args.service)
-        uvicorn.run(app, host='127.0.0.1', port=8091 if args.service == 'detection' else 8093,
+        port = {'detection': 8091, 'recommendation': 8093, 'demo': 8092}[args.service]
+        uvicorn.run(app, host='127.0.0.1', port=port,
                     access_log=False, log_level='warning', workers=1)
 
 

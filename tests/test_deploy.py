@@ -161,3 +161,32 @@ def test_installed_model_bundle_is_verified_before_activation(tmp_path):
         files['model.json'] = json.dumps(manifest).encode()
         with pytest.raises(ValueError, match='Invalid model filename'):
             deploy.verify_runtime(files)
+
+
+@pytest.mark.parametrize('activation_succeeds', [True, False])
+def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_failure(tmp_path, payload, activation_succeeds):
+    root = tmp_path / 'ai'
+    previous = root / 'releases' / ('b' * 40)
+    previous.mkdir(parents=True)
+    (root / 'current').symlink_to(previous)
+    units = tmp_path / 'units'
+    units.mkdir()
+    (units / 'wastenot-demo.service').write_text('[Service]\nExecStart=old-demo-command\n')
+    override = units / 'wastenot-demo.service.d' / '20-ai-release.conf'
+    override.parent.mkdir()
+    original = b'[Service]\nExecStart=old-model-command\n'
+    override.write_bytes(original)
+    readiness = [True] if activation_succeeds else [False, True]
+    with patch.object(deploy, 'ROOT', root), patch.object(deploy, 'UNITS', units), \
+         patch.object(deploy, 'verify_runtime'), patch.object(deploy, 'restart'), \
+         patch.object(deploy, 'ready', side_effect=readiness):
+        if activation_succeeds:
+            deploy.deploy(payload)
+            command = override.read_text()
+            assert f'ExecStart={root}/venv/bin/python {root}/current/serve.py demo' in command
+            assert f'Environment=AI_MODEL_DIRECTORY={root}/models' in command
+        else:
+            with pytest.raises(ValueError, match='previous release restored'):
+                deploy.deploy(payload)
+            assert override.read_bytes() == original
+            assert (root / 'current').resolve() == previous

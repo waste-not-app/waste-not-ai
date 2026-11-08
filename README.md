@@ -18,7 +18,7 @@ PYTHONPATH=src .venv/bin/python -m pytest tests -q
 
 CI mengunduh bobot resmi untuk memeriksa SHA-256 sebenarnya. Paket deploy hanya berisi source worker dan input runtime, tanpa key, foto, dataset, hasil training atau bobot. Worker deteksi memverifikasi model lagi saat startup.
 
-Pilot memakai YOLO11n COCO (`candidate-0ebbc80d4a76`) dan Gemini 3.1 Flash-Lite. Empat policy guide versi 6 tersedia melalui file operator yang terpisah; pemeriksaan sumber otomatis bukan persetujuan keselamatan manusia. Katalog/demo draf di bawah tidak menggambarkan seluruh cakupan produksi. Bobot fine-tuning kandidat belum dipromosikan.
+Pilot memakai v4 + COCO11s (`broad-coco-b0f633193403`, 88 label, square640) dan Gemini 3.1 Flash-Lite. Worker deteksi dan demo browser VM memuat bundle dari manifest release yang sama. Empat policy guide versi 6 tersedia melalui file operator yang terpisah; pemeriksaan sumber otomatis bukan persetujuan keselamatan manusia. Katalog/demo draf di bawah tidak menggambarkan seluruh cakupan produksi.
 
 ## Referensi eksperimen dan demo lokal
 
