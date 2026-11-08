@@ -11,6 +11,7 @@ WorkingDirectory=/opt/wastenot-ai/current
 EnvironmentFile=/etc/wastenot/ai-recommendation.env
 Environment=PYTHONPATH=/opt/wastenot-ai/current/src
 Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=AI_MODEL_DIRECTORY=/opt/wastenot-ai/models
 Environment=DEMO_ALLOWED_HOSTS=127.0.0.1,localhost,[::1],pred-autoscaler.bccdev.id,proxy.bccdev.id,*.bccdev.id
 Environment=YOLO_OFFLINE=true
 Environment=YOLO_AUTOINSTALL=false
@@ -18,7 +19,7 @@ Environment=YOLO_CONFIG_DIR=/var/lib/wastenot-demo/ultralytics
 Environment=MPLCONFIGDIR=/var/lib/wastenot-demo/matplotlib
 Environment=TORCH_HOME=/var/lib/wastenot-demo/torch
 StateDirectory=wastenot-demo
-ExecStart=/opt/wastenot-ai/venv/bin/python -m wastenot_ai.cli demo --model /opt/wastenot-ai/models/yolo11n.pt --port 8092 --no-browser --demo-guides
+ExecStart=/opt/wastenot-ai/venv/bin/python /opt/wastenot-ai/current/serve.py demo
 Restart=on-failure
 RestartSec=10
 TimeoutStopSec=25

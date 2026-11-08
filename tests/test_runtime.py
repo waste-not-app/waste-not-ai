@@ -31,8 +31,9 @@ def test_recommendation_deadline_fits_go_header_timeout(monkeypatch, seconds):
 
 
 @pytest.mark.parametrize('combined', [False, True])
-def test_detection_manifest_checks_both_models_and_warms_up_before_serving(monkeypatch, tmp_path, combined):
-    from wastenot_ai import detector, worker
+@pytest.mark.parametrize('kind', ['detection', 'demo'])
+def test_detection_manifest_checks_both_models_and_warms_up_before_serving(monkeypatch, tmp_path, combined, kind):
+    from wastenot_ai import demo, detector, worker
 
     spec = importlib.util.spec_from_file_location('runtime_bundle', Path(__file__).parents[1] / 'serve.py')
     runtime = importlib.util.module_from_spec(spec)
@@ -46,6 +47,7 @@ def test_detection_manifest_checks_both_models_and_warms_up_before_serving(monke
         (tmp_path / 'general.pt').write_bytes(b'general')
     (tmp_path / 'model.json').write_text(json.dumps(manifest))
     monkeypatch.setenv('AI_MODEL_DIRECTORY', str(tmp_path))
+    monkeypatch.setenv('GEMINI_API_KEY', 'fixture-provider-key')
     monkeypatch.setitem(sys.modules, 'torch', SimpleNamespace(set_num_threads=lambda _: None,
                                                            set_num_interop_threads=lambda _: None))
     calls = []
@@ -56,16 +58,19 @@ def test_detection_manifest_checks_both_models_and_warms_up_before_serving(monke
         return loaded
     monkeypatch.setattr(detector, 'load_detector', load)
     monkeypatch.setattr(worker, 'create_app', lambda **options: calls.append(('serve', options)))
-    runtime.application('detection')
+    monkeypatch.setattr(demo, 'create_demo_app', lambda **options: calls.append(('serve', options)))
+    runtime.application(kind)
     assert calls[0] == ('load', tmp_path / 'waste.pt', {
         'device': 'cpu', 'input_shape': 'square',
         'general_model_path': tmp_path / 'general.pt' if combined else None})
     assert calls[1][0] == 'warmup' and calls[1][1].startswith(b'\x89PNG')
-    assert calls[2] == ('serve', {'detector': loaded})
+    expected = {'detector': loaded, 'demo_guides': True} if kind == 'demo' else {'detector': loaded}
+    assert calls[2] == ('serve', expected)
+    assert ('GEMINI_API_KEY' in runtime.os.environ) == (kind == 'demo')
     calls.clear()
     (tmp_path / ('general.pt' if combined else 'waste.pt')).write_bytes(b'changed')
     with pytest.raises(ValueError, match='checksum'):
-        runtime.application('detection')
+        runtime.application(kind)
     assert calls == []
 
 
