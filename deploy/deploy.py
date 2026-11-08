@@ -3,6 +3,7 @@
 import fcntl
 import gzip
 import hashlib
+import http.cookiejar
 import io
 import json
 import os
@@ -118,16 +119,37 @@ def dropin(service):
             f'ExecStart={ROOT}/venv/bin/python {ROOT}/current/serve.py {kind}\n').encode()
 
 
-def restart():
+def demo_active():
+    if not (UNITS / 'wastenot-demo.service').is_file():
+        return False
+    return subprocess.run(['systemctl', 'is-active', '--quiet', 'wastenot-demo'],
+                          capture_output=True, timeout=10).returncode == 0
+
+
+def restart(*, include_demo=False):
     run('systemctl', 'daemon-reload')
-    run('systemctl', 'restart', *SERVICES)
-    try:
-        run('systemctl', 'try-restart', 'wastenot-demo')
-    except Exception:
-        pass
+    services = SERVICES + (('wastenot-demo',) if include_demo else ())
+    run('systemctl', 'restart', *services)
 
 
-def ready(commit):
+def demo_ready(opener, *, verify_model=True):
+    with opener.open('http://127.0.0.1:8092/', timeout=2) as response:
+        page = response.read(128 * 1024)
+    nonce = re.search(rb'name="wastenot-demo" content="([^"]+)"', page)
+    if nonce is None:
+        raise ValueError('Demo session could not be initialized')
+    request = urllib.request.Request('http://127.0.0.1:8092/demo/api/config',
+                                     headers={'X-WasteNot-Demo': nonce.group(1).decode()})
+    with opener.open(request, timeout=2) as response:
+        config = json.load(response)
+    if not verify_model:
+        return bool(config.get('model_version'))
+    manifest = json.loads((ROOT / 'current/model.json').read_text())
+    return config.get('model_version') == manifest['model_version']
+
+
+def ready(commit, *, include_demo=False):
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar())) if include_demo else None
     for _ in range(60):
         try:
             for port, name, key in ((8091, 'ai-detection.env', 'AI_SERVICE_TOKEN'),
@@ -141,6 +163,8 @@ def ready(commit):
                         raise ValueError('Worker is not ready')
                     if commit is not None and response.headers.get('X-WasteNot-Release') != commit:
                         raise ValueError('Worker is running a different source release')
+            if include_demo and not demo_ready(opener, verify_model=commit is not None):
+                raise ValueError('Demo is running a different model')
             return True
         except (OSError, ValueError):
             time.sleep(1)
@@ -177,6 +201,7 @@ def deploy(raw):
             if stage.exists():
                 shutil.rmtree(stage)
     before = {}
+    include_demo = demo_active()
     try:
         services = SERVICES + (('wastenot-demo',) if (UNITS / 'wastenot-demo.service').is_file() else ())
         for service in services:
@@ -186,8 +211,8 @@ def deploy(raw):
             path.write_bytes(dropin(service))
             path.chmod(0o644)
         link('current', target)
-        restart()
-        if not ready(commit):
+        restart(include_demo=include_demo)
+        if not ready(commit, include_demo=include_demo):
             raise ValueError('New worker source did not become ready')
     except Exception:
         link('current', previous)
@@ -196,8 +221,8 @@ def deploy(raw):
                 path.unlink(missing_ok=True)
             else:
                 path.write_bytes(content)
-        restart()
-        if not ready(None):
+        restart(include_demo=include_demo)
+        if not ready(None, include_demo=include_demo):
             raise RuntimeError('Previous AI release also failed readiness') from None
         raise ValueError('AI deployment failed; previous release restored') from None
     if previous != target:

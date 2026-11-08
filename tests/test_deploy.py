@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import subprocess
 import tarfile
+import urllib.request
 from unittest.mock import patch
 
 import pytest
@@ -164,7 +165,8 @@ def test_installed_model_bundle_is_verified_before_activation(tmp_path):
 
 
 @pytest.mark.parametrize('activation_succeeds', [True, False])
-def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_failure(tmp_path, payload, activation_succeeds):
+@pytest.mark.parametrize('was_active', [True, False])
+def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_failure(tmp_path, payload, activation_succeeds, was_active):
     root = tmp_path / 'ai'
     previous = root / 'releases' / ('b' * 40)
     previous.mkdir(parents=True)
@@ -178,8 +180,9 @@ def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_f
     override.write_bytes(original)
     readiness = [True] if activation_succeeds else [False, True]
     with patch.object(deploy, 'ROOT', root), patch.object(deploy, 'UNITS', units), \
-         patch.object(deploy, 'verify_runtime'), patch.object(deploy, 'restart'), \
-         patch.object(deploy, 'ready', side_effect=readiness):
+         patch.object(deploy, 'verify_runtime'), patch.object(deploy, 'restart') as restart, \
+         patch.object(deploy, 'demo_active', return_value=was_active), \
+         patch.object(deploy, 'ready', side_effect=readiness) as ready:
         if activation_succeeds:
             deploy.deploy(payload)
             command = override.read_text()
@@ -190,3 +193,19 @@ def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_f
                 deploy.deploy(payload)
             assert override.read_bytes() == original
             assert (root / 'current').resolve() == previous
+        assert all(call.kwargs['include_demo'] == was_active for call in restart.call_args_list)
+        assert all(call.kwargs['include_demo'] == was_active for call in ready.call_args_list)
+
+
+@pytest.mark.parametrize('loaded_model,verify_model,expected', [
+    ('combined-current', True, True), ('old-baseline', True, False), ('old-baseline', False, True)])
+def test_demo_readiness_rejects_a_stale_model_and_accepts_legacy_recovery(tmp_path, loaded_model, verify_model, expected):
+    current = tmp_path / 'current'
+    current.mkdir()
+    (current / 'model.json').write_text(json.dumps({'model_version': 'combined-current'}))
+    page = io.BytesIO(b'<meta name="wastenot-demo" content="test-session-nonce">')
+    config = io.BytesIO(json.dumps({'model_version': loaded_model}).encode())
+    opener = patch.object(urllib.request.OpenerDirector, 'open')
+    with patch.object(deploy, 'ROOT', tmp_path), opener as open_request:
+        open_request.side_effect = [page, config]
+        assert deploy.demo_ready(urllib.request.build_opener(), verify_model=verify_model) == expected
