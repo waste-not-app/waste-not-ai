@@ -36,7 +36,9 @@ Bagian berikut mempertahankan penjelasan riset/demo. Hasilnya bukan klaim peneri
 
 Perbaikan cakupan kamera: `demo-camera-v3.bat` sekarang menjalankan **v3 + model benda umum COCO**. Checkpoint v3 sendiri hanya mempunyai sepuluh kelas sampah sehingga tidak dapat mendeteksi ponsel. [Diagnosis, cara mencoba dan batas model gabungan](docs/CAMERA_COVERAGE.md). Belum ada klaim akurasi gabungan; semua dugaan memerlukan konfirmasi.
 
-Pembaruan `pilot-policy-08`: botol kaca utuh dengan risiko tajam dan penerima terkonfirmasi kini memperoleh **Recycle disertai peringatan**. [Audit bug dan hasil verifikasi](docs/DEBUG_20261107.md) mencakup 226 tes, 21.420 kombinasi kondisi dan 25 pemeriksaan browser. Model aktif/cakupan kardus terlihat di layar; tersedia koreksi manual untuk salah deteksi. [Panduan awal bersumber](docs/HANDLING_GUIDANCE.md) tetap tampil saat metode belum dapat ditentukan atau batas generation demo tercapai.
+Pembaruan **`pilot-policy-09`**: demo sekarang memilih **Reuse / Recycle / Trash** langsung dari aturan panduan. Gemini opsional dengan fallback aturan otomatis; kondisi yang belum diketahui tetap menjadi syarat. [Perilaku dan verifikasi](docs/DIRECT_RECOMMENDATIONS.md).
+
+Riwayat `pilot-policy-08`: botol kaca utuh dengan risiko tajam dan penerima terkonfirmasi kini memperoleh **Recycle disertai peringatan**. [Audit bug dan hasil verifikasi](docs/DEBUG_20261107.md) mencakup 226 tes, 21.420 kombinasi kondisi dan 25 pemeriksaan browser. Model aktif/cakupan kardus terlihat di layar; tersedia koreksi manual untuk salah deteksi. [Panduan awal bersumber](docs/HANDLING_GUIDANCE.md) tetap tampil saat metode belum dapat ditentukan atau batas generation demo tercapai.
 
 Perluasan dataset: [audit dan pipeline dataset v3](docs/DATASET_V3.md). Status 7 November 2026: **147 foto baru diunduh, 99 lolos screening awal**, dataset eksperimen `broad-waste-v3-batch2` tersedia dengan 3.798 gambar. [Training kandidat YOLO11s selesai](docs/BROAD_WASTE_V3_RESULTS.md): pada test identik mAP50 **28,28%→35,18%**, dengan tradeoff precision/recall per kelas. Coba `.\demo-camera-v3.bat`. Target data dan seluruh gate kelas belum terpenuhi; model default belum diganti.
 
@@ -139,11 +141,11 @@ Katalog versi `demo-catalog-05` mempunyai **78 pilihan benda/material**; sebagia
 | Sikat gigi | Toothbrush | Konfirmasi plastik manual tanpa listrik/baterai; TRASH hanya saat tidak layak dan akses daur ulang khusus sudah diperiksa tidak ada |
 | Katalog manual | Kaleng aluminium, botol HDPE, kardus, baterai | Belum punya kelas khusus pada checkpoint ini; bukan klaim kemampuan deteksi baru |
 
-Semua 78 panduan merupakan **draf demo**, sebagian dibuat dari template bersama. Perluasan COCO memanfaatkan label pretrained yang sudah ada. Kandidat botol/kaleng telah difine-tune dan dievaluasi terpisah; ia tidak mengenali semua kelas COCO. Perluasan katalog tidak menambah kelas visual baru pada bobot. Template tersedia pada [guide_templates.json](src/wastenot_ai/data/guide_templates.json); katalog pada [catalog.json](src/wastenot_ai/data/catalog.json). Script `scripts/expand_demo_catalog.py` memperbarui data extension secara idempotent jika tabel sumber diubah.
+Semua 85 panduan bawaan merupakan **draf demo**, sebagian dibuat dari template bersama. Perluasan COCO memanfaatkan label pretrained yang sudah ada. Kandidat botol/kaleng telah difine-tune dan dievaluasi terpisah; ia tidak mengenali semua kelas COCO. Perluasan katalog tidak menambah kelas visual baru pada bobot. Template tersedia pada [guide_templates.json](src/wastenot_ai/data/guide_templates.json); katalog pada [catalog.json](src/wastenot_ai/data/catalog.json). Script `scripts/expand_demo_catalog.py` memperbarui data extension secara idempotent jika tabel sumber diubah.
 
 ### Batas layanan demo
 
-Server ini khusus loopback, terpisah dari worker `/internal/detect` dan endpoint produksi Go. Endpoint `/demo/api/*` memakai cookie HttpOnly, token anti-CSRF, pemeriksaan Host/Origin, memori sesi 15 menit dan replay request yang dideduplikasi. Batas rekomendasi 30 per jam per proses; model/provider masing-masing satu job aktif. Tidak ada endpoint untuk menyimpan log.
+Server ini khusus loopback, terpisah dari worker `/internal/detect` dan endpoint produksi Go. Endpoint `/demo/api/*` memakai cookie HttpOnly, token anti-CSRF, pemeriksaan Host/Origin, memori sesi 15 menit dan replay request yang dideduplikasi. Batas panggilan Gemini/simulasi 30 per jam per proses; aturan langsung tetap tersedia di luar batas generation tersebut; model/provider masing-masing satu job aktif. Tidak ada endpoint untuk menyimpan log.
 
 Jangan menjadikan server demo sebagai API publik. Integrasi Go/Android di bawah tetap memakai kontrak produk. Gemini hanya menerima metadata/context/evidence, sementara foto berhenti di YOLO lokal. Sumber Gemini hanya ditampilkan untuk hasil model yang lolos validasi; penanganan khusus diberi label panduan/kebijakan.
 
@@ -217,7 +219,7 @@ Isi satu sampai lima slot yang tersedia; slot kosong dilewati dan nilai duplikat
 
 Pemakaian normal bergiliran **1 → 2 → 3 → 4 → 5 → 1**, sesuai slot terisi. HTTP 429 membuat key tersebut masuk cooldown minimal 60 detik atau lebih lama sesuai `Retry-After`/`RetryInfo` dari Google, lalu mencoba key lain yang tersedia. Setiap key hanya dicoba sekali per permintaan, maksimum lima percobaan dalam satu anggaran timeout. Jika semua sedang cooldown, langsung menghasilkan `LLM_RATE_LIMITED` tanpa request baru. HTTP 401/403 menonaktifkan key sampai proses dimulai ulang; key lain tetap dapat dicoba. Timeout, 5xx, output invalid dan respons terblokir tidak memicu pengulangan generation otomatis.
 
-Rotasi dan cooldown tersimpan di memori **satu instance provider/proses**. Demo mempertahankannya selama server hidup. Menjalankan CLI sekali lagi memulai urutan baru dari key pertama; ini bukan penghitung rotasi yang disimpan di disk. `list-gemini-models` memakai key pertama yang terkonfigurasi tanpa rotasi. Batas 30 permintaan demo per jam tetap berlaku.
+Rotasi dan cooldown tersimpan di memori **satu instance provider/proses**. Demo mempertahankannya selama server hidup. Menjalankan CLI sekali lagi memulai urutan baru dari key pertama; ini bukan penghitung rotasi yang disimpan di disk. `list-gemini-models` memakai key pertama yang terkonfigurasi tanpa rotasi. Batas 30 panggilan Gemini/simulasi per jam tetap berlaku; aturan langsung tidak menghabiskannya.
 
 Google menetapkan [rate limit per proyek, bukan per API key](https://ai.google.dev/gemini-api/docs/rate-limits). Lima key dalam proyek yang sama berbagi kuota; rotasi tidak menjamin bebas limit dan tidak menambah kuota proyek. Periksa kuota/model di AI Studio dan sesuaikan laju permintaan atau ajukan kenaikan kuota bila diperlukan. Semua key yang digunakan perlu memiliki akses ke `GEMINI_MODEL` yang sama.
 
@@ -455,7 +457,7 @@ Urutan smoke integrasi: health worker → deteksi publik memakai akun uji → pi
 | Model Gemini tidak dapat diakses / `LLM_UNAVAILABLE` | Jalankan `list-gemini-models`; periksa nama model, akses akun, jaringan, billing/kuota dan dukungan structured output |
 | `NO_REVIEWED_GUIDE` | Untuk demo gunakan `--demo-guides`; penggunaan sesungguhnya memerlukan `--guides` berisi artikel PUBLISHED yang masih valid dan ditinjau |
 | `NO_ALLOWED_METHOD` | Kondisi belum memenuhi evidence panduan; jangan mengubah UNKNOWN/kondisi hanya untuk mendapatkan saran. Lanjut manual atau lengkapi aturan editorial yang ditinjau |
-| `INVALID_MODEL_OUTPUT` / `INVALID_EVIDENCE` | Output ditolak; metode tetap null. Periksa schema/policy dan kasus uji provider tanpa meloloskan output mentah |
+| `INVALID_MODEL_OUTPUT` / `INVALID_EVIDENCE` | Output Gemini ditolak; pilih ulang memakai aturan evidence yang valid dan laporkan provider=rules. Tanpa evidence valid, metode tetap null |
 | `LLM_RATE_LIMITED` | Semua key yang tersedia sedang dibatasi/cooldown; tunggu petunjuk Google dan periksa kuota proyek. Lima key pada satu proyek tetap berbagi limit |
 | `LLM_TIMEOUT` / `LLM_BLOCKED_OR_INCOMPLETE` | Request gagal atau belum lengkap; sediakan manual dan retry eksplisit sesuai kuota. Tidak otomatis mengulang generation dengan key lain |
 | Worker 401 | Header bearer harus berisi token worker, sama dengan AI_SERVICE_TOKEN proses server; JWT pengguna dipakai hanya pada API publik Go |

@@ -178,8 +178,9 @@ def test_trash_requires_specific_residue_guide_and_confirmed_lack_of_recycling()
     for access in ("UNKNOWN","YES"):
         result = recommend(context("toothbrush","OTHER",recycling_access=access,**values),
                            SpyProvider(),load_guides(),demo_guides=True)
-        assert result.reason_code == ("CONTEXT_REQUIRED" if access == "UNKNOWN" else "NO_ALLOWED_METHOD")
+        assert result.reason_code == "CONTEXT_REQUIRED"
         if access == "UNKNOWN": assert result.missing_context == ["recycling_access"]
+        else: assert result.missing_context == ["condition.cleanliness"]
     provider = SpyProvider()
     result = recommend(context("toothbrush","OTHER",recycling_access="NO",**values),
                        provider,load_guides(),demo_guides=True)
@@ -227,17 +228,18 @@ def test_unknown_risk_requires_clarification_instead_of_prevention_substitution(
     assert provider.calls == []
 
 
-def test_no_recycling_access_never_offers_recycle_or_guesses_trash_for_bottle():
+def test_no_receiver_only_returns_conditional_residue_with_explicit_requirements():
     provider = SpyProvider()
     result = recommend(context(recycling_access="NO"),provider,load_guides(),demo_guides=True)
-    assert result.recommended_method is None and result.status == "UNAVAILABLE"
-    assert provider.calls == []
+    assert result.recommended_method == 'TRASH' and result.status == 'READY'
+    assert result.recommendation_basis == 'CONDITIONAL' and result.conditions_to_verify
 
 
-def test_fixture_is_always_labelled_and_timeout_returns_no_method():
+def test_fixture_is_labelled_and_timeout_uses_real_guide_rules():
     assert recommend(context(), FixtureProvider(), load_guides(), demo_guides=True).prototype_only
     result = recommend(context(), SpyProvider(failure="LLM_TIMEOUT"), load_guides(), demo_guides=True)
-    assert result.reason_code == "LLM_TIMEOUT" and result.recommended_method is None
+    assert result.reason_code == 'LLM_TIMEOUT' and result.recommended_method == 'RECYCLE'
+    assert result.provider == 'rules' and result.evidence_ids and result.source_urls
 
 
 def test_gemini_transport_sends_metadata_schema_header_key_only():

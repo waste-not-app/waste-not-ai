@@ -142,5 +142,21 @@
     "region": "Global; penerapan dan penerima mengikuti aturan setempat",
     "checked_at": "2026-11-07",
     "scope_note": "Prinsip pemisahan limbah infeksius/medis dan risiko penanganannya; bukan janji penerimaan fasilitas kesehatan tertentu."
+  },
+  {
+    "url": "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy",
+    "title": "Non-hazardous materials and waste management hierarchy",
+    "publisher": "US EPA",
+    "region": "Amerika Serikat",
+    "checked_at": "2026-11-13",
+    "scope_note": "Prinsip penggunaan ulang, daur ulang/pengomposan dan residu nonberbahaya. Bukan bukti penerimaan suatu fasilitas Indonesia."
+  },
+  {
+    "url": "https://www.epa.gov/recycle/composting-home",
+    "title": "Composting At Home",
+    "publisher": "US EPA",
+    "region": "Amerika Serikat",
+    "checked_at": "2026-11-13",
+    "scope_note": "Prinsip pengomposan dan batas bahan yang diterima. Konfirmasikan program setempat menerima jenis sisa organik tertentu."
   }
 ]

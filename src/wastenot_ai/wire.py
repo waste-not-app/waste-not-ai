@@ -9,7 +9,7 @@ from pydantic import ConfigDict, Field, field_validator, model_validator
 from .contracts import Category, Condition, Context, Contract, RawDetection, Recommendation
 
 API_VERSION = "1.0.0"
-POLICY_VERSION = "pilot-policy-08"
+POLICY_VERSION = "pilot-policy-09"
 T = TypeVar("T")
 
 

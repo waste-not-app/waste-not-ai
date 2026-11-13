@@ -38,7 +38,7 @@ def create_recommendation_app(*, token=None, provider=None, guides=None, demo_gu
     def ready(request: Request, response: Response):
         if os.getenv('WASTENOT_AI_RELEASE'):
             response.headers['X-WasteNot-Release'] = os.environ['WASTENOT_AI_RELEASE']
-        return envelope(request, {"ready": True, "recommendation_version": "pilot-policy-08"})
+        return envelope(request, {"ready": True, "recommendation_version": "pilot-policy-09"})
 
     @app.get("/internal/v1/objects", response_model=Envelope[ObjectCatalog])
     def objects(request: Request):

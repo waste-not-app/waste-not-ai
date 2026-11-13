@@ -15,7 +15,7 @@ import httpx
 from .catalog import load_catalog, preserve_detected_risk
 from .contracts import Context
 from .media import MAX_BYTES, MediaError
-from .providers import GEMINI_KEY_ENV_NAMES, FixtureProvider, GeminiProvider, load_gemini_api_keys
+from .providers import GEMINI_KEY_ENV_NAMES, FixtureProvider, GeminiProvider, RulesProvider, load_gemini_api_keys
 from .recommendation import load_guides
 from .decisions import Decisions
 from .wire import DecisionInput
@@ -42,8 +42,12 @@ def detector_for(args):
     return load_detector(args.model, args.device, args.input_shape, args.general_model)
 
 
+def provider_for(name):
+    return {'rules': RulesProvider, 'gemini': GeminiProvider, 'fixture': FixtureProvider}[name]()
+
+
 def recommendation_for(args, context):
-    provider = FixtureProvider() if args.provider == "fixture" else GeminiProvider()
+    provider = provider_for(args.provider)
     return Decisions(provider, load_guides(args.guides), demo_guides=args.demo_guides).evaluate(DecisionInput(context=context))
 
 
@@ -111,7 +115,7 @@ def main():
     recommendation_worker.add_argument("--port", type=int, default=8093)
     recommendation_worker.add_argument("--guides", type=Path)
     recommendation_worker.add_argument("--demo-guides", action="store_true")
-    recommendation_worker.add_argument("--provider", choices=["gemini", "fixture"], default="gemini")
+    recommendation_worker.add_argument("--provider", choices=["rules", "gemini", "fixture"], default="gemini")
     detect = sub.add_parser("detect")
     detect.add_argument("image", type=Path)
     bench = sub.add_parser("benchmark")
@@ -125,7 +129,7 @@ def main():
                       help="Konfirmasi bahwa context JSON adalah koreksi/pilihan objek pengguna.")
     for command in (rec, pipe):
         command.add_argument("--context", type=Path, required=True)
-        command.add_argument("--provider", choices=["gemini", "fixture"], default="gemini")
+        command.add_argument("--provider", choices=["rules", "gemini", "fixture"], default="gemini")
         command.add_argument("--guides", type=Path)
         command.add_argument("--demo-guides", action="store_true", help="Izinkan draf hanya untuk demonstrasi berlabel.")
     worker = sub.add_parser("serve-worker")
@@ -168,7 +172,7 @@ def main():
             import uvicorn
             from .recommendation_worker import create_recommendation_app
             os.environ.pop("AI_SERVICE_TOKEN", None)
-            provider = FixtureProvider() if args.provider == "fixture" else GeminiProvider()
+            provider = provider_for(args.provider)
             uvicorn.run(create_recommendation_app(provider=provider, guides=load_guides(args.guides),
                         demo_guides=args.demo_guides), host="127.0.0.1", port=args.port, access_log=False)
         elif args.command == "catalog":
@@ -210,7 +214,7 @@ def main():
             emit(recommendation_for(args, context).model_dump(mode="json"), args.output)
         elif args.command == "pipeline":
             context = Context.model_validate_json(args.context.read_text("utf-8"))
-            provider = FixtureProvider() if args.provider == "fixture" else GeminiProvider()
+            provider = provider_for(args.provider)
             emit(run_pipeline(detector_for(args), read_image(args.image), context, args.object_id,
                               provider, load_guides(args.guides), demo_guides=args.demo_guides), args.output)
         elif args.command == "demo":

@@ -77,7 +77,7 @@
           <label class="check-field"><input id="risk" type="checkbox"><span>Ada risiko selain kotor biasa: pecahan, tepi tajam, listrik/baterai, atau kontaminasi berbahaya.</span></label>
           <label id="risk-details" class="field" hidden>Jenis risiko yang diketahui<select id="risk-type"><option value="UNKNOWN">Belum jelas</option><option value="SHARP">Pecahan / tepi tajam</option><option value="CHEMICAL">Bahan kimia berbahaya</option><option value="BIOLOGICAL">Kontaminasi biologis / limbah medis</option><option value="ELECTRICAL">Listrik / baterai</option><option value="OTHER">Risiko lain</option></select></label>
           <label class="check-field confirmation"><input id="confirmed" type="checkbox" required><span>Saya sudah memilih jenis benda yang benar. Isian yang kosong berarti belum diketahui.</span></label>
-          <div class="provider-row"><label class="field">Sumber rekomendasi<select id="provider"><option value="gemini">Gemini · API langsung</option><option value="fixture">Simulasi · tanpa API</option></select></label><span id="draft-label" class="pill warning">Memuat panduan…</span></div>
+          <div class="provider-row"><label class="field">Sumber rekomendasi<select id="provider"><option value="rules">Aturan panduan · langsung</option><option value="gemini">Gemini · cadangan aturan otomatis</option><option value="fixture">Simulasi · tanpa API</option></select></label><span id="draft-label" class="pill warning">Memuat panduan…</span></div>
           <p id="provider-note" class="field-help"></p>
           <button id="recommend" class="button primary full" type="submit" disabled>Minta rekomendasi <span aria-hidden="true">↗</span></button>
         </form>

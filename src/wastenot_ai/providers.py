@@ -185,6 +185,19 @@ class GeminiProvider:
             raise ProviderError("LLM_UNAVAILABLE") from None
 
 
+class RulesProvider:
+    """Select one already-eligible method using the waste handling hierarchy."""
+    name = 'rules'
+
+    def generate(self, payload: dict) -> str:
+        order = {'REUSE': 0, 'RECYCLE': 1, 'TRASH': 2, 'REDUCE': 3}
+        unknown = payload.get('unknown_requirements', {})
+        candidates = [row for row in payload['guide']['evidence'] if row['method'] in payload['allowed_methods']]
+        evidence = min(candidates, key=lambda row: (len(unknown.get(row['id'], {})), order[row['method']]))
+        return json.dumps({'recommended_method': evidence['method'], 'special_handling': payload['special_handling'],
+                           'evidence_ids': [evidence['id']], 'reason': 'Dipilih dari aturan panduan.', 'caution': ''})
+
+
 class FixtureProvider:
     """Explicit offline contract exercise, never evidence of live LLM inference."""
     name = "fixture"

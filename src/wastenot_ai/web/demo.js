@@ -15,17 +15,17 @@ const messages = {
   DEMO_SESSION_REQUIRED: 'Sesi demo berakhir. Muat ulang halaman untuk memulai lagi.',
   DETECTION_NOT_FOUND: 'Hasil deteksi sudah tidak tersedia. Ambil atau kirim foto lagi.',
   AI_SESSION_EXPIRED: 'Sesi foto berakhir. Mulai scan baru.',
-  DEMO_HOURLY_LIMIT: 'Batas pembuatan rekomendasi otomatis demo tercapai. Panduan awal tetap tersedia di bawah.',
+  DEMO_HOURLY_LIMIT: 'Batas panggilan Gemini demo tercapai. Metode tetap dipilih dari aturan panduan.',
   DEMO_SESSION_LIMIT: 'Sesi demo penuh. Bersihkan hasil lama atau mulai ulang server.',
   INVALID_CONTEXT: 'Periksa kembali jenis benda, material dan kondisi yang dipilih.',
   OBJECT_CONFIRMATION_REQUIRED: 'Konfirmasikan objek dan kondisi terlebih dahulu.',
   OBJECT_REQUIRES_MANUAL: 'Objek ini memerlukan pilihan manual dari katalog.',
   IDEMPOTENCY_CONFLICT: 'Data permintaan berubah. Bersihkan dan kirim ulang foto.',
-  LLM_NOT_CONFIGURED: 'Gemini belum dikonfigurasi. Isi GEMINI_API_KEY di ai/.env lalu mulai ulang demo, atau pilih simulasi.',
+  LLM_NOT_CONFIGURED: 'Gemini belum dikonfigurasi. Metode dipilih dari aturan panduan.',
   LLM_MODEL_NOT_CONFIGURED: 'Pilih GEMINI_MODEL yang dapat diakses akunmu, lalu mulai ulang demo.',
   LLM_UNAVAILABLE: 'Gemini belum dapat diakses. Periksa koneksi, model dan akses API pada akunmu.',
-  LLM_RATE_LIMITED: 'Kuota Gemini sedang dibatasi. Tunggu atau gunakan mode simulasi.',
-  LLM_TIMEOUT: 'Gemini belum merespons dalam batas waktu. Kamu tetap bisa melihat panduan atau memilih manual.',
+  LLM_RATE_LIMITED: 'Kuota Gemini sedang dibatasi. Metode dipilih dari aturan panduan.',
+  LLM_TIMEOUT: 'Gemini melewati batas waktu. Metode dipilih dari aturan panduan.',
   LLM_BLOCKED_OR_INCOMPLETE: 'Respons Gemini diblokir atau belum lengkap; saran tidak digunakan.',
   NO_REVIEWED_GUIDE: 'Belum ada panduan yang ditinjau untuk konteks ini. Untuk eksperimen draf, jalankan demo dengan --demo-guides.',
   NO_ALLOWED_METHOD: 'Kondisi ini belum memiliki metode otomatis dalam panduan. Lengkapi kondisi yang memang diketahui atau pilih penanganan manual.',
@@ -318,7 +318,8 @@ function updateMaterialNote() {
     'Bentuk benda belum memastikan bahannya. Konfirmasikan material yang kamu ketahui.';
 }
 function providerNote() {
-  $('provider-note').textContent = $('provider').value === 'fixture' ? 'Mode simulasi dipilih. Tidak ada request ke Gemini; hasil selalu berlabel simulasi.' :
+  $('provider-note').textContent = $('provider').value === 'rules' ? 'Metode dipilih langsung dari aturan panduan dan kondisi yang kamu konfirmasi. Kondisi yang belum diketahui tetap ditampilkan sebagai syarat.' :
+    $('provider').value === 'fixture' ? 'Mode simulasi dipilih. Tidak ada request ke Gemini; hasil selalu berlabel simulasi.' :
     config?.gemini_configured ? `Rekomendasi akan diminta langsung ke Gemini (${config.gemini_model}). Foto tidak dikirim.` :
       'Gemini belum dikonfigurasi. Isi GEMINI_API_KEY dan GEMINI_MODEL di ai/.env, lalu mulai ulang demo.';
 }
@@ -326,13 +327,15 @@ function renderRecommendation(result) {
   $('recommendation-empty').hidden = true; $('recommendation-result').hidden = false;
   const methodNames = {REDUCE:'Reduce',REUSE:'Reuse',RECYCLE:'Recycle',TRASH:'Trash'};
   $('method').textContent = result.status === 'READY' ? methodNames[result.recommended_method] : result.status === 'NEEDS_CONTEXT' ? 'Lengkapi kondisi · panduan awal' : result.special_handling ? 'Panduan penanganan khusus' : 'Panduan penanganan awal';
-  $('recommendation-source').textContent = result.status === 'READY' ? (result.provider === 'fixture' ? 'Simulasi' : 'Gemini langsung') : 'Panduan umum bersumber';
+  const sourceNames = {rules:'Aturan panduan',fixture:'Simulasi',gemini:'Gemini langsung'};
+  $('recommendation-source').textContent = result.status === 'READY' ? sourceNames[result.provider] || result.provider : 'Panduan umum bersumber';
   $('reason').textContent = result.reason;
   $('recommendation-basis').hidden = result.status !== 'READY';
   $('recommendation-basis').textContent = result.recommendation_basis === 'CONDITIONAL' ?
     'Saran sementara · periksa syarat sebelum bertindak' : 'Berdasarkan kondisi yang kamu isi';
   $('reason-code').hidden = !result.reason_code;
   $('reason-code').textContent = messages[result.reason_code] || result.reason_code || '';
+  if (result.provider === 'rules' && result.reason_code) $('reason-code').textContent = 'Saran tetap tersedia dari aturan panduan. '+$('reason-code').textContent;
   if (result.missing_context?.length) {
     const names = {'risk_type':'jenis risiko','condition.cleanliness':'kebersihan','condition.integrity':'keutuhan',
       'condition.reusable':'kelayakan pakai','condition.cleanable':'kemampuan dibersihkan','condition.soiling':'jenis kotoran',
@@ -372,7 +375,7 @@ async function requestRecommendation(event) {
   const intention = $('reuse-intention').value;
   const item = config.catalog.items.find(x => x.object_key === $('object-key').value);
   recRequestId ||= crypto.randomUUID(); recommending = true; updateForm();
-  $('recommend').textContent = $('provider').value === 'gemini' ? 'Meminta saran Gemini…' : 'Menjalankan simulasi…';
+  $('recommend').textContent = $('provider').value === 'gemini' ? 'Meminta saran Gemini…' : $('provider').value === 'rules' ? 'Memilih metode…' : 'Menjalankan simulasi…';
   recController = new AbortController();
   const input = {client_request_id:recRequestId,detection_id:manualMode ? null : detection.detection_id,
     object_id:manualMode ? null : selected.object_id,manual:manualMode,confirmed_object:true,provider:$('provider').value,

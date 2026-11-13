@@ -17,17 +17,19 @@ class CountingProvider(FixtureProvider):
 
 
 @pytest.mark.parametrize("access,status,missing", [("UNKNOWN", "READY", []),
-                                                   ("NO", "UNAVAILABLE", []), ("YES", "READY", [])])
+                                                   ("NO", "READY", []), ("YES", "READY", [])])
 def test_pilot_recycling_requires_actual_receiver_and_never_guesses_trash(access, status, missing):
     provider = CountingProvider()
     context = Context.model_validate_json(json.dumps({"object_key": "aluminium_can", "category": "METAL",
             "condition": {"cleanliness": "CLEAN", "integrity": "INTACT"}, "recycling_access": access}))
     result = recommend(context, provider, load_guides(), demo_guides=True)
     assert result.status == status and result.missing_context == missing
-    assert result.recommended_method == ("RECYCLE" if status == "READY" else None)
+    assert result.recommended_method == ('TRASH' if access == 'NO' else 'RECYCLE')
     assert provider.calls == int(status == "READY")
     if access == "UNKNOWN":
         assert result.recommendation_basis == "CONDITIONAL" and result.conditions_to_verify == ["recycling_access"]
+    if access == 'NO':
+        assert result.recommendation_basis == 'CONDITIONAL' and result.conditions_to_verify
 
 
 @pytest.mark.parametrize("contents,status,risk", [("FOOD_DRINK", "READY", False), ("UNKNOWN", "NEEDS_CONTEXT", False),
@@ -55,7 +57,7 @@ def test_builtin_claim_audit_has_explicit_pilot_sources_and_no_fabricated_public
     audit = audit_builtin_guides(load_guides(), load_sources())
     assert audit["guides"] == 85 and audit["publication"]["DRAFT"] == 85
     hdpe = next(guide for guide in audit["pilot_claims"] if guide["object_key"] == "hdpe_bottle")
-    assert hdpe["version"] == 5
+    assert hdpe['version'] == 6
     recycle = next(rule for rule in hdpe["evidence"] if rule["method"] == "RECYCLE")
     assert recycle["requires"]["former_contents"] == "FOOD_DRINK"
     assert {source["region"] for source in recycle["sources"]} == {"Amerika Serikat", "Indonesia"}

@@ -11,8 +11,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--url",default="http://127.0.0.1:8092")
 parser.add_argument("--live-gemini",action="store_true")
 parser.add_argument("--artifact-dir",type=Path)
+parser.add_argument("--image",type=Path,help="Public bottle image for the real-detector smoke")
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
+image = args.image.resolve() if args.image else root / "data/local/smoke/bottle.jpg"
 artifacts = args.artifact_dir.resolve() if args.artifact_dir else root / "artifacts"
 (artifacts).mkdir(parents=True,exist_ok=True)
 # Chromium subprocesses may write debug.log relative to cwd even with --log-file.
@@ -33,7 +35,7 @@ with sync_playwright() as playwright:
     assert page.evaluate("document.querySelector('#camera').srcObject === null")
     checks.append("fake_camera_capture_stops_tracks_before_upload")
     previous_photo = page.locator("#photo").get_attribute("src")
-    page.locator("#file").set_input_files(root / "data/local/smoke/bottle.jpg")
+    page.locator("#file").set_input_files(image)
     expect(page.locator("#photo")).not_to_have_attribute("src",previous_photo)
     expect(page.locator("#camera-status")).to_have_text("Tinjau foto")
     page.locator("#detect").click()
@@ -229,8 +231,8 @@ with sync_playwright() as playwright:
     page.locator("#recommend").click()
     expect(page.locator("#method")).to_have_text("Trash")
     checks.append("confirming_broken_glass_still_returns_supported_trash_method")
-    for label, heading in (("Barang lain / bahan belum diketahui", "Panduan penanganan awal"),
-                           ("Elektronik / baterai lain", "Panduan penanganan khusus")):
+    for label, heading in (("Barang lain / bahan belum diketahui", "Recycle"),
+                           ("Elektronik / baterai lain", "Recycle")):
         page.locator("#catalog-search").fill(label)
         page.locator(".catalog-item").click()
         page.locator("#provider").select_option("fixture")
@@ -239,7 +241,7 @@ with sync_playwright() as playwright:
         expect(page.locator("#method")).to_have_text(heading)
         assert page.locator("#handling-steps li").count() >= 3
         assert page.locator("#source-list a").count() >= 1
-        checks.append("uncatalogued_item_has_guidance_" + label)
+        checks.append("uncatalogued_item_has_conditional_method_" + label)
     page.screenshot(path=str(artifacts / "policy08-other-electronics.png"), full_page=True)
     expect(page.locator("#model-coverage")).to_contain_text("Model aktif:")
     page.locator(".object-choice:not(:disabled)").first.click()
@@ -260,25 +262,27 @@ with sync_playwright() as playwright:
       const nonce = document.querySelector('meta[name="wastenot-demo"]').content;
       for (let i=0; i<31; i++) {
         const response = await fetch('/demo/api/recommend', {method:'POST',headers:{'Content-Type':'application/json','X-WasteNot-Demo':nonce},body:JSON.stringify({client_request_id:crypto.randomUUID(),manual:true,confirmed_object:true,provider:'fixture',context:{object_key:'pet_bottle',category:'PLASTIC',condition:{cleanliness:'CLEAN'},recycling_access:'YES'}})});
-        if (response.status === 429) break;
+        if (!response.ok) throw new Error('Recommendation failed: '+response.status);
+        if ((await response.json()).data.provider === 'rules') break;
       }
     }""")
     page.locator("#cleanliness").select_option("DIRTY")
     page.locator("#cleanliness").select_option("CLEAN")
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Panduan penanganan awal")
-    expect(page.locator("#global-message")).to_contain_text("Batas pembuatan")
+    expect(page.locator("#method")).to_have_text("Recycle")
+    expect(page.locator("#recommendation-source")).to_have_text("Aturan panduan")
+    expect(page.locator("#reason-code")).to_contain_text("Saran tetap tersedia")
     assert page.locator("#handling-steps li").count() >= 3
-    checks.append("generation_429_keeps_visible_handling_guidance")
+    checks.append("generation_budget_keeps_sourced_rule_method")
     page.locator("#catalog-search").fill("Barang lain / bahan belum diketahui")
     page.locator(".catalog-item").click()
     page.locator("#provider").select_option("fixture")
     page.locator("#confirmed").check()
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Panduan penanganan awal")
+    expect(page.locator("#method")).to_have_text("Recycle")
     assert page.locator("#handling-steps li").count() >= 3
-    checks.append("policy_only_guidance_still_works_after_generation_budget")
-    page.screenshot(path=str(artifacts / "policy08-guidance-after-limit.png"), full_page=True)
+    checks.append("generic_item_keeps_conditional_method_after_generation_budget")
+    page.screenshot(path=str(artifacts / "policy09-method-after-limit.png"), full_page=True)
     page.set_viewport_size({"width":390,"height":844})
     page.locator("#clear").click()
     expect(page.locator("#photo-stage")).to_be_hidden()

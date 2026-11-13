@@ -7,7 +7,7 @@ from typing import Protocol
 from pydantic import ValidationError
 
 from .catalog import confirm_context, load_catalog
-from .contracts import Context, Guide, ModelSuggestion, Recommendation
+from .contracts import Context, Evidence, Guide, ModelSuggestion, Recommendation
 from .sources import describe_sources
 from .guide_audit import validate_guides
 from .handling_guidance import handling_guidance
@@ -41,6 +41,31 @@ def load_guides(path: Path | None = None) -> list[Guide]:
                      "scope_note":"Draf demo berbasis prinsip umum; perlu review penerapan lokal Indonesia.",
                      "special_handling":item["special_handling"]}
             guides.append(Guide.model_validate_json(json.dumps(value)))
+        routes = json.loads(files('wastenot_ai').joinpath('data/handling_routes.json').read_text('utf-8'))
+        items = {item['object_key']: item for item in load_catalog()['items']}
+        for index, guide in enumerate(guides):
+            item = items[guide.object_key]
+            if guide.publication_status != 'DRAFT':
+                continue
+            route = 'organic' if guide.category == 'ORGANIC' else 'electronic' if guide.category == 'ELECTRONIC' else 'ordinary'
+            if route == 'ordinary' and (item['special_handling'] or guide.special_handling):
+                continue
+            additions = []
+            for value in routes[route]:
+                if value['method'] == 'REUSE' and route == 'electronic' and item.get('guide_template') != 'electronics':
+                    continue
+                if value['method'] == 'REUSE' and route == 'ordinary' and item.get('guide_template') not in {'reuse', 'tableware', 'book'}:
+                    continue
+                requirements = dict(value['requires'])
+                if value['method'] == 'RECYCLE' and route == 'ordinary':
+                    requirements['cleanliness'] = 'CLEAN'
+                    if guide.object_key in {'pet_bottle', 'hdpe_bottle', 'glass_bottle', 'aluminium_can', 'cardboard'}:
+                        requirements['integrity'] = 'INTACT'
+                if guide.object_key == 'hdpe_bottle' or item.get('guide_template') == 'broad_food_container':
+                    requirements['former_contents'] = 'FOOD_DRINK'
+                additions.append(Evidence.model_validate({**value, 'requires': requirements,
+                                                          'id': f"{guide.object_key}-direct09-{value['id']}"}))
+            guides[index] = guide.model_copy(update={'evidence': [*guide.evidence, *additions], 'version': guide.version + 1})
     if len({x.object_key for x in guides}) != len(guides):
         raise ValueError("Panduan duplikat untuk object_key.")
     for guide in guides:
@@ -60,10 +85,23 @@ def is_reviewed(guide: Guide, today: date) -> bool:
         return False
 
 
+def evidence_values(context):
+    return {**context.condition.model_dump(), 'reuse_intention': context.reuse_intention,
+            'recycling_access': context.recycling_access, 'category': context.category.value,
+            'object_key': context.object_key, 'risk_type': context.risk_type, 'risk_flag': context.risk_flag}
+
+
+def evidence_requirements(evidence):
+    defaults = {}
+    if evidence.method == 'REUSE':
+        defaults = {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'reusable': 'YES', 'reuse_intention': True}
+    elif evidence.method == 'RECYCLE':
+        return {**evidence.requires, 'recycling_access': evidence.requires.get('recycling_access', 'YES')}
+    return {**defaults, **evidence.requires}
+
+
 def eligible_evidence(context: Context, guide: Guide, *, risk: bool = False):
-    values = {**context.condition.model_dump(), "reuse_intention": context.reuse_intention,
-              "recycling_access": context.recycling_access, "category": context.category.value,
-              "object_key": context.object_key, "risk_type": context.risk_type}
+    values = evidence_values(context)
     washable = (context.condition.cleanliness == "DIRTY" and context.condition.cleanable == "YES"
                 and context.condition.soiling in {"FOOD_DRINK","DUST"})
     reusable = ((context.condition.cleanliness == "CLEAN" or washable) and context.condition.integrity == "INTACT"
@@ -76,23 +114,18 @@ def eligible_evidence(context: Context, guide: Guide, *, risk: bool = False):
             and (context.recommendation_goal == "PREVENTION" or e.method != "REDUCE")
             and (not hazardous or e.method == "REDUCE")
             and (e.method != "RECYCLE" or context.recycling_access != "NO")
-            and all(values.get(k) == v for k, v in e.requires.items())]
+            and all(values.get(k) == v for k, v in evidence_requirements(e).items())]
 
 
 def missing_context(context: Context, guide: Guide, *, risk: bool) -> list[str]:
-    values = {**context.condition.model_dump(), "reuse_intention":context.reuse_intention,
-              "recycling_access":context.recycling_access,"category":context.category.value,"object_key":context.object_key,
-              "risk_type":context.risk_type}
+    values = evidence_values(context)
     options = []
     for evidence in guide.evidence:
         if evidence.method == "REDUCE" or (risk and not evidence.risk_compatible):
             continue
         if evidence.method == "RECYCLE" and context.recycling_access == "NO":
             continue
-        requirements = evidence.requires
-        if evidence.method == "REUSE":
-            requirements = {"integrity":"INTACT","reusable":"YES","reuse_intention":True,
-                            "cleanliness":"CLEAN",**requirements}
+        requirements = evidence_requirements(evidence)
         if any(values.get(key) not in {None,"UNKNOWN",expected} for key,expected in requirements.items()):
             continue
         needed = [f"condition.{key}" if key in type(context.condition).model_fields else key
@@ -103,17 +136,12 @@ def missing_context(context: Context, guide: Guide, *, risk: bool) -> list[str]:
 
 
 def conditional_evidence(context: Context, guide: Guide, *, risk: bool):
-    values = {**context.condition.model_dump(), "reuse_intention": context.reuse_intention,
-              "recycling_access": context.recycling_access, "category": context.category.value, "object_key": context.object_key,
-              "risk_type": context.risk_type}
+    values = evidence_values(context)
     possible = []
     for evidence in guide.evidence:
         if evidence.method == "REDUCE" or (risk and not evidence.risk_compatible):
             continue
-        requirements = evidence.requires
-        if evidence.method == "REUSE":
-            requirements = {"cleanliness": "CLEAN", "integrity": "INTACT", "reusable": "YES",
-                            "reuse_intention": True, **requirements}
+        requirements = evidence_requirements(evidence)
         if evidence.method == "RECYCLE" and context.recycling_access == "NO":
             continue
         if any(values.get(key) not in {None, "UNKNOWN", expected} for key, expected in requirements.items()):
@@ -136,6 +164,7 @@ def conditional_text(method, label, unknown):
         ("reusable", "YES"): "Pastikan benda masih layak digunakan sesuai fungsinya.",
         ("reusable", "NO"): "Pastikan benda memang tidak lagi layak digunakan sebelum memilih residu.",
         ("reuse_intention", True): "Lanjutkan penggunaan ulang hanya jika kamu ingin memakainya lagi.",
+        ("reuse_intention", False): "Pilih residu hanya setelah memastikan penggunaan ulang tidak dipilih.",
         ("cleanable", "YES"): "Pastikan kotoran dapat dibersihkan dengan cara biasa sesuai petunjuk bahan.",
         ("soiling", "FOOD_DRINK"): "Pastikan kotoran hanya sisa makanan/minuman biasa; jangan gunakan aturan ini untuk kontaminasi berbahaya.",
         ("soiling", "DUST"): "Pastikan kotoran hanya debu biasa; jangan gunakan aturan ini untuk kontaminasi berbahaya.",
@@ -150,6 +179,17 @@ def conditional_text(method, label, unknown):
     steps = list(dict.fromkeys(descriptions.get((key, expected), "Periksa kondisi yang belum diketahui sebelum bertindak.")
                                for key, expected in unknown.items()))
     return reason, steps
+
+
+def selection_error(raw, evidence, allowed, risk):
+    if raw.special_handling != bool(risk) or raw.recommended_method not in allowed:
+        return 'INVALID_MODEL_OUTPUT'
+    by_id = {row.id: row for row in evidence}
+    if len(set(raw.evidence_ids)) != len(raw.evidence_ids) or any(identifier not in by_id for identifier in raw.evidence_ids):
+        return 'INVALID_EVIDENCE'
+    if {by_id[identifier].method for identifier in raw.evidence_ids} != {raw.recommended_method}:
+        return 'INVALID_EVIDENCE'
+    return None
 
 
 def recommend(context: Context, provider: Provider, guides: list[Guide], *,
@@ -218,20 +258,30 @@ def recommend(context: Context, provider: Provider, guides: list[Guide], *,
     }
     if conditional:
         payload.update(advice_basis="CONDITIONAL", unknown_requirements={e.id: requirements for e, requirements in conditional})
+    failure_code = None
+    def rules_choice():
+        from .providers import RulesProvider
+        base['provider'] = 'rules'
+        return ModelSuggestion.model_validate_json(RulesProvider().generate(payload))
     try:
         raw = ModelSuggestion.model_validate_json(provider.generate(payload))
     except ProviderError as exc:
-        return unavailable(exc.code)
+        failure_code = exc.code
+        raw = rules_choice()
     except (ValidationError, ValueError, TypeError):
-        return unavailable("INVALID_MODEL_OUTPUT")
-    if raw.special_handling != bool(risk) or raw.recommended_method not in allowed:
-        return unavailable("INVALID_MODEL_OUTPUT")
+        if provider.name != 'gemini':
+            return unavailable('INVALID_MODEL_OUTPUT')
+        failure_code = 'INVALID_MODEL_OUTPUT'
+        raw = rules_choice()
+    error = selection_error(raw, evidence, allowed, risk)
+    if error and provider.name == 'gemini':
+        failure_code = error
+        raw = rules_choice()
+        error = selection_error(raw, evidence, allowed, risk)
+    if error:
+        return unavailable(error)
     by_id = {e.id: e for e in evidence}
-    if len(set(raw.evidence_ids)) != len(raw.evidence_ids) or any(x not in by_id for x in raw.evidence_ids):
-        return unavailable("INVALID_EVIDENCE")
     cited = [by_id[x] for x in raw.evidence_ids]
-    if {e.method for e in cited} != {raw.recommended_method}:
-        return unavailable("INVALID_EVIDENCE")
     # Render public text from validated evidence; free model prose is never a safety authority.
     reason = " ".join(e.text for e in cited)
     verify = {}
@@ -258,4 +308,5 @@ def recommend(context: Context, provider: Provider, guides: list[Guide], *,
                           special_handling=bool(risk), caution=caution, evidence_ids=raw.evidence_ids,
                           source_urls=source_urls, source_details=describe_sources(source_urls),
                           steps=steps,
+                          reason_code=failure_code,
                           guide_refs=[{"guide_id": guide.id, "version": guide.version}], **base)

@@ -73,7 +73,8 @@ def test_model_receives_unknown_facts_separately_from_unverified_guide_requireme
     assert "sudah menyatakan" not in result.reason
 
 
-def test_complete_but_contradictory_context_is_not_relaxed_to_obtain_any_method():
+def test_confirmed_unusable_nonhazardous_item_without_receiver_selects_residue():
     _, result = run("pet_bottle", "PLASTIC", reuse_intention=False, recycling_access="NO",
                     condition={"cleanliness":"CLEAN", "integrity":"INTACT", "reusable":"NO"})
-    assert result.status == "UNAVAILABLE" and result.recommended_method is None
+    assert result.status == 'READY' and result.recommended_method == 'TRASH'
+    assert result.recommendation_basis == 'CONFIRMED' and result.conditions_to_verify == []
