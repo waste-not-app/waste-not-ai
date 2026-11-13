@@ -1,7 +1,7 @@
 {
-  "version": "pilot-eval-02",
-  "date": "2026-10-20",
-  "purpose": "Fixed regression cases; expected results authored before live Gemini evaluation. Not field accuracy.",
+  "version": "pilot-eval-03",
+  "date": "2026-11-13",
+  "purpose": "Fixed regression cases; policy09 adds sourced nonhazardous residue routes when reuse is declined and no receiver is available. Not field accuracy.",
   "cases": [
     {
       "id": "pet_bottle-clean-accepted",
@@ -68,14 +68,14 @@
         "allow_conditional": false
       },
       "expected": {
-        "status": "UNAVAILABLE",
-        "recommended_method": null,
+        "status": "READY",
+        "recommended_method": "TRASH",
         "special_handling": false,
-        "recommendation_scope": null,
-        "reason_code": "NO_ALLOWED_METHOD",
+        "recommendation_scope": "HANDLING",
+        "reason_code": null,
         "missing_context": []
       },
-      "expect_provider_calls": 0
+      "expect_provider_calls": 1
     },
     {
       "id": "glass_bottle-clean-accepted",
@@ -142,14 +142,14 @@
         "allow_conditional": false
       },
       "expected": {
-        "status": "UNAVAILABLE",
-        "recommended_method": null,
+        "status": "READY",
+        "recommended_method": "TRASH",
         "special_handling": false,
-        "recommendation_scope": null,
-        "reason_code": "NO_ALLOWED_METHOD",
+        "recommendation_scope": "HANDLING",
+        "reason_code": null,
         "missing_context": []
       },
-      "expect_provider_calls": 0
+      "expect_provider_calls": 1
     },
     {
       "id": "aluminium_can-clean-accepted",
@@ -216,14 +216,14 @@
         "allow_conditional": false
       },
       "expected": {
-        "status": "UNAVAILABLE",
-        "recommended_method": null,
+        "status": "READY",
+        "recommended_method": "TRASH",
         "special_handling": false,
-        "recommendation_scope": null,
-        "reason_code": "NO_ALLOWED_METHOD",
+        "recommendation_scope": "HANDLING",
+        "reason_code": null,
         "missing_context": []
       },
-      "expect_provider_calls": 0
+      "expect_provider_calls": 1
     },
     {
       "id": "cardboard-clean-accepted",
@@ -290,14 +290,14 @@
         "allow_conditional": false
       },
       "expected": {
-        "status": "UNAVAILABLE",
-        "recommended_method": null,
+        "status": "READY",
+        "recommended_method": "TRASH",
         "special_handling": false,
-        "recommendation_scope": null,
-        "reason_code": "NO_ALLOWED_METHOD",
+        "recommendation_scope": "HANDLING",
+        "reason_code": null,
         "missing_context": []
       },
-      "expect_provider_calls": 0
+      "expect_provider_calls": 1
     },
     {
       "id": "hdpe-food-accepted",

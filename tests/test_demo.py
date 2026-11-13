@@ -169,23 +169,44 @@ def test_demo_limit_caps_provider_calls_and_invalid_media_is_rejected_early():
         assert client.post("/demo/api/detect",headers={**headers,"X-Client-Request-Id":str(uuid4())},content=b"fake").status_code == 415
         for _ in range(30):
             assert client.post("/demo/api/recommend",json=rec_payload(),headers=headers).status_code == 200
-        assert client.post("/demo/api/recommend",json=rec_payload(),headers=headers).status_code == 429
+        fallback = client.post('/demo/api/recommend', json=rec_payload(), headers=headers)
+        assert fallback.status_code == 200 and fallback.json()['data']['provider'] == 'rules'
+        assert fallback.json()['data']['recommended_method'] == 'RECYCLE'
         assert provider.calls == 30
 
 
-def test_generation_budget_does_not_block_policy_only_guidance_and_429_keeps_steps():
+def test_generation_budget_uses_rules_without_an_extra_provider_call():
     app, _, provider = make_client()
     with TestClient(app, base_url="http://127.0.0.1") as client:
         headers = bootstrap(client)
         for _ in range(30):
             assert client.post("/demo/api/recommend", json=rec_payload(), headers=headers).status_code == 200
         blocked = client.post("/demo/api/recommend", json=rec_payload(), headers=headers)
-        assert blocked.status_code == 429 and blocked.json()["data"]["steps"]
+        assert blocked.status_code == 200 and blocked.json()['data']['steps']
+        assert blocked.json()['data']['provider'] == 'rules' and blocked.json()['data']['reason_code'] == 'DEMO_HOURLY_LIMIT'
         value = rec_payload()
         value["context"] = {"object_key": "other_other", "category": "OTHER"}
         result = client.post("/demo/api/recommend", json=value, headers=headers)
         assert result.status_code == 200 and result.json()["data"]["steps"]
         assert provider.calls == 30
+
+
+def test_default_direct_rules_bypass_generation_budget_and_keep_unknown_conditions():
+    app, _, provider = make_client()
+    with TestClient(app, base_url='http://127.0.0.1') as client:
+        headers = bootstrap(client)
+        for _ in range(35):
+            value = rec_payload()
+            del value['provider']
+            value['context'] = {'object_key': 'plastic_cup', 'category': 'PLASTIC',
+                                'condition': {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'reusable': 'YES'},
+                                'reuse_intention': False, 'recycling_access': 'UNKNOWN'}
+            response = client.post('/demo/api/recommend', json=value, headers=headers)
+            assert response.status_code == 200
+            result = response.json()['data']
+            assert result['recommended_method'] == 'RECYCLE' and result['provider'] == 'rules'
+            assert result['conditions_to_verify'] == ['recycling_access'] and result['saved_log'] is False
+        assert provider.calls == 0
 
 
 def test_false_refrigerator_can_be_explicitly_corrected_to_manual_cardboard(monkeypatch):

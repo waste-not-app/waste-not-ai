@@ -33,20 +33,22 @@ def test_every_catalog_item_has_handling_steps_even_when_no_method_can_be_select
         assert result.source_urls, item["object_key"]
 
 
-def test_provider_failure_preserves_honest_status_and_still_supplies_handling_steps():
+def test_provider_failure_uses_eligible_rules_and_preserves_failure_provenance():
     class Offline(FixtureProvider):
         def generate(self, payload):
             raise ProviderError("LLM_TIMEOUT")
     result = recommend(context(risk_flag=False), Offline(), load_guides(), demo_guides=True)
-    assert result.status == "UNAVAILABLE" and result.reason_code == "LLM_TIMEOUT"
-    assert result.recommended_method is None and result.steps
+    assert result.status == 'READY' and result.reason_code == 'LLM_TIMEOUT'
+    assert result.provider == 'rules' and result.recommended_method in {'REUSE', 'RECYCLE', 'TRASH'}
+    assert result.steps and result.source_urls and result.evidence_ids
 
 
 @pytest.mark.parametrize("category", ["ORGANIC", "PLASTIC", "PAPER", "GLASS", "METAL", "ELECTRONIC", "OTHER"])
 def test_items_outside_named_catalog_have_explicit_manual_material_choices(category):
     result = recommend(Context.model_validate_json(json.dumps({"object_key": "other_" + category.lower(),
         "category": category})), FixtureProvider(), load_guides(), demo_guides=True)
-    assert result.steps and result.source_urls and result.recommended_method is None
+    assert result.steps and result.source_urls and result.recommended_method == 'RECYCLE'
+    assert result.recommendation_basis == 'CONDITIONAL' and 'recycling_access' in result.conditions_to_verify
 
 
 def test_no_reviewed_guide_still_returns_independent_general_handling_guidance():

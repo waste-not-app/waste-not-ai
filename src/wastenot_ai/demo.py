@@ -22,7 +22,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from .catalog import confirm_context, detection_capabilities, load_catalog, preserve_detected_risk
 from .contracts import Context, Contract
 from .media import MAX_BYTES, MediaError
-from .providers import FixtureProvider, GeminiProvider
+from .providers import FixtureProvider, GeminiProvider, RulesProvider
 from .recommendation import ProviderError, is_reviewed, load_guides
 from .decisions import Decisions
 from .wire import DecisionInput
@@ -38,7 +38,7 @@ class RecommendationInput(Contract):
     manual: bool = False
     confirmed_object: bool
     context: Context
-    provider: Literal["gemini", "fixture"] = "gemini"
+    provider: Literal['rules', 'gemini', 'fixture'] = 'rules'
 
 
 def request_uuid(value: str | None):
@@ -63,7 +63,7 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
     nonce = secrets.token_urlsafe(32)
     clients, detections, requests = {}, {}, {}
     detector_lock, provider_lock = Lock(), Lock()
-    providers = providers or {"gemini": GeminiProvider(), "fixture": FixtureProvider()}
+    providers = {"rules": RulesProvider(), **(providers or {"gemini": GeminiProvider(), "fixture": FixtureProvider()})}
     guides = load_guides(guides_path)
     rate_calls = []
     background = set()
@@ -294,6 +294,8 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
             class BudgetedProvider:
                 name = underlying.name
                 def generate(self, payload):
+                    if self.name == 'rules':
+                        return underlying.generate(payload)
                     if len(rate_calls) >= 30:
                         raise ProviderError("DEMO_HOURLY_LIMIT")
                     rate_calls.append(monotonic())
@@ -312,7 +314,7 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
                             guide_status=guide.publication_status if guide else None,
                             input_source="manual_confirmation" if value.manual else "yolo_user_confirmation",
                             saved_log=False)
-            if result.reason_code == "DEMO_HOURLY_LIMIT":
+            if result.reason_code == "DEMO_HOURLY_LIMIT" and result.status != 'READY':
                 return JSONResponse({"detail":"DEMO_HOURLY_LIMIT", "data":response}, status_code=429)
             return {"data":response}
         return await dedup(owner,"recommend",rid,digest,process,20)

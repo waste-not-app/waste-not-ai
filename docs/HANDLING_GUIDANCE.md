@@ -1,5 +1,7 @@
 # Panduan awal untuk setiap pilihan barang
 
+**Perilaku saat ini:** [policy-09](DIRECT_RECOMMENDATIONS.md) memberikan metode langsung untuk konteks normal yang didukung evidence, termasuk saat Gemini gagal atau kuota demo tercapai. Panduan awal tetap digunakan untuk kasus yang belum memiliki rute valid atau memerlukan klarifikasi risiko. Laporan di bawah merekam implementasi policy-08; template umum kini ditambah evidence DRAFT dan tidak otomatis diterbitkan ke produksi.
+
 7 November 2026, `pilot-policy-08`, katalog `demo-catalog-05`.
 
 Kasus pengguna: botol kaca CLEAN/INTACT/reusable YES, reuse_intention=true, recycling_access=YES, risk_flag=true dan risk_type=SHARP sebelumnya menghasilkan UNAVAILABLE/RISK_NOT_COVERED tanpa langkah. Kombinasi kondisi utuh dengan risiko pecahan tidak memenuhi evidence yang khusus memerlukan DAMAGED; UI kemudian menampilkan “Saran belum tersedia” dan menyebut kontaminasi meskipun risikonya tajam.

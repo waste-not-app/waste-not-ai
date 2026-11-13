@@ -33,7 +33,7 @@ def test_compact_selection_preserves_method_evidence_and_prose_validation(model,
     result = recommend(context, GeminiProvider(api_key='test-only-key', model=model,
                        transport=httpx.MockTransport(handler)), load_guides(), demo_guides=True)
     if bad:
-        assert result.status == 'UNAVAILABLE' and result.recommended_method is None
+        assert result.status == 'READY' and result.provider == 'rules' and result.recommended_method == 'RECYCLE'
         assert result.reason_code == ('INVALID_MODEL_OUTPUT' if bad == 'method' else 'INVALID_EVIDENCE')
     else:
         assert result.status == 'READY' and result.recommended_method == 'RECYCLE'

@@ -82,7 +82,7 @@ def evaluate_case(case, provider, guides):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--provider", choices=["fixture", "gemini"], default="fixture")
-    parser.add_argument("--max-calls", type=int, default=16, help="Maximum logical generate calls; key failover may make more HTTP attempts")
+    parser.add_argument("--max-calls", type=int, default=20, help="Maximum logical generate calls; key failover may make more HTTP attempts")
     parser.add_argument("--repeat", type=int, default=1)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--case", action="append", dest="case_ids", help="Evaluate named cases only; writes a separate subset report")
@@ -112,7 +112,7 @@ def main():
                for repetition in range(args.repeat) for case in cases]
     path = args.output or ROOT / "artifacts" / f"recommendation-evaluation-{args.provider}.json"
     report = {"kind": "fixed_scenario_evaluation_not_field_accuracy", "provider": args.provider,
-              "model": getattr(original, "model", None), "scenario_as_of": "2026-10-20",
+              "model": getattr(original, "model", None), "scenario_as_of": json.loads(scenarios_path.read_text('utf-8'))['date'],
               "evaluated_at": datetime.now(timezone.utc).isoformat(),
               "scenario_sha256": hashlib.sha256(scenarios_path.read_bytes()).hexdigest(),
               "guide_sha256": hashlib.sha256(json.dumps([g.model_dump(mode="json") for g in guides], sort_keys=True).encode()).hexdigest(),

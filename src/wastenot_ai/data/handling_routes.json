@@ -1,0 +1,154 @@
+{
+  "ordinary": [
+    {
+      "id": "reuse",
+      "method": "REUSE",
+      "text": "Gunakan kembali benda yang bersih, utuh dan masih layak sesuai fungsi yang memang dirancang untuk digunakan berulang.",
+      "requires": {
+        "cleanliness": "CLEAN",
+        "integrity": "INTACT",
+        "reusable": "YES",
+        "reuse_intention": true
+      },
+      "source_urls": [
+        "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
+      ],
+      "steps": [
+        "Periksa kondisi dan fungsi benda sebelum digunakan kembali.",
+        "Gunakan sesuai petunjuk bahan/pabrikan dan fungsi yang aman."
+      ],
+      "risk_compatible": false
+    },
+    {
+      "id": "recycle",
+      "method": "RECYCLE",
+      "text": "Serahkan benda untuk Recycle melalui pengelola yang mengonfirmasi menerima jenis dan kondisi benda ini.",
+      "requires": {
+        "recycling_access": "YES"
+      },
+      "source_urls": [
+        "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables",
+        "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
+      ],
+      "steps": [
+        "Konfirmasikan material dan penerimaan jenis serta kondisi benda kepada pengelola.",
+        "Pisahkan komponen yang diminta dan ikuti petunjuk persiapan pengelola.",
+        "Serahkan ke jalur yang telah dikonfirmasi, termasuk penerima khusus bila diperlukan."
+      ],
+      "risk_compatible": false
+    },
+    {
+      "id": "trash-unusable",
+      "method": "TRASH",
+      "text": "Pilih Trash sebagai residu nonberbahaya setelah benda tidak layak dipakai dan tidak ada jalur daur ulang yang menerima.",
+      "requires": {
+        "recycling_access": "NO",
+        "reusable": "NO"
+      },
+      "source_urls": [
+        "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
+      ],
+      "steps": [
+        "Pastikan benda tidak mengandung baterai, bahan kimia atau kontaminasi biologis.",
+        "Pisahkan komponen yang masih dapat diterima pengelola bila ada.",
+        "Ikuti pengumpulan residu resmi setempat."
+      ],
+      "risk_compatible": false
+    },
+    {
+      "id": "trash-no-reuse",
+      "method": "TRASH",
+      "text": "Pilih Trash sebagai residu nonberbahaya ketika penggunaan ulang tidak dipilih dan tidak ada penerima daur ulang untuk benda ini.",
+      "requires": {
+        "recycling_access": "NO",
+        "reuse_intention": false
+      },
+      "source_urls": [
+        "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
+      ],
+      "steps": [
+        "Periksa peluang penggunaan ulang atau penyerahan kepada pihak yang memerlukan.",
+        "Pastikan benda tidak mengandung baterai, bahan kimia atau kontaminasi biologis.",
+        "Ikuti pengumpulan residu resmi setempat."
+      ],
+      "risk_compatible": false
+    }
+  ],
+  "organic": [
+    {
+      "id": "compost",
+      "method": "RECYCLE",
+      "text": "Recycle organik berarti penyerahan ke program pengomposan yang menerima jenis sisa organik ini.",
+      "requires": {
+        "recycling_access": "YES"
+      },
+      "source_urls": [
+        "https://www.epa.gov/recycle/composting-home",
+        "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
+      ],
+      "steps": [
+        "Pisahkan sisa organik dari plastik, stiker dan kemasan.",
+        "Konfirmasikan program menerima jenis sisa makanan/tanaman ini; bahan seperti daging, minyak dan makanan olahan memerlukan program yang sesuai.",
+        "Ikuti petunjuk pengumpulan program pengomposan."
+      ],
+      "risk_compatible": false
+    },
+    {
+      "id": "organic-residue",
+      "method": "TRASH",
+      "text": "Pilih Trash untuk sisa organik nonberbahaya bila tidak tersedia jalur pengomposan atau pengumpulan organik yang menerima.",
+      "requires": {
+        "recycling_access": "NO"
+      },
+      "source_urls": [
+        "https://www.epa.gov/recycle/composting-home",
+        "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
+      ],
+      "steps": [
+        "Pisahkan kemasan dan benda lain dari sisa organik.",
+        "Gunakan pengumpulan residu resmi sesuai aturan setempat."
+      ],
+      "risk_compatible": false
+    }
+  ],
+  "electronic": [
+    {
+      "id": "electronics-reuse",
+      "method": "REUSE",
+      "text": "Gunakan kembali atau serahkan perangkat elektronik yang masih layak sesuai fungsi dan petunjuk produsennya.",
+      "requires": {
+        "cleanliness": "CLEAN",
+        "integrity": "INTACT",
+        "reusable": "YES",
+        "reuse_intention": true,
+        "risk_flag": false,
+        "risk_type": "UNKNOWN"
+      },
+      "source_urls": [
+        "https://www.epa.gov/recycle/electronics-donation-and-recycling"
+      ],
+      "steps": [
+        "Periksa kerusakan, panas berlebih atau baterai menggembung sebelum digunakan kembali.",
+        "Hapus data pribadi sebelum menyerahkan perangkat kepada orang lain."
+      ],
+      "risk_compatible": true
+    },
+    {
+      "id": "electronics-recycle",
+      "method": "RECYCLE",
+      "text": "Serahkan elektronik ke program pengumpulan khusus yang mengonfirmasi menerima perangkat dan kondisinya.",
+      "requires": {
+        "recycling_access": "YES"
+      },
+      "source_urls": [
+        "https://www.epa.gov/recycle/electronics-donation-and-recycling"
+      ],
+      "steps": [
+        "Hubungi penerima elektronik untuk memastikan jenis dan kondisi perangkat diterima.",
+        "Lindungi data pribadi sebelum penyerahan bila aman dilakukan.",
+        "Ikuti arahan pengemasan dan jangan masukkan ke sampah atau daur ulang campur."
+      ],
+      "risk_compatible": true
+    }
+  ]
+}

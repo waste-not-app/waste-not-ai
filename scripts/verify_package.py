@@ -13,7 +13,7 @@ expected = {
     "wastenot_ai/detection_quality.py", "wastenot_ai/guide_audit.py", "wastenot_ai/data/detection_profile.json",
     "wastenot_ai/taxonomy.py", "wastenot_ai/handling_guidance.py", "wastenot_ai/camera_benchmark.py",
     "wastenot_ai/data/catalog.json", "wastenot_ai/data/guides.json",
-    "wastenot_ai/data/guide_templates.json", "wastenot_ai/data/source_registry.json", "wastenot_ai/web/index.html",
+    "wastenot_ai/data/guide_templates.json", "wastenot_ai/data/source_registry.json", "wastenot_ai/data/handling_routes.json", "wastenot_ai/web/index.html",
     "wastenot_ai/web/demo.js", "wastenot_ai/web/demo.css",
     "wastenot_ai/web/jakarta.ttf", "wastenot_ai/web/OFL-PlusJakartaSans.txt",
 }
