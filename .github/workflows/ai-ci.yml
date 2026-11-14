@@ -17,7 +17,7 @@ concurrency:
 jobs:
   pipeline:
     name: Verify and Deploy AI Workers
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, ai]
     timeout-minutes: 15
     env:
       PYTHONPATH: src
