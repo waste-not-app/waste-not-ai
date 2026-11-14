@@ -1,0 +1,47 @@
+name: CD Staging
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cd-ai-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: Package AI Release
+    runs-on: [self-hosted, alberd-staging-ai]
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Package runtime release
+        run: python3 scripts/package_release.py "/tmp/wastenot-ai-${{ github.sha }}.tar.gz"
+
+  deploy:
+    name: Deploy AI Workers
+    runs-on: [self-hosted, alberd-staging-ai]
+    needs: package
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Deploy release on staging host
+        run: |
+          set -e
+          trap 'rm -f "/tmp/wastenot-ai-${{ github.sha }}.tar.gz"' EXIT
+          sudo -n install -m 0755 -o root -g root deploy/deploy.py /usr/local/sbin/wastenot-ai-deploy
+          sudo -n /usr/local/sbin/wastenot-ai-deploy < "/tmp/wastenot-ai-${{ github.sha }}.tar.gz"
+
+      - name: Post-deployment health check
+        run: |
+          set -e
+          systemctl is-active --quiet wastenot-yolo.service
+          systemctl is-active --quiet wastenot-decisions.service
+          echo "AI workers are active"
