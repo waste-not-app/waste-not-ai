@@ -13,5 +13,12 @@
   "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU, 8188 MiB, driver 610.62",
   "baseline_inference_device": "cpu",
   "threads": 8,
-  "legacy_data_is_new_holdout": false
+  "legacy_data_is_new_holdout": false,
+  "training_environment": {
+    "python": "3.13.1",
+    "torch": "2.9.1+cu128",
+    "ultralytics": "8.4.183",
+    "numpy": "2.2.5",
+    "Pillow": "11.2.1"
+  }
 }

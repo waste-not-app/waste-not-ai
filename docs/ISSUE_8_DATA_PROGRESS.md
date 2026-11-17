@@ -45,8 +45,13 @@ Laporan yang disimpan:
 - [Verifikasi dataset baseline](../evaluations/issue8-baseline-data-verification.json).
 - [Inventaris environment dan hash](../evaluations/issue8-environment.json).
 - [Kekurangan data baru](../evaluations/issue8-new-data-readiness.json).
+- [Replay baseline yang diukur ulang](../evaluations/issue8-baseline-replay.md) dan [pemeriksaan reproduksi](../evaluations/issue8-baseline-reproduction.json).
+
+Replay ulang memakai 117 foto, dua profil input, dan tiga pengulangan pada CPU delapan thread. Semua checksum input dan metrik agregat pada setiap model/profil cocok dengan laporan lama: precision/recall/F1 gabungan standar 67,8%/43,7%/53,2%, dengan 97 TP, 46 FP, dan 125 FN; F1 redup sintetis 51,6%. Waktu CPU standar sekarang median 512,1 ms/p95 538,2 ms, berbeda dari laporan historis. Ini tidak menunjukkan perubahan kualitas atau percepatan; ukur baseline dan kandidat berdampingan pada kondisi sebanding untuk keputusan performa berikutnya.
 
 Tes Windows yang dapat dijalankan lulus; tes deployment yang mengimpor `fcntl` memerlukan Linux. Unit test audit memakai stub fungsi pHash agar dependency riset OpenCV tidak perlu ditambahkan ke lock service/CI. Penghitungan pHash nyata tetap dijalankan pada intake di environment riset. CI Linux pada PR menjadi pemeriksaan suite lengkap. Tidak ada emulator atau perubahan model produksi.
+
+336 tes kompatibel Windows dan Ruff lulus. [CI Linux pada commit kode `6674064`](https://github.com/waste-not-app/waste-not-ai/actions/runs/44117653326) juga lulus, termasuk deployment recovery, pemeriksaan kontrak, audit dependency dan bobot. Lihat checks PR untuk status head terbaru setelah lampiran laporan ini.
 
 ## Syarat penutupan
 
