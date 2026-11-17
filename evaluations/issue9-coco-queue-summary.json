@@ -1,0 +1,11 @@
+{
+  "planned_images": 260,
+  "candidate_images": 260,
+  "rejected_images": 0,
+  "approved_training_images": 0,
+  "new_holdout_images": 0,
+  "target_instances": {
+    "cell phone": 137,
+    "remote": 304
+  }
+}

@@ -41,25 +41,28 @@ def inside(root, relative):
     return resolved
 
 
-def validate_boxes(boxes):
+def validate_boxes(boxes, class_count=len(LABELS)):
     for box in boxes:
         if len(box) != 5 or not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in box):
             raise ValueError("Invalid or nonfinite bbox")
         cls, x, y, w, h = box
-        if isinstance(cls, bool) or int(cls) != cls or not 0 <= cls < len(LABELS):
+        if isinstance(cls, bool) or int(cls) != cls or not 0 <= cls < class_count:
             raise ValueError("Invalid class ID")
-        if not (w > 0 and h > 0 and 0 <= x-w/2 < x+w/2 <= 1 and 0 <= y-h/2 < y+h/2 <= 1):
+        # Preserve source coordinates; tolerate binary rounding, never clip real excursions.
+        epsilon = 1e-12
+        if not (w > 0 and h > 0 and -epsilon <= x-w/2 < x+w/2 <= 1+epsilon
+                and -epsilon <= y-h/2 < y+h/2 <= 1+epsilon):
             raise ValueError("Box edges outside image")
 
 
-def restore(source, output):
+def restore(source, output, labels=LABELS):
     """Rebase split lists without changing source bytes, splits, or active sampling."""
     source, output = source.resolve(), output.resolve()
     if output.exists() or output.is_relative_to(source) or source.is_relative_to(output):
         raise ValueError("Choose a new output separate from the source")
     manifest = read(source / "manifest.json")
-    if manifest["labels"] != LABELS:
-        raise ValueError("Expected Broad Waste ten-class taxonomy")
+    if manifest["labels"] != list(labels):
+        raise ValueError("Unexpected dataset taxonomy")
     images = {}
     for row in manifest["records"]:
         image = inside(source, row["image"])
@@ -99,8 +102,8 @@ def restore(source, output):
     config = yaml.safe_load((source / "data.yaml").read_text())
     names = config.get("names")
     if isinstance(names, dict):
-        names = [names.get(i) for i in range(len(LABELS))]
-    if names != LABELS or any(config.get(s) != s + ".txt" for s in SPLITS):
+        names = [names.get(i) for i in range(len(labels))]
+    if names != list(labels) or any(config.get(s) != s + ".txt" for s in SPLITS):
         raise ValueError("Dataset YAML taxonomy or split lists differ")
     output.mkdir(parents=True)
     for relative, (image, label) in images.items():
@@ -184,10 +187,10 @@ def stage_review(cache, base, output):
     return summary
 
 
-def readiness(base, intake, intake_root, protected=()):
+def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=FOCUS, train_targets=TRAIN_TARGET):
     """Return measured gaps; legacy samples never count as new holdout support."""
-    if base["labels"] != LABELS or intake.get("labels") != LABELS:
-        raise ValueError("Taxonomy differs from Broad Waste")
+    if base["labels"] != list(labels) or intake.get("labels") != list(labels):
+        raise ValueError("Dataset taxonomy differs")
     protected_rows = list(base["records"]) + list(protected)
     hashes = {r.get("prepared_sha256", r.get("sha256")) for r in protected_rows}
     groups = {r.get("group") for r in protected_rows}
@@ -222,7 +225,7 @@ def readiness(base, intake, intake_root, protected=()):
                 raise ValueError("Image pHash mismatch")
             if any((row["phash"] ^ value).bit_count() <= 5 for value in phashes):
                 raise ValueError("Near-duplicate of protected data")
-            validate_boxes(row["boxes"])
+            validate_boxes(row["boxes"], len(labels))
             rights = row.get("rights", {})
             if not (rights.get("accepted") is True and rights.get("status") == "RELEASE_ELIGIBLE"
                     and rights.get("license_url") and rights.get("source_page") and rights.get("attribution")):
@@ -230,7 +233,7 @@ def readiness(base, intake, intake_root, protected=()):
             review = row.get("visual_review", {})
             if not (review.get("decision") == "APPROVED" and review.get("reviewer")
                     and review.get("reviewer_type") == "human" and review.get("reviewed_at")
-                    and review.get("all_objects_annotated") is True and review.get("labels") == LABELS):
+                    and review.get("all_objects_annotated") is True and review.get("labels") == list(labels)):
                 raise ValueError("Independent complete human review pending")
             if not row["boxes"] and not review.get("verified_negative"):
                 raise ValueError("Empty labels lack verified-negative review")
@@ -269,11 +272,11 @@ def readiness(base, intake, intake_root, protected=()):
     for split in SPLITS:
         rows = [r for r in valid if r["split"] == split]
         support[split] = {}
-        for label in FOCUS:
-            cls = LABELS.index(label)
+        for label in focus:
+            cls = labels.index(label)
             matching = [r for r in rows if any(b[0] == cls for b in r["boxes"])]
             instances = sum(b[0] == cls for r in matching for b in r["boxes"])
-            target = TRAIN_TARGET[label] if split == "train" else 50
+            target = train_targets[label] if split == "train" else 50
             count = len(matching) if split == "train" else instances
             independent = len({capture_groups[r["id"]] for r in matching})
             support[split][label] = {"images": len(matching), "instances": instances,
@@ -282,7 +285,7 @@ def readiness(base, intake, intake_root, protected=()):
                 "group_deficit": max(0, 20-independent) if split != "train" else 0}
     ready = not rejected and all(not v["count_deficit"] and not v["group_deficit"]
                                for split in support.values() for v in split.values())
-    legacy = {split: dict(Counter(LABELS[int(b[0])] for r in base["records"]
+    legacy = {split: dict(Counter(labels[int(b[0])] for r in base["records"]
                                  if r["split"] == split for b in r["boxes"])) for split in SPLITS}
     return {"status": "READY_FOR_TRAINING_EXPERIMENT" if ready else "INCOMPLETE_DATA_REVIEW",
             "legacy_instances": legacy, "new_support": support, "accepted_new_images": len(valid),
@@ -290,13 +293,13 @@ def readiness(base, intake, intake_root, protected=()):
             "scope": "Data readiness only; does not establish model accuracy"}
 
 
-def build(base_root, intake_path, protected, output):
+def build(base_root, intake_path, protected, output, *, labels=LABELS, focus=FOCUS, train_targets=TRAIN_TARGET):
     """Merge approved intake, keeping legacy test out of the new final holdout."""
     base_root, output = base_root.resolve(), output.resolve()
     if output.exists() or output.is_relative_to(base_root) or base_root.is_relative_to(output):
         raise ValueError("Choose a new output separate from baseline")
     base, intake = read(base_root / "manifest.json"), read(intake_path)
-    report = readiness(base, intake, intake_path.parent, protected)
+    report = readiness(base, intake, intake_path.parent, protected, labels=labels, focus=focus, train_targets=train_targets)
     if report["status"] != "READY_FOR_TRAINING_EXPERIMENT":
         raise ValueError("Intake data/review quotas incomplete; inspect audit report before build")
     records = []
@@ -317,6 +320,7 @@ def build(base_root, intake_path, protected, output):
         if not row["boxes"]:
             review["general_negative"] = True
         records.append({**row, "image": relative, "source": "NewCapture", "source_id": row["id"],
+                        "original_source": row.get("source", "NewCapture"),
                         "visual_review": review,
                         "kind": "VERIFIED_NEGATIVE" if not row["boxes"] else "ANNOTATED_OBJECTS"})
         files.append((source, relative, None))
@@ -336,8 +340,9 @@ def build(base_root, intake_path, protected, output):
     active = [r for r in records if r["split"] != "train" or r["source"] == "NewCapture"
               or Path(r["image"]).name in old_active]
     counts = lambda rows: {s: {name: sum(int(b[0]) == i for r in rows if r["split"] == s for b in r["boxes"])
-                              for i, name in enumerate(LABELS)} for s in SPLITS}
-    manifest = {"version": "broad-waste-issue8-v5", "status": "EXPERIMENTAL_NOT_PROMOTED", "labels": LABELS,
+                              for i, name in enumerate(labels)} for s in SPLITS}
+    manifest = {"version": "broad-waste-issue8-v5" if list(labels) == LABELS else "general-focus-issue9-v2",
+                "status": "EXPERIMENTAL_NOT_PROMOTED", "labels": list(labels),
                 "records": records, "baseline_manifest_sha256": digest(base_root / "manifest.json"),
                 "intake_sha256": digest(intake_path), "instances_per_split": counts(records),
                 "active_instances_per_split": counts(active),
@@ -349,7 +354,7 @@ def build(base_root, intake_path, protected, output):
                                                     for r in active if r["split"] == split), encoding="utf-8")
     (output / "train-full.txt").write_text("".join((output / r["image"]).as_posix()+"\n"
                                                     for r in records if r["split"] == "train"), encoding="utf-8")
-    (output / "data.yaml").write_text(yaml.safe_dump({"path": output.as_posix(), "names": LABELS,
+    (output / "data.yaml").write_text(yaml.safe_dump({"path": output.as_posix(), "names": dict(enumerate(labels)),
                                                       **{s: s+".txt" for s in SPLITS}}), encoding="utf-8")
     notices = (base_root / "DATASET_NOTICES.md").read_text(encoding="utf-8")
     notices += "\n\n## New capture attribution\n\n" + "\n".join(

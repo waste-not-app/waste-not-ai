@@ -197,7 +197,7 @@ def test_builder_preserves_train_sampling_and_separates_legacy_test(tuning, inta
     (base / "DATASET_NOTICES.md").write_text("Legacy attribution\n")
     tuning.write(tmp_path / "intake.json", intake)
     # Export behavior is tested separately from the quota gate above.
-    monkeypatch.setattr(tuning, "readiness", lambda *args: {"status": "READY_FOR_TRAINING_EXPERIMENT"})
+    monkeypatch.setattr(tuning, "readiness", lambda *args, **kwargs: {"status": "READY_FOR_TRAINING_EXPERIMENT"})
     output = tmp_path / "output"
     tuning.build(base, tmp_path / "intake.json", [], output)
     result = tuning.read(output / "manifest.json")
