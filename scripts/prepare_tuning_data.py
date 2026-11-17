@@ -9,6 +9,7 @@ import json
 import math
 from pathlib import Path
 import shutil
+import textwrap
 
 import yaml
 
@@ -169,7 +170,9 @@ def stage_review(cache, base, output):
                 draw.rectangle((x+(cx-w/2)*thumb.width, y+(cy-h/2)*thumb.height,
                                 x+(cx+w/2)*thumb.width, y+(cy+h/2)*thumb.height), outline="red", width=2)
             draw.text((x, y+275), f"TACO {row['source_id']} - REVIEW REQUIRED", fill="black")
-            draw.text((x, y+295), ", ".join(sorted({LABELS[int(b[0])] for b in row["boxes"]})), fill="black")
+            labels = ", ".join(sorted({LABELS[int(b[0])] for b in row["boxes"]}))
+            for line_index, line in enumerate(textwrap.wrap(labels, width=45)):
+                draw.text((x, y+290+line_index*12), line, fill="black")
             thumb.close()
         sheet.save(output / f"contact-{start//12+1:02}.jpg")
         sheet.close()
