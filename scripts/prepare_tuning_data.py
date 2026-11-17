@@ -41,7 +41,7 @@ def inside(root, relative):
     return resolved
 
 
-def validate_boxes(boxes, class_count=len(LABELS)):
+def validate_boxes(boxes, class_count=len(LABELS), edge_tolerance=1e-12):
     for box in boxes:
         if len(box) != 5 or not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in box):
             raise ValueError("Invalid or nonfinite bbox")
@@ -49,8 +49,9 @@ def validate_boxes(boxes, class_count=len(LABELS)):
         if isinstance(cls, bool) or int(cls) != cls or not 0 <= cls < class_count:
             raise ValueError("Invalid class ID")
         # Preserve source coordinates; tolerate binary rounding, never clip real excursions.
-        epsilon = 1e-12
-        if not (w > 0 and h > 0 and -epsilon <= x-w/2 < x+w/2 <= 1+epsilon
+        epsilon = edge_tolerance
+        if not (0 < w <= 1 and 0 < h <= 1 and 0 <= x <= 1 and 0 <= y <= 1
+                and -epsilon <= x-w/2 < x+w/2 <= 1+epsilon
                 and -epsilon <= y-h/2 < y+h/2 <= 1+epsilon):
             raise ValueError("Box edges outside image")
 
@@ -361,7 +362,8 @@ def build(base_root, intake_path, protected, output, *, labels=LABELS, focus=FOC
         f"- {r['id']}: {r['rights']['attribution']} — {r['rights']['source_page']} — {r['rights']['license_url']}"
         for r in intake["records"])
     (output / "DATASET_NOTICES.md").write_text(notices+"\n", encoding="utf-8")
-    write(output / "readiness.json", report)
+    write(output / "readiness.json", {**report, "dataset_manifest_sha256": digest(output/"manifest.json"),
+                                     "intake_sha256": manifest["intake_sha256"]})
     return {"status": manifest["status"], "images": len(records), "new_images": len(intake["records"]),
             "next_check": "Run verify_broad_data.py on the completed output before any training"}
 
