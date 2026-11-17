@@ -36,6 +36,8 @@ Kelompok benda dan sesi yang terhubung dihitung satu unit independen. Satu foto 
 
 RealWaste tetap berada pada jalur riset terpisah karena perbedaan ketentuan lisensi dan review manusia independen yang masih tertunda. Dataset lama yang dipulihkan tidak membuktikan kelengkapan anotasi baru atau kemampuan di kamera lapangan.
 
+[Audit kapasitas metadata TACO](../evaluations/issue8-source-capacity.json) juga menunjukkan sumber yang tersedia tidak cukup untuk memenuhi kuota ini sendiri. Di luar v4, batas atas anotasi publisher hanya 52 instance cardboard, 79 paper, dan 28 drink_carton. Angka tersebut bahkan belum memperhitungkan izin, duplikasi, review dan kelompok independen. Perlu foto dari sumber berizin tambahan/benda-sesi baru; mengunduh ulang seluruh cache TACO tidak menyelesaikan kekurangan tersebut.
+
 ## Environment dan verifikasi
 
 Environment riset yang tersedia memakai Python 3.13.1, Ultralytics 8.4.183, NumPy 2.2.5, dan Pillow 11.2.1. Inference CPU memakai Torch 2.14.1/OpenCV 4.13.0.92. Environment training terpisah memakai Torch 2.9.1+cu128. GPU yang terdeteksi RTX 4070 Laptop 8.188 MiB, driver 610.62; tidak ada training dijalankan pada tahap ini. Ruang bebas saat inventaris sekitar 340 GB.
