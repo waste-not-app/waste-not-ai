@@ -1,0 +1,6 @@
+{
+  "version": "issue8-intake-v1",
+  "status": "AWAITING_INDEPENDENT_REVIEW_AND_NEW_CAPTURE",
+  "labels": ["bottle", "can", "cup", "plastic_bag", "paper", "cardboard", "drink_carton", "plastic_wrapper", "food_container", "bottle_cap"],
+  "records": []
+}

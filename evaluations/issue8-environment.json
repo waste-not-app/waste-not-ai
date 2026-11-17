@@ -1,0 +1,17 @@
+{
+  "python": "3.13.1",
+  "packages": {
+    "torch": "2.14.1",
+    "ultralytics": "8.4.183",
+    "numpy": "2.2.5",
+    "opencv-python": "4.13.0.92",
+    "Pillow": "11.2.1"
+  },
+  "baseline_images_restored": 117,
+  "replay_manifest_sha256": "fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa",
+  "dataset_manifest_sha256": "846f9a112db657c0352582acaa25aa935eed32ea18ec6a6a626373d790816c8a",
+  "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU, 8188 MiB, driver 610.62",
+  "baseline_inference_device": "cpu",
+  "threads": 8,
+  "legacy_data_is_new_holdout": false
+}
