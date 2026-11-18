@@ -31,3 +31,31 @@ wastenot_ai = ["data/*.json", "web/*.html", "web/*.css", "web/*.js", "web/*.ttf"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+src = ["src", "tests"]
+extend-exclude = ["annotations", "benchmarks", "evaluations", "examples", "guide-proposals"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "S", "UP", "BLE", "PIE", "RET", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "S108", "S311", "S603", "S607"]
+"scripts/**" = ["S101", "S105", "S310", "S311", "S603", "S607", "B007", "B905", "BLE001"]
+"deploy/**" = ["S310", "S603", "S607", "BLE001"]
+"audit_dependencies.py" = ["S603", "S607"]
+"src/wastenot_ai/{worker,http_api,demo}.py" = ["BLE001"]
+"src/wastenot_ai/openapi_export.py" = ["S106"]
+"src/wastenot_ai/assets.py" = ["S324"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Form", "fastapi.Header", "fastapi.Query"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["wastenot_ai"]
+
+[tool.ruff.format]
+quote-style = "preserve"
