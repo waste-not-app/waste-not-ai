@@ -20,20 +20,24 @@ def external_module(monkeypatch):
 def test_fpi_parser_preserves_all_boxes_on_combined_lines_and_does_not_clip(external_module):
     boxes, combined = external_module.parse_fpi_labels("0 .5 .5 .2 .2 0 .7 .7 .1 .1\n1 -.1 .4 .2 .2\n")
     assert len(boxes) == 3 and combined == 1
-    assert boxes[1] == [0, .7, .7, .1, .1]
-    assert boxes[2][1] == -.1
+    assert boxes[1] == [0, 0.7, 0.7, 0.1, 0.1]
+    assert boxes[2][1] == -0.1
     for invalid in ("0 .1 .2", "0 nan .5 .2 .2", "2 .5 .5 .2 .2"):
         with pytest.raises(ValueError):
             external_module.parse_fpi_labels(invalid)
 
 
 def test_phash_bands_find_all_close_pairs_including_changes_across_five_bands(external_module):
-    values = [0, 1, sum(1 << bit for bit in (0, 11, 22, 33, 43)),
-              sum(1 << bit for bit in (0, 11, 22, 33, 43, 53)), (1 << 63) - 1,
-              ((1 << 63) - 1) ^ (1 << 62)]
+    values = [
+        0,
+        1,
+        sum(1 << bit for bit in (0, 11, 22, 33, 43)),
+        sum(1 << bit for bit in (0, 11, 22, 33, 43, 53)),
+        (1 << 63) - 1,
+        ((1 << 63) - 1) ^ (1 << 62),
+    ]
     rows = [{"phash": value} for value in values]
-    expected = {(i, j) for i, value in enumerate(values) for j in range(i)
-                if (value ^ values[j]).bit_count() <= 5}
+    expected = {(i, j) for i, value in enumerate(values) for j in range(i) if (value ^ values[j]).bit_count() <= 5}
     assert set(external_module.phash_neighbors(rows)) == expected
 
 
@@ -43,11 +47,17 @@ def test_fpi_export_keeps_native_face_scope_and_refuses_to_overwrite(external_mo
     image = cache / "source.jpg"
     Image.new("RGB", (100, 100), "blue").save(image)
     checksum = external_module.expansion.digest(image)
-    row = {"source_id": "photo", "source_split": "train", "cached_path": str(image),
-           "raw_sha256": checksum, "boxes": [[0, .5, .5, .2, .2], [1, .5, .3, .2, .2]]}
+    row = {
+        "source_id": "photo",
+        "source_split": "train",
+        "cached_path": str(image),
+        "raw_sha256": checksum,
+        "boxes": [[0, 0.5, 0.5, 0.2, 0.2], [1, 0.5, 0.3, 0.2, 0.2]],
+    }
     (cache / "fpi-sample.json").write_text(json.dumps({"records": [row]}))
-    (cache / "fpi-pixels.json").write_text(json.dumps({"records": [{"source_id": "photo", "phash": 0,
-                                                                  "width": 100, "height": 100}]}))
+    (cache / "fpi-pixels.json").write_text(
+        json.dumps({"records": [{"source_id": "photo", "phash": 0, "width": 100, "height": 100}]})
+    )
     review = tmp_path / "annotations/fpi-det-sample-v1.json"
     review.parent.mkdir(parents=True)
     review.write_text(json.dumps([{"source_id": "photo", "raw_sha256": checksum, "decision": "PHONE_SCOPE_SCREENED"}]))
@@ -87,9 +97,19 @@ def test_external_build_preserves_active_train_and_pinned_source_rights(monkeypa
         image = base / relative
         image.parent.mkdir(parents=True, exist_ok=True)
         Image.new("RGB", (100, 100), (index * 100, 0, 0)).save(image)
-        records.append({"source": "OldSource", "source_id": str(index), "image": relative, "split": "train",
-                        "prepared_sha256": module.expansion.digest(image), "raw_sha256": module.expansion.digest(image),
-                        "group": "old-train", "phash": index, "boxes": [[0, .5, .5, .8, .8]]})
+        records.append(
+            {
+                "source": "OldSource",
+                "source_id": str(index),
+                "image": relative,
+                "split": "train",
+                "prepared_sha256": module.expansion.digest(image),
+                "raw_sha256": module.expansion.digest(image),
+                "group": "old-train",
+                "phash": index,
+                "boxes": [[0, 0.5, 0.5, 0.8, 0.8]],
+            }
+        )
     (base / "manifest.json").write_text(json.dumps({"records": records}))
     (base / "DATASET_NOTICES.md").write_text("Inherited attribution")
     (base / "train.txt").write_text((base / records[0]["image"]).as_posix() + "\n")
@@ -100,21 +120,42 @@ def test_external_build_preserves_active_train_and_pinned_source_rights(monkeypa
 
     def blob(path, publisher_path):
         raw = path.read_bytes()
-        return {"path": publisher_path, "type": "blob",
-                "sha": hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw, usedforsecurity=False).hexdigest()}
+        return {
+            "path": publisher_path,
+            "type": "blob",
+            "sha": hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw, usedforsecurity=False).hexdigest(),
+        }
 
     readme = cache / "realwaste-README.md"
     readme.write_text("Author license CC BY-NC-SA 4.0")
     image = cache / "Cardboard_1.jpg"
     Image.new("RGB", (100, 100), "blue").save(image)
-    source = {**blob(image, "RealWaste/Cardboard/Cardboard_1.jpg"), "cached_path": str(image),
-              "source_id": "Cardboard_1", "raw_sha256": module.expansion.digest(image)}
-    (cache / "realwaste-tree.json").write_text(json.dumps({"sha": module.REALWASTE_COMMIT,
-        "tree": [blob(readme, "README.md"), source]}))
-    (cache / "realwaste-acquisition.json").write_text(json.dumps({"commit": module.REALWASTE_COMMIT, "selected": [source]}))
-    (cache / "review.json").write_text(json.dumps([{"source_id": "Cardboard_1", "decision": "APPROVED",
-        "raw_sha256": source["raw_sha256"], "pixel_bbox_xyxy": [10, 10, 90, 90],
-        "reviewer": "synthetic-test-fixture", "reviewed_at": "2026-11-07"}]))
+    source = {
+        **blob(image, "RealWaste/Cardboard/Cardboard_1.jpg"),
+        "cached_path": str(image),
+        "source_id": "Cardboard_1",
+        "raw_sha256": module.expansion.digest(image),
+    }
+    (cache / "realwaste-tree.json").write_text(
+        json.dumps({"sha": module.REALWASTE_COMMIT, "tree": [blob(readme, "README.md"), source]})
+    )
+    (cache / "realwaste-acquisition.json").write_text(
+        json.dumps({"commit": module.REALWASTE_COMMIT, "selected": [source]})
+    )
+    (cache / "review.json").write_text(
+        json.dumps(
+            [
+                {
+                    "source_id": "Cardboard_1",
+                    "decision": "APPROVED",
+                    "raw_sha256": source["raw_sha256"],
+                    "pixel_bbox_xyxy": [10, 10, 90, 90],
+                    "reviewer": "synthetic-test-fixture",
+                    "reviewed_at": "2026-11-07",
+                }
+            ]
+        )
+    )
     module.build(output)
     manifest = json.loads((output / "manifest.json").read_text())
     listed = (output / "train.txt").read_text().splitlines()

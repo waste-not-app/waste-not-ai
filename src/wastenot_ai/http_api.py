@@ -1,4 +1,5 @@
 """HTTP envelope, bounded bodies and redacted errors for integration adapters."""
+
 import asyncio
 from uuid import UUID, uuid4
 
@@ -35,16 +36,16 @@ ERRORS = {
 
 def error_response(code, request_id, *, status=None, fields=None, headers=None):
     default_status, message, retryable = ERRORS.get(code, ERRORS["AI_UNAVAILABLE"])
-    envelope = ErrorEnvelope(request_id=request_id, error=ErrorDetail(
-        code=code, message=message, fields=fields or {}, retryable=retryable))
+    envelope = ErrorEnvelope(
+        request_id=request_id, error=ErrorDetail(code=code, message=message, fields=fields or {}, retryable=retryable)
+    )
     return JSONResponse(envelope.model_dump(mode="json"), status_code=status or default_status, headers=headers)
 
 
 def configure_errors(app):
     @app.exception_handler(RequestValidationError)
     async def invalid(request, exc):
-        fields = {".".join(str(x) for x in err["loc"] if x != "body"): "Isian tidak valid."
-                  for err in exc.errors()}
+        fields = {".".join(str(x) for x in err["loc"] if x != "body"): "Isian tidak valid." for err in exc.errors()}
         return error_response("VALIDATION_ERROR", request.state.request_id, fields=fields)
 
     # Starlette also uses this base class for unknown paths and unsupported methods.
@@ -52,9 +53,13 @@ def configure_errors(app):
 
     @app.exception_handler(StarletteHTTPException)
     async def failure(request, exc):
-        code = exc.detail if isinstance(exc.detail, str) and exc.detail in ERRORS else {
-            404: "NOT_FOUND", 405: "METHOD_NOT_ALLOWED", 413: "FILE_TOO_LARGE", 422: "VALIDATION_ERROR"
-        }.get(exc.status_code, "AI_UNAVAILABLE")
+        code = (
+            exc.detail
+            if isinstance(exc.detail, str) and exc.detail in ERRORS
+            else {404: "NOT_FOUND", 405: "METHOD_NOT_ALLOWED", 413: "FILE_TOO_LARGE", 422: "VALIDATION_ERROR"}.get(
+                exc.status_code, "AI_UNAVAILABLE"
+            )
+        )
         return error_response(code, request.state.request_id, status=exc.status_code, headers=exc.headers)
 
     @app.exception_handler(Exception)
@@ -64,6 +69,7 @@ def configure_errors(app):
 
 class BoundedHTTP:
     """Buffer at most the configured limit before FastAPI parses JSON or multipart."""
+
     def __init__(self, app, maximum=16_384, mock=False):
         self.app, self.maximum, self.mock = app, maximum, mock
 
@@ -85,18 +91,30 @@ class BoundedHTTP:
                         return None
                     chunk = message.get("body", b"")
                     if len(body) + len(chunk) > self.maximum:
-                        response = error_response("FILE_TOO_LARGE" if self.mock else "REQUEST_TOO_LARGE", request_id, headers={
-                            "X-Request-ID": str(request_id), "Cache-Control": "no-store",
-                            **({"X-WasteNot-Mock": "true"} if self.mock else {})})
+                        response = error_response(
+                            "FILE_TOO_LARGE" if self.mock else "REQUEST_TOO_LARGE",
+                            request_id,
+                            headers={
+                                "X-Request-ID": str(request_id),
+                                "Cache-Control": "no-store",
+                                **({"X-WasteNot-Mock": "true"} if self.mock else {}),
+                            },
+                        )
                         await response(scope, receive, send)
                         return None
                     body.extend(chunk)
                     if not message.get("more_body", False):
                         break
         except TimeoutError:
-            response = error_response("AI_TIMEOUT", request_id, headers={
-                "X-Request-ID": str(request_id), "Cache-Control": "no-store",
-                **({"X-WasteNot-Mock": "true"} if self.mock else {})})
+            response = error_response(
+                "AI_TIMEOUT",
+                request_id,
+                headers={
+                    "X-Request-ID": str(request_id),
+                    "Cache-Control": "no-store",
+                    **({"X-WasteNot-Mock": "true"} if self.mock else {}),
+                },
+            )
             await response(scope, receive, send)
             return None
         sent = False
@@ -141,8 +159,12 @@ def install_security_schema(app, *, mock=False):
     def schema():
         doc = original()
         doc.setdefault("components", {}).setdefault("securitySchemes", {})["BearerAuth"] = {
-            "type": "http", "scheme": "bearer",
-            "description": "MOCK ONLY: mock-user-a or mock-user-b" if mock else "Private Go-to-Python credential; never send to Android"}
+            "type": "http",
+            "scheme": "bearer",
+            "description": "MOCK ONLY: mock-user-a or mock-user-b"
+            if mock
+            else "Private Go-to-Python credential; never send to Android",
+        }
         doc["security"] = [{"BearerAuth": []}]
         doc["info"]["x-api-version"] = API_VERSION
         if mock:
@@ -153,12 +175,19 @@ def install_security_schema(app, *, mock=False):
                     continue
                 operation["security"] = [{"BearerAuth": []}]
                 for status in (401, 404, 409, 410, 413, 415, 422, 429, 503, 504):
-                    response = operation["responses"].setdefault(str(status), {"description": "AI error; see errors.json"})
-                    response["content"] = {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorEnvelope"}}}
+                    response = operation["responses"].setdefault(
+                        str(status), {"description": "AI error; see errors.json"}
+                    )
+                    response["content"] = {
+                        "application/json": {"schema": {"$ref": "#/components/schemas/ErrorEnvelope"}}
+                    }
                 for status in (429, 503):
-                    operation["responses"][str(status)]["headers"] = {"Retry-After": {
-                        "description": "Wait at least this many seconds when present; retry explicitly with the same client_request_id.",
-                        "schema": {"type": "integer", "minimum": 1}}}
+                    operation["responses"][str(status)]["headers"] = {
+                        "Retry-After": {
+                            "description": "Wait at least this many seconds when present; retry explicitly with the same client_request_id.",
+                            "schema": {"type": "integer", "minimum": 1},
+                        }
+                    }
         raw = ErrorEnvelope.model_json_schema(ref_template="#/components/schemas/{model}")
         definitions = raw.pop("$defs", {})
         doc["components"].setdefault("schemas", {}).update(definitions)

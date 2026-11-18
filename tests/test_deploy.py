@@ -44,7 +44,9 @@ def test_packaged_runtime_excludes_keys_models_training_and_tests(payload):
     commit, files = deploy.parse_release(payload)
     assert commit == 'a' * 40
     assert 'src/wastenot_ai/worker.py' in files
-    assert all(not name.endswith(('.pt', '.env', '.pyc')) and not name.startswith(('tests/', 'data/')) for name in files)
+    assert all(
+        not name.endswith(('.pt', '.env', '.pyc')) and not name.startswith(('tests/', 'data/')) for name in files
+    )
 
 
 @pytest.mark.parametrize('name', ['../escape', 'src/wastenot_ai/../../escape', '/etc/passwd'])
@@ -107,10 +109,15 @@ def test_failed_activation_restores_previous_source_and_service_paths(tmp_path, 
     previous.mkdir(parents=True)
     (root / 'current').symlink_to(previous)
     units = tmp_path / 'units'
-    with patch.object(deploy, 'ROOT', root), patch.object(deploy, 'UNITS', units), \
-         patch.object(deploy, 'verify_runtime'), \
-         patch.object(deploy, 'restart', side_effect=[RuntimeError('startup'), None] if restart_fails else None) as restart, \
-         patch.object(deploy, 'ready', side_effect=[True] if restart_fails else [False, True]):
+    with (
+        patch.object(deploy, 'ROOT', root),
+        patch.object(deploy, 'UNITS', units),
+        patch.object(deploy, 'verify_runtime'),
+        patch.object(
+            deploy, 'restart', side_effect=[RuntimeError('startup'), None] if restart_fails else None
+        ) as restart,
+        patch.object(deploy, 'ready', side_effect=[True] if restart_fails else [False, True]),
+    ):
         with pytest.raises(ValueError, match='previous release restored'):
             deploy.deploy(payload)
         assert (root / 'current').resolve() == previous
@@ -135,8 +142,10 @@ def test_existing_commit_cannot_be_overwritten(tmp_path, payload):
 def test_installed_versions_are_checked_even_with_matching_marker(tmp_path):
     lock = b'httpx==0.28.1\n'
     (tmp_path / 'ai-requirements.sha256').write_text(hashlib.sha256(lock).hexdigest())
-    with patch.object(deploy, 'CONFIG', tmp_path), \
-         patch.object(deploy, 'run', side_effect=subprocess.CalledProcessError(1, ['python'])) as run:
+    with (
+        patch.object(deploy, 'CONFIG', tmp_path),
+        patch.object(deploy, 'run', side_effect=subprocess.CalledProcessError(1, ['python'])) as run,
+    ):
         with pytest.raises(subprocess.CalledProcessError):
             deploy.verify_runtime({'requirements-cpu.lock': lock})
         assert json.loads(run.call_args.kwargs['input']) == {'httpx': '0.28.1'}
@@ -148,11 +157,17 @@ def test_installed_model_bundle_is_verified_before_activation(tmp_path):
     primary, general = tmp_path / 'waste.pt', tmp_path / 'general.pt'
     primary.write_bytes(b'waste')
     general.write_bytes(b'general')
-    manifest = {'filename': primary.name, 'sha256': hashlib.sha256(primary.read_bytes()).hexdigest(),
-                'general_model': {'filename': general.name, 'sha256': hashlib.sha256(general.read_bytes()).hexdigest()}}
+    manifest = {
+        'filename': primary.name,
+        'sha256': hashlib.sha256(primary.read_bytes()).hexdigest(),
+        'general_model': {'filename': general.name, 'sha256': hashlib.sha256(general.read_bytes()).hexdigest()},
+    }
     files = {'requirements-cpu.lock': lock, 'model.json': json.dumps(manifest).encode()}
-    with patch.object(deploy, 'CONFIG', tmp_path), patch.object(deploy, 'run'), \
-         patch.object(deploy, 'environment', return_value={'AI_MODEL_DIRECTORY': str(tmp_path)}):
+    with (
+        patch.object(deploy, 'CONFIG', tmp_path),
+        patch.object(deploy, 'run'),
+        patch.object(deploy, 'environment', return_value={'AI_MODEL_DIRECTORY': str(tmp_path)}),
+    ):
         deploy.verify_runtime(files)
         general.write_bytes(b'changed')
         with pytest.raises(ValueError, match='Installed model'):
@@ -165,7 +180,9 @@ def test_installed_model_bundle_is_verified_before_activation(tmp_path):
 
 @pytest.mark.parametrize('activation_succeeds', [True, False])
 @pytest.mark.parametrize('was_active', [True, False])
-def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_failure(tmp_path, payload, activation_succeeds, was_active):
+def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_failure(
+    tmp_path, payload, activation_succeeds, was_active
+):
     root = tmp_path / 'ai'
     previous = root / 'releases' / ('b' * 40)
     previous.mkdir(parents=True)
@@ -178,10 +195,14 @@ def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_f
     original = b'[Service]\nExecStart=old-model-command\n'
     override.write_bytes(original)
     readiness = [True] if activation_succeeds else [False, True]
-    with patch.object(deploy, 'ROOT', root), patch.object(deploy, 'UNITS', units), \
-         patch.object(deploy, 'verify_runtime'), patch.object(deploy, 'restart') as restart, \
-         patch.object(deploy, 'demo_active', return_value=was_active), \
-         patch.object(deploy, 'ready', side_effect=readiness) as ready:
+    with (
+        patch.object(deploy, 'ROOT', root),
+        patch.object(deploy, 'UNITS', units),
+        patch.object(deploy, 'verify_runtime'),
+        patch.object(deploy, 'restart') as restart,
+        patch.object(deploy, 'demo_active', return_value=was_active),
+        patch.object(deploy, 'ready', side_effect=readiness) as ready,
+    ):
         if activation_succeeds:
             deploy.deploy(payload)
             command = override.read_text()
@@ -196,9 +217,13 @@ def test_installed_demo_follows_release_manifest_and_restores_prior_command_on_f
         assert all(call.kwargs['include_demo'] == was_active for call in ready.call_args_list)
 
 
-@pytest.mark.parametrize('loaded_model,verify_model,expected', [
-    ('combined-current', True, True), ('old-baseline', True, False), ('old-baseline', False, True)])
-def test_demo_readiness_rejects_a_stale_model_and_accepts_legacy_recovery(tmp_path, loaded_model, verify_model, expected):
+@pytest.mark.parametrize(
+    'loaded_model,verify_model,expected',
+    [('combined-current', True, True), ('old-baseline', True, False), ('old-baseline', False, True)],
+)
+def test_demo_readiness_rejects_a_stale_model_and_accepts_legacy_recovery(
+    tmp_path, loaded_model, verify_model, expected
+):
     current = tmp_path / 'current'
     current.mkdir()
     (current / 'model.json').write_text(json.dumps({'model_version': 'combined-current'}))

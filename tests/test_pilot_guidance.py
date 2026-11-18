@@ -10,18 +10,27 @@ from wastenot_ai.sources import load_sources
 
 
 class CountingProvider(FixtureProvider):
-    def __init__(self): self.calls = 0
+    def __init__(self):
+        self.calls = 0
+
     def generate(self, payload):
         self.calls += 1
         return super().generate(payload)
 
 
-@pytest.mark.parametrize("access,status,missing", [("UNKNOWN", "READY", []),
-                                                   ("NO", "READY", []), ("YES", "READY", [])])
+@pytest.mark.parametrize("access,status,missing", [("UNKNOWN", "READY", []), ("NO", "READY", []), ("YES", "READY", [])])
 def test_pilot_recycling_requires_actual_receiver_and_never_guesses_trash(access, status, missing):
     provider = CountingProvider()
-    context = Context.model_validate_json(json.dumps({"object_key": "aluminium_can", "category": "METAL",
-            "condition": {"cleanliness": "CLEAN", "integrity": "INTACT"}, "recycling_access": access}))
+    context = Context.model_validate_json(
+        json.dumps(
+            {
+                "object_key": "aluminium_can",
+                "category": "METAL",
+                "condition": {"cleanliness": "CLEAN", "integrity": "INTACT"},
+                "recycling_access": access,
+            }
+        )
+    )
     result = recommend(context, provider, load_guides(), demo_guides=True)
     assert result.status == status and result.missing_context == missing
     assert result.recommended_method == ('TRASH' if access == 'NO' else 'RECYCLE')
@@ -32,20 +41,42 @@ def test_pilot_recycling_requires_actual_receiver_and_never_guesses_trash(access
         assert result.recommendation_basis == 'CONDITIONAL' and result.conditions_to_verify
 
 
-@pytest.mark.parametrize("contents,status,risk", [("FOOD_DRINK", "READY", False), ("UNKNOWN", "NEEDS_CONTEXT", False),
-                                                ("CHEMICAL", "UNAVAILABLE", True), ("OTHER", "UNAVAILABLE", False)])
+@pytest.mark.parametrize(
+    "contents,status,risk",
+    [
+        ("FOOD_DRINK", "READY", False),
+        ("UNKNOWN", "NEEDS_CONTEXT", False),
+        ("CHEMICAL", "UNAVAILABLE", True),
+        ("OTHER", "UNAVAILABLE", False),
+    ],
+)
 def test_hdpe_contents_not_inferred_from_clean_appearance(contents, status, risk):
     provider = CountingProvider()
-    context = Context.model_validate_json(json.dumps({"object_key": "hdpe_bottle", "category": "PLASTIC",
-            "condition": {"cleanliness": "CLEAN", "integrity": "INTACT", "reusable": "YES", "former_contents": contents},
-            "reuse_intention": True, "recycling_access": "YES"}))
+    context = Context.model_validate_json(
+        json.dumps(
+            {
+                "object_key": "hdpe_bottle",
+                "category": "PLASTIC",
+                "condition": {
+                    "cleanliness": "CLEAN",
+                    "integrity": "INTACT",
+                    "reusable": "YES",
+                    "former_contents": contents,
+                },
+                "reuse_intention": True,
+                "recycling_access": "YES",
+            }
+        )
+    )
     result = recommend(context, provider, load_guides(), demo_guides=True)
     assert result.status == status and result.special_handling == risk
     assert result.recommended_method == ("RECYCLE" if status == "READY" else None)
     assert provider.calls == int(status == "READY")
 
 
-@pytest.mark.parametrize("requirement", [{"cleanlines": "CLEAN"}, {"cleanliness": "CLEEN"}, {"reuse_intention": "true"}])
+@pytest.mark.parametrize(
+    "requirement", [{"cleanlines": "CLEAN"}, {"cleanliness": "CLEEN"}, {"reuse_intention": "true"}]
+)
 def test_bad_guide_conditions_are_rejected_at_load_boundary(requirement):
     guide = load_guides()[0]
     rule = guide.evidence[0].model_copy(update={"requires": requirement})

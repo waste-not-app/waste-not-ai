@@ -22,14 +22,19 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
     async def lifespan(app):
         if app.state.detector is None:
             from .detector import load_detector
+
             general_path = os.getenv("AI_GENERAL_MODEL_PATH")
-            app.state.detector = load_detector(Path(os.getenv("AI_MODEL_PATH", "artifacts/models/yolo11n.pt")),
-                os.getenv("AI_DEVICE", "cpu"), os.getenv("AI_INPUT_SHAPE", "adaptive"),
-                Path(general_path) if general_path else None)
+            app.state.detector = load_detector(
+                Path(os.getenv("AI_MODEL_PATH", "artifacts/models/yolo11n.pt")),
+                os.getenv("AI_DEVICE", "cpu"),
+                os.getenv("AI_INPUT_SHAPE", "adaptive"),
+                Path(general_path) if general_path else None,
+            )
         yield
 
-    app = FastAPI(title="WasteNot private YOLO worker", docs_url=None, redoc_url=None,
-                  openapi_url=None, lifespan=lifespan)
+    app = FastAPI(
+        title="WasteNot private YOLO worker", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan
+    )
     app.state.detector = detector
     app.add_middleware(BoundedHTTP, maximum=None)
     configure_errors(app)
@@ -49,10 +54,19 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
         return {"ready": True}
 
     @app.post("/internal/detect", include_in_schema=False)
-    @app.post("/internal/v1/detect", response_model=Envelope[InternalDetection],
-              openapi_extra={"requestBody": {"required": True, "content": {
-                  mime: {"schema": {"type": "string", "format": "binary", "maxLength": MAX_BYTES}}
-                  for mime in ("image/jpeg", "image/png")}}})
+    @app.post(
+        "/internal/v1/detect",
+        response_model=Envelope[InternalDetection],
+        openapi_extra={
+            "requestBody": {
+                "required": True,
+                "content": {
+                    mime: {"schema": {"type": "string", "format": "binary", "maxLength": MAX_BYTES}}
+                    for mime in ("image/jpeg", "image/png")
+                },
+            }
+        },
+    )
     async def detect(request: Request):
         authorize(request)
         if app.state.detector is None:
@@ -108,13 +122,18 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
     async def capabilities(request: Request):
         authorize(request)
         from .catalog import detection_capabilities, load_catalog
+
         model = app.state.detector.artifact
         labels = app.state.detector.labels
         names = [labels[i] for i in range(len(labels))]
-        return envelope(request, {"model": {"model_version": model["model_version"],
-                                           "sha256": model["sha256"], "class_names": names},
-                                  "thresholds": load_catalog()["thresholds"],
-                                  **detection_capabilities(labels, model_version=model["model_version"], model_sha256=model["sha256"])})
+        return envelope(
+            request,
+            {
+                "model": {"model_version": model["model_version"], "sha256": model["sha256"], "class_names": names},
+                "thresholds": load_catalog()["thresholds"],
+                **detection_capabilities(labels, model_version=model["model_version"], model_sha256=model["sha256"]),
+            },
+        )
 
     install_security_schema(app)
     return app

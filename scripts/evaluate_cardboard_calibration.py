@@ -1,4 +1,5 @@
 """Replay the v4 review threshold on validation, held-out test and frozen camera predictions."""
+
 import argparse
 import json
 from unittest.mock import patch
@@ -36,9 +37,18 @@ def candidate_profile(labels, model_version=None, model_sha256=None):
 
 
 def reviewed(objects, labels, artifact=None):
-    raw = [RawDetection(class_id=obj["class_id"], raw_class=labels[obj["class_id"]],
-                        confidence=obj["confidence"], bbox=tuple(obj["bbox"])) for obj in objects]
-    identity = {} if artifact is None else {"model_version": artifact["model_version"], "model_sha256": artifact["sha256"]}
+    raw = [
+        RawDetection(
+            class_id=obj["class_id"],
+            raw_class=labels[obj["class_id"]],
+            confidence=obj["confidence"],
+            bbox=tuple(obj["bbox"]),
+        )
+        for obj in objects
+    ]
+    identity = (
+        {} if artifact is None else {"model_version": artifact["model_version"], "model_sha256": artifact["sha256"]}
+    )
     if artifact is None:
         return review_detections(raw, labels)
     with patch("wastenot_ai.catalog.review_profile", side_effect=candidate_profile):
@@ -58,7 +68,9 @@ def score_dataset(cached, artifact):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--collect-test", action="store_true", help="Collect fixed test predictions once from the exact v4 checkpoint")
+    parser.add_argument(
+        "--collect-test", action="store_true", help="Collect fixed test predictions once from the exact v4 checkpoint"
+    )
     parser.add_argument("--device", default="0")
     args = parser.parse_args()
     camera = read(CAMERA)
@@ -82,15 +94,19 @@ def main():
         labels = list(BROAD_LABELS)
         if model.names != dict(enumerate(labels)):
             raise ValueError("Checkpoint taxonomy mismatch")
-        predictions = evaluate_fixed(model, DATA, labels, args.device,
-                                     dict(enumerate(range(len(labels)))), split="test")
+        predictions = evaluate_fixed(
+            model, DATA, labels, args.device, dict(enumerate(range(len(labels)))), split="test"
+        )
         predictions["model_sha256"] = artifact["sha256"]
         predictions["manifest_sha256"] = sha(DATA / "manifest.json")
         predictions["split_sha256"] = sha(DATA / "test.txt")
         TEST_CACHE.write_text(json.dumps(predictions, indent=2) + "\n", encoding="utf-8")
     test = read(TEST_CACHE)
-    if (test["model_sha256"] != artifact["sha256"] or test["manifest_sha256"] != sha(DATA / "manifest.json")
-            or test["split_sha256"] != sha(DATA / "test.txt")):
+    if (
+        test["model_sha256"] != artifact["sha256"]
+        or test["manifest_sha256"] != sha(DATA / "manifest.json")
+        or test["split_sha256"] != sha(DATA / "test.txt")
+    ):
         raise ValueError("Test prediction snapshot identity mismatch")
 
     camera_truth = {row["id"]: row for row in benchmark["records"]}
@@ -112,28 +128,56 @@ def main():
                 after = reviewed(row["objects"], labels, model_artifact)["objects"]
                 rows["before"].append({"score": before_score})
                 rows["after"].append({"score": score_image(after, source["truth"], source["evaluated_classes"])})
-            replay[profile][model] = {mode: aggregate(records, camera["target_classes"]) for mode, records in rows.items()}
+            replay[profile][model] = {
+                mode: aggregate(records, camera["target_classes"]) for mode, records in rows.items()
+            }
 
-    report = {"kind": "validation_selected_cardboard_review_threshold", "old_threshold": .5, "new_threshold": .65,
-              "selection": "0.65 chosen using v4 validation before evaluating held-out test and cached camera replay",
-              "decision": "REJECTED_ON_TEST", "active_cardboard_threshold": .5,
-              "validation": score_dataset(read(RUN / "candidate-fixed-val.json"), artifact),
-              "test": score_dataset(test, artifact), "camera_replay": replay,
-              "source_sha256": {"camera_report": sha(CAMERA), "benchmark": sha(benchmark_path),
-                                "validation_predictions": sha(RUN / "candidate-fixed-val.json"),
-                                "test_predictions": sha(TEST_CACHE), "manifest": sha(DATA / "manifest.json"),
-                                "candidate_profile": sha(CANDIDATE)},
-              "limitations": ["Review threshold changes candidate eligibility. Model weights and probability scores are identical.",
-                              "Predictions below 0.5 were not retained by the fixed validation/test cache, which is sufficient for this upward threshold change.",
-                              "Camera predictions are replayed through the actual review policy. Inference latency is not remeasured.",
-                              "The public replay has already been inspected during development. Physical-camera generalization is unverified.",
-                              "This policy does not resolve phone versus remote classification."]}
+    report = {
+        "kind": "validation_selected_cardboard_review_threshold",
+        "old_threshold": 0.5,
+        "new_threshold": 0.65,
+        "selection": "0.65 chosen using v4 validation before evaluating held-out test and cached camera replay",
+        "decision": "REJECTED_ON_TEST",
+        "active_cardboard_threshold": 0.5,
+        "validation": score_dataset(read(RUN / "candidate-fixed-val.json"), artifact),
+        "test": score_dataset(test, artifact),
+        "camera_replay": replay,
+        "source_sha256": {
+            "camera_report": sha(CAMERA),
+            "benchmark": sha(benchmark_path),
+            "validation_predictions": sha(RUN / "candidate-fixed-val.json"),
+            "test_predictions": sha(TEST_CACHE),
+            "manifest": sha(DATA / "manifest.json"),
+            "candidate_profile": sha(CANDIDATE),
+        },
+        "limitations": [
+            "Review threshold changes candidate eligibility. Model weights and probability scores are identical.",
+            "Predictions below 0.5 were not retained by the fixed validation/test cache, which is sufficient for this upward threshold change.",
+            "Camera predictions are replayed through the actual review policy. Inference latency is not remeasured.",
+            "The public replay has already been inspected during development. Physical-camera generalization is unverified.",
+            "This policy does not resolve phone versus remote classification.",
+        ],
+    }
     destination = ROOT / "evaluations/cardboard-v4-calibration.json"
     destination.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({split: {mode: value["per_class"]["cardboard"] for mode, value in report[split].items()}
-                      for split in ("validation", "test")}, indent=2))
-    print(json.dumps({profile: {mode: value["overall"] for mode, value in modes["combined"].items()}
-                      for profile, modes in replay.items()}, indent=2))
+    print(
+        json.dumps(
+            {
+                split: {mode: value["per_class"]["cardboard"] for mode, value in report[split].items()}
+                for split in ("validation", "test")
+            },
+            indent=2,
+        )
+    )
+    print(
+        json.dumps(
+            {
+                profile: {mode: value["overall"] for mode, value in modes["combined"].items()}
+                for profile, modes in replay.items()
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

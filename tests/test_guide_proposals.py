@@ -18,17 +18,25 @@ class Spy(FixtureProvider):
 
 
 def context(guide, **changes):
-    values = {'object_key': guide.object_key, 'category': guide.category,
-              'condition': {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'former_contents': 'FOOD_DRINK'},
-              'recycling_access': 'YES'}
+    values = {
+        'object_key': guide.object_key,
+        'category': guide.category,
+        'condition': {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'former_contents': 'FOOD_DRINK'},
+        'recycling_access': 'YES',
+    }
     values.update(changes)
     return Context.model_validate(values)
 
 
 def test_candidate_snapshot_is_unpublished():
     assert {guide.object_key for guide in GUIDES} == {'pet_bottle', 'hdpe_bottle', 'aluminium_can', 'cardboard'}
-    assert all(guide.publication_status == 'DRAFT' and guide.reviewer is None and guide.reviewed_at is None
-               and guide.valid_until is None for guide in GUIDES)
+    assert all(
+        guide.publication_status == 'DRAFT'
+        and guide.reviewer is None
+        and guide.reviewed_at is None
+        and guide.valid_until is None
+        for guide in GUIDES
+    )
 
 
 @pytest.mark.parametrize('guide', GUIDES, ids=lambda guide: guide.object_key)
@@ -56,8 +64,9 @@ def test_rejected_access_or_chemical_risk_never_generates_handling_advice(guide,
     assert provider.calls == 0
 
 
-@pytest.mark.parametrize('guide', [guide for guide in GUIDES if guide.object_key != 'cardboard'],
-                         ids=lambda guide: guide.object_key)
+@pytest.mark.parametrize(
+    'guide', [guide for guide in GUIDES if guide.object_key != 'cardboard'], ids=lambda guide: guide.object_key
+)
 def test_unconfirmed_contents_request_context_without_spending_provider_quota(guide):
     provider = Spy()
     value = context(guide, condition={'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'former_contents': 'UNKNOWN'})

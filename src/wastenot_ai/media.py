@@ -32,6 +32,11 @@ def decode_image(data: bytes) -> Image.Image:
                 return Image.frombytes("RGB", oriented.size, oriented.tobytes())
     except MediaError:
         raise
-    except (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombError,
-            Image.DecompressionBombWarning) as exc:
+    except (
+        UnidentifiedImageError,
+        OSError,
+        ValueError,
+        Image.DecompressionBombError,
+        Image.DecompressionBombWarning,
+    ) as exc:
         raise MediaError("INVALID_IMAGE") from exc

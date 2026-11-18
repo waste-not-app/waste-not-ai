@@ -1,4 +1,5 @@
 """Prevent a new-data experiment from silently training on the old dataset."""
+
 import importlib.util
 import json
 import sys
@@ -20,15 +21,24 @@ def training(monkeypatch, tmp_path):
 
 
 @pytest.mark.parametrize("wrong_yaml,wrong_comparison", [(False, False), (True, False), (False, True)])
-def test_explicit_dataset_and_comparison_are_checked_before_expensive_training(training, monkeypatch, tmp_path,
-                                                                              wrong_yaml, wrong_comparison):
+def test_explicit_dataset_and_comparison_are_checked_before_expensive_training(
+    training, monkeypatch, tmp_path, wrong_yaml, wrong_comparison
+):
     import yaml
 
     data = tmp_path / "new-data"
     data.mkdir()
     (data / "manifest.json").write_text(json.dumps({"labels": ["bottle", "can"]}))
-    (data / "data.yaml").write_text(yaml.safe_dump({"path": str(tmp_path / "old-data" if wrong_yaml else data),
-        "train": "train.txt", "val": "val.txt", "test": "test.txt"}))
+    (data / "data.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "path": str(tmp_path / "old-data" if wrong_yaml else data),
+                "train": "train.txt",
+                "val": "val.txt",
+                "test": "test.txt",
+            }
+        )
+    )
     calls = []
 
     class StopBeforeGPUTraining(Exception):
@@ -45,9 +55,22 @@ def test_explicit_dataset_and_comparison_are_checked_before_expensive_training(t
             calls.append(kwargs)
             raise StopBeforeGPUTraining()
 
-    monkeypatch.setitem(sys.modules, "ultralytics", SimpleNamespace(YOLO=FakeYOLO, settings=SimpleNamespace(update=lambda _: None)))
-    monkeypatch.setattr(sys, "argv", ["train_broad_waste.py", "--data", str(data), "--device", "cpu",
-                                      "--compare-model", str(tmp_path / "previous.pt")])
+    monkeypatch.setitem(
+        sys.modules, "ultralytics", SimpleNamespace(YOLO=FakeYOLO, settings=SimpleNamespace(update=lambda _: None))
+    )
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "train_broad_waste.py",
+            "--data",
+            str(data),
+            "--device",
+            "cpu",
+            "--compare-model",
+            str(tmp_path / "previous.pt"),
+        ],
+    )
     if wrong_yaml or wrong_comparison:
         with pytest.raises(ValueError, match="Dataset YAML" if wrong_yaml else "taxonomy mismatch"):
             training.main()
@@ -71,8 +94,11 @@ def test_general_focus_dataset_requires_native_taxonomy_and_complete_split_lists
     manifest = {"labels": labels, "records": records}
     manifest_path = tmp_path / "manifest.json"
     manifest_path.write_text(json.dumps(manifest))
-    config = {"path": str(tmp_path), "names": dict(enumerate(labels)),
-              **{split: split + ".txt" for split in ("train", "val", "test")}}
+    config = {
+        "path": str(tmp_path),
+        "names": dict(enumerate(labels)),
+        **{split: split + ".txt" for split in ("train", "val", "test")},
+    }
     (tmp_path / "data.yaml").write_text(yaml.safe_dump(config))
     for row in records:
         (tmp_path / (row["split"] + ".txt")).write_text((tmp_path / row["image"]).as_posix() + "\n")

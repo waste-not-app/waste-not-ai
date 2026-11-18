@@ -1,4 +1,5 @@
 """Download and audit the versioned public Drinking Waste detection dataset."""
+
 import argparse
 import hashlib
 import io
@@ -14,7 +15,9 @@ from pathlib import Path
 from PIL import Image
 
 SOURCE = "https://www.kaggle.com/datasets/arkadiyhacks/drinking-waste-classification"
-DOWNLOAD = "https://www.kaggle.com/api/v1/datasets/download/arkadiyhacks/drinking-waste-classification?datasetVersionNumber=2"
+DOWNLOAD = (
+    "https://www.kaggle.com/api/v1/datasets/download/arkadiyhacks/drinking-waste-classification?datasetVersionNumber=2"
+)
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ARCHIVE = ROOT / "data/local/downloads/drinking-waste.zip"
 DEFAULT_OUTPUT = ROOT / "data/local/drinking-waste-v2"
@@ -43,7 +46,7 @@ def parse_boxes(text, class_count):
             raise ValueError("Invalid class or nonfinite box")
         if not (0 < width <= 1 and 0 < height <= 1 and 0 <= xc <= 1 and 0 <= yc <= 1):
             raise ValueError("Box outside normalized range")
-        if xc-width/2 < -0.002 or yc-height/2 < -0.002 or xc+width/2 > 1.002 or yc+height/2 > 1.002:
+        if xc - width / 2 < -0.002 or yc - height / 2 < -0.002 or xc + width / 2 > 1.002 or yc + height / 2 > 1.002:
             raise ValueError("Box edges outside image")
         boxes.append((cls, xc, yc, width, height))
     if not boxes:
@@ -54,6 +57,7 @@ def parse_boxes(text, class_count):
 def perceptual_hash(image):
     import cv2
     import numpy as np
+
     gray = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2GRAY)
     small = cv2.resize(gray, (32, 32), interpolation=cv2.INTER_AREA).astype(np.float32)
     dct = cv2.dct(small)[:8, :8].flatten()[1:]
@@ -79,14 +83,18 @@ def prepare(archive, output, seed):
                 continue
             prefix = re.sub(r"[\d,]+$", "", Path(name).stem)
             if prefix in expected:
-                ids = {int(line.split()[0]) for line in data.read(name).decode("utf-8-sig").splitlines() if line.strip()}
+                ids = {
+                    int(line.split()[0]) for line in data.read(name).decode("utf-8-sig").splitlines() if line.strip()
+                }
                 if ids != {expected[prefix]}:
                     raise ValueError(f"Source prefix and label IDs disagree: {name}")
         print("Source classes:", labels, flush=True)
         if len(labels) != 4:
             raise ValueError("Unexpected taxonomy; inspect source before training")
         members = set(data.namelist())
-        images = sorted(n for n in members if "/YOLO_imgs/" in n and Path(n).suffix.lower() in {".jpg", ".jpeg", ".png"})
+        images = sorted(
+            n for n in members if "/YOLO_imgs/" in n and Path(n).suffix.lower() in {".jpg", ".jpeg", ".png"}
+        )
         for index, name in enumerate(images):
             try:
                 label_name = str(Path(name).with_suffix(".txt")).replace("\\", "/")
@@ -97,9 +105,15 @@ def prepare(archive, output, seed):
                     original = seen[digest]
                     if sorted(b[0] for b in boxes) != sorted(b[0] for b in original["boxes"]):
                         raise RuntimeError(f"Conflicting classes on duplicate image: {name}")
-                    rejected.append({"source": name, "reason": "exact_duplicate", "of": original["source"],
-                                     "annotation_differs": boxes != original["boxes"],
-                                     "decision": "retain first valid source annotation; no averaged/generated boxes"})
+                    rejected.append(
+                        {
+                            "source": name,
+                            "reason": "exact_duplicate",
+                            "of": original["source"],
+                            "annotation_differs": boxes != original["boxes"],
+                            "decision": "retain first valid source annotation; no averaged/generated boxes",
+                        }
+                    )
                     continue
                 with Image.open(io.BytesIO(raw)) as opened:
                     # Labels refer to stored pixels; do not EXIF-transpose those pixels independently.
@@ -112,10 +126,17 @@ def prepare(archive, output, seed):
                     raise ValueError("Unknown filename sequence; cannot group conservatively")
                 prefix, sequence = match.groups()
                 sequence = int(sequence.replace(",", ""))
-                record = {"source": name, "sha256": digest, "phash": phash,
-                          "sequence_group": f"{prefix}-{(sequence-1)//200}",
-                          "boxes": boxes, "classes": sorted({b[0] for b in boxes}),
-                          "image_id": digest[:20], "width": image.width, "height": image.height}
+                record = {
+                    "source": name,
+                    "sha256": digest,
+                    "phash": phash,
+                    "sequence_group": f"{prefix}-{(sequence - 1) // 200}",
+                    "boxes": boxes,
+                    "classes": sorted({b[0] for b in boxes}),
+                    "image_id": digest[:20],
+                    "width": image.width,
+                    "height": image.height,
+                }
                 image_dir = output / "staging"
                 image_dir.mkdir(exist_ok=True)
                 image.save(image_dir / f"{record['image_id']}.jpg", quality=95)
@@ -173,7 +194,7 @@ def prepare(archive, output, seed):
         class_groups.sort(key=lambda item: len(item[1]), reverse=True)
         totals = Counter()
         target = sum(len(rows) for _, rows in class_groups)
-        ratios = {"train": .70, "val": .15, "test": .15}
+        ratios = {"train": 0.70, "val": 0.15, "test": 0.15}
         for key, rows in class_groups:
             split = min(ratios, key=lambda s: (totals[s] + len(rows)) / (target * ratios[s]))
             assigned[key] = split
@@ -189,23 +210,41 @@ def prepare(archive, output, seed):
             name = row["image_id"]
             (output / "staging" / f"{name}.jpg").replace(output / "images" / split / f"{name}.jpg")
             (output / "labels" / split / f"{name}.txt").write_text(
-                "".join(f"{cls} {xc:.8f} {yc:.8f} {w:.8f} {h:.8f}\n" for cls, xc, yc, w, h in row["boxes"]), encoding="utf-8")
+                "".join(f"{cls} {xc:.8f} {yc:.8f} {w:.8f} {h:.8f}\n" for cls, xc, yc, w, h in row["boxes"]),
+                encoding="utf-8",
+            )
             counts[split].update(str(c) for c, *_ in row["boxes"])
     (output / "staging").rmdir()
-    config = {"path": output.resolve().as_posix(), "train": "images/train", "val": "images/val",
-              "test": "images/test", "names": dict(enumerate(labels))}
+    config = {
+        "path": output.resolve().as_posix(),
+        "train": "images/train",
+        "val": "images/val",
+        "test": "images/test",
+        "names": dict(enumerate(labels)),
+    }
     import yaml
+
     (output / "data.yaml").write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
-    report = {"source": SOURCE, "download": DOWNLOAD, "version": 2, "archive_sha256": archive_digest,
-              "licenses": ["CC0 (publisher)", "MIT (acknowledged TrashNet images; retain notice)"],
-              "seed": seed, "labels": labels, "accepted_images": len(records),
-              "images_per_split": dict(Counter(r["split"] for r in records)),
-              "instances_per_split": dict(counts), "groups_per_split": dict(group_counts),
-              "near_duplicate_pairs": near_pairs, "rejected": rejected,
-              "split_limitations": "Sequence blocks of 200 and pHash distance <=5 are capture proxies. Source has no verified physical_object_id/capture_session_id. Physical-object disjointness is NOT established; exploratory evaluation only, not pilot release evidence. No verified negative/OOD set.",
-              "records": records}
+    report = {
+        "source": SOURCE,
+        "download": DOWNLOAD,
+        "version": 2,
+        "archive_sha256": archive_digest,
+        "licenses": ["CC0 (publisher)", "MIT (acknowledged TrashNet images; retain notice)"],
+        "seed": seed,
+        "labels": labels,
+        "accepted_images": len(records),
+        "images_per_split": dict(Counter(r["split"] for r in records)),
+        "instances_per_split": dict(counts),
+        "groups_per_split": dict(group_counts),
+        "near_duplicate_pairs": near_pairs,
+        "rejected": rejected,
+        "split_limitations": "Sequence blocks of 200 and pHash distance <=5 are capture proxies. Source has no verified physical_object_id/capture_session_id. Physical-object disjointness is NOT established; exploratory evaluation only, not pilot release evidence. No verified negative/OOD set.",
+        "records": records,
+    }
     (output / "manifest.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     import shutil
+
     shutil.copyfile(ROOT / "docs/DATASET_NOTICES.md", output / "DATASET_NOTICES.md")
     print(json.dumps({k: v for k, v in report.items() if k not in {"records", "rejected"}}, indent=2), flush=True)
 

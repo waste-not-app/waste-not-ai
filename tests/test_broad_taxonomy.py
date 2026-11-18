@@ -16,8 +16,10 @@ def test_whole_broad_taxonomy_maps_objects_without_claiming_material_or_calibrat
     assert capabilities["supported_visual_classes"] == 10
     assert set(capabilities["review_only_classes"]) == set(BROAD_LABELS)
     assert capabilities["review_profile"] == "broad-experimental-01"
-    objects = [RawDetection(class_id=i, raw_class=name, confidence=.99,
-                            bbox=(.01+i*.09, .1, .08+i*.09, .8)) for i, name in LABELS.items()]
+    objects = [
+        RawDetection(class_id=i, raw_class=name, confidence=0.99, bbox=(0.01 + i * 0.09, 0.1, 0.08 + i * 0.09, 0.8))
+        for i, name in LABELS.items()
+    ]
     result = review_detections(objects, LABELS)
     assert all(row["confidence_band"] == "UNCERTAIN" and row["object_key"] is None for row in result["objects"])
     for row in result["objects"]:
@@ -34,10 +36,15 @@ def test_every_broad_selection_has_a_unique_catalog_entry_and_draft_guide():
 
 
 def test_broad_cup_selection_replays_through_decision_contract_with_unknown_conditions():
-    selection = {"model_version": "candidate-" + "a"*12 + "-square640", "model_sha256": "a"*64,
-                 "class_names": list(BROAD_LABELS), "mapping_version": "broad-waste-objects-01+broad-experimental-01",
-                 "object": {"class_id": 2, "raw_class": "cup", "confidence": .9, "bbox": [.1,.1,.8,.9]}}
-    request = DecisionInput.model_validate_json(json.dumps({"context": {"object_key": "ceramic_cup", "category": "OTHER"},
-                                                           "selection": selection}))
+    selection = {
+        "model_version": "candidate-" + "a" * 12 + "-square640",
+        "model_sha256": "a" * 64,
+        "class_names": list(BROAD_LABELS),
+        "mapping_version": "broad-waste-objects-01+broad-experimental-01",
+        "object": {"class_id": 2, "raw_class": "cup", "confidence": 0.9, "bbox": [0.1, 0.1, 0.8, 0.9]},
+    }
+    request = DecisionInput.model_validate_json(
+        json.dumps({"context": {"object_key": "ceramic_cup", "category": "OTHER"}, "selection": selection})
+    )
     result = Decisions(FixtureProvider(), load_guides(), demo_guides=True).evaluate(request)
     assert result.recommended_method == "REUSE" and result.recommendation_basis == "CONDITIONAL"

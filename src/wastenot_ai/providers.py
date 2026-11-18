@@ -72,8 +72,15 @@ def _retry_delay(response: httpx.Response) -> float:
 class GeminiProvider:
     name = "gemini"
 
-    def __init__(self, api_key: str | None = None, model: str | None = None,
-                 timeout: float | None = None, transport=None, *, api_keys: list[str] | None = None):
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        timeout: float | None = None,
+        transport=None,
+        *,
+        api_keys: list[str] | None = None,
+    ):
         if api_keys is not None and api_key is not None:
             raise ValueError("Pilih api_key atau api_keys, bukan keduanya.")
         keys = api_keys if api_keys is not None else ([api_key] if api_key is not None else load_gemini_api_keys())
@@ -113,14 +120,16 @@ class GeminiProvider:
             raise ProviderError("LLM_MODEL_NOT_CONFIGURED")
         choice_schema = ModelSuggestion.model_json_schema()
         choice_fields = {"recommended_method", "special_handling", "evidence_ids"}
-        choice_schema["properties"] = {key: value for key, value in choice_schema["properties"].items()
-                                       if key in choice_fields}
+        choice_schema["properties"] = {
+            key: value for key, value in choice_schema["properties"].items() if key in choice_fields
+        }
         choice_schema["required"] = [key for key in choice_schema["required"] if key in choice_fields]
         body = {
             "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
             "contents": [{"role": "user", "parts": [{"text": json.dumps(payload, ensure_ascii=False)}]}],
             "generationConfig": {
-                "temperature": 0, "maxOutputTokens": 2048,
+                "temperature": 0,
+                "maxOutputTokens": 2048,
                 "responseMimeType": "application/json",
                 "responseJsonSchema": choice_schema,
             },
@@ -134,14 +143,19 @@ class GeminiProvider:
         last_error = "LLM_UNAVAILABLE"
         try:
             # The key belongs in a header, never a URL that access logs may record.
-            async with asyncio.timeout(self.timeout), httpx.AsyncClient(timeout=self.timeout, transport=self.transport, follow_redirects=False) as client:
+            async with (
+                asyncio.timeout(self.timeout),
+                httpx.AsyncClient(timeout=self.timeout, transport=self.transport, follow_redirects=False) as client,
+            ):
                 while len(attempted) < self.key_count:
                     remaining = deadline - monotonic()
                     if remaining <= 0:
                         raise ProviderError("LLM_TIMEOUT")
                     index = self._take_key(attempted)
                     attempted.add(index)
-                    response = await client.post(url, json=body, headers={"x-goog-api-key": self._keys[index]}, timeout=remaining)
+                    response = await client.post(
+                        url, json=body, headers={"x-goog-api-key": self._keys[index]}, timeout=remaining
+                    )
                     if monotonic() >= deadline:
                         raise ProviderError("LLM_TIMEOUT")
                     if response.status_code == 429:
@@ -186,6 +200,7 @@ class GeminiProvider:
 
 class RulesProvider:
     """Select one already-eligible method using the waste handling hierarchy."""
+
     name = 'rules'
 
     def generate(self, payload: dict) -> str:
@@ -193,17 +208,31 @@ class RulesProvider:
         unknown = payload.get('unknown_requirements', {})
         candidates = [row for row in payload['guide']['evidence'] if row['method'] in payload['allowed_methods']]
         evidence = min(candidates, key=lambda row: (len(unknown.get(row['id'], {})), order[row['method']]))
-        return json.dumps({'recommended_method': evidence['method'], 'special_handling': payload['special_handling'],
-                           'evidence_ids': [evidence['id']], 'reason': 'Dipilih dari aturan panduan.', 'caution': ''})
+        return json.dumps(
+            {
+                'recommended_method': evidence['method'],
+                'special_handling': payload['special_handling'],
+                'evidence_ids': [evidence['id']],
+                'reason': 'Dipilih dari aturan panduan.',
+                'caution': '',
+            }
+        )
 
 
 class FixtureProvider:
     """Explicit offline contract exercise, never evidence of live LLM inference."""
+
     name = "fixture"
 
     def generate(self, payload: dict) -> str:
         method = next(m for m in ["REUSE", "RECYCLE", "TRASH", "REDUCE"] if m in payload["allowed_methods"])
         evidence = next(e for e in payload["guide"]["evidence"] if e["method"] == method)
-        return json.dumps({"recommended_method": method,
-                           "reason": "Simulasi kontrak; bukan hasil Gemini.", "special_handling": payload.get("special_handling",False),
-                           "caution": "Simulasi.", "evidence_ids": [evidence["id"]]})
+        return json.dumps(
+            {
+                "recommended_method": method,
+                "reason": "Simulasi kontrak; bukan hasil Gemini.",
+                "special_handling": payload.get("special_handling", False),
+                "caution": "Simulasi.",
+                "evidence_ids": [evidence["id"]],
+            }
+        )
