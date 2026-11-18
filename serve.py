@@ -86,8 +86,8 @@ def main():
             backend = torch.backends.nnpack.flags(enabled=False)
     with backend:
         app = application(args.service)
-        port = {'detection': 8091, 'recommendation': 8093, 'demo': 8092}[args.service]
-        uvicorn.run(app, host='127.0.0.1', port=port,
+        port = int(os.getenv('AI_PORT') or {'detection': 8091, 'recommendation': 8093, 'demo': 8092}[args.service])
+        uvicorn.run(app, host=os.getenv('AI_BIND_HOST', '127.0.0.1'), port=port,
                     access_log=False, log_level='warning', workers=1)
 
 
