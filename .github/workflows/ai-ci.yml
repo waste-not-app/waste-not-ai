@@ -30,8 +30,10 @@ jobs:
           cache-dependency-path: requirements-ci.lock
       - name: Install locked runtime and CI dependencies
         run: python -m pip install --require-hashes -r requirements-ci.lock
-      - name: Check source and deploy helpers
-        run: ruff check --ignore F401 --select E9,F src tests scripts deploy serve.py
+      - name: Lint and security rules
+        run: ruff check .
+      - name: Check formatting
+        run: ruff format --check .
       - name: Audit locked CPU dependencies
         run: python audit_dependencies.py
       - name: Check generated contracts without modifying them
