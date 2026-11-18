@@ -6,15 +6,56 @@ Layanan privat YOLO CPU dan keputusan Gemini untuk [Go backend](https://github.c
 - [Deployment dan rollback](docs/DEPLOYMENT.md): jalur rilis yang benar-benar dijalankan, dependency, model dan pemeriksaan kesehatan.
 - [Kontrak publik v1](contracts/v1/public.openapi.json) dan [contoh](contracts/v1/examples/).
 
-Dari root repo ini, jalankan pemeriksaan tanpa key atau model:
+## Mulai cepat dengan Docker
 
 ```sh
-python3.12 -m venv .venv
-.venv/bin/python -m pip install --require-hashes -r requirements-ci.lock
-PYTHONPATH=src .venv/bin/python -m wastenot_ai.cli export-contracts --check
-.venv/bin/python scripts/check_contracts.py contracts/v1 contracts/backend-pin.json
-PYTHONPATH=src .venv/bin/python -m pytest tests -q
+cp .env.example .env          # isi AI_RECOMMENDATION_TOKEN (min. 24 karakter) dan GEMINI_API_KEY bila ada
+make up                       # worker rekomendasi di 127.0.0.1:8093
+GITHUB_TOKEN=... make model   # unduh bobot YOLO ke artifacts/models (sekali saja)
+make up PROFILES=detection    # tambah worker deteksi YOLO di 127.0.0.1:8091
+make logs
+make down
 ```
+
+Image dibangun dari satu `Dockerfile` dengan dua target: `recommendation` (ringan, tanpa torch) dan `detection` (torch CPU + Ultralytics). Keduanya berjalan sebagai user nonroot dengan filesystem read-only dan healthcheck. Worker deteksi memverifikasi SHA-256 bobot terhadap `model.json` saat startup, jadi bobot tidak pernah dimasukkan ke image.
+
+Untuk menyambungkan ke backend lokal, set di `.env` backend: `AI_ENABLED=true`, `AI_SERVICE_TOKEN` dan `AI_RECOMMENDATION_TOKEN` yang sama dengan worker. Stack dev backend sudah mengarah ke `host.docker.internal:8091` dan `:8093`.
+
+## Pengembangan
+
+Prasyarat: Python 3.12 (Linux, macOS, WSL, atau container; lock file dibuat untuk `x86_64-manylinux_2_28`).
+
+```sh
+make install   # venv .venv + dependency CI yang di-hash
+make check     # format, lint, kontrak, test
+make ci        # check + pip-audit
+```
+
+| Target | Fungsi |
+|---|---|
+| `make install` / `make install-cpu` | Dependency CI, atau dependency inferensi CPU (torch, Ultralytics) |
+| `make fmt` / `make fmt-check` | Format dengan ruff |
+| `make lint` | ruff: pyflakes, bugbear, pyupgrade, aturan keamanan bandit (`S`) |
+| `make audit` | pip-audit terhadap `requirements-cpu.lock` |
+| `make sec` | `lint` + `audit` |
+| `make contracts` | Pastikan OpenAPI/contoh di `contracts/v1` sesuai implementasi dan pin backend |
+| `make export-contracts` | Generate ulang kontrak setelah perubahan yang disengaja |
+| `make test` | pytest |
+| `make run-recommendation` / `make run-detection` | Menjalankan worker dari source dengan `.env` |
+| `make docker-build` | Build kedua image |
+
+Konfigurasi utama (lihat [`.env.example`](.env.example)):
+
+| Variabel | Keterangan |
+|---|---|
+| `AI_RECOMMENDATION_TOKEN` | Bearer token Go → worker rekomendasi |
+| `AI_SERVICE_TOKEN` | Bearer token Go → worker deteksi, harus berbeda dari token rekomendasi |
+| `GEMINI_API_KEY`, `GEMINI_API_KEY_1..5` | Key Gemini; tanpa key, rekomendasi jatuh ke aturan yang sudah ditinjau |
+| `GEMINI_MODEL`, `GEMINI_TIMEOUT_SECONDS` | Model dan batas waktu (maksimal 17 detik) |
+| `AI_MODEL_DIRECTORY` | Direktori bobot sesuai `model.json` |
+| `AI_BIND_HOST`, `AI_PORT` | Alamat listen; default `127.0.0.1` dan port bawaan per worker |
+
+CI menjalankan lint, cek format, audit dependency, cek kontrak, test, dan verifikasi bobot. CD ke staging hanya berjalan setelah CI di `main` sukses.
 
 CI mengunduh bobot resmi untuk memeriksa SHA-256 sebenarnya. Paket deploy hanya berisi source worker dan input runtime, tanpa key, foto, dataset, hasil training atau bobot. Worker deteksi memverifikasi model lagi saat startup.
 
