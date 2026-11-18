@@ -78,7 +78,6 @@ def contract_artifacts() -> dict[str, dict]:
             "ceramic_cup", "OTHER", condition={}, reuse_intention=None, recycling_access="UNKNOWN"
         ),
     }
-    # Object keys and categories are checked by the actual decision module, not invented responses.
     from .catalog import load_catalog
 
     items = {row["object_key"]: row for row in load_catalog()["items"]}

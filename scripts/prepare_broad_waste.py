@@ -232,8 +232,7 @@ def source_records(coco_limit):
     images.sort(key=lambda im: not any(a["category_id"] == 47 for a in boxes[im["id"]]))
     accepted = 0
     coco_licenses = {r["id"]: r for r in coco["licenses"]}
-    # COCO provides an explicit, image-specific license ID and original URL.
-    # This is publisher metadata evidence, distinct from TACO's live Flickr check.
+    # COCO license IDs and URLs are publisher evidence, distinct from the TACO Flickr check.
     for im in images[:coco_limit]:
         declared = coco_licenses[im["license"]]
         right = {

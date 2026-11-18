@@ -34,7 +34,6 @@ def record(ident, phash, split=None, group=None, classes=(3,)):
 
 
 def test_transitive_near_duplicates_cannot_bridge_training_and_holdout(expansion):
-    # A--new--B is connected, although A and B are not direct near duplicates.
     old = [record("train", 0, "train"), record("holdout", 1023, "test")]
     additions = [record("bridge", 31), record("independent", 2**40 - 1)]
     assigned, rejected = expansion.split_new_records(old, additions)

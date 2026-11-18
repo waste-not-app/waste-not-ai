@@ -126,7 +126,6 @@ class CombinedDetector:
         general = self.general.detect(image_bytes)
         if waste["image"] != general["image"]:
             raise ValueError("Dimensi gambar kedua checkpoint tidak cocok.")
-        # Only equivalent labels compete here; conflicting classes remain visible.
         objects = []
         for obj in sorted(waste["objects"] + general["objects"], key=lambda obj: obj["confidence"], reverse=True):
             candidate = RawDetection(

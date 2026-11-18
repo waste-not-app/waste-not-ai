@@ -32,7 +32,6 @@ def preserve_detected_risk(context: Context, selected: dict) -> Context:
 
 
 def _detection_mapping(labels: dict[int, str], catalog: dict):
-    # Custom IDs 0..3 are not COCO IDs. Recognize the entire registered taxonomy.
     waste_labels = {0: "aluminium_can", 1: "glass_bottle", 2: "hdpe_bottle", 3: "plastic_bottle"}
     waste_profile = labels == waste_labels
     broad_profile = labels == dict(enumerate(BROAD_LABELS))

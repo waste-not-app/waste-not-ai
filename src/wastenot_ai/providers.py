@@ -188,7 +188,6 @@ class GeminiProvider:
             except ValueError:
                 return text_parts[0]
             if isinstance(choice, dict) and set(choice) == choice_fields:
-                # The legacy internal contract requires prose, but public prose always comes from reviewed evidence.
                 choice.update(reason="Pilihan metode dan evidence untuk validasi server.", caution="")
                 return json.dumps(choice)
             return text_parts[0]

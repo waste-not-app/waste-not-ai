@@ -194,7 +194,6 @@ def conditional_evidence(context: Context, guide: Guide, *, risk: bool):
         if any(values.get(key) not in {None, "UNKNOWN", expected} for key, expected in requirements.items()):
             continue
         unknown = {key: expected for key, expected in requirements.items() if values.get(key) in {None, "UNKNOWN"}}
-        # Unknown former chemical contents and unknown sharp damage remain safety gates.
         if (
             "former_contents" in unknown
             or "risk_type" in unknown

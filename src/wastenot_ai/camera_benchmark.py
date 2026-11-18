@@ -94,8 +94,6 @@ def score_image(objects, truth, evaluated_classes, iou_threshold=0.5):
         per_class[label]["fn"] += 1
         errors.append({"kind": "false_negative", "truth": label})
 
-    # Independent geometric matching diagnoses wrong labels, including classes
-    # outside annotation coverage. It does not alter precision/recall counts.
     edges = [
         (box_iou(obj["bbox"], target["bbox"]), obj["confidence"], i, j)
         for i, target in enumerate(truth)

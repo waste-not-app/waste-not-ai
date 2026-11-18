@@ -117,8 +117,7 @@ def main():
             if (index + 1) % 100 == 0:
                 print(f"Validation inference: {index + 1}/{len(images)}", flush=True)
         cache.write_text(json.dumps({"identity": identity, "records": records}), encoding="utf-8")
-    # A fixed precision target and minimum support are declared before searching.
-    # Thresholds are confidence cutoffs, not estimates of correctness probability.
+    # Precision target and minimum support are fixed before searching.
     grid = [round(0.5 + 0.025 * i, 3) for i in range(19)] + [1.0]
     lower, offered, selection = [], [], {}
     for cls, name in enumerate(LABELS):

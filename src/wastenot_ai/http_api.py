@@ -48,7 +48,6 @@ def configure_errors(app):
         fields = {".".join(str(x) for x in err["loc"] if x != "body"): "Isian tidak valid." for err in exc.errors()}
         return error_response("VALIDATION_ERROR", request.state.request_id, fields=fields)
 
-    # Starlette also uses this base class for unknown paths and unsupported methods.
     from starlette.exceptions import HTTPException as StarletteHTTPException
 
     @app.exception_handler(StarletteHTTPException)
