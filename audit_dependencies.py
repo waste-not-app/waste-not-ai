@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -15,7 +16,7 @@ def main():
     with tempfile.TemporaryDirectory() as directory:
         path = Path(directory) / 'advisory-versions.txt'
         path.write_text('\n'.join(requirements) + '\n')
-        subprocess.run(['pip-audit', '--disable-pip', '--no-deps', '-r', str(path)], check=True)
+        subprocess.run([sys.executable, '-m', 'pip_audit', '--disable-pip', '--no-deps', '-r', str(path)], check=True)
 
 
 if __name__ == '__main__':
