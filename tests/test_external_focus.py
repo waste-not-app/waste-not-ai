@@ -101,7 +101,7 @@ def test_external_build_preserves_active_train_and_pinned_source_rights(monkeypa
     def blob(path, publisher_path):
         raw = path.read_bytes()
         return {"path": publisher_path, "type": "blob",
-                "sha": hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()}
+                "sha": hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw, usedforsecurity=False).hexdigest()}
 
     readme = cache / "realwaste-README.md"
     readme.write_text("Author license CC BY-NC-SA 4.0")

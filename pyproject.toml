@@ -49,7 +49,6 @@ ignore = ["E501"]
 "audit_dependencies.py" = ["S603", "S607"]
 "src/wastenot_ai/{worker,http_api,demo}.py" = ["BLE001"]
 "src/wastenot_ai/openapi_export.py" = ["S106"]
-"src/wastenot_ai/assets.py" = ["S324"]
 
 [tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["fastapi.Depends", "fastapi.File", "fastapi.Form", "fastapi.Header", "fastapi.Query"]

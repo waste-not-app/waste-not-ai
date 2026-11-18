@@ -40,7 +40,7 @@ def publisher_file(repository, commit, row, destination):
         temporary.write_bytes(response.content)
         temporary.replace(destination)
     raw = destination.read_bytes()
-    blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+    blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw, usedforsecurity=False).hexdigest()
     if blob != row["sha"]:
         raise ValueError(f"Publisher Git blob differs from the pinned tree: {destination}")
     return destination
@@ -71,7 +71,7 @@ def acquire():
             candidates = [row for name, row in files.items() if name.startswith("RealWaste/Cardboard/")]
             candidates.sort(key=lambda row: hashlib.sha256(("external-focus-v5-20261107" + row["path"]).encode()).hexdigest())
 
-            def download(row):
+            def download(row, repository=repository, commit=commit):
                 path = publisher_file(repository, commit, row, CACHE / "realwaste-images" / Path(row["path"]).name)
                 return {**row, "cached_path": str(path.resolve()), "raw_sha256": expansion.digest(path), "source_id": path.stem}
 

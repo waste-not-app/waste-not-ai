@@ -72,9 +72,8 @@ def test_symlink_member_is_rejected():
 
 
 def test_compressed_expansion_is_bounded_before_tar_parsing():
-    with patch.object(deploy, 'MAX_EXPANDED', 1024):
-        with pytest.raises(ValueError, match='Expanded release'):
-            deploy.parse_release(gzip.compress(b'x' * 1025))
+    with patch.object(deploy, 'MAX_EXPANDED', 1024), pytest.raises(ValueError, match='Expanded release'):
+        deploy.parse_release(gzip.compress(b'x' * 1025))
 
 
 def test_peer_contract_drift_is_rejected(tmp_path):

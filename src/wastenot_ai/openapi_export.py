@@ -79,7 +79,7 @@ def contract_artifacts() -> dict[str, dict]:
         artifacts["examples/unauthenticated-response.json"] = client.get("/v1/ai/objects", headers={"X-Request-ID": str(UUID(int=99))}).json()
     for scenario in ("provider-unavailable", "timeout", "rate-limited", "no-detections", "uncertain"):
         counter = iter(range(1, 200))
-        with TestClient(create_mock_app(scenario=scenario, clock=lambda: fixed, uuid_factory=lambda: UUID(int=next(counter)))) as client:
+        with TestClient(create_mock_app(scenario=scenario, clock=lambda: fixed, uuid_factory=lambda counter=counter: UUID(int=next(counter)))) as client:
             if scenario in {"no-detections", "uncertain"}:
                 response = client.post("/v1/ai/detections", headers=request_header,
                     data={"client_request_id": str(UUID(int=2))}, files={"image": ("fixture.png", data.getvalue(), "image/png")})

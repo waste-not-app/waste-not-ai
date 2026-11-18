@@ -1,4 +1,5 @@
 import asyncio
+import contextlib
 import json
 import math
 import os
@@ -54,10 +55,8 @@ def _retry_delay(response: httpx.Response) -> float:
     try:
         delays.append(float(value))
     except ValueError:
-        try:
+        with contextlib.suppress(ValueError, TypeError, OverflowError):
             delays.append((parsedate_to_datetime(value) - datetime.now(UTC)).total_seconds())
-        except (ValueError, TypeError, OverflowError):
-            pass
     if len(response.content) <= 128_000:
         try:
             for detail in response.json().get("error", {}).get("details", []):
