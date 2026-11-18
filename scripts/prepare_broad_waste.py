@@ -11,7 +11,7 @@ import urllib.request
 import zipfile
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -70,7 +70,7 @@ def photo_license(url):
         return {"accepted": False, "reason": "Flickr rate limit reached; no further live request this run"}
     page_url = f"https://www.flickr.com/photo.gne?id={photo_id}"
     result = {"photo_id": photo_id, "source_page": page_url,
-              "checked_at": datetime.now(timezone.utc).isoformat(), "accepted": False}
+              "checked_at": datetime.now(UTC).isoformat(), "accepted": False}
     try:
         raw, final = get(page_url, timeout=15)
         text = raw.decode("utf-8")
@@ -170,7 +170,7 @@ def source_records(coco_limit):
         right = {"accepted": True, "verification": "COCO2017 image-specific publisher license metadata",
                  "license_url": declared["url"], "license_name": declared["name"],
                  "source_page": im.get("flickr_url"), "creator_page": None,
-                 "checked_at": datetime.now(timezone.utc).isoformat()}
+                 "checked_at": datetime.now(UTC).isoformat()}
         records.append({"source": "COCO2017", "source_id": str(im["id"]),
                         "url": im["coco_url"].replace("http://images.cocodataset.org/", "https://s3.amazonaws.com/images.cocodataset.org/"),
                         "rights": right, "width": im["width"], "height": im["height"],

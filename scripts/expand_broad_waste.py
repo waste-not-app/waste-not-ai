@@ -8,7 +8,7 @@ import shutil
 import urllib.error
 import urllib.request
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from PIL import Image
@@ -111,7 +111,7 @@ def check_rights(url):
             "license_url": LICENSES.get(license_id), "source_page": final,
             "creator_page": final.rsplit("/" + photo_id, 1)[0] + "/",
             "verification": "image-specific Flickr page, not toolkit or archive license",
-            "checked_at": datetime.now(timezone.utc).isoformat()}
+            "checked_at": datetime.now(UTC).isoformat()}
 
 
 def acquire(plan, cache, max_requests):

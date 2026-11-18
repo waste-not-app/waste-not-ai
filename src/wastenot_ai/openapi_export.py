@@ -1,6 +1,6 @@
 """Deterministically generate the AI handoff contract and real fixture examples."""
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from io import BytesIO
 from pathlib import Path
 from uuid import UUID
@@ -27,7 +27,7 @@ def example_request(key="glass_bottle", category="GLASS", **updates):
 
 
 def contract_artifacts() -> dict[str, dict]:
-    fixed = datetime(2026, 10, 20, 8, tzinfo=timezone.utc)
+    fixed = datetime(2026, 10, 20, 8, tzinfo=UTC)
     request_header = {"Authorization": "Bearer mock-user-a", "X-Request-ID": str(UUID(int=99))}
     counter = iter(range(1, 200))
     app = create_mock_app(clock=lambda: fixed, uuid_factory=lambda: UUID(int=next(counter)))

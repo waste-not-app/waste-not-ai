@@ -5,7 +5,7 @@ import hashlib
 import importlib.metadata
 import json
 import platform
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from time import perf_counter
 
@@ -164,7 +164,7 @@ def main():
                                     for source in sorted({row["source"] for row in selected})}
             results[profile][name] = summary
     import torch
-    report = {"version": "camera-replay-v1", "created_at": datetime.now(timezone.utc).isoformat(),
+    report = {"version": "camera-replay-v1", "created_at": datetime.now(UTC).isoformat(),
         "manifest": args.manifest.resolve().relative_to(ROOT).as_posix(),
         "manifest_sha256": manifest_sha256,
         "images": len(manifest["records"]), "target_classes": manifest["target_classes"],
