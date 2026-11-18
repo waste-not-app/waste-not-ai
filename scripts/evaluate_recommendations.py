@@ -2,7 +2,7 @@
 import argparse
 import hashlib
 import json
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from pathlib import Path
 from time import perf_counter
 
@@ -113,7 +113,7 @@ def main():
     path = args.output or ROOT / "artifacts" / f"recommendation-evaluation-{args.provider}.json"
     report = {"kind": "fixed_scenario_evaluation_not_field_accuracy", "provider": args.provider,
               "model": getattr(original, "model", None), "scenario_as_of": json.loads(scenarios_path.read_text('utf-8'))['date'],
-              "evaluated_at": datetime.now(timezone.utc).isoformat(),
+              "evaluated_at": datetime.now(UTC).isoformat(),
               "scenario_sha256": hashlib.sha256(scenarios_path.read_bytes()).hexdigest(),
               "guide_sha256": hashlib.sha256(json.dumps([g.model_dump(mode="json") for g in guides], sort_keys=True).encode()).hexdigest(),
               "cases": len(records), "passed": sum(row["passed"] for row in records),

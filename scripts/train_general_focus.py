@@ -6,7 +6,7 @@ import json
 import platform
 import shutil
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from time import perf_counter
 
@@ -116,7 +116,7 @@ def main():
     if input_hashes != {"manifest": sha(data / "manifest.json"), "initial_model": sha(initial),
                         **{split: sha(data / (split + ".txt")) for split in ("train", "val", "test")}}:
         raise ValueError("Dataset or baseline changed during training/evaluation")
-    report = {"kind": "experimental_general_focus_fine_tuning", "created_at": datetime.now(timezone.utc).isoformat(),
+    report = {"kind": "experimental_general_focus_fine_tuning", "created_at": datetime.now(UTC).isoformat(),
               "weights": best.relative_to(ROOT).as_posix(), "sha256": sha(best),
               "dataset": data.name, "input_sha256": input_hashes, "labels": list(COCO_LABELS),
               "images_per_split": manifest["images_per_split"],

@@ -82,14 +82,14 @@ class BoundedHTTP:
                 while self.maximum is not None:
                     message = await receive()
                     if message["type"] == "http.disconnect":
-                        return
+                        return None
                     chunk = message.get("body", b"")
                     if len(body) + len(chunk) > self.maximum:
                         response = error_response("FILE_TOO_LARGE" if self.mock else "REQUEST_TOO_LARGE", request_id, headers={
                             "X-Request-ID": str(request_id), "Cache-Control": "no-store",
                             **({"X-WasteNot-Mock": "true"} if self.mock else {})})
                         await response(scope, receive, send)
-                        return
+                        return None
                     body.extend(chunk)
                     if not message.get("more_body", False):
                         break
@@ -98,7 +98,7 @@ class BoundedHTTP:
                 "X-Request-ID": str(request_id), "Cache-Control": "no-store",
                 **({"X-WasteNot-Mock": "true"} if self.mock else {})})
             await response(scope, receive, send)
-            return
+            return None
         sent = False
 
         async def buffered():
@@ -126,7 +126,7 @@ class BoundedHTTP:
             await self.app(scope, buffered, outgoing)
         except Exception:
             if started:
-                return
+                return None
             response = error_response("AI_UNAVAILABLE", request_id)
             await response(scope, receive, outgoing)
 

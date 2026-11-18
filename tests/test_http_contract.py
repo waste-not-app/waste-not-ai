@@ -1,7 +1,7 @@
 import asyncio
 import threading
 from copy import deepcopy
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from io import BytesIO
 from pathlib import Path
 from uuid import uuid4
@@ -129,7 +129,7 @@ def test_public_optional_context_can_be_entirely_omitted_and_strict_mode_is_forw
 
 
 def test_mock_session_selection_replay_conflict_ownership_delete_and_expiry():
-    stamp = [datetime(2026, 10, 20, tzinfo=timezone.utc)]
+    stamp = [datetime(2026, 10, 20, tzinfo=UTC)]
     app = create_mock_app(clock=lambda: stamp[0], ttl_seconds=60)
     with TestClient(app) as client:
         identifier = uuid4()

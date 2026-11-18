@@ -1,7 +1,7 @@
 """Public Go contract mock. No JWT verification, YOLO, Gemini, DB or waste-log writes."""
 import hashlib
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from threading import RLock
 from uuid import UUID, uuid4
 
@@ -55,7 +55,7 @@ class UnavailableProvider:
 def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_factory=uuid4):
     if scenario not in SCENARIOS:
         raise ValueError("Unknown mock scenario")
-    now = clock or (lambda: datetime.now(timezone.utc))
+    now = clock or (lambda: datetime.now(UTC))
     decisions = Decisions(UnavailableProvider() if scenario == "provider-unavailable" else FixtureProvider(),
                           load_guides(), demo_guides=True, today=lambda: now().date())
     sessions, cache = {}, {}

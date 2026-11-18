@@ -3,7 +3,7 @@ import json
 import math
 import os
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
 from threading import Lock
 from time import monotonic
@@ -55,7 +55,7 @@ def _retry_delay(response: httpx.Response) -> float:
         delays.append(float(value))
     except ValueError:
         try:
-            delays.append((parsedate_to_datetime(value) - datetime.now(timezone.utc)).total_seconds())
+            delays.append((parsedate_to_datetime(value) - datetime.now(UTC)).total_seconds())
         except (ValueError, TypeError, OverflowError):
             pass
     if len(response.content) <= 128_000:

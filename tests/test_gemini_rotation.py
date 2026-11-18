@@ -1,6 +1,6 @@
 import json
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 
 import httpx
@@ -61,7 +61,7 @@ def test_rate_limited_key_is_skipped_until_retry_after_expires(monkeypatch):
 
 @pytest.mark.parametrize("hint", ["retry_info", "http_date"])
 def test_provider_retry_hints_extend_cooldown(hint, monkeypatch):
-    fixed = datetime(2026, 11, 7, tzinfo=timezone.utc)
+    fixed = datetime(2026, 11, 7, tzinfo=UTC)
     class Clock:
         @staticmethod
         def now(tz):
