@@ -7,7 +7,6 @@ from pathlib import Path
 
 def main():
     root = Path(__file__).resolve().parent
-    # Advisory identities omit the local +cpu build label; installation still requires the wheel hashes.
     requirements = [
         line.split(' \\')[0].replace('+cpu', '')
         for line in (root / 'requirements-cpu.lock').read_text().splitlines()

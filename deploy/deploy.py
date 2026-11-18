@@ -97,7 +97,6 @@ def verify_runtime(files):
     if (CONFIG / 'ai-requirements.sha256').read_text().strip() != hashlib.sha256(lock).hexdigest():
         raise ValueError('Prepare the new locked CPU environment before deploying dependency changes')
     versions = dict(re.findall(r'^([a-zA-Z0-9_-]+)==([^\s]+)', lock.decode(), re.MULTILINE))
-    # Inspect actual installed versions too: a matching marker cannot hide a changed environment.
     run(
         str(ROOT / 'venv/bin/python'),
         '-I',

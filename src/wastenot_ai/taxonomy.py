@@ -13,7 +13,6 @@ BROAD_LABELS = (
     "bottle_cap",
 )
 
-# Native labels verified against the local pretrained artifact; COCO IDs stay intact.
 COCO_LABELS = (
     'person',
     'bicycle',

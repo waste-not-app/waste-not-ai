@@ -148,7 +148,6 @@ def test_combined_provenance_changes_with_component_or_preprocessing_and_rejects
 def test_combined_result_caps_fifty_boxes_and_does_not_invent_detections():
     empty = combine().detect(b"empty")
     assert empty["objects"] == [] and empty["status"] == "MANUAL_REQUIRED"
-    # Non-overlapping boxes must survive until the wire contract's max-50 boundary.
     boxes = [raw(COCO_LABELS, "cell phone", bbox=(i / 100, 0, (i + 0.5) / 100, 0.01)) for i in range(60)]
     result = combine(general_objects=boxes).detect(b"many")
     assert len(result["objects"]) == 50

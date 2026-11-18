@@ -88,7 +88,6 @@ def benchmark(args):
     records = []
     for path in paths:
         data = read_image(path)
-        # Warm up once, separately from the timed repetitions.
         first = detector.detect(data)
         times = []
         for _ in range(args.repeat):
@@ -202,7 +201,6 @@ def main():
     demo.add_argument("--guides", type=Path)
     args = parser.parse_args()
     if args.command in {"demo", "serve-worker"}:
-        # Explicit flags and env-based launchers select the same checkpoint.
         if any(arg == "--model" or arg.startswith("--model=") for arg in sys.argv):
             os.environ["AI_MODEL_PATH"] = str(args.model.resolve())
         os.environ["AI_DEVICE"] = args.device

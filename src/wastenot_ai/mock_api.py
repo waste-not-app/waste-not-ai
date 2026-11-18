@@ -94,7 +94,6 @@ def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_fa
             raise HTTPException(504, detail="AI_TIMEOUT")
 
     def cleanup():
-        # Expired sessions retain a bounded tombstone for distinguishing expiry from missing IDs.
         for key, row in list(cache.items()):
             if row["expires"] <= now():
                 del cache[key]

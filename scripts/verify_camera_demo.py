@@ -60,8 +60,7 @@ with sync_playwright() as playwright:
     assert page.locator("#recommendation-source").inner_text() == "Simulasi"
     checks.append("real_yolo_selectable_bbox_fixture_recommendation")
     page.screenshot(path=str(artifacts / "camera-demo-desktop.png"), full_page=True)
-    # Controlled delayed response: changing context must discard an old answer,
-    # even if a transport ignores AbortSignal. This makes no provider request.
+    # Changing context must discard a delayed answer without any provider request.
     page.evaluate("""() => {
       window.realDemoFetch = window.fetch;
       window.fetch = (url, options) => String(url).endsWith('/recommend')

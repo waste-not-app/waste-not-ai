@@ -92,8 +92,7 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
                     if len(buffer) + len(chunk) > MAX_BYTES:
                         raise HTTPException(413, detail="FILE_TOO_LARGE")
                     buffer.extend(chunk)
-                # A timed-out native inference cannot be killed safely. Its lock stays
-                # held until completion; a disconnected caller cannot start another job.
+                # Timed-out native inference keeps the lock until it finishes.
                 task = asyncio.create_task(asyncio.to_thread(run_inference))
                 task.add_done_callback(lambda done: done.exception() if not done.cancelled() else None)
                 delegated = True
