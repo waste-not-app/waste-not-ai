@@ -1,4 +1,5 @@
 """Reject unusable evidence conditions before serving a recommendation."""
+
 from typing import get_args
 from urllib.parse import urlsplit
 
@@ -31,16 +32,43 @@ def validate_guides(guides):
 
 def audit_builtin_guides(guides, registry):
     validate_guides(guides)
-    unknown = sorted({url for guide in guides for evidence in guide.evidence
-                      for url in [*guide.source_urls, *evidence.source_urls] if url not in registry})
+    unknown = sorted(
+        {
+            url
+            for guide in guides
+            for evidence in guide.evidence
+            for url in [*guide.source_urls, *evidence.source_urls]
+            if url not in registry
+        }
+    )
     if unknown:
         raise ValueError("Unregistered built-in evidence source")
     pilot = [guide for guide in guides if guide.id.startswith("pilot-") or guide.object_key == "ceramic_cup"]
-    return {"guides": len(guides), "evidence": sum(len(g.evidence) for g in guides),
-            "sources": len(registry), "publication": {status: sum(g.publication_status == status for g in guides)
-                                                       for status in ("DRAFT", "PUBLISHED", "ARCHIVED")},
-            "pilot_claims": [{"object_key": g.object_key, "guide_id": g.id, "version": g.version,
-                              "scope_note": g.scope_note, "evidence": [
-                                  {"id": e.id, "method": e.method, "claim": e.text, "requires": e.requires,
-                                   "sources": [registry[url] for url in e.source_urls or g.source_urls],
-                                   "steps": e.steps or g.steps} for e in g.evidence]} for g in pilot]}
+    return {
+        "guides": len(guides),
+        "evidence": sum(len(g.evidence) for g in guides),
+        "sources": len(registry),
+        "publication": {
+            status: sum(g.publication_status == status for g in guides) for status in ("DRAFT", "PUBLISHED", "ARCHIVED")
+        },
+        "pilot_claims": [
+            {
+                "object_key": g.object_key,
+                "guide_id": g.id,
+                "version": g.version,
+                "scope_note": g.scope_note,
+                "evidence": [
+                    {
+                        "id": e.id,
+                        "method": e.method,
+                        "claim": e.text,
+                        "requires": e.requires,
+                        "sources": [registry[url] for url in e.source_urls or g.source_urls],
+                        "steps": e.steps or g.steps,
+                    }
+                    for e in g.evidence
+                ],
+            }
+            for g in pilot
+        ],
+    }

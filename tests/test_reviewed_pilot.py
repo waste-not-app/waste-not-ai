@@ -32,9 +32,14 @@ def test_can_confirmation_label_excludes_aerosols():
 
 @pytest.mark.parametrize('guide', GUIDES, ids=lambda guide: guide.object_key)
 def test_source_reviewed_pilot_can_use_production_policy_without_demo_flag(guide):
-    context = Context.model_validate({'object_key': guide.object_key, 'category': guide.category,
-        'condition': {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'former_contents': 'FOOD_DRINK'},
-        'recycling_access': 'YES'})
+    context = Context.model_validate(
+        {
+            'object_key': guide.object_key,
+            'category': guide.category,
+            'condition': {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'former_contents': 'FOOD_DRINK'},
+            'recycling_access': 'YES',
+        }
+    )
     result = recommend(context, ContractProvider(), GUIDES, today=date(2026, 11, 4))
     assert result.status == 'READY' and result.recommended_method == 'RECYCLE'
     assert result.prototype_only is False and result.provider == 'contract-test'

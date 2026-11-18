@@ -34,6 +34,7 @@ def fetch(artifact, directory):
             if token and url.scheme == 'https' and url.netloc == 'api.github.com':
                 headers = {'Authorization': 'Bearer ' + token, 'Accept': 'application/octet-stream'}
             request = urllib.request.Request(artifact['url'], headers=headers)
+
             # GitHub redirects private release assets to a signed object URL.
             # Remove credentials when following a redirect to another origin.
             class AssetRedirect(urllib.request.HTTPRedirectHandler):
@@ -41,9 +42,13 @@ def fetch(artifact, directory):
                     redirected = super().redirect_request(request, response, code, message, headers, new_url)
                     previous_origin = urlparse(request.full_url)
                     next_origin = urlparse(new_url)
-                    if redirected and (next_origin.scheme, next_origin.netloc) != (previous_origin.scheme, previous_origin.netloc):
+                    if redirected and (next_origin.scheme, next_origin.netloc) != (
+                        previous_origin.scheme,
+                        previous_origin.netloc,
+                    ):
                         redirected.remove_header('Authorization')
                     return redirected
+
             opener = urllib.request.build_opener(AssetRedirect())
             with opener.open(request, timeout=60) as response:
                 raw = response.read(32 * 1024 * 1024 + 1)

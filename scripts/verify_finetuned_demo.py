@@ -1,4 +1,5 @@
 """Integration smoke for a running specialist demo; not an accuracy evaluation."""
+
 import argparse
 import json
 import os
@@ -12,7 +13,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8095")
     parser.add_argument("--image", type=Path, required=True)
-    parser.add_argument("--object-key", choices=["aluminium_can", "glass_bottle", "pet_bottle", "hdpe_bottle"], required=True)
+    parser.add_argument(
+        "--object-key", choices=["aluminium_can", "glass_bottle", "pet_bottle", "hdpe_bottle"], required=True
+    )
     parser.add_argument("--live-gemini", action="store_true")
     args = parser.parse_args()
     photo = args.image.resolve()
@@ -20,7 +23,12 @@ def main():
     artifacts.mkdir(exist_ok=True)
     os.chdir(artifacts)
     errors, checks = [], []
-    names = {"aluminium_can": "Kaleng aluminium", "glass_bottle": "Botol kaca", "pet_bottle": "Botol plastik", "hdpe_bottle": "Botol HDPE"}
+    names = {
+        "aluminium_can": "Kaleng aluminium",
+        "glass_bottle": "Botol kaca",
+        "pet_bottle": "Botol plastik",
+        "hdpe_bottle": "Botol HDPE",
+    }
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": 1440, "height": 1100})
@@ -56,7 +64,9 @@ def main():
             checks.append("hdpe_unknown_contents_requests_context_before_provider")
         page.locator("#recommend").click()
         expect(page.locator("#method")).to_have_text("Recycle", timeout=30000)
-        expect(page.locator("#recommendation-source")).to_have_text("Gemini langsung" if args.live_gemini else "Simulasi")
+        expect(page.locator("#recommendation-source")).to_have_text(
+            "Gemini langsung" if args.live_gemini else "Simulasi"
+        )
         assert page.locator("#reason").inner_text()
         assert page.locator("#source-list a").count() > 0
         checks.append("real_specialist_bbox_and_list_selection_confirmed_context_recommendation_sources")
@@ -72,9 +82,14 @@ def main():
         assert page.locator(".bbox").count() == 0
         checks.append("photo_and_detections_cleared")
         assert not errors, errors
-        report = {"checks": checks, "model_version": config["model_version"], "browser_errors": errors,
-                  "live_gemini": args.live_gemini, "camera": "not accessed; file upload",
-                  "scope": "Integration smoke with explicitly supplied conditions, not accuracy/material verification"}
+        report = {
+            "checks": checks,
+            "model_version": config["model_version"],
+            "browser_errors": errors,
+            "live_gemini": args.live_gemini,
+            "camera": "not accessed; file upload",
+            "scope": "Integration smoke with explicitly supplied conditions, not accuracy/material verification",
+        }
         (artifacts / "finetuned-demo-browser.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
         print(json.dumps(report, indent=2))
         browser.close()

@@ -1,4 +1,5 @@
 """Freeze evaluation images and publisher annotations before comparing checkpoints."""
+
 import argparse
 import hashlib
 import json
@@ -34,8 +35,7 @@ def rank(identifier):
 
 def xyxy(box):
     _, cx, cy, width, height = box
-    return [max(0, cx - width / 2), max(0, cy - height / 2),
-            min(1, cx + width / 2), min(1, cy + height / 2)]
+    return [max(0, cx - width / 2), max(0, cy - height / 2), min(1, cx + width / 2), min(1, cy + height / 2)]
 
 
 def local_records(manifest):
@@ -54,14 +54,24 @@ def local_records(manifest):
         if checksum != row["prepared_sha256"]:
             raise ValueError("Held-out image changed since dataset preparation")
         is_taco = row["source"] == "TACO"
-        records.append({"id": image.stem, "source": row["source"], "split": "test",
-            "image": image.relative_to(ROOT).as_posix(), "sha256": checksum,
-            "group": row.get("sequence_group") or row["group"], "phash": int(row["phash"]),
-            "evaluated_classes": list(BROAD_LABELS) if is_taco else ["bottle", "can"],
-            "truth": [{"label": BROAD_LABELS[box[0]], "bbox": xyxy(box)} for box in row["boxes"]],
-            "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
-            "rights": row.get("rights", {"license": "CC0 publisher / MIT acknowledged TrashNet", "source": "DrinkingWasteV2"}),
-            "original_source_id": row.get("source_id", row.get("image_id"))})
+        records.append(
+            {
+                "id": image.stem,
+                "source": row["source"],
+                "split": "test",
+                "image": image.relative_to(ROOT).as_posix(),
+                "sha256": checksum,
+                "group": row.get("sequence_group") or row["group"],
+                "phash": int(row["phash"]),
+                "evaluated_classes": list(BROAD_LABELS) if is_taco else ["bottle", "can"],
+                "truth": [{"label": BROAD_LABELS[box[0]], "bbox": xyxy(box)} for box in row["boxes"]],
+                "annotation_source": "publisher boxes mapped by existing Broad Waste pipeline",
+                "rights": row.get(
+                    "rights", {"license": "CC0 publisher / MIT acknowledged TrashNet", "source": "DrinkingWasteV2"}
+                ),
+                "original_source_id": row.get("source_id", row.get("image_id")),
+            }
+        )
     return records
 
 
@@ -90,8 +100,9 @@ def coco_records(coco, existing, blocked_hashes):
     annotations = defaultdict(list)
     for annotation in coco["annotations"]:
         annotations[annotation["image_id"]].append(annotation)
-    candidates = [image for image in coco["images"]
-                  if image["license"] in {4, 5} and image["id"] not in SCREENING_EXCLUSIONS]
+    candidates = [
+        image for image in coco["images"] if image["license"] in {4, 5} and image["id"] not in SCREENING_EXCLUSIONS
+    ]
     candidates.sort(key=lambda image: rank(image["id"]))
     selected_ids = set()
     selected_hashes = [row["phash"] for row in existing]
@@ -124,17 +135,39 @@ def coco_records(coco, existing, blocked_hashes):
                 truth = []
                 for annotation in target_anns:
                     x, y, width, height = annotation["bbox"]
-                    truth.append({"label": names[annotation["category_id"]], "bbox": [
-                        max(0, x / image["width"]), max(0, y / image["height"]),
-                        min(1, (x + width) / image["width"]), min(1, (y + height) / image["height"])]})
-                records.append({"id": "COCO-val-" + str(ident), "source": "COCO2017-val", "split": "val2017",
-                    "image": path.relative_to(ROOT).as_posix(), "sha256": sha(path.read_bytes()),
-                    "group": "COCO-val-" + str(ident), "phash": image_hash, "selection_stratum": target,
-                    "evaluated_classes": list(COCO_TARGETS), "truth": truth,
-                    "annotation_source": "COCO Consortium instances_val2017.json",
-                    "rights": {**licenses[image["license"]], "source_page": image.get("flickr_url"),
-                               "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/" + image["file_name"]},
-                    "original_source_id": ident})
+                    truth.append(
+                        {
+                            "label": names[annotation["category_id"]],
+                            "bbox": [
+                                max(0, x / image["width"]),
+                                max(0, y / image["height"]),
+                                min(1, (x + width) / image["width"]),
+                                min(1, (y + height) / image["height"]),
+                            ],
+                        }
+                    )
+                records.append(
+                    {
+                        "id": "COCO-val-" + str(ident),
+                        "source": "COCO2017-val",
+                        "split": "val2017",
+                        "image": path.relative_to(ROOT).as_posix(),
+                        "sha256": sha(path.read_bytes()),
+                        "group": "COCO-val-" + str(ident),
+                        "phash": image_hash,
+                        "selection_stratum": target,
+                        "evaluated_classes": list(COCO_TARGETS),
+                        "truth": truth,
+                        "annotation_source": "COCO Consortium instances_val2017.json",
+                        "rights": {
+                            **licenses[image["license"]],
+                            "source_page": image.get("flickr_url"),
+                            "download_url": "https://s3.amazonaws.com/images.cocodataset.org/val2017/"
+                            + image["file_name"],
+                        },
+                        "original_source_id": ident,
+                    }
+                )
                 selected_hashes.append(image_hash)
                 selected_ids.add(ident)
                 accepted += 1
@@ -150,7 +183,7 @@ def contact_sheets(records):
     for start in range(0, len(records), 20):
         sheet = Image.new("RGB", (1400, 1100), "white")
         draw = ImageDraw.Draw(sheet)
-        for index, row in enumerate(records[start:start + 20]):
+        for index, row in enumerate(records[start : start + 20]):
             with Image.open(ROOT / row["image"]) as opened:
                 image = opened.convert("RGB")
             image.thumbnail((270, 235))
@@ -158,8 +191,16 @@ def contact_sheets(records):
             sheet.paste(image, (left, top))
             for truth in row["truth"]:
                 x1, y1, x2, y2 = truth["bbox"]
-                draw.rectangle((left + x1 * image.width, top + y1 * image.height,
-                                left + x2 * image.width, top + y2 * image.height), outline="red", width=2)
+                draw.rectangle(
+                    (
+                        left + x1 * image.width,
+                        top + y1 * image.height,
+                        left + x2 * image.width,
+                        top + y2 * image.height,
+                    ),
+                    outline="red",
+                    width=2,
+                )
             draw.text((left, top + 238), row["id"], fill="black")
             draw.text((left, top + 252), ", ".join(sorted({box["label"] for box in row["truth"]}))[:42], fill="black")
             image.close()
@@ -181,21 +222,32 @@ def main():
     blocked = [int(row["phash"]) for row in source["records"] if row["split"] != "test"]
     extra, rejected = coco_records(json.loads(raw_annotations), records, blocked)
     records.extend(extra)
-    result = {"version": "camera-replay-v1", "usage": "EVALUATION_ONLY", "kind": "public_camera_proxy_replay",
-        "seed": SEED, "target_classes": list(BROAD_LABELS) + ["cell phone", "remote"],
+    result = {
+        "version": "camera-replay-v1",
+        "usage": "EVALUATION_ONLY",
+        "kind": "public_camera_proxy_replay",
+        "seed": SEED,
+        "target_classes": list(BROAD_LABELS) + ["cell phone", "remote"],
         "source_manifest_sha256": sha((DATA / "manifest.json").read_bytes()),
         "coco_val_annotations_sha256": sha(raw_annotations),
         "selection": "all 32 held-out TACO images; 3 hash-ranked images per DrinkingWaste test sequence; hash-ranked COCO val quotas before inference",
         "duplicate_check": "COCO candidate pHash Hamming distance >5 from Broad Waste train/val and selected images",
         "annotation_review": "publisher annotations; Codex contact-sheet screening; no independent human bbox review",
-        "limitations": ["Public replay approximates browser preprocessing; local physical-camera capture holdout is pending.",
+        "limitations": [
+            "Public replay approximates browser preprocessing; local physical-camera capture holdout is pending.",
             "COCO val may have informed pretrained model development; it is not a new unseen deployment population.",
             "Per-image evaluated_classes restrict scoring to classes covered by that source's annotations.",
             "DW frames share physical objects and sessions; image counts exceed independent object counts.",
-            "TACO rare classes have limited support; rankings describe this frozen sample."],
-        "records": records, "rejected": rejected,
-        "summary": {"images": len(records), "by_source": dict(Counter(row["source"] for row in records)),
-                    "truth_instances": dict(Counter(box["label"] for row in records for box in row["truth"]))}}
+            "TACO rare classes have limited support; rankings describe this frozen sample.",
+        ],
+        "records": records,
+        "rejected": rejected,
+        "summary": {
+            "images": len(records),
+            "by_source": dict(Counter(row["source"] for row in records)),
+            "truth_instances": dict(Counter(box["label"] for row in records for box in row["truth"])),
+        },
+    }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     contact_sheets(records)

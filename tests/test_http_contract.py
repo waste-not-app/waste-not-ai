@@ -34,9 +34,12 @@ def png(color="white"):
 
 
 def detect(client, *, owner=USER_A, identifier=None, data=None):
-    return client.post("/v1/ai/detections", headers=owner,
-                       data={"client_request_id": str(identifier or uuid4())},
-                       files={"image": ("sample.png", data or png(), "image/png")})
+    return client.post(
+        "/v1/ai/detections",
+        headers=owner,
+        data={"client_request_id": str(identifier or uuid4())},
+        files={"image": ("sample.png", data or png(), "image/png")},
+    )
 
 
 def validator(doc, schema):
@@ -80,7 +83,9 @@ def test_all_generated_examples_match_shared_schemas_and_expected_outcomes(artif
         assert result["status"] == "READY" and result["recommended_method"] == method
         assert result["provider"] == "fixture" and result["prototype_only"] is True
     assert artifacts["examples/needs-context-response.json"]["data"]["status"] == "NEEDS_CONTEXT"
-    assert artifacts["examples/hdpe-needs-context-response.json"]["data"]["missing_context"] == ["condition.former_contents"]
+    assert artifacts["examples/hdpe-needs-context-response.json"]["data"]["missing_context"] == [
+        "condition.former_contents"
+    ]
     assert artifacts["examples/receiver-needs-context-response.json"]["data"]["missing_context"] == ["recycling_access"]
     conditional = artifacts["examples/conditional-cup-response.json"]["data"]
     assert conditional["recommendation_basis"] == "CONDITIONAL" and conditional["recommended_method"] == "REUSE"
@@ -88,17 +93,25 @@ def test_all_generated_examples_match_shared_schemas_and_expected_outcomes(artif
     assert artifacts["examples/provider-unavailable-response.json"]["data"]["reason_code"] == "LLM_UNAVAILABLE"
     private = artifacts["private-recommendation.openapi.json"]
     op = private["paths"]["/internal/v1/recommendations"]["post"]
-    validator(private, op["requestBody"]["content"]["application/json"]["schema"]).validate(artifacts["examples/internal-recommendation-request.json"])
-    validator(private, op["responses"]["200"]["content"]["application/json"]["schema"]).validate(artifacts["examples/internal-recommendation-response.json"])
+    validator(private, op["requestBody"]["content"]["application/json"]["schema"]).validate(
+        artifacts["examples/internal-recommendation-request.json"]
+    )
+    validator(private, op["responses"]["200"]["content"]["application/json"]["schema"]).validate(
+        artifacts["examples/internal-recommendation-response.json"]
+    )
 
 
 def test_schema_rejects_invalid_method_status_scope_and_manual_ids(artifacts):
     doc = artifacts["public.openapi.json"]
     op = doc["paths"]["/v1/ai/recommendations"]["post"]
     response_validator = validator(doc, op["responses"]["201"]["content"]["application/json"]["schema"])
-    for update in ({"recommended_method": "COMPOST"}, {"recommended_method": None},
-                   {"recommendation_scope": "PREVENTION"}, {"status": "UNAVAILABLE"},
-                   {"status": "NEEDS_CONTEXT", "recommended_method": None, "recommendation_scope": None}):
+    for update in (
+        {"recommended_method": "COMPOST"},
+        {"recommended_method": None},
+        {"recommendation_scope": "PREVENTION"},
+        {"status": "UNAVAILABLE"},
+        {"status": "NEEDS_CONTEXT", "recommended_method": None, "recommendation_scope": None},
+    ):
         value = deepcopy(artifacts["examples/recycle-response.json"])
         value["data"].update(update)
         with pytest.raises(ValidationError):
@@ -113,8 +126,13 @@ def test_schema_rejects_invalid_method_status_scope_and_manual_ids(artifacts):
 
 
 def test_public_optional_context_can_be_entirely_omitted_and_strict_mode_is_forwarded():
-    value = {"client_request_id": str(uuid4()), "input_source": "MANUAL", "confirmed_object": True,
-             "confirmed_object_key": "ceramic_cup", "confirmed_category": "OTHER"}
+    value = {
+        "client_request_id": str(uuid4()),
+        "input_source": "MANUAL",
+        "confirmed_object": True,
+        "confirmed_object_key": "ceramic_cup",
+        "confirmed_category": "OTHER",
+    }
     with TestClient(create_mock_app()) as client:
         response = client.post("/v1/ai/recommendations", headers=USER_A, json=value)
         assert response.status_code == 201
@@ -163,8 +181,16 @@ def test_mock_session_selection_replay_conflict_ownership_delete_and_expiry():
         assert client.post("/v1/ai/recommendations", json=expired, headers=USER_A).status_code == 410
 
 
-@pytest.mark.parametrize("field,value", [("user_id", "spoof"), ("allowed_methods", ["TRASH"]),
-                                        ("provider", "gemini"), ("guide_key", "fake"), ("confidence", .99)])
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("user_id", "spoof"),
+        ("allowed_methods", ["TRASH"]),
+        ("provider", "gemini"),
+        ("guide_key", "fake"),
+        ("confidence", 0.99),
+    ],
+)
 def test_public_contract_rejects_injected_authoritative_fields(field, value):
     with TestClient(create_mock_app()) as client:
         response = client.post("/v1/ai/recommendations", headers=USER_A, json={**example_request(), field: value})
@@ -172,7 +198,9 @@ def test_public_contract_rejects_injected_authoritative_fields(field, value):
         assert response.json()["error"]["code"] == "VALIDATION_ERROR"
 
 
-@pytest.mark.parametrize("scenario,status,code", [("rate-limited", 429, "RATE_LIMITED"), ("timeout", 504, "AI_TIMEOUT")])
+@pytest.mark.parametrize(
+    "scenario,status,code", [("rate-limited", 429, "RATE_LIMITED"), ("timeout", 504, "AI_TIMEOUT")]
+)
 def test_mock_transport_failure_envelope(scenario, status, code):
     with TestClient(create_mock_app(scenario=scenario)) as client:
         response = client.post("/v1/ai/recommendations", json=example_request(), headers=USER_A)
@@ -188,7 +216,11 @@ def test_public_media_auth_limits_and_mock_never_retains_photos():
         assert client.get("/v1/ai/objects").status_code == 401
         assert detect(client, data=b"not a photo").status_code == 422
         assert detect(client, data=b"x" * (5 * 1024 * 1024 + 1)).status_code == 413
-        response = client.post("/v1/ai/detections", headers={**USER_A, "content-type": "multipart/form-data"}, content=b"x" * (6 * 1024 * 1024))
+        response = client.post(
+            "/v1/ai/detections",
+            headers={**USER_A, "content-type": "multipart/form-data"},
+            content=b"x" * (6 * 1024 * 1024),
+        )
         assert response.status_code == 413 and response.headers["x-wastenot-mock"] == "true"
         assert detect(client).status_code == 201
         assert all(set(row) == {"owner", "result", "expires", "deleted"} for row in app.state.sessions.values())
@@ -206,9 +238,15 @@ class CountingProvider:
 
 
 def private_input():
-    return {"context": {"object_key": "glass_bottle", "category": "GLASS",
-                         "condition": {"cleanliness": "CLEAN", "integrity": "INTACT"},
-                         "reuse_intention": False, "recycling_access": "YES"}}
+    return {
+        "context": {
+            "object_key": "glass_bottle",
+            "category": "GLASS",
+            "condition": {"cleanliness": "CLEAN", "integrity": "INTACT"},
+            "reuse_intention": False,
+            "recycling_access": "YES",
+        }
+    }
 
 
 def test_private_policy_gate_without_weights_and_one_owner_for_outputs(artifacts):
@@ -226,26 +264,49 @@ def test_private_policy_gate_without_weights_and_one_owner_for_outputs(artifacts
         assert direct["recommended_method"] == "RECYCLE"
         for key in ("reason", "evidence_ids", "source_urls", "recommendation_version"):
             assert direct[key] == artifacts["examples/recycle-response.json"]["data"][key]
-        assert set(provider.calls[-1]) <= {"object_key", "category", "condition", "reuse_intention", "recommendation_goal",
-            "recycling_access", "special_handling", "risk_type", "allowed_methods", "guide"}
+        assert set(provider.calls[-1]) <= {
+            "object_key",
+            "category",
+            "condition",
+            "reuse_intention",
+            "recommendation_goal",
+            "recycling_access",
+            "special_handling",
+            "risk_type",
+            "allowed_methods",
+            "guide",
+        }
         assert client.post("/internal/v1/recommendations", content=b"x" * 16385, headers=AUTH).status_code == 413
 
 
 def test_private_rechecks_saved_detection_and_keeps_risk_on_object_correction():
     provider = CountingProvider()
     value = private_input()
-    value["selection"] = {"model_version": "mock-model", "mapping_version": "wrong",
-                          "class_names": CLASS_NAMES, "object": {"class_id": 1, "raw_class": "glass_bottle", "confidence": .9, "bbox": [.1, .1, .8, .8]}}
+    value["selection"] = {
+        "model_version": "mock-model",
+        "mapping_version": "wrong",
+        "class_names": CLASS_NAMES,
+        "object": {"class_id": 1, "raw_class": "glass_bottle", "confidence": 0.9, "bbox": [0.1, 0.1, 0.8, 0.8]},
+    }
     with TestClient(create_recommendation_app(token=TOKEN, provider=provider, demo_guides=True)) as client:
-        assert client.post("/internal/v1/recommendations", json=value, headers=AUTH).json()["error"]["code"] == "INVALID_AI_REFERENCE"
+        assert (
+            client.post("/internal/v1/recommendations", json=value, headers=AUTH).json()["error"]["code"]
+            == "INVALID_AI_REFERENCE"
+        )
         value["selection"]["mapping_version"] = "drinking-waste-reviewed-02"
-        value["selection"]["object"]["confidence"] = .49
-        assert client.post("/internal/v1/recommendations", json=value, headers=AUTH).json()["error"]["code"] == "OBJECT_REQUIRES_MANUAL"
+        value["selection"]["object"]["confidence"] = 0.49
+        assert (
+            client.post("/internal/v1/recommendations", json=value, headers=AUTH).json()["error"]["code"]
+            == "OBJECT_REQUIRES_MANUAL"
+        )
         value["context"]["object_key"], value["context"]["category"] = "pet_bottle", "PLASTIC"
         names = [f"unsupported-{i}" for i in range(44)]
         names[43] = "knife"
-        value["selection"].update(class_names=names, mapping_version=load_catalog()["mapping_version"],
-            object={"class_id": 43, "raw_class": "knife", "confidence": .9, "bbox": [.1, .1, .8, .8]})
+        value["selection"].update(
+            class_names=names,
+            mapping_version=load_catalog()["mapping_version"],
+            object={"class_id": 43, "raw_class": "knife", "confidence": 0.9, "bbox": [0.1, 0.1, 0.8, 0.8]},
+        )
         response = client.post("/internal/v1/recommendations", json=value, headers=AUTH)
         assert response.status_code == 200 and response.json()["data"]["special_handling"] is True
         assert response.json()["data"]["recommended_method"] is None
@@ -259,10 +320,15 @@ def test_versioned_detector_response_schema_and_legacy_adapter():
         body = response.json()
         assert body["api_version"] == "1.0.0" and body["data"]["model"]["class_names"] == CLASS_NAMES
         spec = client.app.openapi()
-        schema = spec["paths"]["/internal/v1/detect"]["post"]["responses"]["200"]["content"]["application/json"]["schema"]
+        schema = spec["paths"]["/internal/v1/detect"]["post"]["responses"]["200"]["content"]["application/json"][
+            "schema"
+        ]
         validator(spec, schema).validate(body)
         assert client.get("/internal/v1/capabilities", headers=AUTH).json()["data"]["supported_visual_classes"] == 4
-        assert client.post("/internal/detect", content=png(), headers={**AUTH, "content-type": "image/png"}).status_code == 200
+        assert (
+            client.post("/internal/detect", content=png(), headers={**AUTH, "content-type": "image/png"}).status_code
+            == 200
+        )
 
 
 def test_recommendation_timeout_keeps_slot_until_native_provider_finishes():
@@ -279,7 +345,7 @@ def test_recommendation_timeout_keeps_slot_until_native_provider_finishes():
                 finally:
                     finished.set()
 
-        app = create_recommendation_app(token=TOKEN, provider=BlockingProvider(), demo_guides=True, timeout=.04)
+        app = create_recommendation_app(token=TOKEN, provider=BlockingProvider(), demo_guides=True, timeout=0.04)
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
             try:
                 response = await client.post("/internal/v1/recommendations", json=private_input(), headers=AUTH)
@@ -289,6 +355,7 @@ def test_recommendation_timeout_keeps_slot_until_native_provider_finishes():
             finally:
                 release.set()
                 await asyncio.to_thread(finished.wait, 1)
+
     asyncio.run(scenario())
 
 
@@ -298,10 +365,13 @@ def test_concurrent_mock_replay_does_not_duplicate_provider_work():
         app = create_mock_app()
         app.state.decisions.provider = provider
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
-            responses = await asyncio.gather(*[client.post("/v1/ai/recommendations", json=example_request(), headers=USER_A) for _ in range(2)])
+            responses = await asyncio.gather(
+                *[client.post("/v1/ai/recommendations", json=example_request(), headers=USER_A) for _ in range(2)]
+            )
         assert sorted(r.status_code for r in responses) == [200, 201]
         assert responses[0].json()["data"] == responses[1].json()["data"]
         assert len(provider.calls) == 1
+
     asyncio.run(scenario())
 
 

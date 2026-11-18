@@ -16,7 +16,12 @@ def test_empty_ordinary_conditions_produce_conditional_suggestion_without_invent
     context, result = run()
     assert result.status == "READY" and result.recommended_method == "REUSE"
     assert result.recommendation_basis == "CONDITIONAL"
-    assert set(result.conditions_to_verify) == {"condition.cleanliness", "condition.integrity", "condition.reusable", "reuse_intention"}
+    assert set(result.conditions_to_verify) == {
+        "condition.cleanliness",
+        "condition.integrity",
+        "condition.reusable",
+        "reuse_intention",
+    }
     assert "belum" in result.reason.lower() and result.source_urls
     assert context.condition.cleanliness == "UNKNOWN" and context.reuse_intention is None
 
@@ -62,6 +67,7 @@ def test_model_receives_unknown_facts_separately_from_unverified_guide_requireme
         def generate(self, payload):
             self.payload = payload
             return super().generate(payload)
+
     provider = Capturing()
     context = Context.model_validate_json('{"object_key":"ceramic_cup","category":"OTHER"}')
     result = recommend(context, provider, load_guides(), demo_guides=True)
@@ -74,7 +80,12 @@ def test_model_receives_unknown_facts_separately_from_unverified_guide_requireme
 
 
 def test_confirmed_unusable_nonhazardous_item_without_receiver_selects_residue():
-    _, result = run("pet_bottle", "PLASTIC", reuse_intention=False, recycling_access="NO",
-                    condition={"cleanliness":"CLEAN", "integrity":"INTACT", "reusable":"NO"})
+    _, result = run(
+        "pet_bottle",
+        "PLASTIC",
+        reuse_intention=False,
+        recycling_access="NO",
+        condition={"cleanliness": "CLEAN", "integrity": "INTACT", "reusable": "NO"},
+    )
     assert result.status == 'READY' and result.recommended_method == 'TRASH'
     assert result.recommendation_basis == 'CONFIRMED' and result.conditions_to_verify == []

@@ -1,4 +1,5 @@
 """Single AI decision interface used by the HTTP adapter, CLI, demo and mock."""
+
 from datetime import date
 
 from .catalog import load_catalog, preserve_detected_risk, review_detections
@@ -23,8 +24,12 @@ class Decisions:
         if value.selection is not None:
             selection = value.selection
             try:
-                result = review_detections([selection.object], dict(enumerate(selection.class_names)),
-                                          model_version=selection.model_version, model_sha256=selection.model_sha256)
+                result = review_detections(
+                    [selection.object],
+                    dict(enumerate(selection.class_names)),
+                    model_version=selection.model_version,
+                    model_sha256=selection.model_sha256,
+                )
             except ValueError:
                 raise DecisionError("INVALID_AI_REFERENCE") from None
             if result["mapping_version"] != selection.mapping_version:
@@ -51,7 +56,13 @@ class Decisions:
                     status = "PUBLISHED"
                 elif self.demo_guides and guide.publication_status == "DRAFT":
                     status = "DRAFT"
-            items.append(CatalogItem(object_key=row["object_key"], label=row["label"],
-                                     category=Category(row["category"]), special_handling=row["special_handling"],
-                                     guide_status=status))
+            items.append(
+                CatalogItem(
+                    object_key=row["object_key"],
+                    label=row["label"],
+                    category=Category(row["category"]),
+                    special_handling=row["special_handling"],
+                    guide_status=status,
+                )
+            )
         return ObjectCatalog(catalog_version=catalog["catalog_version"], items=items)

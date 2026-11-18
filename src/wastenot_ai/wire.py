@@ -1,4 +1,5 @@
 """Versioned HTTP models shared by the mock, private adapters and OpenAPI export."""
+
 import json
 from datetime import datetime
 from typing import Generic, Literal, TypeVar
@@ -57,7 +58,9 @@ class DetectionObject(RawDetection):
     supported_for_review: bool
     suggested_object_keys: list[str] = Field(max_length=100)
     review_thresholds: Thresholds | None = None
-    review_reasons: list[Literal["CLASS_REVIEW_ONLY", "OVERLAPPING_CLASSES"]] = Field(default_factory=list, max_length=2)
+    review_reasons: list[Literal["CLASS_REVIEW_ONLY", "OVERLAPPING_CLASSES"]] = Field(
+        default_factory=list, max_length=2
+    )
     ambiguous_with: list[str] = Field(default_factory=list, max_length=49)
 
 
@@ -89,7 +92,9 @@ class DetectionResult(Contract):
                 raise ValueError("Inconsistent review state")
             if not obj.supported_for_review and obj.suggested_object_keys:
                 raise ValueError("Manual candidate cannot prefill object keys")
-            if len(set(obj.review_reasons)) != len(obj.review_reasons) or len(set(obj.ambiguous_with)) != len(obj.ambiguous_with):
+            if len(set(obj.review_reasons)) != len(obj.review_reasons) or len(set(obj.ambiguous_with)) != len(
+                obj.ambiguous_with
+            ):
                 raise ValueError("Duplicate ambiguity metadata")
             if bool(obj.ambiguous_with) != ("OVERLAPPING_CLASSES" in obj.review_reasons):
                 raise ValueError("Ambiguity reason and candidates disagree")
@@ -99,7 +104,12 @@ class DetectionResult(Contract):
         for obj in self.objects:
             for other_id in obj.ambiguous_with:
                 other = by_id.get(other_id)
-                if other is None or other_id == obj.object_id or obj.object_id not in other.ambiguous_with or other.class_id == obj.class_id:
+                if (
+                    other is None
+                    or other_id == obj.object_id
+                    or obj.object_id not in other.ambiguous_with
+                    or other.class_id == obj.class_id
+                ):
                     raise ValueError("Invalid competing hypothesis reference")
         if (self.status == "REVIEW_REQUIRED") != reviewable:
             raise ValueError("Inconsistent detection status")
@@ -132,6 +142,7 @@ class InternalDetection(DetectionResult):
 
 class TrustedSelection(Contract):
     """Go constructs this from its stored Python result, never from a public body."""
+
     model_version: str = Field(min_length=1, max_length=100)
     mapping_version: str = Field(min_length=1, max_length=100)
     class_names: list[str] = Field(min_length=1, max_length=256)
@@ -155,12 +166,23 @@ class DecisionInput(Contract):
 
 
 class RecommendationInput(Contract):
-    model_config = ConfigDict(json_schema_extra={"allOf": [
-        {"if": {"properties": {"input_source": {"const": "DETECTION"}}},
-         "then": {"required": ["detection_id", "object_id"], "properties": {
-             "detection_id": {"type": "string", "format": "uuid"}, "object_id": {"type": "string", "minLength": 1}}},
-         "else": {"properties": {"detection_id": {"type": "null"}, "object_id": {"type": "null"}}}}
-    ]})
+    model_config = ConfigDict(
+        json_schema_extra={
+            "allOf": [
+                {
+                    "if": {"properties": {"input_source": {"const": "DETECTION"}}},
+                    "then": {
+                        "required": ["detection_id", "object_id"],
+                        "properties": {
+                            "detection_id": {"type": "string", "format": "uuid"},
+                            "object_id": {"type": "string", "minLength": 1},
+                        },
+                    },
+                    "else": {"properties": {"detection_id": {"type": "null"}, "object_id": {"type": "null"}}},
+                }
+            ]
+        }
+    )
     client_request_id: UUID = Field(strict=False)
     context_revision: int = Field(default=1, ge=1)
     input_source: Literal["DETECTION", "MANUAL"] = "DETECTION"
@@ -186,11 +208,17 @@ class RecommendationInput(Contract):
         return self
 
     def context(self) -> Context:
-        return Context(object_key=self.confirmed_object_key, category=self.confirmed_category,
-                       condition=self.condition, reuse_intention=self.reuse_intention,
-                       risk_flag=self.risk_flag, risk_type=self.risk_type,
-                       recommendation_goal=self.recommendation_goal, recycling_access=self.recycling_access,
-                       allow_conditional=self.allow_conditional)
+        return Context(
+            object_key=self.confirmed_object_key,
+            category=self.confirmed_category,
+            condition=self.condition,
+            reuse_intention=self.reuse_intention,
+            risk_flag=self.risk_flag,
+            risk_type=self.risk_type,
+            recommendation_goal=self.recommendation_goal,
+            recycling_access=self.recycling_access,
+            allow_conditional=self.allow_conditional,
+        )
 
 
 class GuideReference(Contract):
@@ -208,36 +236,100 @@ class SourceReference(Contract):
 
 
 class RecommendationResult(Recommendation):
-    model_config = ConfigDict(json_schema_extra={"allOf": [
-        {"if": {"properties": {"status": {"const": "READY"}}, "required": ["status"]},
-         "then": {"required": ["recommended_method", "recommendation_scope", "evidence_ids", "source_urls", "recommendation_basis"],
-                  "properties": {"recommended_method": {"enum": ["REDUCE", "REUSE", "RECYCLE", "TRASH"]},
-                                 "recommendation_scope": {"enum": ["PREVENTION", "HANDLING"]},
-                                 "evidence_ids": {"minItems": 1}, "source_urls": {"minItems": 1},
-                                 "recommendation_basis": {"enum": ["CONFIRMED", "CONDITIONAL"]}}},
-         "else": {"properties": {"recommended_method": {"type": "null"}, "recommendation_scope": {"type": "null"},
-                                  "recommendation_basis": {"type": "null"}, "conditions_to_verify": {"maxItems": 0}}}},
-        {"if": {"properties": {"status": {"const": "NEEDS_CONTEXT"}}, "required": ["status"]},
-         "then": {"required": ["missing_context"], "properties": {"missing_context": {"minItems": 1}}},
-         "else": {"properties": {"missing_context": {"maxItems": 0}}}},
-        {"if": {"properties": {"status": {"const": "READY"}, "recommended_method": {"const": "REDUCE"}},
-                "required": ["status", "recommended_method"]},
-         "then": {"properties": {"recommendation_scope": {"const": "PREVENTION"}}}},
-        {"if": {"properties": {"status": {"const": "READY"}, "recommended_method": {"enum": ["REUSE", "RECYCLE", "TRASH"]}},
-                "required": ["status", "recommended_method"]},
-         "then": {"properties": {"recommendation_scope": {"const": "HANDLING"}}}},
-        {"if": {"properties": {"recommendation_basis": {"const": "CONDITIONAL"}}, "required": ["recommendation_basis"]},
-         "then": {"required": ["conditions_to_verify"], "properties": {"status": {"const": "READY"}, "conditions_to_verify": {"minItems": 1}}},
-         "else": {"properties": {"conditions_to_verify": {"maxItems": 0}}}},
-    ]})
+    model_config = ConfigDict(
+        json_schema_extra={
+            "allOf": [
+                {
+                    "if": {"properties": {"status": {"const": "READY"}}, "required": ["status"]},
+                    "then": {
+                        "required": [
+                            "recommended_method",
+                            "recommendation_scope",
+                            "evidence_ids",
+                            "source_urls",
+                            "recommendation_basis",
+                        ],
+                        "properties": {
+                            "recommended_method": {"enum": ["REDUCE", "REUSE", "RECYCLE", "TRASH"]},
+                            "recommendation_scope": {"enum": ["PREVENTION", "HANDLING"]},
+                            "evidence_ids": {"minItems": 1},
+                            "source_urls": {"minItems": 1},
+                            "recommendation_basis": {"enum": ["CONFIRMED", "CONDITIONAL"]},
+                        },
+                    },
+                    "else": {
+                        "properties": {
+                            "recommended_method": {"type": "null"},
+                            "recommendation_scope": {"type": "null"},
+                            "recommendation_basis": {"type": "null"},
+                            "conditions_to_verify": {"maxItems": 0},
+                        }
+                    },
+                },
+                {
+                    "if": {"properties": {"status": {"const": "NEEDS_CONTEXT"}}, "required": ["status"]},
+                    "then": {"required": ["missing_context"], "properties": {"missing_context": {"minItems": 1}}},
+                    "else": {"properties": {"missing_context": {"maxItems": 0}}},
+                },
+                {
+                    "if": {
+                        "properties": {"status": {"const": "READY"}, "recommended_method": {"const": "REDUCE"}},
+                        "required": ["status", "recommended_method"],
+                    },
+                    "then": {"properties": {"recommendation_scope": {"const": "PREVENTION"}}},
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "status": {"const": "READY"},
+                            "recommended_method": {"enum": ["REUSE", "RECYCLE", "TRASH"]},
+                        },
+                        "required": ["status", "recommended_method"],
+                    },
+                    "then": {"properties": {"recommendation_scope": {"const": "HANDLING"}}},
+                },
+                {
+                    "if": {
+                        "properties": {"recommendation_basis": {"const": "CONDITIONAL"}},
+                        "required": ["recommendation_basis"],
+                    },
+                    "then": {
+                        "required": ["conditions_to_verify"],
+                        "properties": {"status": {"const": "READY"}, "conditions_to_verify": {"minItems": 1}},
+                    },
+                    "else": {"properties": {"conditions_to_verify": {"maxItems": 0}}},
+                },
+            ]
+        }
+    )
     guide_refs: list[GuideReference] = Field(default_factory=list)
     source_details: list[SourceReference] = Field(default_factory=list)
-    missing_context: list[Literal["condition.cleanliness", "condition.integrity", "condition.reusable",
-                                  "condition.cleanable", "condition.soiling", "condition.former_contents", "reuse_intention",
-                                  "recycling_access", "risk_type"]] = Field(default_factory=list)
-    conditions_to_verify: list[Literal["condition.cleanliness", "condition.integrity", "condition.reusable",
-                                       "condition.cleanable", "condition.soiling", "condition.former_contents",
-                                       "reuse_intention", "recycling_access", "risk_type"]] = Field(default_factory=list)
+    missing_context: list[
+        Literal[
+            "condition.cleanliness",
+            "condition.integrity",
+            "condition.reusable",
+            "condition.cleanable",
+            "condition.soiling",
+            "condition.former_contents",
+            "reuse_intention",
+            "recycling_access",
+            "risk_type",
+        ]
+    ] = Field(default_factory=list)
+    conditions_to_verify: list[
+        Literal[
+            "condition.cleanliness",
+            "condition.integrity",
+            "condition.reusable",
+            "condition.cleanable",
+            "condition.soiling",
+            "condition.former_contents",
+            "reuse_intention",
+            "recycling_access",
+            "risk_type",
+        ]
+    ] = Field(default_factory=list)
 
 
 class RecommendationSession(RecommendationResult):
@@ -275,9 +367,14 @@ def internal_detection(result: dict) -> InternalDetection:
     names = {int(key): value for key, value in model["labels"].items()}
     value = {key: result[key] for key in ("status", "mapping_version", "thresholds", "image", "objects")}
     value["review_profile"] = result.get("review_profile", "catalog-default-01")
-    value.update(model_version=model["model_version"], model={
-        "model_version": model["model_version"], "sha256": model["sha256"],
-        "class_names": [names[i] for i in range(len(names))]})
+    value.update(
+        model_version=model["model_version"],
+        model={
+            "model_version": model["model_version"],
+            "sha256": model["sha256"],
+            "class_names": [names[i] for i in range(len(names))],
+        },
+    )
     return InternalDetection.model_validate_json(json.dumps(value))
 
 

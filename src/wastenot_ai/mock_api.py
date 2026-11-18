@@ -1,4 +1,5 @@
 """Public Go contract mock. No JWT verification, YOLO, Gemini, DB or waste-log writes."""
+
 import hashlib
 import json
 from datetime import UTC, datetime, timedelta
@@ -39,9 +40,18 @@ class MockDetector:
         image = decode_image(data)
         dimensions = {"width": image.width, "height": image.height}
         image.close()
-        objects = [] if scenario == "no-detections" else [RawDetection(
-            class_id=1, raw_class="glass_bottle", confidence=.6 if scenario == "uncertain" else .9,
-            bbox=(.1, .1, .8, .9))]
+        objects = (
+            []
+            if scenario == "no-detections"
+            else [
+                RawDetection(
+                    class_id=1,
+                    raw_class="glass_bottle",
+                    confidence=0.6 if scenario == "uncertain" else 0.9,
+                    bbox=(0.1, 0.1, 0.8, 0.9),
+                )
+            ]
+        )
         return {**review_detections(objects, self.labels), "model": self.artifact, "image": dimensions}
 
 
@@ -56,8 +66,12 @@ def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_fa
     if scenario not in SCENARIOS:
         raise ValueError("Unknown mock scenario")
     now = clock or (lambda: datetime.now(UTC))
-    decisions = Decisions(UnavailableProvider() if scenario == "provider-unavailable" else FixtureProvider(),
-                          load_guides(), demo_guides=True, today=lambda: now().date())
+    decisions = Decisions(
+        UnavailableProvider() if scenario == "provider-unavailable" else FixtureProvider(),
+        load_guides(),
+        demo_guides=True,
+        today=lambda: now().date(),
+    )
     sessions, cache = {}, {}
     lock = RLock()
     bearer = HTTPBearer(auto_error=False)
@@ -111,14 +125,24 @@ def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_fa
 
     @app.get("/v1/ai/objects", response_model=Envelope[ObjectCatalog])
     def objects(request: Request, owner=Depends(user)):
-        catalog = decisions.catalog().model_copy(update={"model_version": "mock-four-class-v1",
-                                                          **detection_capabilities(MockDetector.labels)})
+        catalog = decisions.catalog().model_copy(
+            update={"model_version": "mock-four-class-v1", **detection_capabilities(MockDetector.labels)}
+        )
         return envelope(request, catalog)
 
-    @app.post("/v1/ai/detections", response_model=Envelope[DetectionSession], status_code=201,
-              responses={200: {"model": Envelope[DetectionSession], "description": "Idempotent replay"}})
-    async def detect(request: Request, response: Response, image: UploadFile = File(...),
-                     client_request_id: UUID = Form(...), owner=Depends(user)):
+    @app.post(
+        "/v1/ai/detections",
+        response_model=Envelope[DetectionSession],
+        status_code=201,
+        responses={200: {"model": Envelope[DetectionSession], "description": "Idempotent replay"}},
+    )
+    async def detect(
+        request: Request,
+        response: Response,
+        image: UploadFile = File(...),
+        client_request_id: UUID = Form(...),
+        owner=Depends(user),
+    ):
         fail_scenario()
         try:
             if image.content_type not in {"image/jpeg", "image/png"}:
@@ -143,14 +167,20 @@ def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_fa
                 raise HTTPException(exc.status, detail=exc.code) from None
             value = {k: raw[k] for k in ("status", "mapping_version", "thresholds", "image", "objects")}
             identifier, expires = uuid_factory(), now() + timedelta(seconds=ttl_seconds)
-            value.update(detection_id=str(identifier), model_version="mock-four-class-v1", expires_at=expires.isoformat())
+            value.update(
+                detection_id=str(identifier), model_version="mock-four-class-v1", expires_at=expires.isoformat()
+            )
             result = DetectionSession.model_validate_json(json.dumps(value))
             sessions[identifier] = {"owner": owner, "result": result, "expires": expires, "deleted": False}
             remember(key, digest, result, expires)
             return envelope(request, result)
 
-    @app.post("/v1/ai/recommendations", response_model=Envelope[RecommendationSession], status_code=201,
-              responses={200: {"model": Envelope[RecommendationSession], "description": "Replay or non-READY decision"}})
+    @app.post(
+        "/v1/ai/recommendations",
+        response_model=Envelope[RecommendationSession],
+        status_code=201,
+        responses={200: {"model": Envelope[RecommendationSession], "description": "Replay or non-READY decision"}},
+    )
     def recommendation(value: RecommendationInput, request: Request, response: Response, owner=Depends(user)):
         fail_scenario()
         digest = hashlib.sha256(value.model_dump_json().encode()).hexdigest()
@@ -162,9 +192,14 @@ def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_fa
                 selected = next((x for x in row["result"].objects if x.object_id == value.object_id), None)
                 if selected is None:
                     raise HTTPException(422, detail="INVALID_AI_REFERENCE")
-                selection = TrustedSelection(model_version=row["result"].model_version,
-                    mapping_version=row["result"].mapping_version, class_names=CLASS_NAMES,
-                    object=RawDetection.model_validate_json(selected.model_dump_json(include={"class_id", "raw_class", "confidence", "bbox"})))
+                selection = TrustedSelection(
+                    model_version=row["result"].model_version,
+                    mapping_version=row["result"].mapping_version,
+                    class_names=CLASS_NAMES,
+                    object=RawDetection.model_validate_json(
+                        selected.model_dump_json(include={"class_id", "raw_class", "confidence", "bbox"})
+                    ),
+                )
                 expires = row["expires"]
             key, entry = cached(owner, "recommend", value.client_request_id, digest)
             if entry:
@@ -174,11 +209,16 @@ def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_fa
                 result = decisions.evaluate(DecisionInput(context=value.context(), selection=selection))
             except DecisionError as exc:
                 raise HTTPException(422, detail=exc.code) from None
-            payload = {**result.model_dump(mode="json"), "recommendation_id": str(uuid_factory()),
-                       "detection_id": str(value.detection_id) if value.detection_id else None,
-                       "object_id": value.object_id, "context_revision": value.context_revision,
-                       "confirmed_object_key": value.confirmed_object_key, "category": value.confirmed_category.value,
-                       "expires_at": expires.isoformat()}
+            payload = {
+                **result.model_dump(mode="json"),
+                "recommendation_id": str(uuid_factory()),
+                "detection_id": str(value.detection_id) if value.detection_id else None,
+                "object_id": value.object_id,
+                "context_revision": value.context_revision,
+                "confirmed_object_key": value.confirmed_object_key,
+                "category": value.confirmed_category.value,
+                "expires_at": expires.isoformat(),
+            }
             output = RecommendationSession.model_validate_json(json.dumps(payload))
             remember(key, digest, output, expires)
             if output.status != "READY":

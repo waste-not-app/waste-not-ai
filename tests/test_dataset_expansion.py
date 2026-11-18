@@ -1,4 +1,5 @@
 """Protect held-out data and prevent unverified acquisitions entering training."""
+
 import importlib.util
 import json
 import urllib.error
@@ -19,9 +20,14 @@ def expansion(monkeypatch):
 
 
 def record(ident, phash, split=None, group=None, classes=(3,)):
-    row = {"source": "TACO", "source_id": ident, "raw_sha256": ident,
-           "group": group or ident, "phash": phash,
-           "boxes": [[cls, .5, .5, .2, .2] for cls in classes]}
+    row = {
+        "source": "TACO",
+        "source_id": ident,
+        "raw_sha256": ident,
+        "group": group or ident,
+        "phash": phash,
+        "boxes": [[cls, 0.5, 0.5, 0.2, 0.2] for cls in classes],
+    }
     if split:
         row["split"] = split
     return row
@@ -50,7 +56,11 @@ def test_balancing_preserves_rare_scenes_and_all_cooccurring_boxes(expansion):
     rare = record("rare", 999, "train", classes=(0, 3, 8))
     rows += [rare, record("holdout", 500, "test", classes=(3,))]
     selected = expansion.balanced_train(rows, cap=3)
-    assert rare in selected and rare["boxes"] == [[0, .5, .5, .2, .2], [3, .5, .5, .2, .2], [8, .5, .5, .2, .2]]
+    assert rare in selected and rare["boxes"] == [
+        [0, 0.5, 0.5, 0.2, 0.2],
+        [3, 0.5, 0.5, 0.2, 0.2],
+        [8, 0.5, 0.5, 0.2, 0.2],
+    ]
     assert len(selected) == 3
     assert len({r["source_id"] for r in selected}) == 3
     assert all(r["split"] == "train" for r in selected)
@@ -58,20 +68,35 @@ def test_balancing_preserves_rare_scenes_and_all_cooccurring_boxes(expansion):
 
 def test_planning_rejects_bad_boxes_without_erasing_other_targets(expansion):
     base = {"labels": expansion.LABELS, "records": [], "rejected": [{"source": "TACO", "source_id": "3"}]}
-    images = [{"id": i, "width": 100, "height": 100, "file_name": f"batch_1/{i:06}.jpg",
-               "flickr_url": "https://example.org/image.jpg"} for i in (1, 2, 3)]
-    annotations = [{"image_id": 1, "category_id": 40, "bbox": [10, 10, 20, 20]},
-                   {"image_id": 1, "category_id": 5, "bbox": [40, 40, 20, 20]},
-                   {"image_id": 2, "category_id": 40, "bbox": [95, 95, 20, 20]},
-                   {"image_id": 3, "category_id": 40, "bbox": [10, 10, 20, 20]}]
+    images = [
+        {
+            "id": i,
+            "width": 100,
+            "height": 100,
+            "file_name": f"batch_1/{i:06}.jpg",
+            "flickr_url": "https://example.org/image.jpg",
+        }
+        for i in (1, 2, 3)
+    ]
+    annotations = [
+        {"image_id": 1, "category_id": 40, "bbox": [10, 10, 20, 20]},
+        {"image_id": 1, "category_id": 5, "bbox": [40, 40, 20, 20]},
+        {"image_id": 2, "category_id": 40, "bbox": [95, 95, 20, 20]},
+        {"image_id": 3, "category_id": 40, "bbox": [10, 10, 20, 20]},
+    ]
     plan = expansion.make_plan(base, {"images": images, "annotations": annotations}, 300)
     assert plan["candidate_images"] == 1
     assert {b[0] for b in plan["candidates"][0]["boxes"]} == {0, 3}
     assert plan["invalid_annotation_images"][0]["source_id"] == "2"
 
 
-@pytest.mark.parametrize("error", [urllib.error.URLError("DNS unavailable"),
-    urllib.error.HTTPError("https://www.flickr.com", 429, "Too Many Requests", {}, None)])
+@pytest.mark.parametrize(
+    "error",
+    [
+        urllib.error.URLError("DNS unavailable"),
+        urllib.error.HTTPError("https://www.flickr.com", 429, "Too Many Requests", {}, None),
+    ],
+)
 def test_network_failure_is_checkpointed_without_retrying_or_claiming_data(expansion, monkeypatch, tmp_path, error):
     source = tmp_path / "source"
     source.mkdir()
@@ -84,16 +109,20 @@ def test_network_failure_is_checkpointed_without_retrying_or_claiming_data(expan
         raise error
 
     monkeypatch.setattr(expansion, "check_rights", unavailable)
-    plan = {"baseline_manifest_sha256": "base", "source_metadata_sha256": "source",
-            "candidates": [{"source_id": str(i), "original_url": "https://example.org"} for i in range(3)]}
+    plan = {
+        "baseline_manifest_sha256": "base",
+        "source_metadata_sha256": "source",
+        "candidates": [{"source_id": str(i), "original_url": "https://example.org"} for i in range(3)],
+    }
     state = expansion.acquire(plan, tmp_path / "cache", 100)
     assert len(calls) == 1 and state["records"] == [] and state["status"] == "BLOCKED_NETWORK"
     assert json.loads((tmp_path / "cache/acquisition.json").read_text())["status"] == "BLOCKED_NETWORK"
 
 
 def test_stale_cache_cannot_mix_two_source_snapshots(expansion, tmp_path):
-    (tmp_path / "acquisition.json").write_text(json.dumps({"records": [], "rights": {},
-        "baseline_manifest_sha256": "old"}))
+    (tmp_path / "acquisition.json").write_text(
+        json.dumps({"records": [], "rights": {}, "baseline_manifest_sha256": "old"})
+    )
     with pytest.raises(ValueError, match="snapshot changed"):
         expansion.acquire({"baseline_manifest_sha256": "new"}, tmp_path, 1)
 
@@ -113,8 +142,15 @@ def test_acquisition_checkpoint_reports_running_until_traversal_finishes(expansi
         return {"accepted": False, "reason": "fixture_incompatible_license"}
 
     monkeypatch.setattr(expansion, "check_rights", reject_without_download)
-    state = expansion.acquire({"baseline_manifest_sha256": "base", "source_metadata_sha256": "source",
-        "candidates": [{"source_id": str(i), "original_url": "https://example.org"} for i in range(2)]}, cache, 100)
+    state = expansion.acquire(
+        {
+            "baseline_manifest_sha256": "base",
+            "source_metadata_sha256": "source",
+            "candidates": [{"source_id": str(i), "original_url": "https://example.org"} for i in range(2)],
+        },
+        cache,
+        100,
+    )
     assert observed[0]["status"] == "RUNNING" and observed[0]["requests_this_run"] == 1
     assert state["status"] == "COMPLETE" and state["records"] == []
 
@@ -127,9 +163,11 @@ def test_unreviewed_download_does_not_create_dataset(expansion, monkeypatch, tmp
     (source_path / "taco.json").write_text("{}")
     monkeypatch.setattr(expansion, "BASE", base_path)
     monkeypatch.setattr(expansion, "SOURCE", source_path)
-    state = {"baseline_manifest_sha256": expansion.digest(base_path / "manifest.json"),
-             "source_metadata_sha256": expansion.digest(source_path / "taco.json"),
-             "records": [{"source_id": "1", "visual_review": "PENDING"}]}
+    state = {
+        "baseline_manifest_sha256": expansion.digest(base_path / "manifest.json"),
+        "source_metadata_sha256": expansion.digest(source_path / "taco.json"),
+        "records": [{"source_id": "1", "visual_review": "PENDING"}],
+    }
     output = tmp_path / "v3"
     with pytest.raises(ValueError, match="No new"):
         expansion.build_dataset({"records": []}, state, [], output, 600)
@@ -163,16 +201,33 @@ def test_build_writes_real_images_labels_and_preserves_old_holdout(expansion, mo
     monkeypatch.setattr(expansion, "BASE", base_path)
     monkeypatch.setattr(expansion, "SOURCE", source_path)
     monkeypatch.setattr(prepare_drinking_waste, "perceptual_hash", lambda _: 2**40 - 1)
-    old = {**record("old", 0, "test", classes=(0,)), "image": "images/test/old.jpg",
-           "prepared_sha256": expansion.digest(old_image)}
-    new = {**record("new", 2**40 - 1, classes=(3, 8)), "cached_path": str(new_image),
-           "raw_sha256": expansion.digest(new_image), "rights": {"accepted": True, "license_url": "https://creativecommons.org/licenses/by/2.0/"}}
+    old = {
+        **record("old", 0, "test", classes=(0,)),
+        "image": "images/test/old.jpg",
+        "prepared_sha256": expansion.digest(old_image),
+    }
+    new = {
+        **record("new", 2**40 - 1, classes=(3, 8)),
+        "cached_path": str(new_image),
+        "raw_sha256": expansion.digest(new_image),
+        "rights": {"accepted": True, "license_url": "https://creativecommons.org/licenses/by/2.0/"},
+    }
     if external_source:
         new["source"] = "ExternalPublisher"
-    state = {"baseline_manifest_sha256": expansion.digest(base_path / "manifest.json"),
-             "source_metadata_sha256": expansion.digest(metadata), "records": [new]}
-    review = [{"source_id": "new", "decision": "APPROVED", "raw_sha256": new["raw_sha256"],
-               "reviewer": "synthetic-test-fixture", "reviewed_at": "2026-11-07"}]
+    state = {
+        "baseline_manifest_sha256": expansion.digest(base_path / "manifest.json"),
+        "source_metadata_sha256": expansion.digest(metadata),
+        "records": [new],
+    }
+    review = [
+        {
+            "source_id": "new",
+            "decision": "APPROVED",
+            "raw_sha256": new["raw_sha256"],
+            "reviewer": "synthetic-test-fixture",
+            "reviewed_at": "2026-11-07",
+        }
+    ]
     output = tmp_path / "v3"
     result = expansion.build_dataset({"records": [old]}, state, review, output, 600, **options)
     assert json.loads((output / "review-snapshot.json").read_text()) == review
@@ -194,15 +249,29 @@ def test_browser_import_checks_identity_before_writing_and_resumes_idempotently(
 
     image = tmp_path / "download.jpg"
     Image.new("RGB", (100, 100), "red").save(image)
-    candidate = {"source_id": "123", "source": "TACO", "original_url": "https://farm66.staticflickr.com/65535/123456_abcd_o.jpg",
-                 "width": 100, "height": 100}
+    candidate = {
+        "source_id": "123",
+        "source": "TACO",
+        "original_url": "https://farm66.staticflickr.com/65535/123456_abcd_o.jpg",
+        "width": 100,
+        "height": 100,
+    }
     plan = {"baseline_manifest_sha256": "base", "source_metadata_sha256": "source", "candidates": [candidate]}
-    evidence = {"source_id": "123", "local_path": str(image), "source_page": "https://www.flickr.com/photos/example/123456/",
-                "creator_page": "https://www.flickr.com/photos/example/", "author": "test-fixture", "checked_at": "2026-11-07",
-                "license_url": "https://creativecommons.org/licenses/by/2.0/", "download_url": "https://live.staticflickr.com/65535/123456_abcd_c.jpg"}
+    evidence = {
+        "source_id": "123",
+        "local_path": str(image),
+        "source_page": "https://www.flickr.com/photos/example/123456/",
+        "creator_page": "https://www.flickr.com/photos/example/",
+        "author": "test-fixture",
+        "checked_at": "2026-11-07",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "download_url": "https://live.staticflickr.com/65535/123456_abcd_c.jpg",
+    }
     cache = tmp_path / "cache"
     with pytest.raises(ValueError, match="identity"):
-        expansion.import_browser_downloads(plan, cache, [{**evidence, "source_page": "https://www.flickr.com/photos/example/999/"}])
+        expansion.import_browser_downloads(
+            plan, cache, [{**evidence, "source_page": "https://www.flickr.com/photos/example/999/"}]
+        )
     assert not cache.exists()
     state = expansion.import_browser_downloads(plan, cache, [evidence])
     assert len(state["records"]) == 1 and state["records"][0]["visual_review"] == "PENDING"

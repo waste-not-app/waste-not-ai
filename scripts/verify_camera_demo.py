@@ -1,4 +1,5 @@
 """Browser smoke against a running local demo; camera uses Chromium's fake device."""
+
 import argparse
 import json
 import os
@@ -7,26 +8,32 @@ from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--url",default="http://127.0.0.1:8092")
-parser.add_argument("--live-gemini",action="store_true")
-parser.add_argument("--artifact-dir",type=Path)
-parser.add_argument("--image",type=Path,help="Public bottle image for the real-detector smoke")
+parser.add_argument("--url", default="http://127.0.0.1:8092")
+parser.add_argument("--live-gemini", action="store_true")
+parser.add_argument("--artifact-dir", type=Path)
+parser.add_argument("--image", type=Path, help="Public bottle image for the real-detector smoke")
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 image = args.image.resolve() if args.image else root / "data/local/smoke/bottle.jpg"
 artifacts = args.artifact_dir.resolve() if args.artifact_dir else root / "artifacts"
-(artifacts).mkdir(parents=True,exist_ok=True)
+(artifacts).mkdir(parents=True, exist_ok=True)
 # Chromium subprocesses may write debug.log relative to cwd even with --log-file.
 os.chdir(artifacts)
 errors = []
 checks = []
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=True,args=["--use-fake-ui-for-media-stream","--use-fake-device-for-media-stream",
-                                                           "--log-file="+str(artifacts / "chromium-debug.log")])
-    context = browser.new_context(viewport={"width":1440,"height":1100},permissions=["camera"])
+    browser = playwright.chromium.launch(
+        headless=True,
+        args=[
+            "--use-fake-ui-for-media-stream",
+            "--use-fake-device-for-media-stream",
+            "--log-file=" + str(artifacts / "chromium-debug.log"),
+        ],
+    )
+    context = browser.new_context(viewport={"width": 1440, "height": 1100}, permissions=["camera"])
     page = context.new_page()
-    page.on("pageerror",lambda error:errors.append(str(error)))
-    page.goto(args.url,wait_until="networkidle")
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.goto(args.url, wait_until="networkidle")
     expect(page.locator("#capture")).to_be_enabled()
     page.locator("#capture").click()
     page.locator("#detect").wait_for(state="visible")
@@ -35,12 +42,12 @@ with sync_playwright() as playwright:
     checks.append("fake_camera_capture_stops_tracks_before_upload")
     previous_photo = page.locator("#photo").get_attribute("src")
     page.locator("#file").set_input_files(image)
-    expect(page.locator("#photo")).not_to_have_attribute("src",previous_photo)
+    expect(page.locator("#photo")).not_to_have_attribute("src", previous_photo)
     expect(page.locator("#camera-status")).to_have_text("Tinjau foto")
     page.locator("#detect").click()
-    page.locator(".bbox[aria-label^='Pilih Botol,']").wait_for(state="visible",timeout=25000)
+    page.locator(".bbox[aria-label^='Pilih Botol,']").wait_for(state="visible", timeout=25000)
     # Other hypotheses may cover the center; the outer border remains selectable.
-    page.locator(".bbox[aria-label^='Pilih Botol,']").click(position={"x":2,"y":2})
+    page.locator(".bbox[aria-label^='Pilih Botol,']").click(position={"x": 2, "y": 2})
     page.locator("#object-key").select_option("glass_bottle")
     page.locator("#cleanliness").select_option("CLEAN")
     page.locator("#integrity").select_option("INTACT")
@@ -52,7 +59,7 @@ with sync_playwright() as playwright:
     expect(page.locator("#method")).to_have_text("Recycle")
     assert page.locator("#recommendation-source").inner_text() == "Simulasi"
     checks.append("real_yolo_selectable_bbox_fixture_recommendation")
-    page.screenshot(path=str(artifacts / "camera-demo-desktop.png"),full_page=True)
+    page.screenshot(path=str(artifacts / "camera-demo-desktop.png"), full_page=True)
     # Controlled delayed response: changing context must discard an old answer,
     # even if a transport ignores AbortSignal. This makes no provider request.
     page.evaluate("""() => {
@@ -77,23 +84,27 @@ with sync_playwright() as playwright:
     page.locator("#recommend").click()
     expect(page.locator("#method")).to_have_text("Trash")
     expect(page.locator("#caution")).to_contain_text("Perlu penanganan khusus")
-    expect(page.locator("#source-list a")).to_have_attribute("href","https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/")
+    expect(page.locator("#source-list a")).to_have_attribute(
+        "href", "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    )
     checks.append("broken_glass_keeps_trash_label_with_special_warning")
     if args.live_gemini:
         page.locator("#integrity").select_option("INTACT")
         page.locator("#provider").select_option("gemini")
         page.locator("#recommend").click()
         expect(page.locator("#recommendation-result")).to_be_visible(timeout=30000)
-        assert page.locator("#method").inner_text() == "Recycle",page.locator("#global-message").inner_text()
+        assert page.locator("#method").inner_text() == "Recycle", page.locator("#global-message").inner_text()
         assert page.locator("#recommendation-source").inner_text() == "Gemini langsung"
         checks.append("live_gemini_browser_recommendation")
-        page.screenshot(path=str(artifacts / "camera-demo-gemini.png"),full_page=True)
+        page.screenshot(path=str(artifacts / "camera-demo-gemini.png"), full_page=True)
     page.locator("#integrity").select_option("INTACT")
     page.locator("#recommendation-goal").select_option("PREVENTION")
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Reduce",timeout=30000)
+    expect(page.locator("#method")).to_have_text("Reduce", timeout=30000)
     expect(page.locator("#recommendation-scope")).to_contain_text("Pencegahan")
-    expect(page.locator("#source-list a")).to_have_attribute("href","https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste")
+    expect(page.locator("#source-list a")).to_have_attribute(
+        "href", "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
+    )
     assert page.locator("#sources").get_attribute("open") is not None
     assert page.locator("#alternative").count() == 0
     checks.append("reduce_is_single_prevention_result_with_matching_source")
@@ -105,7 +116,7 @@ with sync_playwright() as playwright:
     page.locator("#reuse-intention").select_option("true")
     page.locator("#confirmed").check()
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Reuse",timeout=30000)
+    expect(page.locator("#method")).to_have_text("Reuse", timeout=30000)
     assert page.locator("#reason").inner_text() and page.locator("#source-list a").count()
     checks.append("reuse_book_with_confirmed_condition_reason_and_sources")
     page.locator("#catalog-search").fill("Sikat gigi plastik manual")
@@ -114,8 +125,10 @@ with sync_playwright() as playwright:
     page.locator("#recycling-access").select_option("NO")
     page.locator("#confirmed").check()
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Trash",timeout=30000)
-    expect(page.locator("#source-list a")).to_have_attribute("href","https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/toothbrushes/")
+    expect(page.locator("#method")).to_have_text("Trash", timeout=30000)
+    expect(page.locator("#source-list a")).to_have_attribute(
+        "href", "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/toothbrushes/"
+    )
     checks.append("trash_manual_plastic_toothbrush_with_confirmed_no_recycling")
     page.locator("#catalog-search").fill("baterai")
     page.locator(".catalog-item").filter(has=page.get_by_text("Baterai", exact=True)).click()
@@ -123,7 +136,7 @@ with sync_playwright() as playwright:
     page.locator("#recycling-access").select_option("YES")
     page.locator("#confirmed").check()
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Recycle",timeout=30000)
+    expect(page.locator("#method")).to_have_text("Recycle", timeout=30000)
     expect(page.locator("#caution")).to_contain_text("Perlu penanganan khusus")
     expect(page.locator("#handling-steps")).to_contain_text("layanan khusus")
     checks.append("battery_keeps_recycle_label_and_specialist_collection_warning")
@@ -132,14 +145,16 @@ with sync_playwright() as playwright:
     page.locator("#integrity").select_option("DAMAGED")
     page.locator("#confirmed").check()
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Trash",timeout=30000)
+    expect(page.locator("#method")).to_have_text("Trash", timeout=30000)
     expect(page.locator("#caution")).to_contain_text("Perlu penanganan khusus")
     expect(page.locator("#handling-steps")).not_to_contain_text("Gunakan kembali hanya")
-    expect(page.locator("#source-list a")).to_have_attribute("href","https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/")
+    expect(page.locator("#source-list a")).to_have_attribute(
+        "href", "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    )
     if args.live_gemini:
         expect(page.locator("#recommendation-source")).to_have_text("Gemini langsung")
     checks.append("broken_drinking_glass_has_trash_reason_sources_and_no_reuse_steps")
-    page.screenshot(path=str(artifacts / "camera-demo-special-classification.png"),full_page=True)
+    page.screenshot(path=str(artifacts / "camera-demo-special-classification.png"), full_page=True)
     page.locator("#catalog-search").fill("Cangkir keramik")
     page.locator(".catalog-item").click()
     page.locator("#cleanliness").select_option("DIRTY")
@@ -158,14 +173,14 @@ with sync_playwright() as playwright:
     checks.append("unknown_risk_asks_for_context_instead_of_reduce")
     page.locator("#risk").uncheck()
     page.locator("#recommend").click()
-    expect(page.locator("#method")).to_have_text("Reuse",timeout=30000)
+    expect(page.locator("#method")).to_have_text("Reuse", timeout=30000)
     expect(page.locator("#reason")).to_contain_text("setelah dicuci")
     expect(page.locator("#handling-steps")).to_contain_text("cuci")
     assert page.locator("#cleanliness").input_value() == "DIRTY"
     expect(page.locator("#source-list")).to_contain_text("Pemerintah Kabupaten Banjarnegara")
     expect(page.locator("#source-list")).to_contain_text("Amerika Serikat")
     checks.append("washable_dirty_ceramic_mug_is_reuse_with_scoped_sources")
-    page.screenshot(path=str(artifacts / "camera-demo-washable-mug.png"),full_page=True)
+    page.screenshot(path=str(artifacts / "camera-demo-washable-mug.png"), full_page=True)
     page.locator("#soiling").select_option("HAZARDOUS")
     expect(page.locator("#risk")).to_be_checked()
     page.locator("#recommend").click()
@@ -230,8 +245,10 @@ with sync_playwright() as playwright:
     page.locator("#recommend").click()
     expect(page.locator("#method")).to_have_text("Trash")
     checks.append("confirming_broken_glass_still_returns_supported_trash_method")
-    for label, heading in (("Barang lain / bahan belum diketahui", "Recycle"),
-                           ("Elektronik / baterai lain", "Recycle")):
+    for label, heading in (
+        ("Barang lain / bahan belum diketahui", "Recycle"),
+        ("Elektronik / baterai lain", "Recycle"),
+    ):
         page.locator("#catalog-search").fill(label)
         page.locator(".catalog-item").click()
         page.locator("#provider").select_option("fixture")
@@ -282,23 +299,30 @@ with sync_playwright() as playwright:
     assert page.locator("#handling-steps li").count() >= 3
     checks.append("generic_item_keeps_conditional_method_after_generation_budget")
     page.screenshot(path=str(artifacts / "policy09-method-after-limit.png"), full_page=True)
-    page.set_viewport_size({"width":390,"height":844})
+    page.set_viewport_size({"width": 390, "height": 844})
     page.locator("#clear").click()
     expect(page.locator("#photo-stage")).to_be_hidden()
     assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
-    page.screenshot(path=str(artifacts / "camera-demo-mobile.png"),full_page=True)
+    page.screenshot(path=str(artifacts / "camera-demo-mobile.png"), full_page=True)
     checks.append("mobile_layout_and_photo_cleanup")
     # Denial is exercised with a fresh browser context and a controlled API rejection.
-    denied = browser.new_context(viewport={"width":390,"height":844})
-    denied.add_init_script("Object.defineProperty(navigator.mediaDevices,'getUserMedia',{value:()=>Promise.reject(new DOMException('Denied','NotAllowedError'))})")
+    denied = browser.new_context(viewport={"width": 390, "height": 844})
+    denied.add_init_script(
+        "Object.defineProperty(navigator.mediaDevices,'getUserMedia',{value:()=>Promise.reject(new DOMException('Denied','NotAllowedError'))})"
+    )
     denied_page = denied.new_page()
-    denied_page.goto(args.url,wait_until="networkidle")
+    denied_page.goto(args.url, wait_until="networkidle")
     expect(denied_page.locator("#global-message")).to_contain_text("Izin kamera")
     assert denied_page.locator("#choose-file").is_visible() and denied_page.locator("#manual").is_visible()
     checks.append("camera_denied_keeps_file_and_manual_fallback")
-    assert not errors,errors
-    report = {"checks":checks,"browser_errors":errors,"camera":"fake Chromium device; physical camera not accessed",
-              "real_yolo":True,"live_gemini":args.live_gemini}
-    (artifacts / "camera-demo-browser.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps(report,indent=2))
+    assert not errors, errors
+    report = {
+        "checks": checks,
+        "browser_errors": errors,
+        "camera": "fake Chromium device; physical camera not accessed",
+        "real_yolo": True,
+        "live_gemini": args.live_gemini,
+    }
+    (artifacts / "camera-demo-browser.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(report, indent=2))
     browser.close()

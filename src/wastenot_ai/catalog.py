@@ -18,14 +18,17 @@ def confirm_context(context: Context) -> dict:
 
 
 def preserve_detected_risk(context: Context, selected: dict) -> Context:
-    risk = any(item["special_handling"] for item in load_catalog()["items"]
-               if item["baseline_class_id"] == selected["class_id"]
-               and item["baseline_raw_class"] == selected["raw_class"])
+    risk = any(
+        item["special_handling"]
+        for item in load_catalog()["items"]
+        if item["baseline_class_id"] == selected["class_id"] and item["baseline_raw_class"] == selected["raw_class"]
+    )
     if not risk:
         return context
-    kind = "SHARP" if selected["raw_class"] in {"knife","scissors"} else "ELECTRICAL"
-    return context.model_copy(update={"risk_flag":True,
-                                      "risk_type":kind if context.risk_type == "UNKNOWN" else context.risk_type})
+    kind = "SHARP" if selected["raw_class"] in {"knife", "scissors"} else "ELECTRICAL"
+    return context.model_copy(
+        update={"risk_flag": True, "risk_type": kind if context.risk_type == "UNKNOWN" else context.risk_type}
+    )
 
 
 def _detection_mapping(labels: dict[int, str], catalog: dict):
@@ -40,11 +43,22 @@ def _detection_mapping(labels: dict[int, str], catalog: dict):
         if broad_profile or (combined_profile and raw in BROAD_OBJECT_KEYS):
             mapping[cls] = [item for item in catalog["items"] if item["object_key"] in BROAD_OBJECT_KEYS[raw]]
             continue
-        mapping[cls] = [item for item in catalog["items"] if (
-            item["object_key"] in waste_keys[cls] if waste_profile else
-            item["baseline_class_id"] == cls and item["baseline_raw_class"] == raw)]
-    version = "broad-coco-objects-01" if combined_profile else "broad-waste-objects-01" if broad_profile else (
-        "drinking-waste-reviewed-02" if waste_profile else catalog["mapping_version"])
+        mapping[cls] = [
+            item
+            for item in catalog["items"]
+            if (
+                item["object_key"] in waste_keys[cls]
+                if waste_profile
+                else item["baseline_class_id"] == cls and item["baseline_raw_class"] == raw
+            )
+        ]
+    version = (
+        "broad-coco-objects-01"
+        if combined_profile
+        else "broad-waste-objects-01"
+        if broad_profile
+        else ("drinking-waste-reviewed-02" if waste_profile else catalog["mapping_version"])
+    )
     return version, mapping
 
 
@@ -53,15 +67,21 @@ def detection_capabilities(labels: dict[int, str], *, model_version=None, model_
     profile = review_profile(labels, model_version, model_sha256)
     if profile["id"] != DEFAULT_PROFILE:
         version += "+" + profile["id"]
-    return {"mapping_version": version, "supported_visual_classes": sum(bool(rows) for rows in mapping.values()),
-            "supported_object_labels": {item["object_key"]: labels[cls] for cls, rows in mapping.items() for item in rows},
-            "review_profile": profile["id"],
-            "class_thresholds": {name: {key: value[key] for key in ("lower", "offered")}
-                                 for name, value in profile["classes"].items()},
-            "review_only_classes": [name for name, value in profile["classes"].items() if not value["offered_enabled"]]}
+    return {
+        "mapping_version": version,
+        "supported_visual_classes": sum(bool(rows) for rows in mapping.values()),
+        "supported_object_labels": {item["object_key"]: labels[cls] for cls, rows in mapping.items() for item in rows},
+        "review_profile": profile["id"],
+        "class_thresholds": {
+            name: {key: value[key] for key in ("lower", "offered")} for name, value in profile["classes"].items()
+        },
+        "review_only_classes": [name for name, value in profile["classes"].items() if not value["offered_enabled"]],
+    }
 
 
-def review_detections(objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None) -> dict:
+def review_detections(
+    objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None
+) -> dict:
     catalog = load_catalog()
     version, mapping = _detection_mapping(labels, catalog)
     thresholds = catalog["thresholds"]
@@ -81,17 +101,25 @@ def review_detections(objects: list[RawDetection], labels: dict[int, str], *, mo
         band = "MANUAL_REQUIRED"
         if reviewable:
             band = "OFFERED" if obj.confidence >= limits["offered"] and not reasons else "UNCERTAIN"
-        result.append({
-            **obj.model_dump(mode="json"), "object_id": f"object-{index + 1}",
-            "confidence_band": band, "object_key": None, "category": None,
-            "requires_material_confirmation": reviewable,
-            "supported_for_review": reviewable,
-            "suggested_object_keys": [item["object_key"] for item in matches] if reviewable else [],
-            "review_thresholds": limits, "review_reasons": reasons,
-        })
+        result.append(
+            {
+                **obj.model_dump(mode="json"),
+                "object_id": f"object-{index + 1}",
+                "confidence_band": band,
+                "object_key": None,
+                "category": None,
+                "requires_material_confirmation": reviewable,
+                "supported_for_review": reviewable,
+                "suggested_object_keys": [item["object_key"] for item in matches] if reviewable else [],
+                "review_thresholds": limits,
+                "review_reasons": reasons,
+            }
+        )
     annotate_ambiguity(result, profile["overlap_iou"])
     return {
         "status": "REVIEW_REQUIRED" if any(x["supported_for_review"] for x in result) else "MANUAL_REQUIRED",
         "mapping_version": version,
-        "thresholds": thresholds, "review_profile": profile["id"], "objects": result,
+        "thresholds": thresholds,
+        "review_profile": profile["id"],
+        "objects": result,
     }

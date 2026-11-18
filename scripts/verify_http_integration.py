@@ -1,4 +1,5 @@
 """Real YOLO -> versioned private HTTP -> Python decisions; no Go or log writes."""
+
 import argparse
 import json
 from pathlib import Path
@@ -38,21 +39,33 @@ def main():
     headers = {"Authorization": "Bearer " + token}
     detector = YoloDetector(args.model, input_shape=args.input_shape)
     with TestClient(create_app(detector, token)) as client:
-        response = client.post("/internal/v1/detect", headers={**headers, "content-type": "image/jpeg"},
-                               content=read_image(args.image))
+        response = client.post(
+            "/internal/v1/detect", headers={**headers, "content-type": "image/jpeg"}, content=read_image(args.image)
+        )
         assert response.status_code == 200, response.status_code
         body = response.json()
         validate_response("private-detection.openapi.json", "/internal/v1/detect", body)
     detection = body["data"]
     context = json.loads(args.context.read_text("utf-8"))
-    selected = next((row for row in detection["objects"] if row["supported_for_review"]
-                     and context["object_key"] in row["suggested_object_keys"]), None)
+    selected = next(
+        (
+            row
+            for row in detection["objects"]
+            if row["supported_for_review"] and context["object_key"] in row["suggested_object_keys"]
+        ),
+        None,
+    )
     assert selected is not None, "No reviewable detection supports the requested object context"
-    request = {"context": context, "selection": {
-        "model_version": detection["model_version"], "mapping_version": detection["mapping_version"],
-        "class_names": detection["model"]["class_names"],
-        "model_sha256": detection["model"]["sha256"],
-        "object": {key: selected[key] for key in ("class_id", "raw_class", "confidence", "bbox")}}}
+    request = {
+        "context": context,
+        "selection": {
+            "model_version": detection["model_version"],
+            "mapping_version": detection["mapping_version"],
+            "class_names": detection["model"]["class_names"],
+            "model_sha256": detection["model"]["sha256"],
+            "object": {key: selected[key] for key in ("class_id", "raw_class", "confidence", "bbox")},
+        },
+    }
     provider = GeminiProvider() if args.live_gemini else FixtureProvider()
     with TestClient(create_recommendation_app(token=token, provider=provider, demo_guides=True)) as client:
         response = client.post("/internal/v1/recommendations", json=request, headers=headers)
@@ -62,18 +75,35 @@ def main():
         result = value["data"]
         assert result["status"] == "READY", result["reason_code"]
         assert result["provider"] == ("gemini" if args.live_gemini else "fixture")
-    report = {"real_yolo": True, "transport": "private HTTP adapters via ASGI TestClient",
-              "model_sha256": detection["model"]["sha256"], "mapping_version": detection["mapping_version"],
-              "decision_request": request,
-              "recommendation": result, "live_gemini": args.live_gemini,
-              "photo_sent_to_gemini": False, "saved_log": False, "go_backend_implemented": False}
+    report = {
+        "real_yolo": True,
+        "transport": "private HTTP adapters via ASGI TestClient",
+        "model_sha256": detection["model"]["sha256"],
+        "mapping_version": detection["mapping_version"],
+        "decision_request": request,
+        "recommendation": result,
+        "live_gemini": args.live_gemini,
+        "photo_sent_to_gemini": False,
+        "saved_log": False,
+        "go_backend_implemented": False,
+    }
     (ROOT / "artifacts").mkdir(exist_ok=True)
     filename = "http-integration-gemini.json" if args.live_gemini else "http-integration-fixture.json"
     target = args.output or ROOT / "artifacts" / filename
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print(json.dumps({"real_yolo": True, "versioned_http_schema": "passed", "decision_status": result["status"],
-                      "method": result["recommended_method"], "live_gemini": args.live_gemini, "saved_log": False}))
+    print(
+        json.dumps(
+            {
+                "real_yolo": True,
+                "versioned_http_schema": "passed",
+                "decision_status": result["status"],
+                "method": result["recommended_method"],
+                "live_gemini": args.live_gemini,
+                "saved_log": False,
+            }
+        )
+    )
 
 
 if __name__ == "__main__":
