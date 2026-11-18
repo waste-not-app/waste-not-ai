@@ -11,6 +11,8 @@ from unittest.mock import patch
 
 import pytest
 
+pytest.importorskip("fcntl")
+
 
 def module(name, relative):
     spec = importlib.util.spec_from_file_location(name, Path(__file__).parents[1] / relative)
