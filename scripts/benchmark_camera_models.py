@@ -111,22 +111,24 @@ def main():
     parser.add_argument("--general-name", default="coco")
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--repeats", type=int, default=3)
+    parser.add_argument("--input-size", type=int, choices=(640,768,960), default=640)
+    parser.add_argument("--warmup", type=int, default=5)
     parser.add_argument("--output", type=Path, default=ROOT / "evaluations/camera-replay-v1-comparison.json")
     args = parser.parse_args()
-    if args.repeats < 1:
-        raise ValueError("Timing repeats must be positive")
+    if args.repeats < 1 or args.warmup < 5:
+        raise ValueError("Timing repeats must be positive and warmup at least five")
     if len({args.waste_name, args.general_name, "combined"}) != 3:
         raise ValueError("Model names must be distinct and reserve 'combined' for the merged adapter")
     manifest = load_manifest(args.manifest, ROOT)
     manifest_sha256 = hashlib.sha256(args.manifest.read_bytes()).hexdigest()
     load_started = perf_counter()
-    waste = YoloDetector(args.v3, args.device, "square")
-    general = YoloDetector(args.coco, args.device, "square")
+    waste = YoloDetector(args.v3, args.device, "square", args.input_size)
+    general = YoloDetector(args.coco, args.device, "square", args.input_size)
     detectors = {args.waste_name: waste, args.general_name: general, "combined": CombinedDetector(waste, general)}
     load_seconds = perf_counter() - load_started
     warmup = browser_input(repository_path(ROOT, manifest["records"][0]["image"]))
     for detector in detectors.values():
-        for _ in range(2):
+        for _ in range(args.warmup):
             detector.detect(warmup)
     records = []
     names = list(detectors)
@@ -171,10 +173,10 @@ def main():
         "environment": {"python": platform.python_version(), "platform": platform.platform(),
             "processor": platform.processor(), "torch": torch.__version__, "torch_threads": torch.get_num_threads(),
             "ultralytics": importlib.metadata.version("ultralytics"), "device": args.device},
-        "protocol": {"input_shape": "square640", "input_profiles": PROFILES,
+        "protocol": {"input_shape": f"square{args.input_size}", "input_size":args.input_size, "input_profiles": PROFILES,
             "browser_preprocessing": "long side <=1600, JPEG quality90, Pillow bilinear approximation to browser canvas",
             "prediction_confidence_floor": .25, "review_confidence_floor": .5, "iou_matching": .5,
-            "duplicate_pair_iou": .65, "timing_repeats": args.repeats, "warmup_calls_per_mode": 2,
+            "duplicate_pair_iou": .65, "timing_repeats": args.repeats, "warmup_calls_per_mode": args.warmup,
             "timing": "wall-clock detector.detect including decoding, inference, mapping and merging; excludes model load and JPEG preparation",
             "model_order": "rotated per image and repetition; sequential inference on same device",
             "load_seconds_both_checkpoints": load_seconds},

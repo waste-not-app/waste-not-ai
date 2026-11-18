@@ -23,10 +23,10 @@ def repository_path(root: Path, relative: str) -> Path:
     return resolved
 
 
-def load_manifest(path: Path, root: Path):
+def load_manifest(path: Path, root: Path, *, allowed_usage=("EVALUATION_ONLY",)):
     manifest = json.loads(path.read_text("utf-8"))
-    if manifest.get("usage") != "EVALUATION_ONLY" or not manifest.get("records"):
-        raise ValueError("A nonempty evaluation-only manifest is required")
+    if manifest.get("usage") not in allowed_usage or not manifest.get("records"):
+        raise ValueError("A nonempty manifest with an allowed evaluation usage is required")
     labels = manifest["target_classes"]
     if not labels or len(set(labels)) != len(labels):
         raise ValueError("Target classes must be unique")
