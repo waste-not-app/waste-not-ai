@@ -1,17 +1,17 @@
 """Compare v3, COCO and their real combined adapter on identical frozen camera inputs."""
 import argparse
 import csv
-from datetime import datetime, timezone
 import hashlib
 import importlib.metadata
 import json
-from pathlib import Path
 import platform
+from datetime import datetime, timezone
+from pathlib import Path
 from time import perf_counter
 
 import numpy as np
 
-from wastenot_ai.camera_benchmark import repository_path, aggregate, browser_input, load_manifest, score_image
+from wastenot_ai.camera_benchmark import aggregate, browser_input, load_manifest, repository_path, score_image
 from wastenot_ai.detector import CombinedDetector, YoloDetector
 
 ROOT = Path(__file__).resolve().parents[1]

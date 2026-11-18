@@ -1,18 +1,18 @@
 """Prepare a reproducible, source-attributed object taxonomy from real bounding boxes."""
 import argparse
-from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
 import hashlib
 import json
 import math
-from pathlib import Path
 import random
 import re
 import shutil
 import threading
 import urllib.request
 import zipfile
+from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
+from pathlib import Path
 
 from PIL import Image, ImageDraw
 

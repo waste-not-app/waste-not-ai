@@ -2,11 +2,11 @@
 import hashlib
 import json
 import os
-from pathlib import Path
 import re
 import sys
-from urllib.parse import urlparse
 import urllib.request
+from pathlib import Path
+from urllib.parse import urlparse
 
 
 def main():

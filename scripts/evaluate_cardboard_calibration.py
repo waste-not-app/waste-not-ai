@@ -1,11 +1,11 @@
 """Replay the v4 review threshold on validation, held-out test and frozen camera predictions."""
 import argparse
 import json
-from pathlib import Path
 from unittest.mock import patch
 
 from train_broad_waste import ROOT, evaluate_fixed, sha
-from wastenot_ai.camera_benchmark import repository_path, aggregate, load_manifest, score_image
+
+from wastenot_ai.camera_benchmark import aggregate, load_manifest, repository_path, score_image
 from wastenot_ai.catalog import review_detections
 from wastenot_ai.contracts import RawDetection
 from wastenot_ai.detection_quality import review_profile

@@ -1,8 +1,8 @@
 """Prevent a new-data experiment from silently training on the old dataset."""
 import importlib.util
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest

@@ -1,6 +1,7 @@
 """Checkpoint-bound review policy; confidence never confirms material or safety."""
 import json
 from importlib.resources import files
+
 from .taxonomy import BROAD_LABELS, COMBINED_LABELS
 
 DEFAULT_PROFILE = "catalog-default-01"

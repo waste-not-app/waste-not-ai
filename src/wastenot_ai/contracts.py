@@ -1,7 +1,6 @@
-from enum import StrEnum
 import math
-from typing import Literal
-from typing import Annotated
+from enum import StrEnum
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 

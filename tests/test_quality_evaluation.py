@@ -2,8 +2,8 @@ import importlib.util
 import json
 from pathlib import Path
 
-from PIL import Image
 import pytest
+from PIL import Image
 
 
 def script(name):

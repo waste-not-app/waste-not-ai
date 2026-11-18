@@ -7,7 +7,6 @@ import http.cookiejar
 import io
 import json
 import os
-from pathlib import Path, PurePosixPath
 import re
 import shutil
 import subprocess
@@ -16,6 +15,7 @@ import tarfile
 import tempfile
 import time
 import urllib.request
+from pathlib import Path, PurePosixPath
 
 ROOT = Path('/opt/wastenot-ai')
 CONFIG = Path('/etc/wastenot')

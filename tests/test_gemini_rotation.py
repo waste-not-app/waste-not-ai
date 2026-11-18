@@ -1,14 +1,13 @@
+import json
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from email.utils import format_datetime
-import json
 
 import httpx
 import pytest
 
 from wastenot_ai.providers import GEMINI_KEY_ENV_NAMES, GeminiProvider, load_gemini_api_keys
 from wastenot_ai.recommendation import ProviderError
-
 
 KEYS = [f"test-only-key-{i}" for i in range(1, 6)]
 
@@ -196,7 +195,9 @@ def test_numbered_env_keys_precede_legacy_trim_deduplicate_and_allow_gaps(monkey
 def test_worker_cli_removes_all_gemini_credentials(monkeypatch):
     import os
     import sys
+
     import uvicorn
+
     from wastenot_ai.cli import main
     monkeypatch.setattr(sys,"argv",["wastenot-ai","serve-worker"])
     for name in GEMINI_KEY_ENV_NAMES:
@@ -210,6 +211,7 @@ def test_worker_cli_removes_all_gemini_credentials(monkeypatch):
 
 def test_doctor_reports_numbered_key_count_without_values(monkeypatch,capsys):
     import sys
+
     from wastenot_ai.cli import main
     monkeypatch.setattr(sys,"argv",["wastenot-ai","doctor"])
     for name in GEMINI_KEY_ENV_NAMES:

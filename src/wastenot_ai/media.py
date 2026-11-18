@@ -1,5 +1,5 @@
-from io import BytesIO
 import warnings
+from io import BytesIO
 
 from PIL import Image, ImageOps, UnidentifiedImageError
 

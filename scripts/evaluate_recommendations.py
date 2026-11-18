@@ -1,8 +1,8 @@
 """Fixed scenario evaluation. Fixture results and live Gemini results are separate."""
 import argparse
-from datetime import date, datetime, timezone
 import hashlib
 import json
+from datetime import date, datetime, timezone
 from pathlib import Path
 from time import perf_counter
 

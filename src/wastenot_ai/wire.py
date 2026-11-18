@@ -1,6 +1,6 @@
 """Versioned HTTP models shared by the mock, private adapters and OpenAPI export."""
-from datetime import datetime
 import json
+from datetime import datetime
 from typing import Generic, Literal, TypeVar
 from uuid import UUID
 

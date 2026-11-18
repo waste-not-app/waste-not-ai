@@ -1,12 +1,7 @@
-import asyncio
-import json
 import re
-import threading
 from uuid import uuid4
 
 from fastapi.testclient import TestClient
-import httpx
-import pytest
 
 from wastenot_ai.catalog import load_catalog, review_detections
 from wastenot_ai.contracts import RawDetection

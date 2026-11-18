@@ -1,7 +1,7 @@
 """Deterministically generate the AI handoff contract and real fixture examples."""
+import json
 from datetime import datetime, timezone
 from io import BytesIO
-import json
 from pathlib import Path
 from uuid import UUID
 

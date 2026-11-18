@@ -1,26 +1,23 @@
 import asyncio
+import threading
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from io import BytesIO
-import json
 from pathlib import Path
-import threading
-from uuid import UUID, uuid4
+from uuid import uuid4
 
-from fastapi.testclient import TestClient
 import httpx
+import pytest
+from fastapi.testclient import TestClient
 from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 from openapi_spec_validator import validate
 from PIL import Image
-import pytest
 
 from wastenot_ai.catalog import load_catalog
-from wastenot_ai.http_api import ERRORS
 from wastenot_ai.mock_api import CLASS_NAMES, MockDetector, create_mock_app
 from wastenot_ai.openapi_export import contract_artifacts, example_request, export_contracts
 from wastenot_ai.providers import FixtureProvider
 from wastenot_ai.recommendation_worker import create_recommendation_app
-from wastenot_ai.wire import DecisionInput
 from wastenot_ai.worker import create_app
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -1,8 +1,8 @@
 """Replay an image through camera capture and upload; save metadata, never photo copies."""
 import argparse
 import base64
-from io import BytesIO
 import json
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image

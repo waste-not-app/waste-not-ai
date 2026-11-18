@@ -1,6 +1,6 @@
 """Apply reviewed exclusions through split lists, preserving original downloaded files."""
-from collections import Counter
 import json
+from collections import Counter
 from pathlib import Path
 
 import yaml

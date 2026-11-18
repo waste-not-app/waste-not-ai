@@ -1,6 +1,6 @@
 """Check wheel resources without downloading models, images or API credentials."""
-from pathlib import Path
 import sys
+from pathlib import Path
 from zipfile import ZipFile
 
 directory = Path(sys.argv[1])

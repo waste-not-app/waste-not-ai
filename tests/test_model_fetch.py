@@ -3,7 +3,6 @@ import importlib.util
 from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
-import urllib.request
 
 import pytest
 

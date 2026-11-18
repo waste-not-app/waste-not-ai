@@ -1,11 +1,10 @@
 """Render downloaded detection images with original target boxes for local screening."""
 import argparse
 import json
-from pathlib import Path
 import textwrap
+from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
-
 from prepare_broad_waste import LABELS
 
 ROOT = Path(__file__).resolve().parents[1]

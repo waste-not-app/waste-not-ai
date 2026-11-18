@@ -1,21 +1,21 @@
 """Acquire and prepare cardboard and general-object confusion training supplements."""
 import argparse
-from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor
 import csv
 import hashlib
 import json
-from pathlib import Path
 import shutil
 import zipfile
-
-import httpx
-from PIL import Image, ImageDraw
-import yaml
+from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 import expand_broad_waste as expansion
+import httpx
+import yaml
+from PIL import Image, ImageDraw
 from prepare_broad_waste import normalized_box
 from prepare_drinking_waste import perceptual_hash
+
 from wastenot_ai.taxonomy import COCO_LABELS
 
 ROOT = Path(__file__).resolve().parents[1]

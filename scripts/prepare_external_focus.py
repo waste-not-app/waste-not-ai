@@ -1,19 +1,18 @@
 """Audit publisher samples and build the manually reviewed RealWaste research supplement."""
 import argparse
-from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor
 import hashlib
-from io import BytesIO
 import json
 import math
-from pathlib import Path
 import shutil
 import zipfile
-
-import httpx
-from PIL import Image
+from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
+from pathlib import Path
 
 import expand_broad_waste as expansion
+import httpx
+from PIL import Image
 from prepare_broad_waste import normalized_box
 from prepare_drinking_waste import perceptual_hash
 

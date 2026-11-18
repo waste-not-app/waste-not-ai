@@ -1,6 +1,6 @@
+import json
 from datetime import date
 from importlib.resources import files
-import json
 from pathlib import Path
 from typing import Protocol
 
@@ -8,9 +8,9 @@ from pydantic import ValidationError
 
 from .catalog import confirm_context, load_catalog
 from .contracts import Context, Evidence, Guide, ModelSuggestion, Recommendation
-from .sources import describe_sources
 from .guide_audit import validate_guides
 from .handling_guidance import handling_guidance
+from .sources import describe_sources
 
 
 class ProviderError(Exception):
