@@ -1,15 +1,15 @@
 """Download and audit the versioned public Drinking Waste detection dataset."""
 import argparse
-from collections import Counter, defaultdict
 import hashlib
 import io
 import json
 import math
-from pathlib import Path
 import random
 import re
 import urllib.request
 import zipfile
+from collections import Counter, defaultdict
+from pathlib import Path
 
 from PIL import Image
 

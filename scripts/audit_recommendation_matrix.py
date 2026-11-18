@@ -1,8 +1,8 @@
 """Exercise handling invariants across the full catalog without calling a live provider."""
 import argparse
+import json
 from collections import Counter
 from itertools import product
-import json
 from pathlib import Path
 
 from wastenot_ai.catalog import load_catalog

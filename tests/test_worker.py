@@ -1,8 +1,8 @@
 import asyncio
 import threading
 
-from fastapi.testclient import TestClient
 import httpx
+from fastapi.testclient import TestClient
 
 from wastenot_ai.media import MediaError
 from wastenot_ai.worker import create_app

@@ -2,7 +2,7 @@
 import asyncio
 from uuid import UUID, uuid4
 
-from fastapi import HTTPException, Request
+from fastapi import Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 

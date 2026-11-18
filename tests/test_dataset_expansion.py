@@ -1,11 +1,10 @@
 """Protect held-out data and prevent unverified acquisitions entering training."""
 import importlib.util
 import json
-from pathlib import Path
 import urllib.error
+from pathlib import Path
 
 import pytest
-
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 
@@ -139,9 +138,9 @@ def test_unreviewed_download_does_not_create_dataset(expansion, monkeypatch, tmp
 
 @pytest.mark.parametrize("external_source", [False, True])
 def test_build_writes_real_images_labels_and_preserves_old_holdout(expansion, monkeypatch, tmp_path, external_source):
-    from PIL import Image
     import prepare_drinking_waste
     import yaml
+    from PIL import Image
 
     base_path, source_path = tmp_path / "base", tmp_path / "source"
     base_path.mkdir()

@@ -1,10 +1,10 @@
+import json
 from datetime import date
 from io import BytesIO
-import json
 
 import httpx
-from PIL import Image
 import pytest
+from PIL import Image
 
 from wastenot_ai.catalog import review_detections
 from wastenot_ai.cli import run_pipeline

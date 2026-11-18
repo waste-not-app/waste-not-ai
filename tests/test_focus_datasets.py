@@ -73,6 +73,7 @@ def test_general_holdout_cannot_reuse_another_models_training_photo(focus):
 
 def test_dataset_verifier_requires_explicit_review_for_empty_negative_labels(monkeypatch, tmp_path):
     import hashlib
+
     from PIL import Image
 
     scripts = Path(__file__).resolve().parents[1] / "scripts"

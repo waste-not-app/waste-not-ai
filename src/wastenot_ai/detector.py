@@ -7,8 +7,8 @@ from time import perf_counter
 
 from .catalog import review_detections
 from .contracts import RawDetection
-from .media import decode_image
 from .detection_quality import box_iou
+from .media import decode_image
 from .taxonomy import BROAD_LABELS, COCO_LABELS, COMBINED_LABELS
 
 

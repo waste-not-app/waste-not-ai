@@ -1,14 +1,14 @@
 """Train/evaluate a separate broad detector; never silently replace the active checkpoint."""
 import argparse
-from collections import Counter
-from datetime import datetime, timedelta, timezone
 import hashlib
 import importlib.metadata
 import json
 import os
-from pathlib import Path
 import platform
 import shutil
+from collections import Counter
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]

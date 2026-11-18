@@ -1,13 +1,13 @@
-from datetime import date
 import json
+from datetime import date
 
 import pytest
 
 from wastenot_ai.contracts import Context
+from wastenot_ai.guide_audit import audit_builtin_guides, validate_guides
 from wastenot_ai.providers import FixtureProvider
 from wastenot_ai.recommendation import eligible_evidence, load_guides, recommend
 from wastenot_ai.sources import load_sources
-from wastenot_ai.guide_audit import audit_builtin_guides, validate_guides
 
 
 class CountingProvider(FixtureProvider):

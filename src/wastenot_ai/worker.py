@@ -1,14 +1,14 @@
 import asyncio
-from contextlib import asynccontextmanager
 import hmac
 import os
+from contextlib import asynccontextmanager
 from pathlib import Path
 from threading import Lock
 
 from fastapi import FastAPI, HTTPException, Request, Response
 
-from .media import MAX_BYTES, MediaError
 from .http_api import BoundedHTTP, configure_errors, envelope, install_security_schema
+from .media import MAX_BYTES, MediaError
 from .wire import DetectionCapabilities, Envelope, InternalDetection, internal_detection
 
 

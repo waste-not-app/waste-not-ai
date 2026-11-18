@@ -1,18 +1,17 @@
 """Acquire rare-class TACO examples without modifying the audited baseline dataset."""
 import argparse
-from collections import Counter, defaultdict
-from datetime import datetime, timezone
 import hashlib
 import json
-from pathlib import Path
 import random
 import re
 import shutil
 import urllib.error
 import urllib.request
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
 
 from PIL import Image
-
 from prepare_broad_waste import LABELS, LICENSES, TACO_MAP, normalized_box
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -307,8 +306,8 @@ def balanced_train(records, cap):
 
 def build_dataset(base, state, review, output, cap, *, base_dir=None, version="broad-waste-v3",
                   source_metadata_path=None, source_notice=None):
-    from prepare_drinking_waste import parse_boxes, perceptual_hash
     import yaml
+    from prepare_drinking_waste import parse_boxes, perceptual_hash
 
     base_dir = base_dir or BASE
     source_metadata_path = source_metadata_path or SOURCE / "taco.json"

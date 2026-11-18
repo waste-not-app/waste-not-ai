@@ -1,9 +1,9 @@
 import hashlib
-from io import BytesIO
 import json
+from io import BytesIO
 
-from PIL import Image
 import pytest
+from PIL import Image
 
 from wastenot_ai.camera_benchmark import aggregate, browser_input, load_manifest, score_image
 

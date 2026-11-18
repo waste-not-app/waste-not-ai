@@ -2,22 +2,22 @@ import argparse
 import hashlib
 import json
 import os
-from pathlib import Path
 import platform
 import statistics
 import sys
+from pathlib import Path
 from time import perf_counter
 
+import httpx
 from dotenv import load_dotenv
 from pydantic import ValidationError
-import httpx
 
 from .catalog import load_catalog, preserve_detected_risk
 from .contracts import Context
+from .decisions import Decisions
 from .media import MAX_BYTES, MediaError
 from .providers import GEMINI_KEY_ENV_NAMES, FixtureProvider, GeminiProvider, RulesProvider, load_gemini_api_keys
 from .recommendation import load_guides
-from .decisions import Decisions
 from .wire import DecisionInput
 
 AI_DIR = Path(__file__).resolve().parents[2]
@@ -87,6 +87,7 @@ def benchmark(args):
                         "status": first["status"], "objects": first["objects"]})
     all_times = sorted(t for r in records for t in r["warm_ms"])
     from math import ceil
+
     import torch
     emit({"kind": "exploratory_inference_not_accuracy_evaluation", "sample_count": len(records),
           "model": detector.artifact, "environment": {"python": platform.python_version(),
@@ -165,11 +166,13 @@ def main():
             for name in (*GEMINI_KEY_ENV_NAMES, "AI_SERVICE_TOKEN", "AI_RECOMMENDATION_TOKEN"):
                 os.environ.pop(name, None)
             import uvicorn
+
             from .mock_api import create_mock_app
             print("PUBLIC CONTRACT MOCK: mock-user-a / mock-user-b; no YOLO/Gemini/DB.", flush=True)
             uvicorn.run(create_mock_app(scenario=args.scenario), host="127.0.0.1", port=args.port, access_log=False)
         elif args.command == "serve-recommendations":
             import uvicorn
+
             from .recommendation_worker import create_recommendation_app
             os.environ.pop("AI_SERVICE_TOKEN", None)
             provider = provider_for(args.provider)
@@ -218,9 +221,11 @@ def main():
             emit(run_pipeline(detector_for(args), read_image(args.image), context, args.object_id,
                               provider, load_guides(args.guides), demo_guides=args.demo_guides), args.output)
         elif args.command == "demo":
-            import uvicorn
             import webbrowser
             from threading import Timer
+
+            import uvicorn
+
             from .demo import create_demo_app
             url = f"http://127.0.0.1:{args.port}"
             def open_demo():
@@ -237,6 +242,7 @@ def main():
                 os.environ.pop(name, None)
             os.environ.pop("AI_RECOMMENDATION_TOKEN", None)
             import uvicorn
+
             from .worker import create_app
             uvicorn.run(create_app(), host="127.0.0.1", port=args.port, access_log=False)
     except (ValueError, OSError, ImportError, ValidationError, MediaError, httpx.HTTPError) as exc:

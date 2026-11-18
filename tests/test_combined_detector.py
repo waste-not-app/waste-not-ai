@@ -1,8 +1,8 @@
 import json
 from uuid import uuid4
 
-from fastapi.testclient import TestClient
 import pytest
+from fastapi.testclient import TestClient
 
 from wastenot_ai.catalog import detection_capabilities, preserve_detected_risk, review_detections
 from wastenot_ai.contracts import RawDetection

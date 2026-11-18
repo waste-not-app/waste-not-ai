@@ -1,15 +1,15 @@
 """Freeze evaluation images and publisher annotations before comparing checkpoints."""
 import argparse
-from collections import Counter, defaultdict
 import hashlib
 import json
-from pathlib import Path
 import zipfile
+from collections import Counter, defaultdict
+from pathlib import Path
 
 import httpx
 from PIL import Image, ImageDraw
-
 from prepare_drinking_waste import perceptual_hash
+
 from wastenot_ai.taxonomy import BROAD_LABELS
 
 ROOT = Path(__file__).resolve().parents[1]

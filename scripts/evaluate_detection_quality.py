@@ -1,9 +1,9 @@
 """Measure a reviewed camera holdout, or explicitly labelled synthetic sanity inputs."""
 import argparse
-from datetime import date
 import hashlib
-from io import BytesIO
 import json
+from datetime import date
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image, ImageDraw

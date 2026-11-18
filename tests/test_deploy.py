@@ -1,12 +1,12 @@
-import hashlib
 import gzip
+import hashlib
 import importlib.util
 import io
 import json
-from pathlib import Path
 import subprocess
 import tarfile
 import urllib.request
+from pathlib import Path
 from unittest.mock import patch
 
 import pytest

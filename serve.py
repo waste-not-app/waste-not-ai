@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import argparse
-from contextlib import nullcontext
 import hashlib
 import io
 import json
 import os
-from pathlib import Path
 import re
+from contextlib import nullcontext
+from pathlib import Path
 
 
 def application(kind):
@@ -47,6 +47,7 @@ def application(kind):
         torch.set_num_threads(1)
         torch.set_num_interop_threads(1)
         from PIL import Image
+
         from wastenot_ai.detector import load_detector
         from wastenot_ai.worker import create_app
         detector = load_detector(model, device='cpu', input_shape=input_shape, general_model_path=general_model)

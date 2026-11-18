@@ -1,6 +1,5 @@
 """Compare fixed-confidence errors on unchanged val, not on test or mined training backgrounds."""
 import argparse
-import hashlib
 import json
 import os
 from pathlib import Path

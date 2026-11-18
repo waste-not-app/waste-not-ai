@@ -1,16 +1,17 @@
 """Fine-tune and compare the native COCO detector on the reviewed focus dataset."""
 import argparse
-from collections import Counter
 import csv
-from datetime import datetime, timezone
 import importlib.metadata
 import json
-from pathlib import Path
 import platform
 import shutil
+from collections import Counter
+from datetime import datetime, timezone
+from pathlib import Path
 from time import perf_counter
 
 from train_broad_waste import ROOT, evaluate_fixed, sha
+
 from wastenot_ai.taxonomy import COCO_LABELS
 
 

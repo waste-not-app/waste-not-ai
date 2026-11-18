@@ -2,9 +2,9 @@ import json
 from io import BytesIO
 from types import SimpleNamespace
 
+import pytest
 from PIL import Image
 
-import pytest
 from wastenot_ai.catalog import detection_capabilities, review_detections
 from wastenot_ai.contracts import RawDetection
 from wastenot_ai.decisions import DecisionError, Decisions

@@ -8,7 +8,6 @@ from wastenot_ai.recommendation import load_guides
 from wastenot_ai.taxonomy import BROAD_LABELS, BROAD_OBJECT_KEYS
 from wastenot_ai.wire import DecisionInput
 
-
 LABELS = dict(enumerate(BROAD_LABELS))
 
 

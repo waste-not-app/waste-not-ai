@@ -1,5 +1,5 @@
-import json
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
@@ -11,7 +11,6 @@ from wastenot_ai.providers import FixtureProvider
 from wastenot_ai.recommendation import load_guides
 from wastenot_ai.taxonomy import BROAD_LABELS, COMBINED_LABELS
 from wastenot_ai.wire import DecisionInput
-
 
 V4_SHA = "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f"
 COMBINED_SHA = "0b06663cfd8de5027adfae2f759320f8f92b6eab7a65ceb6366197fcd3d846c3"

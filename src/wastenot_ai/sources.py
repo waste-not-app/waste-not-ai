@@ -1,5 +1,5 @@
-from importlib.resources import files
 import json
+from importlib.resources import files
 from urllib.parse import urlparse
 
 

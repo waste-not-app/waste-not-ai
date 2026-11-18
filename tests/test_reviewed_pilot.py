@@ -8,7 +8,6 @@ from wastenot_ai.contracts import Context
 from wastenot_ai.providers import FixtureProvider
 from wastenot_ai.recommendation import is_reviewed, load_guides, recommend
 
-
 GUIDES = load_guides(Path(__file__).parents[1] / 'guides/pilot-source-reviewed-v6.json')
 
 

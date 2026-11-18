@@ -5,9 +5,9 @@ import hashlib
 import importlib.metadata
 import json
 import os
-from pathlib import Path
 import platform
 import shutil
+from pathlib import Path
 from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]

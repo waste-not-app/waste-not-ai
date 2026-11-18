@@ -1,15 +1,14 @@
 """Operational detection scoring for a frozen, partially annotated image collection."""
-from collections import Counter
 import hashlib
-from io import BytesIO
 import json
 import math
+from collections import Counter
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image, ImageEnhance
 
 from .detection_quality import box_iou
-
 
 
 def repository_path(root: Path, relative: str) -> Path:

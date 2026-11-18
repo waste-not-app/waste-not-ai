@@ -1,7 +1,7 @@
 """Public Go contract mock. No JWT verification, YOLO, Gemini, DB or waste-log writes."""
-from datetime import datetime, timedelta, timezone
 import hashlib
 import json
+from datetime import datetime, timedelta, timezone
 from threading import RLock
 from uuid import UUID, uuid4
 
@@ -15,8 +15,16 @@ from .http_api import BoundedHTTP, configure_errors, envelope, install_security_
 from .media import MAX_BYTES, MediaError, decode_image
 from .providers import FixtureProvider
 from .recommendation import ProviderError, load_guides
-from .wire import (API_VERSION, DecisionInput, DetectionSession, Envelope, ObjectCatalog,
-                   RecommendationInput, RecommendationSession, TrustedSelection)
+from .wire import (
+    API_VERSION,
+    DecisionInput,
+    DetectionSession,
+    Envelope,
+    ObjectCatalog,
+    RecommendationInput,
+    RecommendationSession,
+    TrustedSelection,
+)
 
 MOCK_TOKENS = {"mock-user-a": "a", "mock-user-b": "b"}
 SCENARIOS = ("normal", "uncertain", "no-detections", "provider-unavailable", "rate-limited", "timeout")

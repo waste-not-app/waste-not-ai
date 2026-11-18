@@ -1,14 +1,13 @@
 """Loopback-only camera playground; no production JWT, database, or log writes."""
 import asyncio
-from contextlib import asynccontextmanager
-from datetime import date
 import hashlib
 import hmac
-from importlib.resources import files
-import json
 import os
-from pathlib import Path
 import secrets
+from contextlib import asynccontextmanager
+from datetime import date
+from importlib.resources import files
+from pathlib import Path
 from threading import Lock
 from time import monotonic
 from typing import Literal
@@ -21,10 +20,10 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .catalog import confirm_context, detection_capabilities, load_catalog, preserve_detected_risk
 from .contracts import Context, Contract
+from .decisions import Decisions
 from .media import MAX_BYTES, MediaError
 from .providers import FixtureProvider, GeminiProvider, RulesProvider
 from .recommendation import ProviderError, is_reviewed, load_guides
-from .decisions import Decisions
 from .wire import DecisionInput
 
 TTL = 15 * 60
