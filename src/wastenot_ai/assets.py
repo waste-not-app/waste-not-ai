@@ -39,7 +39,7 @@ def fetch_assets(directory: Path) -> dict:
                 finally:
                     part.unlink(missing_ok=True)
             data = destination.read_bytes()
-            if asset.get("sha1") and hashlib.sha1(data).hexdigest() != asset["sha1"]:
+            if asset.get("sha1") and hashlib.sha1(data, usedforsecurity=False).hexdigest() != asset["sha1"]:
                 raise ValueError("Checksum gambar sumber tidak cocok.")
             if asset.get("sha256") and hashlib.sha256(data).hexdigest() != asset["sha256"]:
                 raise ValueError("Checksum model tidak cocok.")

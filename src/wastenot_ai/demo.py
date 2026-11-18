@@ -1,5 +1,6 @@
 """Loopback-only camera playground; no production JWT, database, or log writes."""
 import asyncio
+import contextlib
 import hashlib
 import hmac
 import os
@@ -91,11 +92,9 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
             app.state.detector = load_detector(Path(os.getenv("AI_MODEL_PATH", "artifacts/models/yolo11n.pt")),
                 os.getenv("AI_DEVICE", "cpu"), os.getenv("AI_INPUT_SHAPE", "adaptive"),
                 Path(general_path) if general_path else None)
-        try:
+        with contextlib.suppress(Exception):
             if hasattr(app.state.detector, "model") and hasattr(app.state.detector.model, "warmup"):
                 app.state.detector.model.warmup(imgsz=(1, 3, 640, 640))
-        except Exception:
-            pass
         task = asyncio.create_task(scavenger())
         if on_ready:
             on_ready()
@@ -130,8 +129,7 @@ def create_demo_app(detector=None, *, demo_guides=False, guides_path: Path | Non
             host_only = (request.headers.get("host") or "").split(":")[0]
             forwarded_host_only = host.split(":")[0]
             is_valid_origin = (
-                origin == direct or
-                origin == forwarded or
+                origin in (direct, forwarded) or
                 origin_host in [host_only, forwarded_host_only, "localhost", "127.0.0.1", "pred-autoscaler.bccdev.id"] or
                 any(origin_host.endswith("." + h.lstrip("*.")) for h in allowed_hosts if h.startswith("*."))
             )

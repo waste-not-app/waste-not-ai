@@ -239,4 +239,4 @@ if __name__ == '__main__':
             print(json.dumps(deploy(sys.stdin.buffer.read(MAX_ARCHIVE + 1))))
     except Exception:
         print('AI deployment failed; inspect the release and worker state on the host.', file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from None

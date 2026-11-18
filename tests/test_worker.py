@@ -15,7 +15,8 @@ class Detector:
     def __init__(self): self.calls = 0
     def detect(self,data):
         self.calls += 1
-        if data == b"bad": raise MediaError("INVALID_IMAGE")
+        if data == b"bad":
+            raise MediaError("INVALID_IMAGE")
         return {"status":"MANUAL_REQUIRED","objects":[]}
 
 

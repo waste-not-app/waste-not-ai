@@ -179,8 +179,10 @@ def test_trash_requires_specific_residue_guide_and_confirmed_lack_of_recycling()
         result = recommend(context("toothbrush","OTHER",recycling_access=access,**values),
                            SpyProvider(),load_guides(),demo_guides=True)
         assert result.reason_code == "CONTEXT_REQUIRED"
-        if access == "UNKNOWN": assert result.missing_context == ["recycling_access"]
-        else: assert result.missing_context == ["condition.cleanliness"]
+        if access == "UNKNOWN":
+            assert result.missing_context == ["recycling_access"]
+        else:
+            assert result.missing_context == ["condition.cleanliness"]
     provider = SpyProvider()
     result = recommend(context("toothbrush","OTHER",recycling_access="NO",**values),
                        provider,load_guides(),demo_guides=True)
