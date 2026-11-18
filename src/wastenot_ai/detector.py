@@ -13,9 +13,11 @@ from .taxonomy import BROAD_LABELS, COCO_LABELS, COMBINED_LABELS
 
 
 class YoloDetector:
-    def __init__(self, model_path: Path, device: str = "cpu", input_shape: str = "adaptive"):
+    def __init__(self, model_path: Path, device: str = "cpu", input_shape: str = "adaptive", input_size: int = 640):
         if input_shape not in {"adaptive", "square"}:
             raise ValueError("Input shape harus adaptive atau square.")
+        if isinstance(input_size, bool) or not isinstance(input_size, int) or input_size not in {640, 768, 960}:
+            raise ValueError("Input size must be 640, 768 or 960")
         if not model_path.is_file():
             raise ValueError("Model tidak ditemukan. Jalankan perintah fetch-assets terlebih dahulu.")
         # Configure before importing Ultralytics: no telemetry or automatic requirements install.
@@ -27,6 +29,7 @@ class YoloDetector:
         self.model = YOLO(str(model_path), task="detect")
         self.device = device
         self.input_shape = input_shape
+        self._input_size = input_size
         self.labels = {int(k): v for k, v in self.model.names.items()}
         checksum = hashlib.sha256(model_path.read_bytes()).hexdigest()
         try:
@@ -34,10 +37,11 @@ class YoloDetector:
         except importlib.metadata.PackageNotFoundError:
             runtime_version = importlib.metadata.version("ultralytics-opencv-headless")
         self.artifact = {
-            "model_version": f"candidate-{checksum[:12]}" + ("-square640" if input_shape == "square" else ""),
+            "model_version": f"candidate-{checksum[:12]}" + (
+                f"-square{input_size}" if input_shape == "square" else f"-adaptive{input_size}" if input_size != 640 else ""),
             "sha256": checksum,
             "labels": self.labels, "ultralytics_version": runtime_version,
-            "device": device, "input_size": 640,
+            "device": device, "input_size": input_size,
             "input_shape": input_shape,
             "preprocessing": "EXIF transpose, RGB, Ultralytics letterbox",
             "license": "Ultralytics AGPL-3.0 / Enterprise; see provenance documentation",
@@ -46,14 +50,20 @@ class YoloDetector:
             } else "checkpoint-native-labels",
         }
 
+    @property
+    def input_size(self):
+        return self._input_size
+
     def detect(self, image_bytes: bytes) -> dict:
         started = perf_counter()
         image = decode_image(image_bytes)
         decoded_at = perf_counter()
         try:
-            result = self.model.predict(image, imgsz=640, conf=0.25, device=self.device,
+            result = self.model.predict(image, imgsz=getattr(self, "input_size", 640), batch=1, conf=0.25, device=self.device,
                                         rect=self.input_shape != "square",
                                         iou=.7, agnostic_nms=False, verbose=False, save=False, max_det=50)[0]
+            if hasattr(result, "orig_shape") and tuple(result.orig_shape) != (image.height, image.width):
+                raise ValueError("Prediction coordinates do not refer to the decoded image")
             objects = []
             if result.boxes is not None:
                 for box in result.boxes:
@@ -87,6 +97,10 @@ class CombinedDetector:
         self.labels = dict(enumerate(COMBINED_LABELS))
         components = [{key: detector.artifact[key] for key in ("model_version", "sha256", "input_shape")}
                       for detector in (waste, general)]
+        # Preserve the released 640 bundle identity; nondefault resolutions are separately bound.
+        for component, detector in zip(components, (waste, general)):
+            if detector.artifact.get("input_size", 640) != 640:
+                component["input_size"] = detector.artifact["input_size"]
         identity = {"components": components, "merge": "same-class-iou065-max50-v1", "labels": COMBINED_LABELS}
         checksum = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
         self.artifact = {"model_version": f"broad-coco-{checksum[:12]}", "sha256": checksum,
@@ -115,9 +129,9 @@ class CombinedDetector:
                 "timing_ms": {"total": round((perf_counter() - started) * 1000, 2)}}
 
 
-def load_detector(model_path: Path, device="cpu", input_shape="adaptive", general_model_path: Path | None = None):
-    primary = YoloDetector(model_path, device, input_shape)
+def load_detector(model_path: Path, device="cpu", input_shape="adaptive", general_model_path: Path | None = None, *, input_size=640):
+    primary = YoloDetector(model_path, device, input_shape, input_size)
     if general_model_path is None:
         return primary
-    general = YoloDetector(general_model_path, device, input_shape)
+    general = YoloDetector(general_model_path, device, input_shape, input_size)
     return CombinedDetector(primary, general)

@@ -126,6 +126,7 @@ def stability(selection, reports):
         decisions.append({"seed": seed, **decision})
     passed = all(not row["reasons"] for row in decisions)
     return {"status": "VALIDATION_STABLE_PENDING_RESOLUTION_REVIEW" if passed else "KEEP_BASELINE_UNSTABLE",
+            "input_sha256": selection["input_sha256"], "selected_config": selection["selected_config"],
             "branch": selection["branch"], "selected_candidate_sha256": selection["selected_candidate_sha256"] if passed else None,
             "seed_results": decisions, "mean_focus_f1_gain": sum(r["gain"] for r in decisions)/3,
             "minimum_focus_f1_gain": min(r["gain"] for r in decisions), "promoted": False, "holdout_opened": False}
