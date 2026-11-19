@@ -81,7 +81,7 @@ def create_mock_app(*, scenario="normal", clock=None, ttl_seconds=86400, uuid_fa
             raise HTTPException(401, detail="UNAUTHENTICATED")
         return MOCK_TOKENS[credentials.credentials]
 
-    app = FastAPI(title="WasteNot PUBLIC CONTRACT MOCK — not production Go", version=API_VERSION)
+    app = FastAPI(title="WasteNot public contract mock (not the production Go API)", version=API_VERSION)
     app.add_middleware(BoundedHTTP, maximum=MAX_BYTES + 65536, mock=True)
     configure_errors(app)
     app.state.sessions, app.state.cache = sessions, cache

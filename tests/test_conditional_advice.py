@@ -22,7 +22,7 @@ def test_empty_ordinary_conditions_produce_conditional_suggestion_without_invent
         "condition.reusable",
         "reuse_intention",
     }
-    assert "belum" in result.reason.lower() and result.source_urls
+    assert "missing" in result.reason.lower() and result.source_urls
     assert context.condition.cleanliness == "UNKNOWN" and context.reuse_intention is None
 
 

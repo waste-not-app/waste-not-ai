@@ -15,9 +15,9 @@ from .taxonomy import BROAD_LABELS, COCO_LABELS, COMBINED_LABELS
 class YoloDetector:
     def __init__(self, model_path: Path, device: str = "cpu", input_shape: str = "adaptive"):
         if input_shape not in {"adaptive", "square"}:
-            raise ValueError("Input shape harus adaptive atau square.")
+            raise ValueError("Input shape must be adaptive or square.")
         if not model_path.is_file():
-            raise ValueError("Model tidak ditemukan. Jalankan perintah fetch-assets terlebih dahulu.")
+            raise ValueError("Model not found. Run fetch-assets first.")
         # Configure before importing Ultralytics: no telemetry or automatic requirements install.
         os.environ.setdefault("YOLO_CONFIG_DIR", str(Path(".cache-ai/ultralytics").resolve()))
         os.environ.setdefault("MPLCONFIGDIR", str(Path(".cache-ai/matplotlib").resolve()))
@@ -102,7 +102,7 @@ class CombinedDetector:
 
     def __init__(self, waste, general):
         if waste.labels != dict(enumerate(BROAD_LABELS)) or general.labels != dict(enumerate(COCO_LABELS)):
-            raise ValueError("Model pendamping memerlukan checkpoint Broad Waste dan COCO lengkap.")
+            raise ValueError("The companion model needs both the Broad Waste and COCO checkpoints.")
         self.waste, self.general = waste, general
         self.labels = dict(enumerate(COMBINED_LABELS))
         components = [
@@ -125,7 +125,7 @@ class CombinedDetector:
         waste = self.waste.detect(image_bytes)
         general = self.general.detect(image_bytes)
         if waste["image"] != general["image"]:
-            raise ValueError("Dimensi gambar kedua checkpoint tidak cocok.")
+            raise ValueError("The image dimensions from the two checkpoints do not match.")
         objects = []
         for obj in sorted(waste["objects"] + general["objects"], key=lambda obj: obj["confidence"], reverse=True):
             candidate = RawDetection(

@@ -55,4 +55,4 @@ def test_compact_selection_preserves_method_evidence_and_prose_validation(model,
     else:
         assert result.status == 'READY' and result.recommended_method == 'RECYCLE'
         assert result.prototype_only is True
-        assert 'Pilihan metode dan evidence untuk validasi server.' not in result.reason
+        assert 'Method and evidence choice for server validation.' not in result.reason

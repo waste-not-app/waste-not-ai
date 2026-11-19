@@ -9,7 +9,7 @@ from pydantic import ValidationError
 from .catalog import confirm_context, load_catalog
 from .contracts import Context, Evidence, Guide, ModelSuggestion, Recommendation
 from .guide_audit import validate_guides
-from .handling_guidance import handling_guidance
+from .handling_guidance import handling_guidance, in_sentence
 from .sources import describe_sources
 
 
@@ -91,7 +91,7 @@ def load_guides(path: Path | None = None) -> list[Guide]:
                 update={'evidence': [*guide.evidence, *additions], 'version': guide.version + 1}
             )
     if len({x.object_key for x in guides}) != len(guides):
-        raise ValueError("Panduan duplikat untuk object_key.")
+        raise ValueError("Duplicate guide for object_key.")
     for guide in guides:
         ids = [x.id for x in guide.evidence]
         if len(set(ids)) != len(ids):
@@ -208,43 +208,41 @@ def conditional_evidence(context: Context, guide: Guide, *, risk: bool):
 
 def conditional_text(method, label, unknown):
     descriptions = {
-        ("cleanliness", "CLEAN"): "Periksa kebersihan; jalur ini memerlukan benda yang bersih.",
-        ("cleanliness", "DIRTY"): "Jika benda kotor, periksa jenis kotorannya sebelum mengikuti langkah pencucian.",
-        ("integrity", "INTACT"): "Periksa retak dan kerusakan; gunakan jalur ini hanya bila benda utuh.",
-        ("reusable", "YES"): "Pastikan benda masih layak digunakan sesuai fungsinya.",
-        ("reusable", "NO"): "Pastikan benda memang tidak lagi layak digunakan sebelum memilih residu.",
-        ("reuse_intention", True): "Lanjutkan penggunaan ulang hanya jika kamu ingin memakainya lagi.",
-        ("reuse_intention", False): "Pilih residu hanya setelah memastikan penggunaan ulang tidak dipilih.",
-        ("cleanable", "YES"): "Pastikan kotoran dapat dibersihkan dengan cara biasa sesuai petunjuk bahan.",
+        ("cleanliness", "CLEAN"): "Check that it's clean. This route needs a clean item.",
+        ("cleanliness", "DIRTY"): "If it's dirty, check what the dirt is before following the washing steps.",
+        ("integrity", "INTACT"): "Check for cracks and damage. Use this route only if the item is intact.",
+        ("reusable", "YES"): "Make sure the item still works for its purpose.",
+        ("reusable", "NO"): "Make sure the item really can't be used anymore before choosing residual waste.",
+        ("reuse_intention", True): "Go ahead with reuse only if you want to keep using it.",
+        ("reuse_intention", False): "Choose residual waste only after you've decided not to reuse it.",
+        ("cleanable", "YES"): "Make sure the dirt washes off normally, following the material's instructions.",
         (
             "soiling",
             "FOOD_DRINK",
-        ): "Pastikan kotoran hanya sisa makanan/minuman biasa; jangan gunakan aturan ini untuk kontaminasi berbahaya.",
+        ): "Make sure the dirt is only ordinary food or drink residue. Don't use this rule for hazardous contamination.",
         (
             "soiling",
             "DUST",
-        ): "Pastikan kotoran hanya debu biasa; jangan gunakan aturan ini untuk kontaminasi berbahaya.",
+        ): "Make sure the dirt is only ordinary dust. Don't use this rule for hazardous contamination.",
         (
             "recycling_access",
             "YES",
-        ): "Konfirmasikan pengelola yang menerima jenis dan kondisi benda ini sebelum menyerahkan.",
+        ): "Confirm a collector accepts this type of item in this condition before you hand it over.",
         (
             "recycling_access",
             "NO",
-        ): "Periksa program pengumpulan yang sesuai; pilih residu hanya jika tidak ada penerima sesuai panduan.",
+        ): "Look for a suitable collection program. Choose residual waste only if no collector named in the guide accepts it.",
     }
     labels = {"REUSE": "Reuse", "RECYCLE": "Recycle", "TRASH": "Trash"}
     actions = {
-        "REUSE": "Gunakan kembali hanya setelah kebersihan, keutuhan, kelayakan dan niat pakai ulang dipastikan.",
-        "RECYCLE": "Periksa material/kebersihan dan pastikan pengelola menerima benda sebelum menyerahkan.",
-        "TRASH": "Jangan langsung membuang; pastikan syarat residu pada panduan terpenuhi terlebih dahulu.",
+        "REUSE": "Reuse it only after you've confirmed it's clean, intact, usable, and something you want to keep using.",
+        "RECYCLE": "Check the material and cleanliness, and make sure a collector accepts it before you hand it over.",
+        "TRASH": "Don't throw it away yet. First make sure it meets the guide's conditions for residual waste.",
     }
-    reason = (
-        f"Saran sementara: {labels[method]} untuk {label}. Informasi yang diperlukan belum lengkap. {actions[method]}"
-    )
+    reason = f"Provisional advice: {labels[method]} for this {in_sentence(label)}. Some information is still missing. {actions[method]}"
     steps = list(
         dict.fromkeys(
-            descriptions.get((key, expected), "Periksa kondisi yang belum diketahui sebelum bertindak.")
+            descriptions.get((key, expected), "Check the unknown conditions before acting.")
             for key, expected in unknown.items()
         )
     )
@@ -294,7 +292,7 @@ def recommend(
             filter(
                 None,
                 [
-                    "Ada risiko khusus. Ikuti petunjuk pengemasan dan pengelola yang sesuai; jangan membuang benda berbahaya sembarangan.",
+                    "There is a special risk. Follow the packaging instructions and use a suitable handler. Never dump hazardous items.",
                     caution,
                 ],
             )
@@ -323,7 +321,7 @@ def recommend(
         return unavailable(
             "RISK_DETAILS_REQUIRED",
             missing=["risk_type"],
-            reason="Risiko khusus dicentang, tetapi jenisnya belum dijelaskan. Pilih jenis risiko agar kotor biasa tidak disamakan dengan kontaminasi berbahaya.",
+            reason="You marked a special risk but didn't say which kind. Choose the risk type so ordinary dirt isn't treated as hazardous contamination.",
         )
     if (
         context.recommendation_goal != "PREVENTION"
@@ -332,7 +330,7 @@ def recommend(
     ):
         return unavailable(
             "RISK_NOT_COVERED",
-            reason="Risiko listrik/baterai memerlukan jalur elektronik khusus. Panduan bahan biasa tidak digunakan; periksa jenis barang dan ikuti arahan khusus di bawah.",
+            reason="Electrical or battery risks need a specialist electronics route, so the regular material guide doesn't apply. Check the item type and follow the specialist advice below.",
         )
     evidence = eligible_evidence(context, guide, risk=bool(risk))
     conditional = []
@@ -353,14 +351,14 @@ def recommend(
         ):
             return unavailable(
                 "RISK_NOT_COVERED",
-                reason="Panduan benda ini belum mencakup kontaminasi yang kamu laporkan. Jangan gunakan panduan cuci biasa atau buang sebagai residu biasa; minta arahan pengelola limbah yang sesuai.",
+                reason="This item's guide doesn't cover the contamination you reported. Don't follow the regular washing advice or put it in residual waste. Ask a suitable waste handler for advice.",
             )
         missing = missing_context(context, guide, risk=bool(risk))
         if missing:
             return unavailable(
                 "CONTEXT_REQUIRED",
                 missing=missing,
-                reason="Belum cukup informasi untuk memilih penanganan benda saat ini. Lengkapi kondisi yang diketahui; sistem tidak menggantinya dengan saran Reduce.",
+                reason="There isn't enough information to choose how to handle this item yet. Fill in what you know about its condition. We won't swap in Reduce advice instead.",
             )
         return unavailable("RISK_NOT_COVERED" if risk else "NO_ALLOWED_METHOD")
     payload = {
@@ -428,9 +426,9 @@ def recommend(
     source_urls = list(dict.fromkeys(url for e in cited for url in (e.source_urls or guide.source_urls)))
     steps = list(dict.fromkeys(step for e in cited for step in (e.steps or guide.steps)))
     if conditional:
-        steps = [*verification_steps, "Ikuti langkah berikut hanya setelah syarat di atas terpenuhi.", *steps]
+        steps = [*verification_steps, "Follow these steps only after the conditions above are met.", *steps]
         caution = " ".join(
-            filter(None, ["Saran bersyarat; informasi yang kosong tidak dianggap sudah terkonfirmasi.", caution])
+            filter(None, ["Conditional advice. Anything left blank is not treated as confirmed.", caution])
         )
     return Recommendation(
         status="READY",
