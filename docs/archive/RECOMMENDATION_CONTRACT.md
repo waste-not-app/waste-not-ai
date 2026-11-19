@@ -90,7 +90,7 @@ Konteks CLI: [Reduce](../../examples/context-reduce.json), [Reuse](../../example
 
 ## Sumber draf
 
-- [EPA: What You Can Do About Climate Change — Waste](https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste): prinsip pencegahan, penggunaan ulang dan daur ulang.
+- [EPA: What You Can Do About Climate Change, Waste](https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste): prinsip pencegahan, penggunaan ulang dan daur ulang.
 - [EPA: Common Recyclables](https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables): panduan bahan yang dapat didaur ulang.
 - [Cornwall Council: Toothbrushes](https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/toothbrushes/): contoh sikat plastik yang tidak masuk pengumpulan daur ulang biasa, sebagai sumber spesifik draf Trash.
 - [Cornwall Council: Broken glass](https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/): jalur residu untuk pecahan kaca dengan pengemasan pelindung dan label.

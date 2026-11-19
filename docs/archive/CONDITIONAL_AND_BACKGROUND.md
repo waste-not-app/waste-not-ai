@@ -12,7 +12,7 @@ Contoh minimal:
 {"object_key":"ceramic_cup","category":"OTHER"}
 ```
 
-Hasil dapat berupa **Reuse — saran sementara**, alasan, sumber dan langkah pemeriksaan. Reuse baru diikuti setelah keutuhan, kelayakan, kebersihan dan keinginan memakai ulang dipastikan. Botol PET yang kondisinya belum diketahui dapat mendapat **Recycle bersyarat**, tanpa mengklaim fasilitas sudah menerima. Jika ada kondisi yang sudah diisi, saran tidak boleh bertentangan dengannya.
+Hasil dapat berupa **Reuse, saran sementara**, alasan, sumber dan langkah pemeriksaan. Reuse baru diikuti setelah keutuhan, kelayakan, kebersihan dan keinginan memakai ulang dipastikan. Botol PET yang kondisinya belum diketahui dapat mendapat **Recycle bersyarat**, tanpa mengklaim fasilitas sudah menerima. Jika ada kondisi yang sudah diisi, saran tidak boleh bertentangan dengannya.
 
 | Field respons | Arti |
 |---|---|
