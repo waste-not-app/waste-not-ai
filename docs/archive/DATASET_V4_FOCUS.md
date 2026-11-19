@@ -51,7 +51,7 @@ Screening dilakukan Codex melalui contact sheet beranotasi dan pemeriksaan judul
 
 Benchmark `camera-replay-v1.json` mempertahankan SHA-256 `fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa`. Data tambahan tidak mempunyai kecocokan pHash berjarak paling banyak lima bit dengan benchmark. Sebanyak 47 foto test lama Broad Waste memang menjadi sumber benchmark dan tetap berada pada test.
 
-Pemeriksaan antarpaket juga menguji hash identik, kelompok proksi dan pHash dekat. Hasilnya tidak memiliki konflik split. Kelompok berdasarkan metadata dan pHash masih merupakan pendekatan terhadap adegan fisik yang benar-benar independen. [Laporan audit kebocoran](../evaluations/focus-v4-leakage-audit.json).
+Pemeriksaan antarpaket juga menguji hash identik, kelompok proksi dan pHash dekat. Hasilnya tidak memiliki konflik split. Kelompok berdasarkan metadata dan pHash masih merupakan pendekatan terhadap adegan fisik yang benar-benar independen. [Laporan audit kebocoran](../../evaluations/focus-v4-leakage-audit.json).
 
 Foto COCO train 2017 sudah tersedia saat pretraining model COCO. Penggunaannya di sini merupakan penyeimbangan ulang untuk fine-tuning. Foto COCO val disisihkan untuk validation/test eksperimen fine-tuning setelah mengecualikan benchmark, tetapi validation COCO juga umum digunakan dalam pengembangan checkpoint asal. Tambahan Open Images memberikan sumber foto berbeda. Angka evaluasi berikutnya perlu menyebutkan riwayat sumber ini.
 
@@ -68,7 +68,7 @@ Foto TACO tambahan memakai lisensi CC BY 2.0 yang diperiksa per foto melalui met
 .\.venv-ai\Scripts\python.exe -m pytest tests -q -p no:cacheprovider
 ```
 
-Kedua verifier lulus pemeriksaan file gambar, checksum, geometri label, hak sumber dan daftar split. Pembulatan tepi pada 15 anotasi DrinkingWaste lama memakai toleransi asli 0,002. Seluruh 245 tes Python lulus. [Verifikasi kardus](../evaluations/focus-v4-cardboard-verification.json), [verifikasi model umum](../evaluations/focus-v4-general-verification.json).
+Kedua verifier lulus pemeriksaan file gambar, checksum, geometri label, hak sumber dan daftar split. Pembulatan tepi pada 15 anotasi DrinkingWaste lama memakai toleransi asli 0,002. Seluruh 245 tes Python lulus. [Verifikasi kardus](../../evaluations/focus-v4-cardboard-verification.json), [verifikasi model umum](../../evaluations/focus-v4-general-verification.json).
 
 Untuk akuisisi dan build ulang, `prepare_focus_datasets.py` menyediakan tahap `acquire-cardboard`, `acquire-general`, `acquire-openimages`, `build-cardboard`, `build-general` dan `audit`. Cache sumber serta review berada di `data/local/downloads/focus-v4/`. Builder meminta folder output baru agar snapshot hasil sebelumnya terjaga. Snapshot sumber, dataset lokal dan gambar berada dalam jalur yang diabaikan Git, sehingga clone baru memerlukan proses akuisisi dan review ulang atau salinan paket lokal.
 

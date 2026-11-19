@@ -4,7 +4,7 @@ Perluasan objek setelah eksperimen empat kelas ini didokumentasikan terpisah pad
 
 Eksperimen lokal ini memakai **Drinking Waste Classification v2** dari Arkadiy
 Serezhkin. Lihat [riset sumber](DATASET_RESEARCH.md) dan
-[atribusi/lisensi](DATASET_NOTICES.md). Foto, arsip, anotasi, log training, dan
+[atribusi/lisensi](../DATASET_NOTICES.md). Foto, arsip, anotasi, log training, dan
 bobot tetap di direktori lokal yang diabaikan Git. Foto kamera pengguna dan
 sampel TACO smoke **tidak** dimasukkan ke training.
 

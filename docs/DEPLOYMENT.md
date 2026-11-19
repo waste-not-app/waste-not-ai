@@ -7,7 +7,7 @@ Hanya worker AI yang dikelola repo ini. Go blue-green dan PostgreSQL dikelola ba
 - SSH `proxy.bccdev.id:11049`, alias operator `cp-bcc`; deployment memerlukan hak administrator untuk helper/systemd.
 - Python3.12 CPU venv `/opt/wastenot-ai/venv`, dipasang dengan `--require-hashes -r requirements-cpu.lock` dan pemeriksaan dependency. Fingerprint yang ditinjau tersimpan root-only di `/etc/wastenot/ai-requirements.sha256`.
 - Direktori model `/opt/wastenot-ai/models` memuat setiap checkpoint yang dipatok `model.json`. Isi `AI_MODEL_DIRECTORY=/opt/wastenot-ai/models` pada konfigurasi worker untuk memilih bundle sesuai manifest release. Runtime dan helper deployment memeriksa checksum setiap komponen serta identitas model gabungan. Konfigurasi lama dengan `AI_MODEL_PATH` dan `AI_MODEL_SHA256` tetap didukung untuk release satu model.
-- Akun OS `wastenot-yolo` dan `wastenot-decisions`, unit hardened dari [deploy/systemd](../deploy/systemd/), serta rilis awal valid pada `/opt/wastenot-ai/current`. Helper menolak first install tanpa rilis pemulihan; provisioning host baru adalah langkah operator terpisah.
+- Akun OS `wastenot-yolo` dan `wastenot-decisions`, unit hardened dari [deploy/systemd](../deploy/systemd), serta rilis awal valid pada `/opt/wastenot-ai/current`. Helper menolak first install tanpa rilis pemulihan; provisioning host baru adalah langkah operator terpisah.
 - `/etc/wastenot/ai-detection.env` dan `ai-recommendation.env` root:root0600. Dua token layanan berbeda; key/model Gemini hanya di file rekomendasi. Jangan menaruh key di repo, log atau parameter command.
 - File policy guide operator di luar direktori release tetap read-only dan tidak ditimpa CD. Source draf di repo tidak otomatis diterbitkan.
 

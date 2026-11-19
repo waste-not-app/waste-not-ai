@@ -4,7 +4,7 @@
 kaleng aluminium, botol kaca, botol HDPE, dan botol PET. Ini kandidat eksperimen
 botol/kaleng; model COCO tetap menjadi default demo dengan cakupan luas.
 Sumber/lisensi dan reproduksi: [fine-tuning](FINE_TUNING.md),
-[riset dataset](DATASET_RESEARCH.md), [notices](DATASET_NOTICES.md).
+[riset dataset](DATASET_RESEARCH.md), [notices](../DATASET_NOTICES.md).
 
 ## Training dan artifact
 

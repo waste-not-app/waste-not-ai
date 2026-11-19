@@ -14,7 +14,7 @@ Threshold 0,65 dipilih dari hasil validation v4 sebelum memeriksa test dan repla
 | Test F1 | 44,9% | 36,4% |
 | F1 gabungan pada benchmark standar | 48,0% | 47,4% |
 
-Validation memuat 51 anotasi kardus dan test memuat 30. Pada test, kehilangan tiga deteksi benar melebihi pengurangan dua salah deteksi. Kandidat berstatus `REJECTED_ON_TEST` dan konfigurasi aktif memakai threshold 0,50. Unit test memastikan kandidat evaluasi terisolasi dari runtime. [Hasil evaluasi](../evaluations/cardboard-v4-calibration.json), [kandidat profil](../evaluations/cardboard-v4-threshold-candidate.json).
+Validation memuat 51 anotasi kardus dan test memuat 30. Pada test, kehilangan tiga deteksi benar melebihi pengurangan dua salah deteksi. Kandidat berstatus `REJECTED_ON_TEST` dan konfigurasi aktif memakai threshold 0,50. Unit test memastikan kandidat evaluasi terisolasi dari runtime. [Hasil evaluasi](../../evaluations/cardboard-v4-calibration.json), [kandidat profil](../../evaluations/cardboard-v4-threshold-candidate.json).
 
 Replay menggunakan prediksi yang tersimpan dan memeriksa bahwa skor awal dapat direproduksi. Cache validation/test menyimpan prediksi mulai confidence 0,50, sehingga mencakup semua prediksi yang diperlukan untuk kenaikan threshold ini. Latency inference tidak diukur ulang dalam eksperimen threshold.
 
@@ -34,7 +34,7 @@ Setelah hasil threshold ditolak dan unduhan foto baru gagal, checkpoint COCO11s 
 | Salah deteksi kulkas test | 1 | 4 |
 | mAP50 test seluruh kelas yang memiliki GT | 55,2% | 63,1% |
 
-Validation terdiri dari 43 foto dan test 42 foto. Checkpoint COCO11s dipilih setelah hasil validation, kemudian dievaluasi pada test dan benchmark kamera. Hasil ini mengukur perubahan kapasitas model pendamping. Pengujian ini menggunakan bobot pretrained COCO11s yang tersedia lokal. [Perbandingan model umum dan provenance dataset](../evaluations/general-coco11s-comparison.json).
+Validation terdiri dari 43 foto dan test 42 foto. Checkpoint COCO11s dipilih setelah hasil validation, kemudian dievaluasi pada test dan benchmark kamera. Hasil ini mengukur perubahan kapasitas model pendamping. Pengujian ini menggunakan bobot pretrained COCO11s yang tersedia lokal. [Perbandingan model umum dan provenance dataset](../../evaluations/general-coco11s-comparison.json).
 
 ## Benchmark gabungan
 
@@ -56,13 +56,13 @@ Sebagian foto test Broad Waste juga menjadi sumber benchmark, sehingga hasil tes
 | Salah deteksi kardus | 5 | 5 |
 | Median CPU | 154 ms | 211 ms |
 
-Pada simulasi redup, F1 meningkat 48,4% menjadi 51,6%. Pendamping lebih besar meningkatkan recall bersama tambahan biaya CPU dan sedikit tambahan salah deteksi total. Runtime benchmark memakai Python 3.13.1, Torch 2.14.1 CPU dan Ultralytics 8.4.183. Variasi kondisi eksekusi dapat memengaruhi waktu, dan pemeriksaan singkat lain juga berjalan pada sebagian pengukuran. [Benchmark lengkap](../evaluations/camera-replay-v1-v4-coco11s-comparison.md), [data per foto](../evaluations/camera-replay-v1-v4-coco11s-comparison.json).
+Pada simulasi redup, F1 meningkat 48,4% menjadi 51,6%. Pendamping lebih besar meningkatkan recall bersama tambahan biaya CPU dan sedikit tambahan salah deteksi total. Runtime benchmark memakai Python 3.13.1, Torch 2.14.1 CPU dan Ultralytics 8.4.183. Variasi kondisi eksekusi dapat memengaruhi waktu, dan pemeriksaan singkat lain juga berjalan pada sebagian pengukuran. [Benchmark lengkap](../../evaluations/camera-replay-v1-v4-coco11s-comparison.md), [data per foto](../../evaluations/camera-replay-v1-v4-coco11s-comparison.json).
 
 Foto ponsel biru pengguna diperiksa setelah pemilihan model melalui endpoint demo nyata. Foto tersebut masih diprediksi remote, dengan skor 64,2%, dibanding 87,8% pada pendamping lama. Foto ini menjadi diagnosis terpisah dan belum menjadi data training atau benchmark utama. Hasil agregat yang lebih baik belum menyelesaikan kasus ponsel tersebut.
 
 ## Data ponsel dan langkah pengambilan foto
 
-Pencarian sumber publik menghasilkan kandidat metadata, tetapi unduhan asli Wikimedia membalas HTTP 403 dan enam kandidat Flickr membalas HTTP 502. Ada **nol foto training baru** yang berhasil diperoleh pada upaya ini. Setiap kandidat masih memerlukan pemeriksaan lisensi per foto, screening visual dan anotasi bbox. [Audit akuisisi](../evaluations/phone-rear-v2-acquisition.json).
+Pencarian sumber publik menghasilkan kandidat metadata, tetapi unduhan asli Wikimedia membalas HTTP 403 dan enam kandidat Flickr membalas HTTP 502. Ada **nol foto training baru** yang berhasil diperoleh pada upaya ini. Setiap kandidat masih memerlukan pemeriksaan lisensi per foto, screening visual dan anotasi bbox. [Audit akuisisi](../../evaluations/phone-rear-v2-acquisition.json).
 
 Tambahan yang diperlukan adalah foto kamera baru dengan izin penggunaan untuk latihan, terutama ponsel tampak belakang dan tiga kamera. Sertakan tampak depan, sudut miring, genggaman tangan dan variasi pencahayaan, serta remote sebagai pembanding. Identitas benda fisik dan sesi pengambilan perlu dicatat agar pembagian train/validation/test menghindari duplikasi adegan. Foto benchmark dan screenshot diagnosis tetap dikelola sebagai evaluasi.
 
@@ -72,7 +72,7 @@ Tambahan yang diperlukan adalah foto kamera baru dengan izin penggunaan untuk la
 .\demo-camera-v4.bat
 ```
 
-Launcher membuka konfigurasi eksperimen terbaru pada `http://127.0.0.1:8100`, dengan versi `broad-coco-b0f633193403`. Endpoint konfigurasi dan deteksi sudah diperiksa melalui HTTP untuk 88 label gabungan, threshold kardus 0,50, checksum model umum, foto kardus yang bisa dipilih dan pembersihan sesi. Kamera fisik baru belum diuji. [Pemeriksaan demo](../evaluations/v4-coco11s-demo-verification.json).
+Launcher membuka konfigurasi eksperimen terbaru pada `http://127.0.0.1:8100`, dengan versi `broad-coco-b0f633193403`. Endpoint konfigurasi dan deteksi sudah diperiksa melalui HTTP untuk 88 label gabungan, threshold kardus 0,50, checksum model umum, foto kardus yang bisa dipilih dan pembersihan sesi. Kamera fisik baru belum diuji. [Pemeriksaan demo](../../evaluations/v4-coco11s-demo-verification.json).
 
 Bobot pendamping berada di `artifacts/models/yolo11s.pt`, dengan SHA-256 `85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5`. Semua dugaan tetap memerlukan konfirmasi pengguna. Dataset publik, dukungan kelas kecil dan benchmark yang sudah diamati selama pengembangan membuat hasil ini tetap eksploratif.
 

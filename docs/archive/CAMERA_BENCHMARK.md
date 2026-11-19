@@ -1,6 +1,6 @@
 # Benchmark replay kamera v1
 
-7 November 2026. Benchmark membandingkan checkpoint Broad Waste v3, YOLO11n COCO, dan adapter gabungan yang dipakai demo. Daftar foto dan anotasi dibekukan sebelum inference. Hasil lengkap tersedia dalam [laporan perbandingan](../evaluations/camera-replay-v1-comparison.md), [JSON prediksi dan skor](../evaluations/camera-replay-v1-comparison.json), serta [CSV kesalahan](../evaluations/camera-replay-v1-comparison-errors.csv).
+7 November 2026. Benchmark membandingkan checkpoint Broad Waste v3, YOLO11n COCO, dan adapter gabungan yang dipakai demo. Daftar foto dan anotasi dibekukan sebelum inference. Hasil lengkap tersedia dalam [laporan perbandingan](../../evaluations/camera-replay-v1-comparison.md), [JSON prediksi dan skor](../../evaluations/camera-replay-v1-comparison.json), serta [CSV kesalahan](../../evaluations/camera-replay-v1-comparison-errors.csv).
 
 ## Hasil utama
 
@@ -18,7 +18,7 @@ Perbedaan sumber juga besar. Pada 15 foto DrinkingWaste dengan 23 objek, v3 dan 
 
 Pada transformasi redup, recall gabungan berubah dari 33,3% menjadi 32,4%, dan F1 dari 43,0% menjadi 43,8%. Jumlah FP berkurang dari 48 menjadi 35. Respons ini khusus pada pengurangan brightness yang diterapkan pada sampel tetap.
 
-![Recall per kelas dan waktu CPU](../evaluations/camera-replay-v1-comparison.png)
+![Recall per kelas dan waktu CPU](../../evaluations/camera-replay-v1-comparison.png)
 
 ## Data dan cakupan
 

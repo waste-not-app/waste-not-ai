@@ -31,7 +31,7 @@ Request publik menambahkan `allow_conditional` default **true**. Untuk alur yang
 
 Respons menambahkan recommendation_basis (CONFIRMED/CONDITIONAL/null) dan conditions_to_verify (field path yang sama seperti missing_context). READY berarti saran siap ditinjau, bukan bukti tindakan telah dilaksanakan. Frontend menampilkan label “Saran sementara”, syarat dan sumber; tidak mengisi nilai UNKNOWN atau menyimpan aktivitas otomatis. Perubahan kondisi membatalkan saran lama. Demo browser sudah memakai alur ini.
 
-OpenAPI dan [contoh conditional-cup](../contracts/v1/examples/conditional-cup-response.json) telah diregenerasi. Python tetap memiliki aturan; Go tidak mengimplementasikan ulang seleksi evidence. Semua panduan tetap DRAFT untuk demo sampai review lokal yang sebenarnya.
+OpenAPI dan [contoh conditional-cup](../../contracts/v1/examples/conditional-cup-response.json) telah diregenerasi. Python tetap memiliki aturan; Go tidak mengimplementasikan ulang seleksi evidence. Semua panduan tetap DRAFT untuk demo sampai review lokal yang sebenarnya.
 
 ```powershell
 # Kamera dengan model terlatih:
@@ -45,7 +45,7 @@ OpenAPI dan [contoh conditional-cup](../contracts/v1/examples/conditional-cup-re
 .\.venv-ai\Scripts\python.exe scripts/evaluate_recommendations.py --provider gemini --max-calls 16
 ```
 
-44/44 skenario offline lulus. Empat kasus baru membiarkan seluruh field opsional kosong (cangkir, PET, kaleng, baterai) dan lulus pada Gemini nyata. Run live penuh menghasilkan 42/44: dua kasus gagal karena LLM_UNAVAILABLE, kemudian dua kasus tersebut lulus pada percobaan eksplisit terpisah. Ini tidak dilaporkan sebagai 44/44 dalam satu run. Laporan [run penuh](../evaluations/recommendation-policy06-gemini-20261020.json), [percobaan ulang dua kasus](../evaluations/recommendation-policy06-provider-recheck-20261020.json), dan [fixture](../evaluations/recommendation-policy06-fixture-20261020.json). Enam kasus adversarial tetap output fixture yang disuntikkan; tidak dihitung sebagai panggilan Gemini.
+44/44 skenario offline lulus. Empat kasus baru membiarkan seluruh field opsional kosong (cangkir, PET, kaleng, baterai) dan lulus pada Gemini nyata. Run live penuh menghasilkan 42/44: dua kasus gagal karena LLM_UNAVAILABLE, kemudian dua kasus tersebut lulus pada percobaan eksplisit terpisah. Ini tidak dilaporkan sebagai 44/44 dalam satu run. Laporan [run penuh](../../evaluations/recommendation-policy06-gemini-20261020.json), [percobaan ulang dua kasus](../../evaluations/recommendation-policy06-provider-recheck-20261020.json), dan [fixture](../../evaluations/recommendation-policy06-fixture-20261020.json). Enam kasus adversarial tetap output fixture yang disuntikkan; tidak dihitung sebagai panggilan Gemini.
 
 ## Memahami background pada confusion matrix
 
@@ -53,7 +53,7 @@ Model empat kelas tidak dilatih untuk mengeluarkan kelas kelima bernama backgrou
 
 Matriks test lama dibuat dengan default validator deteksi confidence **0,001**, sementara demo meninjau kandidat mulai 0,50. Ini menjelaskan mengapa jumlah kotak salah pada gambar matriks jauh lebih besar. Mengubah threshold tampilan matriks tidak menghilangkan kesalahan model; pengukuran harus menyebut confidence, matching IoU dan split.
 
-Pada **681 gambar val yang sama**, batas 0,50 dan matching IoU 0,45 versi Ultralytics menghasilkan 25 prediksi tanpa pasangan (14 kaca, 6 HDPE, 5 PET). Banyak kesalahan lain justru pertukaran kelas; misalnya 55 anotasi kaleng dipasangkan dengan prediksi kaca. Lihat [matriks val pada 0,50](../evaluations/yolo-original-val-conf050.png). Ini berbeda dari scorer class-aware pada IoU 0,50 yang digunakan untuk menghitung precision/recall, sehingga jumlah TP/FP tidak dicampur antarprotokol.
+Pada **681 gambar val yang sama**, batas 0,50 dan matching IoU 0,45 versi Ultralytics menghasilkan 25 prediksi tanpa pasangan (14 kaca, 6 HDPE, 5 PET). Banyak kesalahan lain justru pertukaran kelas; misalnya 55 anotasi kaleng dipasangkan dengan prediksi kaca. Lihat [matriks val pada 0,50](../../evaluations/yolo-original-val-conf050.png). Ini berbeda dari scorer class-aware pada IoU 0,50 yang digunakan untuk menghitung precision/recall, sehingga jumlah TP/FP tidak dicampur antarprotokol.
 
 ## Eksperimen training
 
@@ -66,7 +66,7 @@ Kandidat pertama fine-tune 12 epoch (early stop), best epoch 4, menghasilkan has
 | Sebelum | 558 | 122 | 123 | 82,06% | 81,94% |
 | Background v1 | 515 | 159 | 166 | 76,41% | 75,62% |
 
-Kandidat ini **ditolak untuk mengganti model demo**. Kaleng membaik precision-nya, tetapi PET lebih sering salah kelas dan recall kaca turun. [Report lengkap](../evaluations/background-v1-validation-20261020.json), [matriks kandidat](../evaluations/yolo-background-v1-val-conf050.png). Menambah negatif tidak otomatis menyelesaikan pertukaran kelas.
+Kandidat ini **ditolak untuk mengganti model demo**. Kaleng membaik precision-nya, tetapi PET lebih sering salah kelas dan recall kaca turun. [Report lengkap](../../evaluations/background-v1-validation-20261020.json), [matriks kandidat](../../evaluations/yolo-background-v1-val-conf050.png). Menambah negatif tidak otomatis menyelesaikan pertukaran kelas.
 
 Script reproduksi (memerlukan environment training dan dataset lokal):
 
@@ -96,7 +96,7 @@ Pada 681 gambar val, conf 0,50, scorer class-aware IoU 0,50:
 
 Padding saja membuat perbedaan besar pada kandidat shape-v2. Namun pada perbandingan **sama-sama persegi**, FP hanya turun sekitar 11,9%, belum target 25%. Model utama adaptif juga masih mempunyai recall sedikit lebih tinggi. Kandidat kedua tidak menggantikan model utama. Tidak ada klaim bahwa model baru sudah meningkatkan akurasi dunia nyata.
 
-Laporan [adaptif](../evaluations/background-shape-adaptive-validation-20261020.json), [persegi](../evaluations/background-shape-square-validation-20261020.json), dan [matriks persegi](../evaluations/yolo-background-shape-square-val-conf050.png). Jumlah pada matriks Ultralytics memakai matching IoU 0,45, sesuai protokol sebelumnya; jangan dicampur dengan scorer IoU 0,50 pada tabel.
+Laporan [adaptif](../../evaluations/background-shape-adaptive-validation-20261020.json), [persegi](../../evaluations/background-shape-square-validation-20261020.json), dan [matriks persegi](../../evaluations/yolo-background-shape-square-val-conf050.png). Jumlah pada matriks Ultralytics memakai matching IoU 0,45, sesuai protokol sebelumnya; jangan dicampur dengan scorer IoU 0,50 pada tabel.
 
 Runtime sekarang menyediakan `--input-shape adaptive|square` untuk detect, demo, benchmark, pipeline dan worker; env `AI_INPUT_SHAPE` juga tersedia. Default tetap adaptive untuk model utama yang sudah diukur. Square diberi suffix `-square640` pada model_version sehingga profil threshold adaptif tidak dipakai diam-diam untuk pipeline yang berbeda. Checksum tetap mengidentifikasi bobot, sedangkan mapping/profile harus ikut diperiksa oleh Go. Mode square yang belum memiliki profil terdaftar memakai default katalog dan tetap eksperimen.
 
