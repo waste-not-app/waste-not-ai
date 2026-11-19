@@ -1,0 +1,231 @@
+{
+  "review_date_utc7": "2026-11-19",
+  "protected_reference_rows": 4630,
+  "method": "Recomputed SHA-256 and pHash, checked orientation, geometry, prior decisions, source metadata and protected matches at pHash distance <= 5",
+  "disposition": "QUEUE_AUDIT_COMPLETE_ACCEPTANCE_INCOMPLETE",
+  "visual_screening_photos": {
+    "TACO": 48,
+    "COCO": 60,
+    "FPI": 20
+  },
+  "queues": {
+    "TACO": {
+      "manifest_sha256": "260682954d6518513302ce953a1d63179068d81dd1cf71b5b621f551bbf2c1a7",
+      "images_checked": 48,
+      "focus_instances": {
+        "drink_carton": 18,
+        "plastic_wrapper": 40,
+        "cardboard": 8,
+        "paper": 18
+      },
+      "images_with_class": {
+        "drink_carton": 15,
+        "plastic_wrapper": 22,
+        "cardboard": 5,
+        "paper": 15
+      },
+      "instances_under_one_percent_area": {
+        "drink_carton": 17,
+        "plastic_wrapper": 33,
+        "cardboard": 7,
+        "paper": 16
+      },
+      "prior_decisions": {
+        "DEFERRED": 48
+      },
+      "photo_license_records": 48,
+      "photo_attribution_names": 8,
+      "holdout_eligible_photos": 0,
+      "findings": {
+        "1013": [
+          "protected_source_group"
+        ],
+        "104": [
+          "protected_source_group"
+        ],
+        "105": [
+          "protected_source_group"
+        ],
+        "106": [
+          "protected_source_group"
+        ],
+        "107": [
+          "protected_source_group"
+        ],
+        "110": [
+          "protected_source_group"
+        ],
+        "1114": [
+          "protected_source_group"
+        ],
+        "1124": [
+          "protected_source_group"
+        ],
+        "1135": [
+          "protected_source_group"
+        ],
+        "1152": [
+          "protected_source_group"
+        ],
+        "1192": [
+          "protected_source_group"
+        ],
+        "1202": [
+          "protected_source_group"
+        ],
+        "1205": [
+          "protected_source_group"
+        ],
+        "1209": [
+          "protected_source_group"
+        ],
+        "1211": [
+          "protected_source_group"
+        ],
+        "1213": [
+          "protected_source_group"
+        ],
+        "1218": [
+          "protected_source_group"
+        ],
+        "1227": [
+          "protected_source_group"
+        ],
+        "1228": [
+          "protected_source_group"
+        ],
+        "1237": [
+          "protected_source_group"
+        ],
+        "1239": [
+          "protected_source_group"
+        ],
+        "1240": [
+          "protected_source_group"
+        ],
+        "1242": [
+          "protected_source_group"
+        ],
+        "1246": [
+          "protected_source_group"
+        ],
+        "1247": [
+          "protected_source_group"
+        ],
+        "1248": [
+          "protected_source_group"
+        ],
+        "1257": [
+          "protected_source_group"
+        ],
+        "128": [
+          "protected_source_group"
+        ],
+        "1316": [
+          "protected_source_group"
+        ],
+        "1323": [
+          "protected_source_group"
+        ],
+        "135": [
+          "protected_source_group"
+        ],
+        "1350": [
+          "protected_source_group"
+        ],
+        "1353": [
+          "protected_source_group"
+        ],
+        "1389": [
+          "protected_source_group"
+        ],
+        "1400": [
+          "protected_source_group"
+        ],
+        "1407": [
+          "protected_source_group"
+        ],
+        "1453": [
+          "protected_source_group"
+        ],
+        "1465": [
+          "protected_source_group"
+        ],
+        "1495": [
+          "protected_source_group"
+        ],
+        "185": [
+          "protected_source_group"
+        ],
+        "860": [
+          "protected_source_group"
+        ],
+        "868": [
+          "protected_source_group"
+        ],
+        "879": [
+          "protected_source_group"
+        ],
+        "989": [
+          "protected_source_group"
+        ],
+        "998": [
+          "protected_source_group"
+        ]
+      },
+      "finding_counts": {
+        "protected_source_group": 45
+      },
+      "approved_for_final_holdout": 0
+    },
+    "COCO": {
+      "manifest_sha256": "d813e6ee1c15f1da299aec1689c80cd92e23b4bf20b41ac6c51b20e52d1aae9d",
+      "images_checked": 260,
+      "focus_instances": {
+        "cell phone": 137,
+        "remote": 304
+      },
+      "images_with_class": {
+        "cell phone": 99,
+        "remote": 184
+      },
+      "instances_under_one_percent_area": {
+        "cell phone": 64,
+        "remote": 182
+      },
+      "prior_decisions": {
+        "NONE": 260
+      },
+      "photo_license_records": 260,
+      "photo_attribution_names": 0,
+      "holdout_eligible_photos": 0,
+      "findings": {},
+      "finding_counts": {},
+      "approved_for_final_holdout": 0
+    },
+    "FPI": {
+      "manifest_sha256": "26f242d84a4c8e74275d2219566c975e0e639e0c7f17d8e6507af9c0d9a43ef0",
+      "images_checked": 400,
+      "focus_instances": {
+        "phone": 417
+      },
+      "images_with_class": {
+        "phone": 400
+      },
+      "instances_under_one_percent_area": {
+        "phone": 5
+      },
+      "prior_decisions": {
+        "PHONE_SCOPE_SCREENED": 13,
+        "NONE": 385,
+        "DEFERRED": 2
+      },
+      "photo_license_records": 0,
+      "photo_attribution_names": 0,
+      "holdout_eligible_photos": 0,
+      "findings": {},
+      "finding_counts": {},
+      "approved_for_final_holdout": 0
+    }
+  }
+}

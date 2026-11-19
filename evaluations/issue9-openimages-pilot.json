@@ -1,0 +1,31 @@
+{
+  "source": "https://storage.googleapis.com/openimages/web/download_v7.html",
+  "scope": "Publisher validation metadata, excluding recorded prior source IDs. Pilot must still be reviewed for annotation scope and independent groups.",
+  "metadata_hashes": {
+    "boxes.csv": "d8bbd59410af14835d7733165a7bb8a3f0213981b22dd5077b0b9f7878991ff2",
+    "images.csv": "ed93a0e121fe345effdfc7359b848dbc64a1ff6778c8c73563157cb500b33a17"
+  },
+  "metadata_photo_upper_bound": {
+    "cell phone": 15,
+    "remote": 5
+  },
+  "downloads_attempted": 17,
+  "downloaded_and_screened": 17,
+  "skipped": {},
+  "pilot_class_photo_counts": {
+    "cell phone": 12,
+    "remote": 5
+  },
+  "publisher_box_counts": {
+    "cell phone": 16,
+    "remote": 8
+  },
+  "visual_screening_photos": 17,
+  "visual_screening_examples": {
+    "12e529ac3ceecdb3": "iPod touch products labeled cell phone",
+    "45de55405fcf44e5": "Music players labeled cell phone",
+    "59730ff54cda6627": "Phone case product composite with a missing front-view box",
+    "c48ad3322299db3e": "Cordless phone handset labeled remote"
+  },
+  "holdout_approved": 0
+}
