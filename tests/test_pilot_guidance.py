@@ -91,4 +91,4 @@ def test_builtin_claim_audit_has_explicit_pilot_sources_and_no_fabricated_public
     assert hdpe['version'] == 6
     recycle = next(rule for rule in hdpe["evidence"] if rule["method"] == "RECYCLE")
     assert recycle["requires"]["former_contents"] == "FOOD_DRINK"
-    assert {source["region"] for source in recycle["sources"]} == {"Amerika Serikat", "Indonesia"}
+    assert {source["region"] for source in recycle["sources"]} == {"United States", "Indonesia"}
