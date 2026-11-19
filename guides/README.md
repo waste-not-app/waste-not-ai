@@ -1,11 +1,49 @@
-# Panduan pilot dengan pemeriksaan sumber otomatis
+# Pilot Guides
 
-File `pilot-source-reviewed-v6.json` berisi empat panduan PET, HDPE, kaleng aluminium non-aerosol dan kardus. Isinya mengikuti [usulan versi 6](../guide-proposals/README.md) dan [pemeriksaan seluruh sumber](../../docs/AI_GUIDE_SOURCE_REVIEW.md). Pemeriksaan sumber dilakukan Codex; penanggung jawab repo mendelegasikan pemilihan pendekatan. Metadata menyebut **Codex automated source review; not human safety approval**. Ini bukan tanda tangan atau peninjauan keselamatan manusia.
+`pilot-source-reviewed-v6.json` contains the four guides used by the production recommendation worker:
 
-Cakupan: pengguna Indonesia yang mengonfirmasi material, kondisi, riwayat isi bila relevan, dan pengelola setempat yang menerima material/kondisi tersebut. Sumber asing mendukung prinsip bahan, bukan hukum atau penerimaan fasilitas Indonesia. Kaleng aerosol/bertekanan, bekas kimia, dan material di luar cakupan tidak boleh memakai aturan pilot. Label katalog menyebut non-aerosol secara eksplisit. Tidak ada jaminan bahan dari foto atau keamanan isi ulang.
+- PET bottles;
+- HDPE containers;
+- non-aerosol aluminium cans;
+- cardboard.
 
-Tanggal pemeriksaan 4 November 2026; masa berlaku sampai 4 Desember 2026 dipilih sebagai siklus tinjauan ulang pilot 30 hari. Setelah kedaluwarsa, policy menolak panduan secara otomatis. Tujuh puluh empat draf lainnya tetap tidak diterbitkan. File draf asli dan proposal tidak diubah menjadi terbitan; artifact ini mempunyai metadata penerbitan terpisah.
+They implement the [v6 proposals](../guide-proposals/README.md).
 
-Operator memasang file dengan checksum pada path versioned yang hanya dapat dibaca layanan keputusan, kemudian mengisi `AI_GUIDES_PATH`. Tidak memerlukan key Gemini di repo. Worker memvalidasi schema dan status/masa berlaku. `AI_ALLOW_PROTOTYPE` tetap false; provider tetap Gemini asli. Aktifkan capability rekomendasi setelah pemeriksaan worker dan satu alur publik nyata lulus. Respons provider yang lambat/invalid tetap menjadi UNAVAILABLE, tanpa metode buatan server atau penyimpanan otomatis.
+## Review status
 
-Ini pilot integrasi backend. Pemeriksaan sumber otomatis tidak menggantikan holdout model, penilaian manusia untuk penanganan berisiko, mutu/latensi LLM, penerimaan Android, atau persetujuan peluncuran umum.
+- **Review method.** The sources were checked by an automated review, which the repository owner delegated. The metadata states this explicitly: **"Codex automated source review; not human safety approval"**. It is not a signature or a human safety review.
+- **Validity.** Checked on 4 November 2026 and valid until 4 December 2026, a 30-day pilot review cycle. The worker rejects expired guides automatically.
+- **Other guides.** The remaining 74 guides stay unpublished as drafts. The original draft and proposal files were never converted into published guides; this artifact carries its own publication metadata.
+
+## Scope
+
+The guides apply to users in Indonesia who confirm three things:
+
+- the material and condition;
+- the item's former contents, where relevant;
+- that a local collector accepts that material in that condition.
+
+Foreign sources support the material principles, not Indonesian law or facility acceptance. These items must never use the pilot rules:
+
+- aerosol or pressurized cans;
+- containers with a chemical history;
+- materials outside the pilot scope.
+
+The guides make no claim about the material from a photo, or about refill safety.
+
+## Installation
+
+1. Install the file with its checksum at a versioned path that only the recommendation service can read.
+2. Set `AI_GUIDES_PATH` to that path. The worker validates the schema, status, and validity window on load.
+3. Keep `AI_ALLOW_PROTOTYPE=false` and the real Gemini provider.
+4. Enable the recommendation capability only after a worker check and one end-to-end request through the public API both pass.
+
+Slow or invalid provider responses still return `UNAVAILABLE`. The server never invents a method or saves anything automatically.
+
+The automated source review does not replace any of the following:
+
+- a model holdout evaluation;
+- human review of risky handling;
+- LLM quality and latency checks;
+- Android acceptance testing;
+- approval for a general launch.
