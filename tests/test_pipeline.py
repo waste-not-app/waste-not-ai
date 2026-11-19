@@ -193,7 +193,7 @@ def test_context_category_spoof_is_rejected_before_provider():
 
 def test_reuse_requires_positive_user_context_and_only_its_own_evidence():
     guide = load_guides()[0]
-    reuse = Evidence(id="reuse-reviewed-test", method="REUSE", text="Contoh aturan reuse yang ditinjau.", requires={})
+    reuse = Evidence(id="reuse-reviewed-test", method="REUSE", text="Example of a reviewed reuse rule.", requires={})
     guide = guide.model_copy(update={"evidence": [*guide.evidence, reuse]})
     provider = SpyProvider({"recommended_method": "REUSE", "evidence_ids": ["reuse-reviewed-test"]})
     accepted = recommend(
@@ -224,7 +224,7 @@ def test_prevention_uses_reduce_sources_and_steps_instead_of_disposal_guidance()
     assert result.recommendation_scope == "PREVENTION"
     assert provider.calls[0]["allowed_methods"] == ["REDUCE"]
     assert result.source_urls == ["https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"]
-    assert "pencegahan" in result.reason and "pembelian berikutnya" in result.steps[0]
+    assert "next time" in result.reason and "Next time you shop" in result.steps[0]
     assert "Kosongkan botol" not in " ".join(result.steps)
 
 

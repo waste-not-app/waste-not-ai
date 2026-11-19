@@ -47,18 +47,18 @@ def fetch_assets(directory: Path) -> dict:
                             for chunk in response.iter_bytes():
                                 size += len(chunk)
                                 if size > 32 * 1024 * 1024:
-                                    raise ValueError("Asset melebihi batas unduhan 32 MiB.")
+                                    raise ValueError("Asset exceeds the 32 MiB download limit.")
                                 handle.write(chunk)
                     part.replace(destination)
                 finally:
                     part.unlink(missing_ok=True)
             data = destination.read_bytes()
             if asset.get("sha1") and hashlib.sha1(data, usedforsecurity=False).hexdigest() != asset["sha1"]:
-                raise ValueError("Checksum gambar sumber tidak cocok.")
+                raise ValueError("Source image checksum does not match.")
             if asset.get("sha256") and hashlib.sha256(data).hexdigest() != asset["sha256"]:
-                raise ValueError("Checksum model tidak cocok.")
+                raise ValueError("Model checksum does not match.")
             manifest.append({**asset, "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)})
-    result = {"assets": manifest, "training_dataset": "NONE", "pilot_accuracy": "BELUM DIUKUR"}
+    result = {"assets": manifest, "training_dataset": "NONE", "pilot_accuracy": "NOT MEASURED"}
     output = directory / "artifacts/asset-manifest.json"
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

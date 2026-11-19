@@ -19,7 +19,7 @@ def test_broken_glass_with_electrical_risk_cannot_get_ordinary_glass_trash():
     )
     result = recommend(context, FixtureProvider(), load_guides(), demo_guides=True)
     assert result.recommended_method is None, "Electrical risk was matched to unrelated broken-glass Trash evidence"
-    assert result.steps and any("baterai" in step.lower() for step in result.steps)
+    assert result.steps and any("battery" in step.lower() for step in result.steps)
 
 
 def test_explicit_biological_risk_with_hazardous_soiling_keeps_biological_guidance():
@@ -36,7 +36,7 @@ def test_explicit_biological_risk_with_hazardous_soiling_keeps_biological_guidan
     )
     result = recommend(context, FixtureProvider(), load_guides(), demo_guides=True)
     assert "https://www.who.int/news-room/fact-sheets/detail/health-care-waste" in result.source_urls
-    assert any("medis" in step for step in result.steps)
+    assert any("medical" in step for step in result.steps)
 
 
 def test_sharp_glass_without_confirmed_receiver_does_not_recommend_reuse_or_unconditional_recycle():

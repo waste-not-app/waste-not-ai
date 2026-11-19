@@ -78,7 +78,7 @@ def test_washable_dirty_tableware_is_reuse_with_washing_prerequisite(key, catego
     result = recommend(context, provider, load_guides(), demo_guides=True)
     assert result.status == "READY" and result.recommended_method == "REUSE"
     assert result.recommendation_scope == "HANDLING" and provider.calls == 1
-    assert "dicuci" in result.reason and "cuci" in " ".join(result.steps)
+    assert "washing" in result.reason and "wash" in " ".join(result.steps)
     assert context.condition.cleanliness == "DIRTY"
     assert len(result.source_details) == 2
     assert any(source["region"] == "Banjarnegara, Indonesia" for source in result.source_details)

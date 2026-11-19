@@ -16,10 +16,10 @@ def describe_sources(urls: list[str]) -> list[dict]:
             {
                 "url": url,
                 "title": urlparse(url).hostname or url,
-                "publisher": "Sumber panduan kustom",
-                "region": "Belum dicatat",
+                "publisher": "Custom guide source",
+                "region": "Not recorded",
                 "checked_at": None,
-                "scope_note": "Metadata sumber belum dicatat dalam registri prototipe.",
+                "scope_note": "Source metadata is not recorded in the prototype registry.",
             },
         )
         for url in urls

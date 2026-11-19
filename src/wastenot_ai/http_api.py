@@ -10,27 +10,27 @@ from fastapi.responses import JSONResponse
 from .wire import API_VERSION, ErrorDetail, ErrorEnvelope
 
 ERRORS = {
-    "UNAUTHENTICATED": (401, "Autentikasi diperlukan.", False),
-    "NOT_FOUND": (404, "Data tidak ditemukan.", False),
-    "DETECTION_NOT_FOUND": (404, "Sesi deteksi tidak ditemukan.", False),
-    "AI_SESSION_EXPIRED": (410, "Sesi AI berakhir; lakukan scan kembali.", False),
-    "IDEMPOTENCY_CONFLICT": (409, "ID permintaan sudah dipakai untuk isi yang berbeda.", False),
-    "VALIDATION_ERROR": (422, "Periksa kembali isianmu.", False),
-    "INVALID_CONTEXT": (422, "Objek dan kategori tidak cocok dengan katalog.", False),
-    "INVALID_AI_REFERENCE": (422, "Referensi hasil deteksi tidak cocok.", False),
-    "OBJECT_REQUIRES_MANUAL": (422, "Pilih objek melalui input manual.", False),
-    "FILE_TOO_LARGE": (413, "Ukuran gambar maksimal 5 MiB.", False),
-    "REQUEST_TOO_LARGE": (413, "Ukuran permintaan melampaui batas layanan.", False),
-    "UNSUPPORTED_MEDIA_TYPE": (415, "Gunakan JPEG atau PNG.", False),
-    "INVALID_IMAGE": (422, "Gambar tidak dapat dibaca.", False),
-    "IMAGE_DIMENSIONS_EXCEEDED": (422, "Gambar melampaui batas dimensi.", False),
-    "RATE_LIMITED": (429, "Batas permintaan tercapai; tunggu sebelum mencoba lagi.", True),
-    "AI_BUSY": (503, "Layanan AI sedang sibuk.", True),
-    "AI_UNAVAILABLE": (503, "Layanan AI belum tersedia.", True),
-    "INVALID_AI_RESPONSE": (503, "Respons layanan AI tidak dapat digunakan.", True),
-    "AI_TIMEOUT": (504, "Layanan AI melewati batas waktu.", True),
-    "AI_DISABLED": (503, "Fitur AI belum diaktifkan.", False),
-    "METHOD_NOT_ALLOWED": (405, "Metode HTTP tidak didukung.", False),
+    "UNAUTHENTICATED": (401, "Authentication required.", False),
+    "NOT_FOUND": (404, "Not found.", False),
+    "DETECTION_NOT_FOUND": (404, "Detection session not found.", False),
+    "AI_SESSION_EXPIRED": (410, "The AI session has expired. Scan again.", False),
+    "IDEMPOTENCY_CONFLICT": (409, "This request ID was already used with a different payload.", False),
+    "VALIDATION_ERROR": (422, "Check your input.", False),
+    "INVALID_CONTEXT": (422, "The object and category do not match the catalog.", False),
+    "INVALID_AI_REFERENCE": (422, "The detection reference does not match.", False),
+    "OBJECT_REQUIRES_MANUAL": (422, "Choose the object manually.", False),
+    "FILE_TOO_LARGE": (413, "Images can be at most 5 MiB.", False),
+    "REQUEST_TOO_LARGE": (413, "The request is larger than the service allows.", False),
+    "UNSUPPORTED_MEDIA_TYPE": (415, "Use a JPEG or PNG image.", False),
+    "INVALID_IMAGE": (422, "The image could not be read.", False),
+    "IMAGE_DIMENSIONS_EXCEEDED": (422, "The image is larger than the allowed dimensions.", False),
+    "RATE_LIMITED": (429, "Too many requests. Wait before trying again.", True),
+    "AI_BUSY": (503, "The AI service is busy.", True),
+    "AI_UNAVAILABLE": (503, "The AI service is unavailable.", True),
+    "INVALID_AI_RESPONSE": (503, "The AI service returned an unusable response.", True),
+    "AI_TIMEOUT": (504, "The AI service timed out.", True),
+    "AI_DISABLED": (503, "AI features are not enabled.", False),
+    "METHOD_NOT_ALLOWED": (405, "HTTP method not supported.", False),
 }
 
 
@@ -45,7 +45,7 @@ def error_response(code, request_id, *, status=None, fields=None, headers=None):
 def configure_errors(app):
     @app.exception_handler(RequestValidationError)
     async def invalid(request, exc):
-        fields = {".".join(str(x) for x in err["loc"] if x != "body"): "Isian tidak valid." for err in exc.errors()}
+        fields = {".".join(str(x) for x in err["loc"] if x != "body"): "Invalid value." for err in exc.errors()}
         return error_response("VALIDATION_ERROR", request.state.request_id, fields=fields)
 
     from starlette.exceptions import HTTPException as StarletteHTTPException

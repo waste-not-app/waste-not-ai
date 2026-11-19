@@ -84,7 +84,7 @@ def benchmark(args):
     detector = detector_for(args)
     paths = sorted(p for p in args.images.rglob("*") if p.suffix.lower() in {".jpg", ".jpeg", ".png"})
     if not paths:
-        raise ValueError("Folder tidak berisi gambar JPEG/PNG.")
+        raise ValueError("The folder contains no JPEG or PNG images.")
     records = []
     for path in paths:
         data = read_image(path)
@@ -121,7 +121,7 @@ def benchmark(args):
             },
             "warm_p50_ms": round(statistics.median(all_times), 2),
             "warm_p95_ms": round(all_times[ceil(len(all_times) * 0.95) - 1], 2),
-            "accuracy": "BELUM DIUKUR: belum ada holdout pilot berlabel.",
+            "accuracy": "NOT MEASURED: there is no labeled pilot holdout yet.",
             "records": records,
         },
         args.output,
@@ -169,25 +169,23 @@ def main():
         "--confirm-object",
         action="store_true",
         required=True,
-        help="Konfirmasi bahwa context JSON adalah koreksi/pilihan objek pengguna.",
+        help="Confirm that the context JSON is the user's own object choice or correction.",
     )
     for command in (rec, pipe):
         command.add_argument("--context", type=Path, required=True)
         command.add_argument("--provider", choices=["rules", "gemini", "fixture"], default="gemini")
         command.add_argument("--guides", type=Path)
-        command.add_argument(
-            "--demo-guides", action="store_true", help="Izinkan draf hanya untuk demonstrasi berlabel."
-        )
+        command.add_argument("--demo-guides", action="store_true", help="Allow draft guides, for labeled demos only.")
     worker = sub.add_parser("serve-worker")
     worker.add_argument("--port", type=int, default=8091)
-    demo = sub.add_parser("demo", help="Buka demo kamera lokal dengan pemilihan objek dan Gemini.")
+    demo = sub.add_parser("demo", help="Open the local camera demo with object selection and Gemini.")
     for command in (detect, bench, pipe, demo, worker):
         command.add_argument("--model", type=Path, default=AI_DIR / "artifacts/models/yolo11n.pt")
         command.add_argument(
             "--general-model",
             type=Path,
             default=Path(os.environ["AI_GENERAL_MODEL_PATH"]) if os.getenv("AI_GENERAL_MODEL_PATH") else None,
-            help="Pendamping COCO untuk checkpoint Broad Waste; kedua model memeriksa foto.",
+            help="COCO companion for a Broad Waste checkpoint; both models check the photo.",
         )
         command.add_argument("--device", default=os.getenv("AI_DEVICE", "cpu"))
         command.add_argument(
@@ -197,7 +195,7 @@ def main():
         command.add_argument("--output", type=Path)
     demo.add_argument("--port", type=int, default=8092)
     demo.add_argument("--no-browser", action="store_true")
-    demo.add_argument("--demo-guides", action="store_true", help="Izinkan draf dengan label demo.")
+    demo.add_argument("--demo-guides", action="store_true", help="Allow draft guides with a demo label.")
     demo.add_argument("--guides", type=Path)
     args = parser.parse_args()
     if args.command in {"demo", "serve-worker"}:
@@ -264,13 +262,13 @@ def main():
         elif args.command == "list-gemini-models":
             keys = load_gemini_api_keys()
             if not keys:
-                raise ValueError("Isi API key Gemini di .env terlebih dahulu.")
+                raise ValueError("Set a Gemini API key in .env first.")
             with httpx.Client(timeout=15, follow_redirects=False) as client:
                 response = client.get(
                     "https://generativelanguage.googleapis.com/v1beta/models", headers={"x-goog-api-key": keys[0]}
                 )
                 if response.status_code != 200:
-                    raise ValueError("Gagal membaca daftar model Gemini; periksa akses/kuota API.")
+                    raise ValueError("Could not read the Gemini model list. Check API access and quota.")
                 emit(
                     {
                         "models": [
@@ -278,7 +276,7 @@ def main():
                             for m in response.json().get("models", [])
                             if "generateContent" in m.get("supportedGenerationMethods", [])
                         ],
-                        "note": "Periksa dukungan structured output sebelum mengisi GEMINI_MODEL.",
+                        "note": "Check structured output support before setting GEMINI_MODEL.",
                     }
                 )
         elif args.command == "detect":
@@ -319,7 +317,7 @@ def main():
                     timer.daemon = True
                     timer.start()
 
-            print(f"Demo kamera: {url} | Ctrl+C untuk berhenti.")
+            print(f"Camera demo: {url} | Press Ctrl+C to stop.")
             uvicorn.run(
                 create_demo_app(demo_guides=args.demo_guides, guides_path=args.guides, on_ready=open_demo),
                 host="127.0.0.1",
@@ -339,12 +337,12 @@ def main():
     except (ValueError, OSError, ImportError, ValidationError, MediaError, httpx.HTTPError) as exc:
         # No provider exception text, request body, key or image is ever printed.
         if args.command in {"recommend", "pipeline", "list-gemini-models"}:
-            message = "Periksa context, konfigurasi Gemini, akses jaringan dan file panduan. Jalankan doctor untuk status konfigurasi."
+            message = "Check the context, Gemini configuration, network access, and guide file. Run doctor to see the configuration status."
         else:
             message = (
                 str(exc)
                 if isinstance(exc, MediaError)
-                else "Periksa file input, model dan dependency; lihat README ai."
+                else "Check the input file, model, and dependencies. See the README."
             )
         print(json.dumps({"error": message}, ensure_ascii=False), file=sys.stderr)
         return 1

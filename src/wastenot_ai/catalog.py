@@ -13,7 +13,7 @@ def load_catalog() -> dict:
 def confirm_context(context: Context) -> dict:
     item = next((x for x in load_catalog()["items"] if x["object_key"] == context.object_key), None)
     if item is None or item["category"] != context.category:
-        raise ValueError("Objek/kategori tidak cocok dengan katalog pilot.")
+        raise ValueError("Object or category does not match the pilot catalog.")
     return item
 
 
@@ -90,7 +90,7 @@ def review_detections(
     result = []
     for index, obj in enumerate(objects):
         if labels.get(obj.class_id) != obj.raw_class:
-            raise ValueError("Class ID dan label tidak cocok dengan artifact model.")
+            raise ValueError("Class ID and label do not match the model artifact.")
         matches = mapping[obj.class_id]
         supported = bool(matches)
         selected = profile["classes"].get(obj.raw_class, {})
