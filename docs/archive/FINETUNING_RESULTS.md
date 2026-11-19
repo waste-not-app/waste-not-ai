@@ -1,4 +1,4 @@
-# Hasil fine-tuning pertama — 20 Oktober 2026
+# Hasil fine-tuning pertama: 20 Oktober 2026
 
 **YOLO11n berhasil dilatih pada Drinking Waste Classification v2** untuk
 kaleng aluminium, botol kaca, botol HDPE, dan botol PET. Ini kandidat eksperimen

@@ -43,7 +43,7 @@ Paket `general-confusion-v1` memakai 535 foto train, 43 validation dan 42 test d
 
 | Percobaan | Freeze | Laju belajar | Epoch selesai / terbaik | Ponsel benar pada validation | Remote benar pada validation |
 |---|---:|---:|---:|---:|---:|
-| COCO awal | — | — | — | 2 / 19 | 1 / 9 |
+| COCO awal | n/a | n/a | n/a | 2 / 19 | 1 / 9 |
 | Fine-tuning awal | 10 | 0,0001 | 14 / 4 | 2 / 19 | 1 / 9 |
 | Kepala deteksi | 23 | 0,00003 | 11 / 1 | 2 / 19 | 1 / 9 |
 
