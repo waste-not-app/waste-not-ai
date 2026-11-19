@@ -24,9 +24,9 @@ def main():
     os.chdir(artifacts)
     errors, checks = [], []
     names = {
-        "aluminium_can": "Kaleng aluminium",
-        "glass_bottle": "Botol kaca",
-        "pet_bottle": "Botol plastik",
+        "aluminium_can": "Aluminium can",
+        "glass_bottle": "Glass bottle",
+        "pet_bottle": "Plastic bottle",
         "hdpe_bottle": "Botol HDPE",
     }
     with sync_playwright() as playwright:
@@ -40,7 +40,7 @@ def main():
         assert config["review_only_classes"] == ["glass_bottle"]
         assert config["supported_visual_classes"] == 4
         assert set(config["supported_object_labels"]) == {"aluminium_can", "glass_bottle", "pet_bottle", "hdpe_bottle"}
-        expect(page.locator("#catalog-summary")).to_contain_text("4 dari 69")
+        expect(page.locator("#catalog-summary")).to_contain_text("4 of 69")
         checks.append("catalog_reflects_specialist_scope_and_includes_scoped_hdpe")
         page.locator("#file").set_input_files(photo)
         page.locator("#detect").click()
@@ -58,15 +58,13 @@ def main():
         if args.object_key == "hdpe_bottle":
             expect(page.locator("#former-contents-field")).to_be_visible()
             page.locator("#recommend").click()
-            expect(page.locator("#method")).to_have_text("Lengkapi kondisi")
-            expect(page.locator("#reason-code")).to_contain_text("isi botol sebelumnya")
+            expect(page.locator("#method")).to_have_text("Add details")
+            expect(page.locator("#reason-code")).to_contain_text("what it held")
             page.locator("#former-contents").select_option("FOOD_DRINK")
             checks.append("hdpe_unknown_contents_requests_context_before_provider")
         page.locator("#recommend").click()
         expect(page.locator("#method")).to_have_text("Recycle", timeout=30000)
-        expect(page.locator("#recommendation-source")).to_have_text(
-            "Gemini langsung" if args.live_gemini else "Simulasi"
-        )
+        expect(page.locator("#recommendation-source")).to_have_text("Gemini" if args.live_gemini else "Simulation")
         assert page.locator("#reason").inner_text()
         assert page.locator("#source-list a").count() > 0
         checks.append("real_specialist_bbox_and_list_selection_confirmed_context_recommendation_sources")
@@ -76,7 +74,7 @@ def main():
             expect(page.locator("#risk")).to_be_checked()
             expect(page.locator("#recommendation-result")).to_be_hidden()
             page.locator("#recommend").click()
-            expect(page.locator("#method")).to_have_text("Saran belum tersedia")
+            expect(page.locator("#method")).to_have_text("Starter handling advice")
             checks.append("hdpe_chemical_history_blocks_ordinary_recycle_and_clears_stale_answer")
         page.locator("#clear").click()
         assert page.locator(".bbox").count() == 0

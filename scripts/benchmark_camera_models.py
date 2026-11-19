@@ -29,20 +29,20 @@ def latency(values):
 
 
 def percent(value):
-    return "â€”" if value is None else f"{100 * value:.1f}%"
+    return "n/a" if value is None else f"{100 * value:.1f}%"
 
 
 def write_summary(report, destination):
     lines = [
-        "# Benchmark replay kamera v1",
+        "# Camera replay benchmark v1",
         "",
-        f"Tanggal UTC {report['created_at']}",
+        f"Date (UTC): {report['created_at']}",
         "",
-        f"{report['images']} foto dasar, {len(report['results'])} profil input, {report['protocol']['timing_repeats']} pengulangan waktu per input/model.",
+        f"{report['images']} base photos, {len(report['results'])} input profiles, {report['protocol']['timing_repeats']} timing repeats per input and model.",
         "",
-        "Matching IoU 0,50 pada kandidat yang bisa dipilih di demo. Precision/recall hanya menghitung kelas yang dianotasi oleh sumber pada setiap foto.",
+        "Matching uses IoU 0.50 on candidates the demo lets users pick. Precision and recall count only the classes the source annotated in each photo.",
         "",
-        "| Profil | Model | Precision | Recall | F1 | TP | FP | FN | Median ms | P95 ms |",
+        "| Profile | Model | Precision | Recall | F1 | TP | FP | FN | Median ms | P95 ms |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for profile, modes in report["results"].items():
@@ -55,9 +55,9 @@ def write_summary(report, destination):
     names = list(baseline)
     lines += [
         "",
-        "## Per kelas pada browser JPEG90",
+        "## Per class on browser JPEG90",
         "",
-        "| Kelas | GT | " + " | ".join(name + " P / R" for name in names) + " |",
+        "| Class | GT | " + " | ".join(name + " P / R" for name in names) + " |",
         "|---|---:|" + "---:|" * len(names),
     ]
     for label in report["target_classes"]:
@@ -69,9 +69,9 @@ def write_summary(report, destination):
         lines.append(f"| {label} | {support} | " + " | ".join(cells) + " |")
     lines += [
         "",
-        "## Diagnosis pada browser JPEG90",
+        "## Diagnosis on browser JPEG90",
         "",
-        "| Model | Salah label pada lokasi GT | GT tanpa kandidat bertumpuk | Pasangan kotak kelas sama | Pasangan label bertentangan |",
+        "| Model | Wrong label at GT location | GT with no overlapping candidate | Same-class box pairs | Conflicting label pairs |",
         "|---|---:|---:|---:|---:|",
     ]
     for name, result in baseline.items():
@@ -80,22 +80,22 @@ def write_summary(report, destination):
         )
     lines += [
         "",
-        "## Pasangan salah label yang paling sering",
+        "## Most common label mistakes",
         "",
-        "| Model | Ground truth | Prediksi | Jumlah |",
+        "| Model | Ground truth | Prediction | Count |",
         "|---|---|---|---:|",
     ]
     for name, result in baseline.items():
         mistakes = [pair for pair in result["confusion"] if pair["predicted"] not in {pair["truth"], "__missed__"}]
         for pair in sorted(mistakes, key=lambda pair: (-pair["count"], pair["truth"], pair["predicted"]))[:5]:
             lines.append(f"| {name} | {pair['truth']} | {pair['predicted']} | {pair['count']} |")
-    lines += ["", "## Batas interpretasi", ""]
+    lines += ["", "## Limits of interpretation", ""]
     lines.extend("- " + item for item in report["limitations"])
     lines += [
         "",
-        "Input redup merupakan transformasi sintetis dari foto yang sama. Jumlah foto independen tetap sama dengan jumlah foto dasar.",
+        "The dim input is a synthetic transform of the same photos, so the number of independent photos equals the number of base photos.",
         "",
-        "Kesalahan per foto dan keluaran semua model tersedia di JSON serta CSV pendamping.",
+        "Per-photo errors and every model's output are in the accompanying JSON and CSV.",
         "",
     ]
     destination.write_text("\n".join(lines), encoding="utf-8")
@@ -125,7 +125,7 @@ def write_plot(report, destination):
     axes[0].set_ylabel("Recall (%)")
     axes[0].set_ylim(0, 105)
     support = baseline[names[0]]["overall"]["support"]
-    axes[0].set_title(f"{report['images']} foto, {support} anotasi objek, JPEG90, IoU 0.50")
+    axes[0].set_title(f"{report['images']} photos, {support} object annotations, JPEG90, IoU 0.50")
     axes[0].legend()
     names = list(baseline)
     timing = [baseline[name]["latency"]["median_ms"] for name in names]
@@ -136,7 +136,7 @@ def write_plot(report, destination):
     device = report["environment"]["device"]
     axes[1].set_xlabel(f"Median waktu detector.detect pada {device} (ms)")
     repeats = report["protocol"]["timing_repeats"]
-    axes[1].set_title(f"{repeats} pengulangan tiap foto setelah warmup")
+    axes[1].set_title(f"{repeats} repeats per photo after warmup")
     for axis in axes:
         axis.spines[["top", "right"]].set_visible(False)
     figure.tight_layout()

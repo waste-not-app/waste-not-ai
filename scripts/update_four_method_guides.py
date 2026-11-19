@@ -24,20 +24,18 @@ def prevention(identifier, food=False):
         "requires": {},
         "risk_compatible": True,
         "text": (
-            "Untuk mencegah sisa makanan berikutnya, rencanakan porsi dan beli hanya yang dibutuhkan. "
-            "Saran ini tidak menetapkan keamanan konsumsi atau pembuangan makanan saat ini."
+            "To avoid leftovers next time, plan portions and buy only what you need. "
+            "This advice doesn't decide whether the food you have now is safe to eat or how to throw it away."
         )
         if food
         else (
-            "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih "
-            "produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini."
+            "To avoid the next piece of waste, skip purchases you don't need and choose durable products "
+            "or less packaging. This is advice for next time, not for getting rid of the item you have now."
         ),
         "source_urls": [prevention_url],
-        "steps": ["Rencanakan kebutuhan sebelum membeli dan hindari jumlah berlebih."]
+        "steps": ["Plan what you need before you shop and avoid buying too much."]
         if food
-        else [
-            "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
-        ],
+        else ["Next time you shop, buy only what you need and look for durable products or less packaging."],
     }
 
 
@@ -49,26 +47,26 @@ for key, guide in templates.items():
     guide["evidence"].append(prevention("prevent-waste-v2", food=key == "food"))
     if key == "food":
         guide["caution"] = (
-            "Foto tidak memastikan makanan aman dikonsumsi. REDUCE adalah pencegahan berikutnya; penanganan sisa saat ini mengikuti layanan organik lokal."
+            "A photo can't tell whether food is safe to eat. REDUCE is about preventing the next waste. Handle current scraps through your local organic waste service."
         )
 templates["toothbrush"] = {
     "source_urls": [trash_url],
     "steps": [
-        "Konfirmasikan sikat gigi plastik manual, tanpa baterai atau komponen listrik.",
-        "Periksa program pengumpulan khusus sebelum memilih residu sesuai aturan setempat.",
+        "Confirm it's a manual plastic toothbrush with no battery or electrical parts.",
+        "Check for a specialist collection program before choosing residual waste under local rules.",
     ],
-    "caution": "Referensi Cornwall, Inggris; bukan aturan penerimaan Indonesia. Sikat gigi elektrik/baterai memerlukan penanganan elektronik khusus.",
+    "caution": "Cornwall, UK reference. These are not Indonesian acceptance rules. Electric or battery toothbrushes need specialist electronics handling.",
     "evidence": [
         prevention("prevent-waste-v2"),
         {
             "id": "manual-plastic-residue-v2",
             "method": "TRASH",
-            "text": "Sikat gigi plastik manual yang tidak layak dipakai dan tidak memiliki akses daur ulang khusus dapat diarahkan ke residu sesuai aturan lokal. Referensi Cornwall tidak memasukkannya dalam pengumpulan daur ulang biasa.",
+            "text": "A worn-out manual plastic toothbrush with no specialist recycling option can go to residual waste under local rules. Cornwall does not include toothbrushes in regular recycling collections.",
             "requires": {"reusable": "NO", "recycling_access": "NO"},
             "source_urls": [trash_url],
             "steps": [
-                "Pastikan ini sikat gigi plastik manual tanpa baterai, bukan limbah medis atau berbahaya.",
-                "Jika tidak ada program daur ulang khusus, gunakan jalur residu sesuai ketentuan petugas setempat.",
+                "Make sure it's a manual plastic toothbrush without a battery, and not medical or hazardous waste.",
+                "If there's no specialist recycling program, use the residual waste route your local collector sets.",
             ],
         },
     ],
@@ -81,12 +79,12 @@ def broken_glass(identifier):
         "method": "TRASH",
         "risk_compatible": True,
         "requires": {"category": "GLASS", "integrity": "DAMAGED"},
-        "text": "Kaca pecah diarahkan ke Trash sebagai residu dengan pengemasan pelindung agar tidak melukai petugas. Panduan Cornwall menempatkan pecahan kaca pada jalur residu; konfirmasikan aturan penerima setempat.",
+        "text": "Broken glass goes to Trash as residual waste, wrapped so it can't cut the people who collect it. Cornwall's guidance puts broken glass in residual waste. Check your local collector's rules.",
         "source_urls": [glass_url],
         "steps": [
-            "Jangan gunakan kembali kaca yang retak atau pecah dan hindari kontak langsung dengan tepi tajam.",
-            "Gunakan pembungkus pelindung atau wadah kokoh dan beri label berisi pecahan kaca; minta bantuan petugas bila tidak aman.",
-            "Serahkan melalui jalur residu sesuai petunjuk pengelola setempat; jangan campur pecahan lepas dengan daur ulang biasa.",
+            "Don't reuse cracked or broken glass, and avoid touching sharp edges.",
+            "Wrap it or put it in a sturdy container labelled as broken glass. Ask the collection staff for help if it isn't safe to handle.",
+            "Put it out with residual waste as your local collector instructs. Don't mix loose shards with regular recycling.",
         ],
     }
 
@@ -95,17 +93,17 @@ tableware = templates["tableware"]
 tableware["evidence"] = [e for e in tableware["evidence"] if not e["id"].endswith(("-v3", "-v4"))]
 tableware["source_urls"] = [wash_url, local_reuse_url]
 tableware["caution"] = (
-    "Cuci dahulu sebelum dipakai kembali. Jangan gunakan aturan cuci biasa untuk kontaminasi kimia/biologis. Kaca/keramik retak atau pecah tidak dipakai ulang."
+    "Wash it before using it again. Normal washing doesn't deal with chemical or biological contamination. Don't reuse cracked or broken glass or ceramics."
 )
 tableware["evidence"][0].update(
-    text="Peralatan makan/minum guna ulang yang bersih, utuh dan masih layak dapat dipakai kembali sesuai fungsinya. Pengguna sudah menyatakan ingin menggunakannya kembali.",
+    text="Clean, intact, reusable tableware that's still in good shape can go back into use. You said you want to keep using it.",
     source_urls=[wash_url, local_reuse_url],
     steps=[
-        "Periksa kembali kebersihan serta tidak adanya retak atau tepi tajam.",
-        "Gunakan kembali sesuai fungsi dan petunjuk bahan/produk; jangan menambah sampah dengan mengganti peralatan yang masih layak.",
+        "Check again that it's clean and has no cracks or sharp edges.",
+        "Use it for its intended purpose and follow the material or product instructions. Keeping usable tableware in service avoids extra waste.",
     ],
 )
-for soil, label in [("FOOD_DRINK", "sisa makanan/minuman"), ("DUST", "debu biasa")]:
+for soil, label, verb in [("FOOD_DRINK", "food or drink residue", "washes off"), ("DUST", "dust", "cleans off")]:
     tableware["evidence"].append(
         {
             "id": f"tableware-wash-{soil.lower()}-reuse-v4",
@@ -119,12 +117,12 @@ for soil, label in [("FOOD_DRINK", "sisa makanan/minuman"), ("DUST", "debu biasa
                 "cleanable": "YES",
                 "soiling": soil,
             },
-            "text": f"Peralatan ini masih utuh dan layak; kotorannya berupa {label} yang kamu konfirmasi bisa dibersihkan. Gunakan kembali setelah dicuci dan diperiksa kebersihannya.",
+            "text": f"This item is intact and usable, and you confirmed the dirt is ordinary {label} that {verb}. Reuse it after washing and checking it's clean.",
             "source_urls": [wash_url, local_reuse_url],
             "steps": [
-                "Bersihkan kotoran, cuci dan bilas sesuai petunjuk bahan/produk, lalu keringkan sebelum digunakan kembali.",
-                "Periksa kembali kondisi setelah dicuci. Bila ada retak, kerusakan atau dugaan kontaminasi berbahaya, hentikan dan perbarui kondisi objek.",
-                "Gunakan kembali sesuai fungsinya setelah bersih dan kering.",
+                "Remove the dirt, then wash, rinse, and dry it as the material or product instructions say before using it again.",
+                "Check its condition again after washing. If you find cracks, damage, or signs of hazardous contamination, stop and update the item's condition.",
+                "Reuse it for its intended purpose once it's clean and dry.",
             ],
         }
     )
@@ -139,11 +137,11 @@ for state, requirements in [
             "method": "TRASH",
             "risk_compatible": state == "damaged",
             "requires": {"category": "OTHER", **requirements},
-            "text": "Keramik yang rusak atau tidak layak digunakan diarahkan ke Trash sesuai jalur residu setempat, bukan dicampur dengan daur ulang botol kaca. Referensi Islington memasukkan peralatan keramik ke sampah rumah tangga.",
+            "text": "Damaged or unusable ceramics go to Trash through your local residual waste route, not into glass bottle recycling. Islington's guidance puts ceramic tableware in household waste.",
             "source_urls": [ceramic_url],
             "steps": [
-                "Jangan gunakan kembali peralatan keramik yang rusak atau tidak layak.",
-                "Lindungi bagian tajam dengan pembungkus atau wadah kokoh dan minta petunjuk penyerahan dari petugas setempat.",
+                "Don't reuse ceramic tableware that's damaged or no longer usable.",
+                "Cover sharp parts with wrapping or a sturdy container, and ask local collection staff how to hand it over.",
             ],
         }
     )
@@ -154,12 +152,12 @@ templates["electronics"]["evidence"] = [
         "method": "RECYCLE",
         "risk_compatible": True,
         "requires": {},
-        "text": "Perangkat elektronik diarahkan ke Recycle melalui program pengembalian produsen atau pengelola e-waste yang menerima jenis perangkatnya, agar material dapat dipulihkan. Ini bukan izin memasukkannya ke tong daur ulang biasa.",
+        "text": "Electronics go to Recycle through a manufacturer take-back program or an e-waste handler that accepts this type of device, so the materials can be recovered. This doesn't mean it can go in a regular recycling bin.",
         "source_urls": templates["electronics"]["source_urls"],
         "steps": [
-            "Hubungi produsen atau pengelola e-waste untuk memastikan penerimaan dan prosedur penyerahan.",
-            "Lindungi data pribadi bila dapat dilakukan dengan aman; jangan membongkar baterai atau perangkat rusak sendiri.",
-            "Serahkan melalui layanan khusus; perangkat dengan baterai tidak dimasukkan ke tong sampah atau daur ulang biasa.",
+            "Contact the manufacturer or an e-waste handler to confirm they accept it and how to hand it over.",
+            "Protect your personal data if you can do it safely. Don't take apart batteries or damaged devices yourself.",
+            "Hand it over through a specialist service. Devices with batteries never go in the regular trash or recycling.",
         ],
     },
 ]
@@ -172,11 +170,11 @@ templates["sharp"].update(
             "method": "RECYCLE",
             "risk_compatible": True,
             "requires": {"object_key": "knife"},
-            "text": "Pisau logam dapat diarahkan ke Recycle melalui pengelola logam yang menerima benda tajam. Referensi Wandsworth menyediakan jalur scrap metal khusus; konfirmasikan penerimaan dan pengemasan kepada petugas lokal.",
+            "text": "A metal knife can go to Recycle through a metal handler that accepts sharp items. Wandsworth runs a dedicated scrap metal route. Confirm acceptance and packaging with your local collector.",
             "source_urls": [sharp_url],
             "steps": [
-                "Hubungi pengelola logam untuk memastikan pisau diterima dan ikuti prosedur penyerahannya.",
-                "Lindungi bilah agar tidak melukai petugas; jangan masukkan pisau lepas ke tong daur ulang biasa.",
+                "Contact a metal handler to confirm they accept knives, and follow how they want it handed over.",
+                "Cover the blade so it can't hurt collection staff. Don't put a loose knife in the regular recycling bin.",
             ],
         },
     ],
@@ -187,13 +185,13 @@ templates["sharp"]["evidence"].append(
         "method": "RECYCLE",
         "risk_compatible": True,
         "requires": {"object_key": "scissors"},
-        "text": "Gunting logam diarahkan ke Recycle melalui pusat pengumpulan yang menerima gunting. Referensi Auckland menyediakan jalur tersebut; periksa penerimaan dan lindungi bagian tajam sesuai petunjuk petugas setempat.",
+        "text": "Metal scissors go to Recycle through a collection center that accepts scissors. Auckland runs such a route. Check that yours accepts them, and cover the blades as local staff instruct.",
         "source_urls": [
             "https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/get-rid-unwanted-items/organisation/331.html"
         ],
         "steps": [
-            "Hubungi pusat pengumpulan yang menerima gunting logam dan tanyakan prosedur pengemasannya.",
-            "Lindungi bilah agar tidak melukai petugas; jangan membuang gunting lepas ke tong daur ulang biasa.",
+            "Contact a collection center that accepts metal scissors and ask how to package them.",
+            "Cover the blades so they can't hurt collection staff. Don't put loose scissors in the regular recycling bin.",
         ],
     }
 )
@@ -216,12 +214,12 @@ for guide in guides:
                 "method": "RECYCLE",
                 "risk_compatible": True,
                 "requires": {},
-                "text": "Baterai bekas diarahkan ke Recycle melalui pengumpul baterai atau pengelola limbah khusus yang menerima jenisnya. Bahan berharga dapat dipulihkan; jangan mencampurnya ke sampah rumah tangga atau tong daur ulang biasa.",
+                "text": "Used batteries go to Recycle through a battery collector or specialist waste handler that accepts this type, so valuable materials can be recovered. Don't mix them into household trash or a regular recycling bin.",
                 "source_urls": guide["source_urls"],
                 "steps": [
-                    "Hubungi pengumpul baterai atau pengelola limbah khusus untuk memastikan jenis baterai diterima.",
-                    "Jika baterai rusak, bocor atau menggembung, minta prosedur penanganan kepada produsen/petugas dan jangan membongkarnya.",
-                    "Serahkan sesuai prosedur layanan khusus; jangan dibakar atau dimasukkan ke tong sampah/daur ulang biasa.",
+                    "Contact a battery collector or a specialist waste handler to confirm they accept this type of battery.",
+                    "If the battery is damaged, leaking, or swollen, ask the manufacturer or the collector how to handle it, and don't take it apart.",
+                    "Hand it over through the specialist service. Don't burn it or put it in the regular trash or recycling.",
                 ],
             },
         ]
