@@ -1,0 +1,1508 @@
+[
+  {
+    "id": "core-pet_bottle",
+    "version": 1,
+    "object_key": "pet_bottle",
+    "category": "PLASTIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: pet-plastic-bottles. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Empty out every last drop so it doesn't contaminate paper or other plastics.",
+      "If it held a sweet drink or milk, give it a quick rinse with a little water and let it drain.",
+      "Leave the cap on or take it off, whichever your waste bank or local collector asks for.",
+      "Flatten the bottle if you need to save space before taking it to a waste bank or recycling drop-off."
+    ],
+    "caution": "Don't keep refilling single-use PET bottles for food or hot drinks. Whether caps and labels are accepted depends on your local recycler's rules.",
+    "evidence": [
+      {
+        "id": "pet_bottle-pet-plastic-bottles-recycle",
+        "method": "RECYCLE",
+        "text": "PET bottles (resin code 1) can go to recycling if your local facility accepts this kind of packaging. The plastic code on its own doesn't guarantee they'll take it.",
+        "requires": {
+          "cleanliness": "CLEAN",
+          "integrity": "INTACT",
+          "former_contents": "FOOD_DRINK"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Empty out every last drop so it doesn't contaminate paper or other plastics.",
+          "If it held a sweet drink or milk, give it a quick rinse with a little water and let it drain.",
+          "Leave the cap on or take it off, whichever your waste bank or local collector asks for.",
+          "Flatten the bottle if you need to save space before taking it to a waste bank or recycling drop-off."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-hdpe_bottle",
+    "version": 1,
+    "object_key": "hdpe_bottle",
+    "category": "PLASTIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: hdpe-containers. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Before you recycle it with regular plastics, make sure it didn't hold hazardous chemicals or pesticides.",
+      "Empty it and rinse out ordinary residue, such as a drink or liquid soap, until it's clean.",
+      "Take it to a waste bank or plastic recycling center that accepts resin code 2 (HDPE)."
+    ],
+    "caution": "Containers that held hazardous chemicals, oil, or solvents must never go into household recycling.",
+    "evidence": [
+      {
+        "id": "hdpe_bottle-hdpe-containers-recycle",
+        "method": "RECYCLE",
+        "text": "HDPE (resin code 2) is a sturdy plastic used for milk bottles and household packaging. It can go to a recycling facility when it's clean and free of hazardous residue.",
+        "requires": {
+          "cleanliness": "CLEAN",
+          "integrity": "INTACT",
+          "former_contents": "FOOD_DRINK"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Before you recycle it with regular plastics, make sure it didn't hold hazardous chemicals or pesticides.",
+          "Empty it and rinse out ordinary residue, such as a drink or liquid soap, until it's clean.",
+          "Take it to a waste bank or plastic recycling center that accepts resin code 2 (HDPE)."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-cardboard",
+    "version": 1,
+    "object_key": "cardboard",
+    "category": "PAPER",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: clean-cardboard-boxes. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Take out the contents, plastic fillers, and any food scraps.",
+      "Remove excess plastic tape if your collector asks, then fold the box flat.",
+      "Keep it somewhere dry so the fibers don't go moldy before you take it to a waste bank or collector."
+    ],
+    "caution": "Remove food scraps. Grease stains don't always get a box rejected, so ask your collector, and don't assume another country's rules apply to facilities in Indonesia.",
+    "evidence": [
+      {
+        "id": "cardboard-clean-cardboard-boxes-recycle",
+        "method": "RECYCLE",
+        "text": "Dry corrugated cardboard and cartons can be recycled or reused as long as they aren't wet or heavily greasy.",
+        "requires": {
+          "cleanliness": "CLEAN",
+          "integrity": "INTACT"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Take out the contents, plastic fillers, and any food scraps.",
+          "Remove excess plastic tape if your collector asks, then fold the box flat.",
+          "Keep it somewhere dry so the fibers don't go moldy before you take it to a waste bank or collector."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-paper",
+    "version": 1,
+    "object_key": "paper",
+    "category": "PAPER",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: office-paper-and-newspapers. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Consider donating readable books to a school, library, or community group before recycling them.",
+      "Keep dry paper away from wet waste, food scraps, and laminated plastic.",
+      "Stack or tie the paper and newspapers neatly, then take them to a waste bank or recycling center."
+    ],
+    "caution": "Check plastic-coated or laminated paper separately. Confirm with your collector whether they take books, receipts, tissues, and shredded paper, and don't assume every paper product is accepted.",
+    "evidence": [
+      {
+        "id": "paper-office-paper-and-newspapers-recycle",
+        "method": "RECYCLE",
+        "text": "Office paper, newspapers, magazines, and unwanted books keep their recycling value when you keep them separate from wet and organic waste.",
+        "requires": {
+          "cleanliness": "CLEAN"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Consider donating readable books to a school, library, or community group before recycling them.",
+          "Keep dry paper away from wet waste, food scraps, and laminated plastic.",
+          "Stack or tie the paper and newspapers neatly, then take them to a waste bank or recycling center."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-book",
+    "version": 1,
+    "object_key": "book",
+    "category": "PAPER",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: office-paper-and-newspapers. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Consider donating readable books to a school, library, or community group before recycling them.",
+      "Keep dry paper away from wet waste, food scraps, and laminated plastic.",
+      "Stack or tie the paper and newspapers neatly, then take them to a waste bank or recycling center."
+    ],
+    "caution": "Check plastic-coated or laminated paper separately. Confirm with your collector whether they take books, receipts, tissues, and shredded paper, and don't assume every paper product is accepted.",
+    "evidence": [
+      {
+        "id": "book-office-paper-and-newspapers-recycle",
+        "method": "RECYCLE",
+        "text": "Office paper, newspapers, magazines, and unwanted books keep their recycling value when you keep them separate from wet and organic waste.",
+        "requires": {
+          "cleanliness": "CLEAN"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Consider donating readable books to a school, library, or community group before recycling them.",
+          "Keep dry paper away from wet waste, food scraps, and laminated plastic.",
+          "Stack or tie the paper and newspapers neatly, then take them to a waste bank or recycling center."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "book-office-paper-and-newspapers-reuse",
+        "method": "REUSE",
+        "text": "A readable book can be passed on to a school, library, or community group before you think about recycling it.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Consider donating readable books to a school, library, or community group before recycling them."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-glass_bottle",
+    "version": 1,
+    "object_key": "glass_bottle",
+    "category": "GLASS",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables",
+      "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    ],
+    "scope_note": "Built from the reviewed backend articles: intact-glass-bottles-and-jars, broken-glass-and-sharp-shards. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Empty the bottle or jar and rinse off any food or drink residue.",
+      "Remove metal or plastic lids if the collection point asks you to.",
+      "Hand them over carefully at a waste bank or glass collection point so they don't break on the way."
+    ],
+    "caution": "This guide only covers bottles and jars. Don't mix in mirrors, window glass, ceramics, or light bulbs without the collector's approval; bulbs need their own route. Never throw away broken glass in a thin plastic bag without protection. Broken fluorescent tubes and CFL bulbs contain mercury and must go through the hazardous waste route, not regular residual waste.",
+    "evidence": [
+      {
+        "id": "glass_bottle-intact-glass-bottles-and-jars-recycle",
+        "method": "RECYCLE",
+        "text": "Intact glass bottles and jars can be recycled again and again, or cleaned and reused as containers.",
+        "requires": {
+          "cleanliness": "CLEAN",
+          "integrity": "INTACT"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Empty the bottle or jar and rinse off any food or drink residue.",
+          "Remove metal or plastic lids if the collection point asks you to.",
+          "Hand them over carefully at a waste bank or glass collection point so they don't break on the way."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "glass_bottle-intact-glass-bottles-and-jars-reuse",
+        "method": "REUSE",
+        "text": "An intact glass bottle or jar can be cleaned and reused as a container.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Empty the bottle or jar and rinse off any food or drink residue."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "glass_bottle-broken-glass-and-sharp-shards-trash",
+        "method": "TRASH",
+        "text": "Broken glass doesn't belong in regular recycling because it can injure sorting staff and damage machines. Wrap it securely and put it out with residual waste, or give it to a specialist collector if one is available.",
+        "requires": {
+          "integrity": "DAMAGED"
+        },
+        "source_urls": [
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+        ],
+        "steps": [
+          "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+          "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+          "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-aluminium_can",
+    "version": 1,
+    "object_key": "aluminium_can",
+    "category": "METAL",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: aluminium-drink-cans. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Pour out the rest of the drink and rinse lightly so the can doesn't attract ants or smell.",
+      "Leave the can in shape if your collector uses automated sorting, or follow your local waste bank's instructions.",
+      "Keep them in a dry container with other similar metals until you drop them off."
+    ],
+    "caution": "Never crush pressurized aerosol cans such as spray paint or insecticide. Handle pressurized cans under the household hazardous waste rules.",
+    "evidence": [
+      {
+        "id": "aluminium_can-aluminium-drink-cans-recycle",
+        "method": "RECYCLE",
+        "text": "Aluminium drink cans are valuable to recycle and easiest to sort when they're empty and free of leftover drink.",
+        "requires": {
+          "cleanliness": "CLEAN",
+          "integrity": "INTACT",
+          "former_contents": "FOOD_DRINK"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Pour out the rest of the drink and rinse lightly so the can doesn't attract ants or smell.",
+          "Leave the can in shape if your collector uses automated sorting, or follow your local waste bank's instructions.",
+          "Keep them in a dry container with other similar metals until you drop them off."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-steel_can",
+    "version": 1,
+    "object_key": "steel_can",
+    "category": "METAL",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: food-cans-and-clean-foil. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Scrape out and rinse off sauce, oil, or food until the can is clean.",
+      "Avoid touching the sharp rim, and don't force it to fold or cut it.",
+      "Collect the cans once they're dry, keep foil separate, and confirm with your waste bank or metal collector that they accept them."
+    ],
+    "caution": "Foil caked in sticky food isn't fit for metal recycling.",
+    "evidence": [
+      {
+        "id": "steel_can-food-cans-and-clean-foil-recycle",
+        "method": "RECYCLE",
+        "text": "Metal food cans and clean aluminium foil can be recycled through collectors that accept each material. A collector that takes cans doesn't necessarily take foil.",
+        "requires": {
+          "cleanliness": "CLEAN",
+          "former_contents": "FOOD_DRINK"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Scrape out and rinse off sauce, oil, or food until the can is clean.",
+          "Avoid touching the sharp rim, and don't force it to fold or cut it.",
+          "Collect the cans once they're dry, keep foil separate, and confirm with your waste bank or metal collector that they accept them."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-plastic_bag",
+    "version": 1,
+    "object_key": "plastic_bag",
+    "category": "PLASTIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: plastic-bags-and-wrap. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Bring a cloth shopping bag or your own container when you shop so you don't need a new plastic bag.",
+      "If you already have clean bags, reuse them as bin liners or for wrapping.",
+      "Ask whether a local store or waste bank collects clean plastic film separately."
+    ],
+    "caution": "Don't put plastic bags or wrap in a mixed recycling bin unless your collector confirms they take them. Only log it as Reduce when you actually avoided new packaging.",
+    "evidence": [
+      {
+        "id": "plastic_bag-plastic-bags-and-wrap-reduce",
+        "method": "REDUCE",
+        "text": "Cut down on plastic bags and wrap by bringing your own bag or container. Plastic film needs a dedicated collector and doesn't belong in mixed recycling by default.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Bring a cloth shopping bag or your own container when you shop so you don't need a new plastic bag.",
+          "If you already have clean bags, reuse them as bin liners or for wrapping.",
+          "Ask whether a local store or waste bank collects clean plastic film separately."
+        ],
+        "risk_compatible": true
+      },
+      {
+        "id": "plastic_bag-plastic-bags-and-wrap-reuse",
+        "method": "REUSE",
+        "text": "A clean plastic bag you already have can be reused as a bin liner or for wrapping.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "If you already have clean bags, reuse them as bin liners or for wrapping."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "plastic_bag-plastic-bags-and-wrap-recycle",
+        "method": "RECYCLE",
+        "text": "Clean plastic film can go to a collector that takes it separately. It doesn't belong in mixed recycling by default.",
+        "requires": {
+          "cleanliness": "CLEAN"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Ask whether a local store or waste bank collects clean plastic film separately."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-plastic_wrapper",
+    "version": 1,
+    "object_key": "plastic_wrapper",
+    "category": "PLASTIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+    ],
+    "scope_note": "Built from the reviewed backend articles: plastic-bags-and-wrap. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Bring a cloth shopping bag or your own container when you shop so you don't need a new plastic bag.",
+      "If you already have clean bags, reuse them as bin liners or for wrapping.",
+      "Ask whether a local store or waste bank collects clean plastic film separately."
+    ],
+    "caution": "Don't put plastic bags or wrap in a mixed recycling bin unless your collector confirms they take them. Only log it as Reduce when you actually avoided new packaging.",
+    "evidence": [
+      {
+        "id": "plastic_wrapper-plastic-bags-and-wrap-reduce",
+        "method": "REDUCE",
+        "text": "Cut down on plastic bags and wrap by bringing your own bag or container. Plastic film needs a dedicated collector and doesn't belong in mixed recycling by default.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Bring a cloth shopping bag or your own container when you shop so you don't need a new plastic bag.",
+          "If you already have clean bags, reuse them as bin liners or for wrapping.",
+          "Ask whether a local store or waste bank collects clean plastic film separately."
+        ],
+        "risk_compatible": true
+      },
+      {
+        "id": "plastic_wrapper-plastic-bags-and-wrap-recycle",
+        "method": "RECYCLE",
+        "text": "Clean plastic film can go to a collector that takes it separately. It doesn't belong in mixed recycling by default.",
+        "requires": {
+          "cleanliness": "CLEAN"
+        },
+        "source_urls": [
+          "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
+        ],
+        "steps": [
+          "Ask whether a local store or waste bank collects clean plastic film separately."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-battery",
+    "version": 1,
+    "object_key": "battery",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/used-household-batteries"
+    ],
+    "scope_note": "Built from the reviewed backend articles: used-household-batteries. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Store used batteries somewhere cool and dry, away from children and metal objects.",
+      "Cover both terminals of lithium or coin batteries with non-conductive electrical tape, or put each one in its own bag, so they can't short-circuit.",
+      "Confirm the battery type and condition with the manufacturer or collector before you bring them. Not every electronics drop box takes loose, lead-acid, or damaged batteries."
+    ],
+    "caution": "Never take apart, puncture, crush, or burn used batteries. If a battery is swollen, leaking, or physically damaged, contact a licensed hazardous waste handler or the manufacturer for special handling.",
+    "evidence": [
+      {
+        "id": "battery-used-household-batteries-recycle",
+        "method": "RECYCLE",
+        "text": "Used batteries can still hold energy, and some contain hazardous materials. Lithium, coin, and rechargeable batteries need a specialist collection point, not the trash or mixed recycling. Check the battery type and what the collector accepts.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/used-household-batteries"
+        ],
+        "steps": [
+          "Store used batteries somewhere cool and dry, away from children and metal objects.",
+          "Cover both terminals of lithium or coin batteries with non-conductive electrical tape, or put each one in its own bag, so they can't short-circuit.",
+          "Confirm the battery type and condition with the manufacturer or collector before you bring them. Not every electronics drop box takes loose, lead-acid, or damaged batteries."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-toothbrush",
+    "version": 1,
+    "object_key": "toothbrush",
+    "category": "OTHER",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/toothbrushes/"
+    ],
+    "scope_note": "Built from the reviewed backend articles: manual-plastic-toothbrushes. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Make sure it's an ordinary manual toothbrush with no battery or electronic parts.",
+      "If a community or store take-back program accepts toothbrushes, you can send it there.",
+      "If there's no such program, put it in the residual waste bin."
+    ],
+    "caution": "Electric toothbrushes with batteries must be handled as e-waste, not regular residual waste.",
+    "evidence": [
+      {
+        "id": "toothbrush-manual-plastic-toothbrushes-trash",
+        "method": "TRASH",
+        "text": "This source doesn't include manual plastic toothbrushes in regular recycling collection. Ask about specialist programs in your area. If there's no suitable collector, use your local residual waste route.",
+        "requires": {},
+        "source_urls": [
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/toothbrushes/"
+        ],
+        "steps": [
+          "Make sure it's an ordinary manual toothbrush with no battery or electronic parts.",
+          "If a community or store take-back program accepts toothbrushes, you can send it there.",
+          "If there's no such program, put it in the residual waste bin."
+        ],
+        "risk_compatible": false
+      }
+    ]
+  },
+  {
+    "id": "core-banana",
+    "version": 1,
+    "object_key": "banana",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/composting-home",
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: food-scraps-and-composting, preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+      "Cut large pieces into smaller ones so they break down faster.",
+      "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+      "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+    ],
+    "caution": "Leave out meat, fish, bones, dairy, oil, pet waste, painted wood, and diseased plants. Home composters usually don't reach industrial processing conditions, so packaging labeled compostable isn't automatically suitable. Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "banana-food-scraps-and-composting-recycle",
+        "method": "RECYCLE",
+        "text": "Fruit and vegetable scraps, coffee grounds, eggshells, and dry leaves can be composted at home or sent to a community organics program, so they don't produce methane in a landfill.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/composting-home"
+        ],
+        "steps": [
+          "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+          "Cut large pieces into smaller ones so they break down faster.",
+          "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+          "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "banana-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-apple",
+    "version": 1,
+    "object_key": "apple",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/composting-home",
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: food-scraps-and-composting, preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+      "Cut large pieces into smaller ones so they break down faster.",
+      "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+      "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+    ],
+    "caution": "Leave out meat, fish, bones, dairy, oil, pet waste, painted wood, and diseased plants. Home composters usually don't reach industrial processing conditions, so packaging labeled compostable isn't automatically suitable. Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "apple-food-scraps-and-composting-recycle",
+        "method": "RECYCLE",
+        "text": "Fruit and vegetable scraps, coffee grounds, eggshells, and dry leaves can be composted at home or sent to a community organics program, so they don't produce methane in a landfill.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/composting-home"
+        ],
+        "steps": [
+          "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+          "Cut large pieces into smaller ones so they break down faster.",
+          "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+          "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "apple-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-orange",
+    "version": 1,
+    "object_key": "orange",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/composting-home",
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: food-scraps-and-composting, preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+      "Cut large pieces into smaller ones so they break down faster.",
+      "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+      "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+    ],
+    "caution": "Leave out meat, fish, bones, dairy, oil, pet waste, painted wood, and diseased plants. Home composters usually don't reach industrial processing conditions, so packaging labeled compostable isn't automatically suitable. Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "orange-food-scraps-and-composting-recycle",
+        "method": "RECYCLE",
+        "text": "Fruit and vegetable scraps, coffee grounds, eggshells, and dry leaves can be composted at home or sent to a community organics program, so they don't produce methane in a landfill.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/composting-home"
+        ],
+        "steps": [
+          "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+          "Cut large pieces into smaller ones so they break down faster.",
+          "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+          "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "orange-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-broccoli",
+    "version": 1,
+    "object_key": "broccoli",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/composting-home",
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: food-scraps-and-composting, preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+      "Cut large pieces into smaller ones so they break down faster.",
+      "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+      "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+    ],
+    "caution": "Leave out meat, fish, bones, dairy, oil, pet waste, painted wood, and diseased plants. Home composters usually don't reach industrial processing conditions, so packaging labeled compostable isn't automatically suitable. Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "broccoli-food-scraps-and-composting-recycle",
+        "method": "RECYCLE",
+        "text": "Fruit and vegetable scraps, coffee grounds, eggshells, and dry leaves can be composted at home or sent to a community organics program, so they don't produce methane in a landfill.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/composting-home"
+        ],
+        "steps": [
+          "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+          "Cut large pieces into smaller ones so they break down faster.",
+          "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+          "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "broccoli-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-carrot",
+    "version": 1,
+    "object_key": "carrot",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/composting-home",
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: food-scraps-and-composting, preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+      "Cut large pieces into smaller ones so they break down faster.",
+      "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+      "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+    ],
+    "caution": "Leave out meat, fish, bones, dairy, oil, pet waste, painted wood, and diseased plants. Home composters usually don't reach industrial processing conditions, so packaging labeled compostable isn't automatically suitable. Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "carrot-food-scraps-and-composting-recycle",
+        "method": "RECYCLE",
+        "text": "Fruit and vegetable scraps, coffee grounds, eggshells, and dry leaves can be composted at home or sent to a community organics program, so they don't produce methane in a landfill.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/composting-home"
+        ],
+        "steps": [
+          "Keep vegetable scraps, fruit peels, coffee grounds, and dry leaves separate from plastic and packaging.",
+          "Cut large pieces into smaller ones so they break down faster.",
+          "Mix at least two to three parts dry (brown) material by volume, such as dry leaves or shredded cardboard without coating, tape, or glue, for every one part wet (green) material. Use a composter that lets air in, not an airtight container.",
+          "Turn it regularly and keep it as damp as a wrung-out sponge. Let the compost mature before you use it; material that's only been dried isn't compost yet."
+        ],
+        "risk_compatible": false
+      },
+      {
+        "id": "carrot-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-sandwich",
+    "version": 1,
+    "object_key": "sandwich",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+      "Keep perishable food in closed containers and use up older items first.",
+      "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+    ],
+    "caution": "Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "sandwich-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-hot_dog",
+    "version": 1,
+    "object_key": "hot_dog",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+      "Keep perishable food in closed containers and use up older items first.",
+      "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+    ],
+    "caution": "Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "hot_dog-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-pizza",
+    "version": 1,
+    "object_key": "pizza",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+      "Keep perishable food in closed containers and use up older items first.",
+      "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+    ],
+    "caution": "Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "pizza-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-donut",
+    "version": 1,
+    "object_key": "donut",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+      "Keep perishable food in closed containers and use up older items first.",
+      "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+    ],
+    "caution": "Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "donut-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-cake",
+    "version": 1,
+    "object_key": "cake",
+    "category": "ORGANIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.epa.gov/recycle/preventing-wasted-food-home"
+    ],
+    "scope_note": "Built from the reviewed backend articles: preventing-household-food-waste. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+      "Keep perishable food in closed containers and use up older items first.",
+      "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+    ],
+    "caution": "Normal looks and smell don't prove food is safe. Don't taste it to check. If you don't know how long or how warm it was stored, or it wasn't stored safely, don't eat it.",
+    "evidence": [
+      {
+        "id": "cake-preventing-household-food-waste-reduce",
+        "method": "REDUCE",
+        "text": "Planning your shopping and storing food well is the most effective way to keep food from going to waste.",
+        "requires": {},
+        "source_urls": [
+          "https://www.epa.gov/recycle/preventing-wasted-food-home"
+        ],
+        "steps": [
+          "Plan your meals and check what's in the fridge before you shop so you don't buy too much.",
+          "Keep perishable food in closed containers and use up older items first.",
+          "Serve sensible portions. Chill perishable food quickly in a closed container at 4 °C or below, and don't leave it at room temperature for more than two hours, or one hour when it's above 32 °C."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-wine_glass",
+    "version": 1,
+    "object_key": "wine_glass",
+    "category": "GLASS",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    ],
+    "scope_note": "Built from the reviewed backend articles: broken-glass-and-sharp-shards. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+      "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+      "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+    ],
+    "caution": "Never throw away broken glass in a thin plastic bag without protection. Broken fluorescent tubes and CFL bulbs contain mercury and must go through the hazardous waste route, not regular residual waste.",
+    "evidence": [
+      {
+        "id": "wine_glass-broken-glass-and-sharp-shards-trash",
+        "method": "TRASH",
+        "text": "Broken glass doesn't belong in regular recycling because it can injure sorting staff and damage machines. Wrap it securely and put it out with residual waste, or give it to a specialist collector if one is available.",
+        "requires": {
+          "integrity": "DAMAGED"
+        },
+        "source_urls": [
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+        ],
+        "steps": [
+          "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+          "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+          "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-glass_cup",
+    "version": 1,
+    "object_key": "glass_cup",
+    "category": "GLASS",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    ],
+    "scope_note": "Built from the reviewed backend articles: broken-glass-and-sharp-shards. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+      "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+      "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+    ],
+    "caution": "Never throw away broken glass in a thin plastic bag without protection. Broken fluorescent tubes and CFL bulbs contain mercury and must go through the hazardous waste route, not regular residual waste.",
+    "evidence": [
+      {
+        "id": "glass_cup-broken-glass-and-sharp-shards-trash",
+        "method": "TRASH",
+        "text": "Broken glass doesn't belong in regular recycling because it can injure sorting staff and damage machines. Wrap it securely and put it out with residual waste, or give it to a specialist collector if one is available.",
+        "requires": {
+          "integrity": "DAMAGED"
+        },
+        "source_urls": [
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+        ],
+        "steps": [
+          "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+          "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+          "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-glass_bowl",
+    "version": 1,
+    "object_key": "glass_bowl",
+    "category": "GLASS",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    ],
+    "scope_note": "Built from the reviewed backend articles: broken-glass-and-sharp-shards. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+      "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+      "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+    ],
+    "caution": "Never throw away broken glass in a thin plastic bag without protection. Broken fluorescent tubes and CFL bulbs contain mercury and must go through the hazardous waste route, not regular residual waste.",
+    "evidence": [
+      {
+        "id": "glass_bowl-broken-glass-and-sharp-shards-trash",
+        "method": "TRASH",
+        "text": "Broken glass doesn't belong in regular recycling because it can injure sorting staff and damage machines. Wrap it securely and put it out with residual waste, or give it to a specialist collector if one is available.",
+        "requires": {
+          "integrity": "DAMAGED"
+        },
+        "source_urls": [
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+        ],
+        "steps": [
+          "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+          "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+          "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-glass_vase",
+    "version": 1,
+    "object_key": "glass_vase",
+    "category": "GLASS",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    ],
+    "scope_note": "Built from the reviewed backend articles: broken-glass-and-sharp-shards. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+      "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+      "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+    ],
+    "caution": "Never throw away broken glass in a thin plastic bag without protection. Broken fluorescent tubes and CFL bulbs contain mercury and must go through the hazardous waste route, not regular residual waste.",
+    "evidence": [
+      {
+        "id": "glass_vase-broken-glass-and-sharp-shards-trash",
+        "method": "TRASH",
+        "text": "Broken glass doesn't belong in regular recycling because it can injure sorting staff and damage machines. Wrap it securely and put it out with residual waste, or give it to a specialist collector if one is available.",
+        "requires": {
+          "integrity": "DAMAGED"
+        },
+        "source_urls": [
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+        ],
+        "steps": [
+          "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+          "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+          "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-other_glass",
+    "version": 1,
+    "object_key": "other_glass",
+    "category": "GLASS",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+    ],
+    "scope_note": "Built from the reviewed backend articles: broken-glass-and-sharp-shards. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": false,
+    "steps": [
+      "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+      "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+      "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+    ],
+    "caution": "Never throw away broken glass in a thin plastic bag without protection. Broken fluorescent tubes and CFL bulbs contain mercury and must go through the hazardous waste route, not regular residual waste.",
+    "evidence": [
+      {
+        "id": "other_glass-broken-glass-and-sharp-shards-trash",
+        "method": "TRASH",
+        "text": "Broken glass doesn't belong in regular recycling because it can injure sorting staff and damage machines. Wrap it securely and put it out with residual waste, or give it to a specialist collector if one is available.",
+        "requires": {
+          "integrity": "DAMAGED"
+        },
+        "source_urls": [
+          "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
+        ],
+        "steps": [
+          "Wear thick gloves or use a broom and dustpan, and don't pick up small pieces with bare hands.",
+          "Put the shards in a thick cardboard box or sturdy container and seal it with tape.",
+          "Write a clear warning such as \"Careful: broken glass\" on the outside before putting it in the residual waste bin."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-cell_phone",
+    "version": 1,
+    "object_key": "cell_phone",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.jakarta.go.id/e-waste"
+    ],
+    "scope_note": "Built from the reviewed backend articles: small-electronics-and-cables. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+      "If the user can't remove the battery, leave the device intact and don't force it open.",
+      "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+    ],
+    "caution": "Don't throw e-waste out with household trash, and never burn cables to recover copper; it releases toxic smoke.",
+    "evidence": [
+      {
+        "id": "cell_phone-small-electronics-and-cables-recycle",
+        "method": "RECYCLE",
+        "text": "Phones, chargers, cables, and small electronics contain hazardous parts as well as valuable metals, so they need to go to an official e-waste collector.",
+        "requires": {},
+        "source_urls": [
+          "https://www.jakarta.go.id/e-waste"
+        ],
+        "steps": [
+          "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+          "If the user can't remove the battery, leave the device intact and don't force it open.",
+          "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-laptop",
+    "version": 1,
+    "object_key": "laptop",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.jakarta.go.id/e-waste"
+    ],
+    "scope_note": "Built from the reviewed backend articles: small-electronics-and-cables. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+      "If the user can't remove the battery, leave the device intact and don't force it open.",
+      "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+    ],
+    "caution": "Don't throw e-waste out with household trash, and never burn cables to recover copper; it releases toxic smoke.",
+    "evidence": [
+      {
+        "id": "laptop-small-electronics-and-cables-recycle",
+        "method": "RECYCLE",
+        "text": "Phones, chargers, cables, and small electronics contain hazardous parts as well as valuable metals, so they need to go to an official e-waste collector.",
+        "requires": {},
+        "source_urls": [
+          "https://www.jakarta.go.id/e-waste"
+        ],
+        "steps": [
+          "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+          "If the user can't remove the battery, leave the device intact and don't force it open.",
+          "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-mouse",
+    "version": 1,
+    "object_key": "mouse",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.jakarta.go.id/e-waste"
+    ],
+    "scope_note": "Built from the reviewed backend articles: small-electronics-and-cables. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+      "If the user can't remove the battery, leave the device intact and don't force it open.",
+      "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+    ],
+    "caution": "Don't throw e-waste out with household trash, and never burn cables to recover copper; it releases toxic smoke.",
+    "evidence": [
+      {
+        "id": "mouse-small-electronics-and-cables-recycle",
+        "method": "RECYCLE",
+        "text": "Phones, chargers, cables, and small electronics contain hazardous parts as well as valuable metals, so they need to go to an official e-waste collector.",
+        "requires": {},
+        "source_urls": [
+          "https://www.jakarta.go.id/e-waste"
+        ],
+        "steps": [
+          "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+          "If the user can't remove the battery, leave the device intact and don't force it open.",
+          "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-remote",
+    "version": 1,
+    "object_key": "remote",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.jakarta.go.id/e-waste"
+    ],
+    "scope_note": "Built from the reviewed backend articles: small-electronics-and-cables. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+      "If the user can't remove the battery, leave the device intact and don't force it open.",
+      "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+    ],
+    "caution": "Don't throw e-waste out with household trash, and never burn cables to recover copper; it releases toxic smoke.",
+    "evidence": [
+      {
+        "id": "remote-small-electronics-and-cables-recycle",
+        "method": "RECYCLE",
+        "text": "Phones, chargers, cables, and small electronics contain hazardous parts as well as valuable metals, so they need to go to an official e-waste collector.",
+        "requires": {},
+        "source_urls": [
+          "https://www.jakarta.go.id/e-waste"
+        ],
+        "steps": [
+          "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+          "If the user can't remove the battery, leave the device intact and don't force it open.",
+          "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-keyboard",
+    "version": 1,
+    "object_key": "keyboard",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.jakarta.go.id/e-waste"
+    ],
+    "scope_note": "Built from the reviewed backend articles: small-electronics-and-cables. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+      "If the user can't remove the battery, leave the device intact and don't force it open.",
+      "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+    ],
+    "caution": "Don't throw e-waste out with household trash, and never burn cables to recover copper; it releases toxic smoke.",
+    "evidence": [
+      {
+        "id": "keyboard-small-electronics-and-cables-recycle",
+        "method": "RECYCLE",
+        "text": "Phones, chargers, cables, and small electronics contain hazardous parts as well as valuable metals, so they need to go to an official e-waste collector.",
+        "requires": {},
+        "source_urls": [
+          "https://www.jakarta.go.id/e-waste"
+        ],
+        "steps": [
+          "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+          "If the user can't remove the battery, leave the device intact and don't force it open.",
+          "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-clock",
+    "version": 1,
+    "object_key": "clock",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.jakarta.go.id/e-waste"
+    ],
+    "scope_note": "Built from the reviewed backend articles: small-electronics-and-cables. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+      "If the user can't remove the battery, leave the device intact and don't force it open.",
+      "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+    ],
+    "caution": "Don't throw e-waste out with household trash, and never burn cables to recover copper; it releases toxic smoke.",
+    "evidence": [
+      {
+        "id": "clock-small-electronics-and-cables-recycle",
+        "method": "RECYCLE",
+        "text": "Phones, chargers, cables, and small electronics contain hazardous parts as well as valuable metals, so they need to go to an official e-waste collector.",
+        "requires": {},
+        "source_urls": [
+          "https://www.jakarta.go.id/e-waste"
+        ],
+        "steps": [
+          "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+          "If the user can't remove the battery, leave the device intact and don't force it open.",
+          "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  },
+  {
+    "id": "core-hair_drier",
+    "version": 1,
+    "object_key": "hair_drier",
+    "category": "ELECTRONIC",
+    "publication_status": "PUBLISHED",
+    "reviewed_at": "2026-11-16",
+    "reviewer": "Alberd (backend guide articles)",
+    "valid_until": "2027-05-16",
+    "source_urls": [
+      "https://www.jakarta.go.id/e-waste"
+    ],
+    "scope_note": "Built from the reviewed backend articles: small-electronics-and-cables. General handling advice, not proof that a local facility accepts the item.",
+    "special_handling": true,
+    "steps": [
+      "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+      "If the user can't remove the battery, leave the device intact and don't force it open.",
+      "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+    ],
+    "caution": "Don't throw e-waste out with household trash, and never burn cables to recover copper; it releases toxic smoke.",
+    "evidence": [
+      {
+        "id": "hair_drier-small-electronics-and-cables-recycle",
+        "method": "RECYCLE",
+        "text": "Phones, chargers, cables, and small electronics contain hazardous parts as well as valuable metals, so they need to go to an official e-waste collector.",
+        "requires": {},
+        "source_urls": [
+          "https://www.jakarta.go.id/e-waste"
+        ],
+        "steps": [
+          "Back up anything important, then wipe all your personal data (factory reset) before handing the device over.",
+          "If the user can't remove the battery, leave the device intact and don't force it open.",
+          "Take it to an official local government e-waste drop box, a licensed collector's pickup service, or a manufacturer take-back program."
+        ],
+        "risk_compatible": true
+      }
+    ]
+  }
+]
