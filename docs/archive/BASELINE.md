@@ -70,4 +70,4 @@ YOLO nyata → object-3/bottle → konteks uji glass_bottle/CLEAN/INTACT → pan
 - Konten: seluruh 68 panduan masih DRAFT, belum review penanggung jawab lokal.
 - Integrasi produksi: auth/sesi/idempotensi/budget/retensi Go, kamera Android dan AT-AI-01–18 belum diuji oleh prototipe CLI ini.
 
-Panduan reproduksi ada di [README](../README.md); pembagian integrasi ada di [HANDOFF](HANDOFF.md).
+Panduan reproduksi ada di [README](../../README.md); pembagian integrasi ada di [HANDOFF](HANDOFF.md).

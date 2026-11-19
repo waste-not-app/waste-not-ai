@@ -18,7 +18,7 @@ Dataset batch kedua memiliki **3.798 gambar**, split penuh **2.173 train / 948 v
 | food_container | 6 | 12 | 28 |
 | bottle_cap | 23 | 28 | 31 |
 
-Target 300 instance training per kelas masih belum tercapai. Angka screening merupakan pemeriksaan Codex pada contact sheet beranotasi, bukan sertifikasi ahli manusia. Foto meragukan tidak dipaksakan masuk; keputusan dan hash tersimpan di `review-snapshot.json`. [Report build batch kedua](../evaluations/broad-waste-v3-batch2-build.json) dan [verifikasi dataset nyata](../evaluations/broad-waste-v3-batch2-verification.json). Verifikasi mencakup hash/label/split aktif dan memastikan tidak ada kelompok proksi atau pHash dekat yang melintasi split.
+Target 300 instance training per kelas masih belum tercapai. Angka screening merupakan pemeriksaan Codex pada contact sheet beranotasi, bukan sertifikasi ahli manusia. Foto meragukan tidak dipaksakan masuk; keputusan dan hash tersimpan di `review-snapshot.json`. [Report build batch kedua](../../evaluations/broad-waste-v3-batch2-build.json) dan [verifikasi dataset nyata](../../evaluations/broad-waste-v3-batch2-verification.json). Verifikasi mencakup hash/label/split aktif dan memastikan tidak ada kelompok proksi atau pHash dekat yang melintasi split.
 
 Seluruh **204 tes Python lulus** setelah penambahan dukungan dataset eksplisit pada training, validasi bahwa YAML menunjuk dataset/split yang dipilih, serta perbandingan checkpoint dengan taksonomi yang sama. CLI training tidak lagi diam-diam memakai v1 ketika menjalankan eksperimen data baru. Parameter `--compare-model` menilai checkpoint lama pada validation yang identik dengan kandidat. Profil confidence atau model default tidak dipromosikan otomatis.
 
@@ -32,7 +32,7 @@ Log/progres berada di `artifacts/training/broad-waste-v3-batch2-yolo11s-training
 
 ## Riwayat batch pertama
 
-7 November 2026. **Status: dataset eksperimen v3 berhasil dibuat.** Jalur terminal tetap gagal DNS, tetapi browser internal berhasil mengunduh 58 foto baru dengan lisensi CC BY 2.0 yang diperiksa pada halaman masing-masing foto. Sebanyak 50 lolos screening visual awal, 8 ditunda. Dataset lokal menjadi **3.749 gambar**; seluruh 3.699 gambar dan penempatan split baseline tetap utuh. Model belum dilatih ulang. Laporan: [acquisition](../evaluations/broad-waste-v3-acquisition.json), [build](../evaluations/broad-waste-v3-build.json), [verifikasi](../evaluations/broad-waste-v3-verification.json).
+7 November 2026. **Status: dataset eksperimen v3 berhasil dibuat.** Jalur terminal tetap gagal DNS, tetapi browser internal berhasil mengunduh 58 foto baru dengan lisensi CC BY 2.0 yang diperiksa pada halaman masing-masing foto. Sebanyak 50 lolos screening visual awal, 8 ditunda. Dataset lokal menjadi **3.749 gambar**; seluruh 3.699 gambar dan penempatan split baseline tetap utuh. Model belum dilatih ulang. Laporan: [acquisition](../../evaluations/broad-waste-v3-acquisition.json), [build](../../evaluations/broad-waste-v3-build.json), [verifikasi](../../evaluations/broad-waste-v3-verification.json).
 
 ## Hasil batch pertama
 

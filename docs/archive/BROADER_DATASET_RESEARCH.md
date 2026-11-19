@@ -4,7 +4,7 @@ Pemeriksaan: **20 Oktober 2026**. Ini mencatat riset sebelum eksperimen. Tindak 
 
 ## Kondisi proyek
 
-Saat riset ini dibuat, checkpoint hasil fine-tuning mempunyai empat keluaran: aluminium can, glass bottle, HDPE bottle, dan PET/plastic bottle. Demo biasa tetap memakai checkpoint COCO dengan 80 kelas; katalog saat itu berisi 69 pilihan benda/material, yang tidak berarti checkpoint khusus sudah memiliki 69 kelas. Perbedaan tersebut sudah didokumentasikan dalam [README AI](../README.md) dan [riset dataset pertama](DATASET_RESEARCH.md).
+Saat riset ini dibuat, checkpoint hasil fine-tuning mempunyai empat keluaran: aluminium can, glass bottle, HDPE bottle, dan PET/plastic bottle. Demo biasa tetap memakai checkpoint COCO dengan 80 kelas; katalog saat itu berisi 69 pilihan benda/material, yang tidak berarti checkpoint khusus sudah memiliki 69 kelas. Perbedaan tersebut sudah didokumentasikan dalam [README AI](../../README.md) dan [riset dataset pertama](DATASET_RESEARCH.md).
 
 ## Sumber primer yang diperiksa
 

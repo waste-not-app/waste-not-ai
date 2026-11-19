@@ -2,11 +2,11 @@
 
 Status 7 November 2026: backend Go dan sesi produksi sudah tersedia. Kontrak publik/snapshot Go terkini serta status wiring Android dijelaskan di [INTEGRATION.md](INTEGRATION.md), dan worker/deploy pada [DEPLOYMENT.md](DEPLOYMENT.md). Pernyataan belum diimplementasikan pada uraian historis di bawah berlaku pada checkpoint demo awal, bukan kondisi layanan saat ini.
 
-Pembaruan aktif: [pilot-policy-06, kondisi kosong dan audit background](CONDITIONAL_AND_BACKGROUND.md). UNKNOWN biasa boleh mendapat READY/CONDITIONAL; syarat yang belum diketahui muncul di conditions_to_verify. Bagian policy-05/evaluasi 40 kasus di bawah adalah perilaku/run sebelumnya; allow_conditional=false mempertahankan mode ketat tersebut. Suite aktif kini 44 kasus, dengan 40 kasus lama diuji dalam mode ketat dan empat kasus kondisi kosong. Hash report lama merujuk snapshot skenario sebelum perubahan, bukan byte file skenario aktif.
+Pembaruan aktif: [pilot-policy-06, kondisi kosong dan audit background](archive/CONDITIONAL_AND_BACKGROUND.md). UNKNOWN biasa boleh mendapat READY/CONDITIONAL; syarat yang belum diketahui muncul di conditions_to_verify. Bagian policy-05/evaluasi 40 kasus di bawah adalah perilaku/run sebelumnya; allow_conditional=false mempertahankan mode ketat tersebut. Suite aktif kini 44 kasus, dengan 40 kasus lama diuji dalam mode ketat dan empat kasus kondisi kosong. Hash report lama merujuk snapshot skenario sebelum perubahan, bukan byte file skenario aktif.
 
 Keputusan 20 Oktober 2026: **Python memiliki satu implementasi aturan AI**.
 Go mengaksesnya melalui HTTP privat. Frontend memakai HTTP publik Go.
-Kontrak bertipe, mock publik dan adapter Python tersedia di repo ini. Backend Go dan sesi produksi kini tersedia di repo backend; wiring Android berada pada PR integrasi dan penerimaan perangkat masih perlu diselesaikan. Pembaruan poin 3-4 menambahkan profil deteksi per kelas dan panduan pilot; lihat [mutu deteksi](DETECTION_QUALITY.md) dan [evaluasi rekomendasi](RECOMMENDATION_EVALUATION.md).
+Kontrak bertipe, mock publik dan adapter Python tersedia di repo ini. Backend Go dan sesi produksi kini tersedia di repo backend; wiring Android berada pada PR integrasi dan penerimaan perangkat masih perlu diselesaikan. Pembaruan poin 3-4 menambahkan profil deteksi per kelas dan panduan pilot; lihat [mutu deteksi](archive/DETECTION_QUALITY.md) dan [evaluasi rekomendasi](archive/RECOMMENDATION_EVALUATION.md).
 
 ## Artifact yang menjadi acuan tim
 
