@@ -158,5 +158,21 @@
     "region": "United States",
     "checked_at": "2026-11-13",
     "scope_note": "Composting principles and the limits on accepted materials. Confirm that your local program accepts the specific organic scraps."
+  },
+  {
+    "url": "https://www.epa.gov/recycle/preventing-wasted-food-home",
+    "title": "Preventing Wasted Food At Home",
+    "publisher": "US EPA",
+    "region": "United States",
+    "checked_at": "2026-11-16",
+    "scope_note": "Planning and storage habits that prevent food waste. Advice for next time, not a food safety check of the item in front of you."
+  },
+  {
+    "url": "https://www.jakarta.go.id/e-waste",
+    "title": "E-Waste",
+    "publisher": "Jakarta Provincial Government",
+    "region": "Jakarta, Indonesia",
+    "checked_at": "2026-11-16",
+    "scope_note": "Electronic waste collection in Jakarta. Other regions need their own official collector."
   }
 ]
