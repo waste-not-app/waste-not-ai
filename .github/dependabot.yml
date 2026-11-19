@@ -16,5 +16,9 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      # The hashed lock files and the host venv target Python 3.12; move them together on purpose.
+      - dependency-name: python
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
     commit-message:
       prefix: build
