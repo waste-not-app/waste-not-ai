@@ -61,7 +61,8 @@ def detection_capabilities(labels: dict[int, str], *, model_version=None, model_
             "review_only_classes": [name for name, value in profile["classes"].items() if not value["offered_enabled"]]}
 
 
-def review_detections(objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None) -> dict:
+def review_detections(objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None,
+                      lower_thresholds=None) -> dict:
     catalog = load_catalog()
     version, mapping = _detection_mapping(labels, catalog)
     thresholds = catalog["thresholds"]
@@ -76,6 +77,9 @@ def review_detections(objects: list[RawDetection], labels: dict[int, str], *, mo
         supported = bool(matches)
         selected = profile["classes"].get(obj.raw_class, {})
         limits = {key: selected.get(key, thresholds[key]) for key in ("lower", "offered")}
+        if lower_thresholds and obj.raw_class in lower_thresholds:
+            limits["lower"] = lower_thresholds[obj.raw_class]
+            limits["offered"] = max(limits["offered"], limits["lower"])
         reviewable = supported and obj.confidence >= limits["lower"]
         reasons = ["CLASS_REVIEW_ONLY"] if reviewable and not selected.get("offered_enabled", True) else []
         band = "MANUAL_REQUIRED"

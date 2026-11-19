@@ -53,7 +53,8 @@ def choose(reports):
                 or report.get("holdout_opened") is not False or report.get("branch") != branch):
             raise ValueError("Selection accepts completed validation-only reports from one branch")
         signature = {"inputs": report["input_sha256"],
-                     "controlled": {k:report["config"][k] for k in ("imgsz", "batch", "nbs", "seed")}}
+                     "controlled": {k: value for k, value in report["config"].items()
+                                    if k not in {"freeze", "lr0"}}}
         signatures.append(signature)
         if signature != signatures[0]:
             raise ValueError("Dataset, initial model or controlled experiment parameters differ")

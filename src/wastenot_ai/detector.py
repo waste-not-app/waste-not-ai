@@ -8,7 +8,7 @@ from time import perf_counter
 from .catalog import review_detections
 from .contracts import RawDetection
 from .media import decode_image
-from .detection_quality import box_iou
+from .fusion import FusionPolicy, fuse
 from .taxonomy import BROAD_LABELS, COCO_LABELS, COMBINED_LABELS
 
 
@@ -54,12 +54,12 @@ class YoloDetector:
     def input_size(self):
         return self._input_size
 
-    def detect(self, image_bytes: bytes) -> dict:
+    def detect(self, image_bytes: bytes, *, confidence_floor=0.25) -> dict:
         started = perf_counter()
         image = decode_image(image_bytes)
         decoded_at = perf_counter()
         try:
-            result = self.model.predict(image, imgsz=getattr(self, "input_size", 640), batch=1, conf=0.25, device=self.device,
+            result = self.model.predict(image, imgsz=getattr(self, "input_size", 640), batch=1, conf=confidence_floor, device=self.device,
                                         rect=self.input_shape != "square",
                                         iou=.7, agnostic_nms=False, verbose=False, save=False, max_det=50)[0]
             if hasattr(result, "orig_shape") and tuple(result.orig_shape) != (image.height, image.width):
@@ -90,10 +90,11 @@ class YoloDetector:
 
 class CombinedDetector:
     """Waste and general checkpoints with one versioned label space for review."""
-    def __init__(self, waste, general):
+    def __init__(self, waste, general, *, policy=None):
         if waste.labels != dict(enumerate(BROAD_LABELS)) or general.labels != dict(enumerate(COCO_LABELS)):
             raise ValueError("Model pendamping memerlukan checkpoint Broad Waste dan COCO lengkap.")
         self.waste, self.general = waste, general
+        self._policy = policy
         self.labels = dict(enumerate(COMBINED_LABELS))
         components = [{key: detector.artifact[key] for key in ("model_version", "sha256", "input_shape")}
                       for detector in (waste, general)]
@@ -102,30 +103,43 @@ class CombinedDetector:
             if detector.artifact.get("input_size", 640) != 640:
                 component["input_size"] = detector.artifact["input_size"]
         identity = {"components": components, "merge": "same-class-iou065-max50-v1", "labels": COMBINED_LABELS}
+        if policy is not None:
+            identity["merge"] = f"same-class-iou{round(policy.merge_iou * 100):03d}-max50-v1"
+            identity["calibration"] = {"thresholds": policy.thresholds, "confidence_floor": 0.05, "nms_iou": 0.7,
+                                       "preprocessing": [d.artifact["preprocessing"] for d in (waste, general)]}
         checksum = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
         self.artifact = {"model_version": f"broad-coco-{checksum[:12]}", "sha256": checksum,
                          "labels": self.labels, "scope": "broad-waste-plus-coco-experimental",
                          "components": components, "merge_policy": identity["merge"]}
+        if policy is not None:
+            self.artifact["calibration"] = identity["calibration"]
+
+    def native_predictions(self, image_bytes):
+        waste = self.waste.detect(image_bytes, confidence_floor=0.05)
+        general = self.general.detect(image_bytes, confidence_floor=0.05)
+        if waste["image"] != general["image"]:
+            raise ValueError("Component image dimensions disagree")
+        return {"broad": waste["objects"], "general": general["objects"]}, waste["image"]
+
+    def review_predictions(self, predictions):
+        policy = self._policy or FusionPolicy()
+        kept = fuse(predictions, policy)
+        return review_detections([raw for _, raw in kept], self.labels,
+                                 model_version=self.artifact["model_version"], model_sha256=self.artifact["sha256"],
+                                 lower_thresholds=dict(policy.thresholds))
 
     def detect(self, image_bytes: bytes) -> dict:
         started = perf_counter()
-        waste = self.waste.detect(image_bytes)
-        general = self.general.detect(image_bytes)
-        if waste["image"] != general["image"]:
-            raise ValueError("Dimensi gambar kedua checkpoint tidak cocok.")
-        # Only equivalent labels compete here; conflicting classes remain visible.
-        objects = []
-        for obj in sorted(waste["objects"] + general["objects"], key=lambda obj: obj["confidence"], reverse=True):
-            candidate = RawDetection(class_id=COMBINED_LABELS.index(obj["raw_class"]), raw_class=obj["raw_class"],
-                                     confidence=obj["confidence"], bbox=tuple(obj["bbox"]))
-            if not any(other.class_id == candidate.class_id and box_iou(other.bbox, candidate.bbox) >= .65
-                       for other in objects):
-                objects.append(candidate)
-            if len(objects) == 50:
-                break
-        return {**review_detections(objects, self.labels, model_version=self.artifact["model_version"],
-                                    model_sha256=self.artifact["sha256"]),
-                "model": self.artifact, "image": waste["image"],
+        if self._policy is None:
+            waste = self.waste.detect(image_bytes)
+            general = self.general.detect(image_bytes)
+            if waste["image"] != general["image"]:
+                raise ValueError("Component image dimensions disagree")
+            predictions, dimensions = {"broad": waste["objects"], "general": general["objects"]}, waste["image"]
+        else:
+            predictions, dimensions = self.native_predictions(image_bytes)
+        return {**self.review_predictions(predictions),
+                "model": self.artifact, "image": dimensions,
                 "timing_ms": {"total": round((perf_counter() - started) * 1000, 2)}}
 
 

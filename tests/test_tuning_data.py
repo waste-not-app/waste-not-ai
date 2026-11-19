@@ -126,7 +126,8 @@ def test_same_session_cannot_cross_splits(tuning, intake, tmp_path, monkeypatch)
     import prepare_drinking_waste
     first = intake["records"][0]
     other = copy.deepcopy(first)
-    other.update(id="second", image="second.png", split="test", group="other-object", phash=first["phash"] ^ ((1 << 30)-1))
+    other.update(id="second", image="second.png", split="test", group="other-object", holdout_eligible=True,
+                 phash=first["phash"] ^ ((1 << 30)-1))
     image = tmp_path / "second.png"
     Image.new("RGB", (64,64), "red").save(image)
     other["prepared_sha256"] = tuning.digest(image)

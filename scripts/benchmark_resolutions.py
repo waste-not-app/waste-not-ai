@@ -14,7 +14,7 @@ import yaml
 
 from training_experiments import dataset_snapshot, sha, write
 from prepare_external_focus import phash_neighbors
-from wastenot_ai.camera_benchmark import load_manifest
+from wastenot_ai.camera_benchmark import browser_input, load_manifest
 from wastenot_ai.detector import load_detector
 from wastenot_ai.resolution_benchmark import (benchmark_stage, cache_identity, distribution, prepare_inputs,
                                            select_resolution, PROFILES)
@@ -71,11 +71,15 @@ def validation_manifest(specs, root=ROOT):
                 existing["truth"].extend(r for r in truth if r["label"] not in shared)
                 existing["evaluated_classes"] = sorted(set(scope)|set(existing["evaluated_classes"]))
                 existing["source_groups"].append(row["group"])
+                if row.get("session_id"):
+                    existing["source_groups"].append("session:" + row["session_id"])
                 continue
             grouped[checksum] = {"id":checksum,"sha256":checksum,
                 "image":(data/row["image"]).resolve().relative_to(root.resolve()).as_posix(),
                 "group":row["group"],"source_groups":[row["group"]],"source":branch,
-                "split":"val","evaluated_classes":scope,"truth":truth}
+                "split":"val","phash":row["phash"],"evaluated_classes":scope,"truth":truth}
+            if row.get("session_id"):
+                grouped[checksum]["source_groups"].append("session:" + row["session_id"])
     groups, hashes, sessions = {}, {}, {}
     for row in protection:
         for field, table in (("group",groups),("prepared_sha256",hashes),("session_id",sessions)):
@@ -92,16 +96,30 @@ def validation_manifest(specs, root=ROOT):
 
 
 def component_ap(detectors, specs, output):
+    configs = {}
+    for branch, (data, _, _) in specs.items():
+        work = output / f"ap-input-{branch}"
+        images, labels = work / "images", work / "labels"
+        images.mkdir(parents=True)
+        labels.mkdir()
+        listed = []
+        for index, line in enumerate((data / "val.txt").read_text("utf-8").splitlines()):
+            source = Path(line)
+            target = images / f"{index}.jpg"
+            target.write_bytes(browser_input(source))
+            (labels / f"{index}.txt").write_bytes((data / "labels" / "val" / source.with_suffix(".txt").name).read_bytes())
+            listed.append(target.as_posix())
+        validation_list = work / "val.txt"
+        validation_list.write_text("\n".join(listed) + "\n", encoding="utf-8")
+        configs[branch] = output / f"ap-{branch}-validation.yaml"
+        configs[branch].write_text(yaml.safe_dump({"path": data.resolve().as_posix(),
+            "names": dict(enumerate(BROAD_LABELS if branch == "broad" else COCO_LABELS)),
+            "train": (data/"train.txt").resolve().as_posix(), "val": validation_list.resolve().as_posix()}), encoding="utf-8")
     reports = {}
     for size,combined in detectors.items():
         reports[str(size)] = {}
         for branch,detector in (("broad",combined.waste),("general",combined.general)):
-            data = specs[branch][0]
-            config_path = output/f"ap-{branch}-validation.yaml"
-            config_path.write_text(yaml.safe_dump({"path":data.resolve().as_posix(),
-                "names":detector.labels,"train":(data/"train.txt").resolve().as_posix(),
-                "val":(data/"val.txt").resolve().as_posix()}),encoding="utf-8")
-            value = detector.model.val(data=str(config_path),split="val",device="cpu",batch=1,workers=0,
+            value = detector.model.val(data=str(configs[branch]),split="val",device="cpu",batch=1,workers=0,
                 imgsz=size,rect=False,conf=.001,iou=.7,max_det=50,plots=False,
                 project=str(output/"component-ap"),name=f"{branch}-{size}")
             per_class = []

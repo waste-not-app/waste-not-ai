@@ -195,6 +195,7 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
     protected_rows = list(base["records"]) + list(protected)
     hashes = {r.get("prepared_sha256", r.get("sha256")) for r in protected_rows}
     groups = {r.get("group") for r in protected_rows}
+    sessions = {r.get("session_id") for r in protected_rows}
     phashes = [r["phash"] for r in protected_rows if "phash" in r]
     valid, rejected = [], []
     seen_ids, seen_hashes = set(), set()
@@ -206,12 +207,14 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
             seen_ids.add(row["id"])
             if row.get("split") not in SPLITS or not row.get("group") or not row.get("session_id"):
                 raise ValueError("Missing split, group, or capture session")
+            if row["split"] == "test" and row.get("holdout_eligible") is not True:
+                raise ValueError("Final holdout eligibility must be reviewed explicitly")
             image = inside(intake_root, row["image"])
             checksum = digest(image)
             if checksum != row.get("prepared_sha256"):
                 raise ValueError("Image checksum mismatch")
-            if checksum in hashes or checksum in seen_hashes or row["group"] in groups:
-                raise ValueError("Reused/protected image or group")
+            if checksum in hashes or checksum in seen_hashes or row["group"] in groups or row["session_id"] in sessions:
+                raise ValueError("Reused/protected image, group or session")
             seen_hashes.add(checksum)
             if not isinstance(row.get("phash"), int) or not 0 <= row["phash"] < 2**63:
                 raise ValueError("Missing or invalid image pHash")
@@ -266,7 +269,8 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
 
     for i, row in enumerate(valid):
         for j, other in enumerate(valid[:i]):
-            if row["group"] == other["group"] or row["session_id"] == other["session_id"]:
+            if (row["group"] == other["group"] or row["session_id"] == other["session_id"]
+                    or (row["phash"] ^ other["phash"]).bit_count() <= 5):
                 parents[find(i)] = find(j)
     capture_groups = {r["id"]: find(i) for i, r in enumerate(valid)}
     support = {}

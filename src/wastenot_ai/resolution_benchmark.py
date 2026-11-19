@@ -118,9 +118,11 @@ def prepare_inputs(manifest, root, profiles=PROFILES):
     return inputs
 
 
-def benchmark_stage(detectors, inputs, labels, *, repeats=3, warmup=5, clock=perf_counter, memory=process_memory):
+def benchmark_stage(detectors, inputs, labels, *, repeats=3, warmup=5, clock=perf_counter, memory=process_memory,
+                    comparison_names=None):
     sizes = sorted(detectors)
-    if sizes not in ([640,768],[640,768,960]) or repeats < 3 or warmup < 5:
+    allowed = list(comparison_names) == sizes if comparison_names else sizes in ([640,768],[640,768,960])
+    if not allowed or repeats < 3 or warmup < 5:
         raise ValueError("Compare 640/768 first, >=3 repeats and >=5 excluded warmups")
     for detector in detectors.values():
         for _ in range(warmup):
