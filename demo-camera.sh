@@ -15,10 +15,10 @@ elif command -v python3 >/dev/null 2>&1; then
 fi
 
 if [[ -z "$VENV_PYTHON" ]]; then
-    echo "Error: Python environment tidak ditemukan." >&2
+    echo "Error: no Python environment found." >&2
     exit 1
 fi
 
 export PYTHONPATH="$SCRIPT_DIR/src:${PYTHONPATH:-}"
-echo "==> Menjalankan WasteNot AI Camera Demo..."
+echo "==> Starting the WasteNot AI camera demo..."
 exec "$VENV_PYTHON" -m wastenot_ai.cli demo --demo-guides "$@"
