@@ -12,19 +12,19 @@
       "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables",
       "https://www.epa.gov/hw/household-hazardous-waste-hhw"
     ],
-    "scope_note": "Khusus botol PET bekas pangan/minuman yang material, riwayat isi dan penerimanya dikonfirmasi pengguna. Prinsip EPA dari AS; tidak membuktikan penerimaan fasilitas Indonesia.",
+    "scope_note": "Only for PET bottles that held food or drink, where the user confirmed the material, former contents, and collector. Uses US EPA principles and doesn't prove acceptance by facilities in Indonesia.",
     "special_handling": false,
     "steps": [
-      "Konfirmasi material PET dan riwayat bekas pangan/minuman; bila riwayat belum diketahui, lengkapi informasi sebelum memakai panduan ini.",
-      "Kosongkan dan bersihkan sisa biasa sesuai petunjuk penerima; hentikan bila ada dugaan kontaminasi berbahaya.",
-      "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+      "Confirm the bottle is PET and that it held food or drink. If you don't know what it held, add that information before using this guide.",
+      "Empty it and rinse out ordinary residue as the collector asks. Stop if you suspect hazardous contamination.",
+      "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
     ],
-    "caution": "Bentuk botol dan kode resin bukan bukti material atau keamanan isi ulang. Riwayat isi belum diketahui memerlukan klarifikasi; bekas kimia atau kontaminasi berbahaya memerlukan arahan pengelola khusus.",
+    "caution": "A bottle's shape and resin code don't prove its material or that it's safe to refill. Unknown former contents need clarifying, and chemical residue or hazardous contamination needs a specialist handler.",
     "evidence": [
       {
         "id": "pet-clean-recycle-v1",
         "method": "RECYCLE",
-        "text": "Botol PET bekas pangan/minuman yang bersih dapat diarahkan ke Recycle setelah material, riwayat isi dan penerimaan pengelola dikonfirmasi. Ikuti syarat penerima; deteksi foto tidak membuktikan keamanan atau penerimaan lokal.",
+        "text": "A clean PET bottle that held food or drink can go to Recycle once you've confirmed the material, what it held, and that your collector accepts it. Follow the collector's requirements. Photo detection doesn't prove safety or local acceptance.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -36,9 +36,9 @@
           "https://www.epa.gov/hw/household-hazardous-waste-hhw"
         ],
         "steps": [
-          "Konfirmasi material PET dan riwayat bekas pangan/minuman; bila riwayat belum diketahui, lengkapi informasi sebelum memakai panduan ini.",
-          "Kosongkan dan bersihkan sisa biasa sesuai petunjuk penerima; hentikan bila ada dugaan kontaminasi berbahaya.",
-          "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+          "Confirm the bottle is PET and that it held food or drink. If you don't know what it held, add that information before using this guide.",
+          "Empty it and rinse out ordinary residue as the collector asks. Stop if you suspect hazardous contamination.",
+          "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
         ]
       },
       {
@@ -46,12 +46,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]
@@ -69,19 +69,19 @@
       "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables",
       "https://www.epa.gov/hw/household-hazardous-waste-hhw"
     ],
-    "scope_note": "Khusus kaleng aluminium bekas minuman/pangan non-aerosol, tanpa isi bertekanan. Material, riwayat isi dan penerima dikonfirmasi pengguna; tidak menyatakan penerimaan nasional Indonesia.",
+    "scope_note": "Only for non-aerosol aluminium food or drink cans with no pressurized contents, where the user confirmed the material, former contents, and collector. Doesn't claim acceptance across Indonesia.",
     "special_handling": false,
     "steps": [
-      "Pastikan kaleng aluminium bekas minuman/pangan non-aerosol, tanpa isi bertekanan; bila tidak pasti, jangan gunakan panduan ini dan minta klarifikasi.",
-      "Kosongkan dan bersihkan sisa biasa sesuai petunjuk penerima; hentikan bila ada dugaan kontaminasi berbahaya.",
-      "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+      "Make sure it's a non-aerosol aluminium food or drink can with no pressurized contents. If you aren't sure, don't use this guide and ask for clarification.",
+      "Empty it and rinse out ordinary residue as the collector asks. Stop if you suspect hazardous contamination.",
+      "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
     ],
-    "caution": "Bukan untuk kaleng aerosol/bertekanan atau bekas bahan kimia. Jangan melubangi, menekan atau mencoba mengosongkan isi bertekanan. Minta arahan pengelola yang sesuai untuk benda di luar cakupan.",
+    "caution": "Not for aerosol or pressurized cans, or cans that held chemicals. Don't puncture, crush, or try to empty pressurized contents. Ask a suitable handler about items outside this scope.",
     "evidence": [
       {
         "id": "can-clean-recycle-v1",
         "method": "RECYCLE",
-        "text": "Kaleng aluminium bekas minuman/pangan non-aerosol yang bersih dapat diarahkan ke Recycle setelah riwayat isi dan penerimaan pengelola dikonfirmasi. Ikuti persyaratan penerima; panduan ini tidak mencakup kaleng bertekanan atau bekas kimia.",
+        "text": "A clean non-aerosol aluminium food or drink can goes to Recycle once you've confirmed what it held and that your collector accepts it. Follow the collector's requirements. This guide doesn't cover pressurized cans or cans that held chemicals.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -93,9 +93,9 @@
           "https://www.epa.gov/hw/household-hazardous-waste-hhw"
         ],
         "steps": [
-          "Pastikan kaleng aluminium bekas minuman/pangan non-aerosol, tanpa isi bertekanan; bila tidak pasti, jangan gunakan panduan ini dan minta klarifikasi.",
-          "Kosongkan dan bersihkan sisa biasa sesuai petunjuk penerima; hentikan bila ada dugaan kontaminasi berbahaya.",
-          "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+          "Make sure it's a non-aerosol aluminium food or drink can with no pressurized contents. If you aren't sure, don't use this guide and ask for clarification.",
+          "Empty it and rinse out ordinary residue as the collector asks. Stop if you suspect hazardous contamination.",
+          "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
         ]
       },
       {
@@ -103,12 +103,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]
@@ -125,17 +125,17 @@
     "source_urls": [
       "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
     ],
-    "scope_note": "Prinsip daur ulang kardus dari EPA AS dengan konfirmasi penerima setempat. Aturan kotak pangan, minyak dan kekeringan mengikuti pengelola; bukan larangan atau penerimaan universal Indonesia.",
+    "scope_note": "US EPA cardboard recycling principles, with confirmation from the local collector. Rules for food boxes, grease, and dryness follow the collector. Not a universal rule for Indonesia in either direction.",
     "special_handling": false,
     "steps": [
-      "Periksa kebersihan dan aturan penerimaan kardus."
+      "Check that the cardboard is clean and what the collector accepts."
     ],
-    "caution": "Kardus tercemar makanan tidak otomatis layak didaur ulang.",
+    "caution": "Cardboard with food on it isn't automatically recyclable.",
     "evidence": [
       {
         "id": "cardboard-clean-recycle-v1",
         "method": "RECYCLE",
-        "text": "Kardus yang bersih dapat diarahkan ke Recycle karena kamu sudah mengonfirmasi pengelola yang menerima jenis dan kondisinya. Ikuti persyaratan penerima; skor YOLO tidak membuktikan penerimaan fasilitas.",
+        "text": "You confirmed that your collector accepts clean cardboard in this condition, so this piece can go to Recycle. Follow the collector's requirements. A YOLO score doesn't prove that a facility will accept it.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -145,9 +145,9 @@
           "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
         ],
         "steps": [
-          "Pastikan material kardus dan pengelola yang menerima kondisi benda ini benar.",
-          "Ikuti syarat kebersihan dan kekeringan penerima. Pisahkan sisa pangan; bagian basah atau berminyak tidak otomatis diterima atau ditolak semua program.",
-          "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+          "Make sure the item really is cardboard and that your collector accepts it in this condition.",
+          "Follow the collector's requirements for clean and dry cardboard. Remove food scraps. Not every program accepts or rejects wet or greasy parts.",
+          "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
         ]
       },
       {
@@ -155,12 +155,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]
@@ -179,17 +179,17 @@
       "https://www3.epa.gov/recyclecity/recovery.htm",
       "https://tasikmalaya.pom.go.id/berita/cerdas-memilih-kemasan-wujudkan-pangan-aman-melalui-pengenalan-kode-plastik"
     ],
-    "scope_note": "HDPE kode 2 bekas pangan/minuman dikonfirmasi pengguna; sumber BPOM untuk identitas/peruntukan, EPA untuk prinsip daur ulang. Penerimaan wajib dikonfirmasi lokal.",
+    "scope_note": "You confirmed it's a code 2 HDPE bottle that held food or drink. BPOM covers the material and its intended use, and EPA covers recycling principles. Acceptance must be confirmed locally.",
     "special_handling": false,
     "steps": [
-      "Periksa isi sebelumnya dan penerimaan pengelola."
+      "Check what it held before and whether your collector accepts it."
     ],
-    "caution": "Kode 2 dan bentuk botol bukan bukti aman untuk dipakai ulang atau kontak pangan. Isi sebelumnya yang tidak diketahui atau bahan kimia tidak memakai aturan botol pangan ini.",
+    "caution": "Resin code 2 and a bottle shape don't prove it's safe to reuse or to hold food. Bottles with unknown or chemical contents can't follow this food bottle guide.",
     "evidence": [
       {
         "id": "hdpe-food-recycle-v5",
         "method": "RECYCLE",
-        "text": "Botol HDPE bekas pangan/minuman yang bersih dapat diarahkan ke Recycle karena isi sebelumnya dan penerimaan pengelola telah kamu konfirmasi. Kode resin 2 tidak menjamin aman dipakai ulang atau diterima semua fasilitas.",
+        "text": "You confirmed what this clean HDPE bottle held and that your collector accepts it, so it can go to Recycle. Resin code 2 doesn't guarantee it's safe to reuse or that every facility accepts it.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -202,9 +202,9 @@
           "https://tasikmalaya.pom.go.id/berita/cerdas-memilih-kemasan-wujudkan-pangan-aman-melalui-pengenalan-kode-plastik"
         ],
         "steps": [
-          "Konfirmasi bahan HDPE/kode 2 dan riwayat bekas pangan/minuman; jangan memakai aturan ini untuk bekas kimia atau isi yang tidak diketahui.",
-          "Kosongkan dan bersihkan sisa pangan sesuai petunjuk penerima; pisahkan sesuai jenis.",
-          "Serahkan kepada pengelola yang dikonfirmasi menerima HDPE dengan kondisi tersebut. Jangan menganggap botol bekas otomatis aman diisi ulang."
+          "Confirm that it's HDPE (code 2) and that it held food or drink. Don't use this guide for bottles that held chemicals or unknown contents.",
+          "Empty it, rinse out food residue as the collector asks, and sort it by type.",
+          "Hand it to a collector you confirmed accepts HDPE in this condition. Don't assume a used bottle is safe to refill."
         ]
       },
       {
@@ -212,12 +212,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]

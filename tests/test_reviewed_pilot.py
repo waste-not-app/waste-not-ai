@@ -27,7 +27,7 @@ def test_review_metadata_is_honest_and_time_bounded():
 
 def test_can_confirmation_label_excludes_aerosols():
     item = next(row for row in load_catalog()['items'] if row['object_key'] == 'aluminium_can')
-    assert 'non-aerosol' in item['label'] and item['requires_material_confirmation'] is True
+    assert 'non-aerosol' in item['label'].lower() and item['requires_material_confirmation'] is True
 
 
 @pytest.mark.parametrize('guide', GUIDES, ids=lambda guide: guide.object_key)

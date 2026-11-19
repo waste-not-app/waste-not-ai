@@ -8,7 +8,7 @@
   "items": [
     {
       "object_key": "pet_bottle",
-      "label": "Botol plastik PET bekas pangan/minuman (konfirmasi pengguna)",
+      "label": "PET plastic bottle from food or drink (confirmed by user)",
       "category": "PLASTIC",
       "guide_key": "pet_bottle",
       "special_handling": false,
@@ -18,7 +18,7 @@
     },
     {
       "object_key": "hdpe_bottle",
-      "label": "Botol HDPE bekas pangan/minuman (konfirmasi pengguna)",
+      "label": "HDPE bottle from food or drink (confirmed by user)",
       "category": "PLASTIC",
       "guide_key": "hdpe_bottle",
       "special_handling": false,
@@ -28,7 +28,7 @@
     },
     {
       "object_key": "glass_bottle",
-      "label": "Botol kaca",
+      "label": "Glass bottle",
       "category": "GLASS",
       "guide_key": "glass_bottle",
       "special_handling": false,
@@ -38,7 +38,7 @@
     },
     {
       "object_key": "aluminium_can",
-      "label": "Kaleng aluminium bekas minuman/pangan non-aerosol",
+      "label": "Non-aerosol aluminium food or drink can",
       "category": "METAL",
       "guide_key": "aluminium_can",
       "special_handling": false,
@@ -48,7 +48,7 @@
     },
     {
       "object_key": "cardboard",
-      "label": "Kardus",
+      "label": "Cardboard",
       "category": "PAPER",
       "guide_key": "cardboard",
       "special_handling": false,
@@ -58,7 +58,7 @@
     },
     {
       "object_key": "battery",
-      "label": "Baterai",
+      "label": "Battery",
       "category": "ELECTRONIC",
       "guide_key": "battery",
       "special_handling": true,
@@ -68,7 +68,7 @@
     },
     {
       "object_key": "bicycle",
-      "label": "Sepeda",
+      "label": "Bicycle",
       "category": "OTHER",
       "guide_key": "bicycle",
       "special_handling": false,
@@ -79,7 +79,7 @@
     },
     {
       "object_key": "bench",
-      "label": "Bangku",
+      "label": "Bench",
       "category": "OTHER",
       "guide_key": "bench",
       "special_handling": false,
@@ -90,7 +90,7 @@
     },
     {
       "object_key": "backpack",
-      "label": "Ransel",
+      "label": "Backpack",
       "category": "OTHER",
       "guide_key": "backpack",
       "special_handling": false,
@@ -101,7 +101,7 @@
     },
     {
       "object_key": "umbrella",
-      "label": "Payung",
+      "label": "Umbrella",
       "category": "OTHER",
       "guide_key": "umbrella",
       "special_handling": false,
@@ -112,7 +112,7 @@
     },
     {
       "object_key": "handbag",
-      "label": "Tas tangan",
+      "label": "Handbag",
       "category": "OTHER",
       "guide_key": "handbag",
       "special_handling": false,
@@ -123,7 +123,7 @@
     },
     {
       "object_key": "tie",
-      "label": "Dasi",
+      "label": "Tie",
       "category": "OTHER",
       "guide_key": "tie",
       "special_handling": false,
@@ -134,7 +134,7 @@
     },
     {
       "object_key": "suitcase",
-      "label": "Koper",
+      "label": "Suitcase",
       "category": "OTHER",
       "guide_key": "suitcase",
       "special_handling": false,
@@ -156,7 +156,7 @@
     },
     {
       "object_key": "skis",
-      "label": "Peralatan ski",
+      "label": "Skis",
       "category": "OTHER",
       "guide_key": "skis",
       "special_handling": false,
@@ -167,7 +167,7 @@
     },
     {
       "object_key": "snowboard",
-      "label": "Papan snowboard",
+      "label": "Snowboard",
       "category": "OTHER",
       "guide_key": "snowboard",
       "special_handling": false,
@@ -178,7 +178,7 @@
     },
     {
       "object_key": "sports_ball",
-      "label": "Bola olahraga",
+      "label": "Sports ball",
       "category": "OTHER",
       "guide_key": "sports_ball",
       "special_handling": false,
@@ -189,7 +189,7 @@
     },
     {
       "object_key": "kite",
-      "label": "Layang-layang",
+      "label": "Kite",
       "category": "OTHER",
       "guide_key": "kite",
       "special_handling": false,
@@ -200,7 +200,7 @@
     },
     {
       "object_key": "baseball_bat",
-      "label": "Pemukul bisbol",
+      "label": "Baseball bat",
       "category": "OTHER",
       "guide_key": "baseball_bat",
       "special_handling": false,
@@ -211,7 +211,7 @@
     },
     {
       "object_key": "baseball_glove",
-      "label": "Sarung tangan bisbol",
+      "label": "Baseball glove",
       "category": "OTHER",
       "guide_key": "baseball_glove",
       "special_handling": false,
@@ -233,7 +233,7 @@
     },
     {
       "object_key": "surfboard",
-      "label": "Papan selancar",
+      "label": "Surfboard",
       "category": "OTHER",
       "guide_key": "surfboard",
       "special_handling": false,
@@ -244,7 +244,7 @@
     },
     {
       "object_key": "tennis_racket",
-      "label": "Raket tenis",
+      "label": "Tennis racket",
       "category": "OTHER",
       "guide_key": "tennis_racket",
       "special_handling": false,
@@ -255,7 +255,7 @@
     },
     {
       "object_key": "wine_glass",
-      "label": "Gelas berkaki (kaca)",
+      "label": "Wine glass",
       "category": "GLASS",
       "guide_key": "wine_glass",
       "special_handling": false,
@@ -266,7 +266,7 @@
     },
     {
       "object_key": "plastic_cup",
-      "label": "Gelas plastik",
+      "label": "Plastic cup",
       "category": "PLASTIC",
       "guide_key": "plastic_cup",
       "special_handling": false,
@@ -277,7 +277,7 @@
     },
     {
       "object_key": "glass_cup",
-      "label": "Gelas kaca",
+      "label": "Glass cup",
       "category": "GLASS",
       "guide_key": "glass_cup",
       "special_handling": false,
@@ -288,7 +288,7 @@
     },
     {
       "object_key": "ceramic_cup",
-      "label": "Cangkir keramik",
+      "label": "Ceramic mug",
       "category": "OTHER",
       "guide_key": "ceramic_cup",
       "special_handling": false,
@@ -299,7 +299,7 @@
     },
     {
       "object_key": "metal_cup",
-      "label": "Cangkir logam",
+      "label": "Metal cup",
       "category": "METAL",
       "guide_key": "metal_cup",
       "special_handling": false,
@@ -310,7 +310,7 @@
     },
     {
       "object_key": "metal_fork",
-      "label": "Garpu logam",
+      "label": "Metal fork",
       "category": "METAL",
       "guide_key": "metal_fork",
       "special_handling": false,
@@ -321,7 +321,7 @@
     },
     {
       "object_key": "knife",
-      "label": "Pisau",
+      "label": "Knife",
       "category": "METAL",
       "guide_key": "knife",
       "special_handling": true,
@@ -332,7 +332,7 @@
     },
     {
       "object_key": "metal_spoon",
-      "label": "Sendok logam",
+      "label": "Metal spoon",
       "category": "METAL",
       "guide_key": "metal_spoon",
       "special_handling": false,
@@ -343,7 +343,7 @@
     },
     {
       "object_key": "plastic_bowl",
-      "label": "Mangkuk plastik",
+      "label": "Plastic bowl",
       "category": "PLASTIC",
       "guide_key": "plastic_bowl",
       "special_handling": false,
@@ -354,7 +354,7 @@
     },
     {
       "object_key": "glass_bowl",
-      "label": "Mangkuk kaca",
+      "label": "Glass bowl",
       "category": "GLASS",
       "guide_key": "glass_bowl",
       "special_handling": false,
@@ -365,7 +365,7 @@
     },
     {
       "object_key": "ceramic_bowl",
-      "label": "Mangkuk keramik",
+      "label": "Ceramic bowl",
       "category": "OTHER",
       "guide_key": "ceramic_bowl",
       "special_handling": false,
@@ -376,7 +376,7 @@
     },
     {
       "object_key": "banana",
-      "label": "Pisang / sisa pisang",
+      "label": "Banana or banana scraps",
       "category": "ORGANIC",
       "guide_key": "banana",
       "special_handling": false,
@@ -387,7 +387,7 @@
     },
     {
       "object_key": "apple",
-      "label": "Apel / sisa apel",
+      "label": "Apple or apple scraps",
       "category": "ORGANIC",
       "guide_key": "apple",
       "special_handling": false,
@@ -398,7 +398,7 @@
     },
     {
       "object_key": "sandwich",
-      "label": "Roti isi / sisanya",
+      "label": "Sandwich or leftovers",
       "category": "ORGANIC",
       "guide_key": "sandwich",
       "special_handling": false,
@@ -409,7 +409,7 @@
     },
     {
       "object_key": "orange",
-      "label": "Jeruk / sisa jeruk",
+      "label": "Orange or orange scraps",
       "category": "ORGANIC",
       "guide_key": "orange",
       "special_handling": false,
@@ -420,7 +420,7 @@
     },
     {
       "object_key": "broccoli",
-      "label": "Brokoli / sisanya",
+      "label": "Broccoli or leftovers",
       "category": "ORGANIC",
       "guide_key": "broccoli",
       "special_handling": false,
@@ -431,7 +431,7 @@
     },
     {
       "object_key": "carrot",
-      "label": "Wortel / sisanya",
+      "label": "Carrot or leftovers",
       "category": "ORGANIC",
       "guide_key": "carrot",
       "special_handling": false,
@@ -442,7 +442,7 @@
     },
     {
       "object_key": "hot_dog",
-      "label": "Hot dog / sisanya",
+      "label": "Hot dog or leftovers",
       "category": "ORGANIC",
       "guide_key": "hot_dog",
       "special_handling": false,
@@ -453,7 +453,7 @@
     },
     {
       "object_key": "pizza",
-      "label": "Piza / sisanya",
+      "label": "Pizza or leftovers",
       "category": "ORGANIC",
       "guide_key": "pizza",
       "special_handling": false,
@@ -464,7 +464,7 @@
     },
     {
       "object_key": "donut",
-      "label": "Donat / sisanya",
+      "label": "Donut or leftovers",
       "category": "ORGANIC",
       "guide_key": "donut",
       "special_handling": false,
@@ -475,7 +475,7 @@
     },
     {
       "object_key": "cake",
-      "label": "Kue / sisanya",
+      "label": "Cake or leftovers",
       "category": "ORGANIC",
       "guide_key": "cake",
       "special_handling": false,
@@ -486,7 +486,7 @@
     },
     {
       "object_key": "chair",
-      "label": "Kursi",
+      "label": "Chair",
       "category": "OTHER",
       "guide_key": "chair",
       "special_handling": false,
@@ -508,7 +508,7 @@
     },
     {
       "object_key": "potted_plant",
-      "label": "Tanaman beserta pot",
+      "label": "Potted plant",
       "category": "OTHER",
       "guide_key": "potted_plant",
       "special_handling": false,
@@ -519,7 +519,7 @@
     },
     {
       "object_key": "bed",
-      "label": "Tempat tidur",
+      "label": "Bed",
       "category": "OTHER",
       "guide_key": "bed",
       "special_handling": false,
@@ -530,7 +530,7 @@
     },
     {
       "object_key": "dining_table",
-      "label": "Meja makan",
+      "label": "Dining table",
       "category": "OTHER",
       "guide_key": "dining_table",
       "special_handling": false,
@@ -541,7 +541,7 @@
     },
     {
       "object_key": "toilet",
-      "label": "Kloset",
+      "label": "Toilet",
       "category": "OTHER",
       "guide_key": "toilet",
       "special_handling": false,
@@ -552,7 +552,7 @@
     },
     {
       "object_key": "tv",
-      "label": "Televisi / monitor",
+      "label": "TV or monitor",
       "category": "ELECTRONIC",
       "guide_key": "tv",
       "special_handling": true,
@@ -574,7 +574,7 @@
     },
     {
       "object_key": "mouse",
-      "label": "Mouse komputer",
+      "label": "Computer mouse",
       "category": "ELECTRONIC",
       "guide_key": "mouse",
       "special_handling": true,
@@ -585,7 +585,7 @@
     },
     {
       "object_key": "remote",
-      "label": "Remote kontrol",
+      "label": "Remote control",
       "category": "ELECTRONIC",
       "guide_key": "remote",
       "special_handling": true,
@@ -607,7 +607,7 @@
     },
     {
       "object_key": "cell_phone",
-      "label": "Ponsel",
+      "label": "Mobile phone",
       "category": "ELECTRONIC",
       "guide_key": "cell_phone",
       "special_handling": true,
@@ -640,7 +640,7 @@
     },
     {
       "object_key": "toaster",
-      "label": "Pemanggang roti",
+      "label": "Toaster",
       "category": "ELECTRONIC",
       "guide_key": "toaster",
       "special_handling": true,
@@ -651,7 +651,7 @@
     },
     {
       "object_key": "sink",
-      "label": "Bak cuci",
+      "label": "Sink",
       "category": "OTHER",
       "guide_key": "sink",
       "special_handling": false,
@@ -662,7 +662,7 @@
     },
     {
       "object_key": "refrigerator",
-      "label": "Kulkas",
+      "label": "Refrigerator",
       "category": "ELECTRONIC",
       "guide_key": "refrigerator",
       "special_handling": true,
@@ -673,7 +673,7 @@
     },
     {
       "object_key": "book",
-      "label": "Buku kertas",
+      "label": "Paper book",
       "category": "PAPER",
       "guide_key": "book",
       "special_handling": false,
@@ -684,7 +684,7 @@
     },
     {
       "object_key": "clock",
-      "label": "Jam",
+      "label": "Clock",
       "category": "ELECTRONIC",
       "guide_key": "clock",
       "special_handling": true,
@@ -695,7 +695,7 @@
     },
     {
       "object_key": "glass_vase",
-      "label": "Vas kaca",
+      "label": "Glass vase",
       "category": "GLASS",
       "guide_key": "glass_vase",
       "special_handling": false,
@@ -706,7 +706,7 @@
     },
     {
       "object_key": "ceramic_vase",
-      "label": "Vas keramik",
+      "label": "Ceramic vase",
       "category": "OTHER",
       "guide_key": "ceramic_vase",
       "special_handling": false,
@@ -717,7 +717,7 @@
     },
     {
       "object_key": "scissors",
-      "label": "Gunting",
+      "label": "Scissors",
       "category": "METAL",
       "guide_key": "scissors",
       "special_handling": true,
@@ -728,7 +728,7 @@
     },
     {
       "object_key": "teddy_bear",
-      "label": "Boneka",
+      "label": "Stuffed toy",
       "category": "OTHER",
       "guide_key": "teddy_bear",
       "special_handling": false,
@@ -739,7 +739,7 @@
     },
     {
       "object_key": "hair_drier",
-      "label": "Pengering rambut",
+      "label": "Hair dryer",
       "category": "ELECTRONIC",
       "guide_key": "hair_drier",
       "special_handling": true,
@@ -750,7 +750,7 @@
     },
     {
       "object_key": "toothbrush",
-      "label": "Sikat gigi plastik manual",
+      "label": "Manual plastic toothbrush",
       "category": "OTHER",
       "guide_key": "toothbrush",
       "special_handling": false,
@@ -761,7 +761,7 @@
     },
     {
       "object_key": "steel_can",
-      "label": "Kaleng baja/tinplate bekas pangan (konfirmasi pengguna)",
+      "label": "Steel or tinplate food can (confirmed by user)",
       "category": "METAL",
       "guide_key": "steel_can",
       "special_handling": false,
@@ -772,7 +772,7 @@
     },
     {
       "object_key": "paper_cup",
-      "label": "Gelas kertas berlapis (konfirmasi pengguna)",
+      "label": "Coated paper cup (confirmed by user)",
       "category": "PAPER",
       "guide_key": "paper_cup",
       "special_handling": false,
@@ -783,7 +783,7 @@
     },
     {
       "object_key": "plastic_bag",
-      "label": "Kantong plastik",
+      "label": "Plastic bag",
       "category": "PLASTIC",
       "guide_key": "plastic_bag",
       "special_handling": false,
@@ -794,7 +794,7 @@
     },
     {
       "object_key": "paper",
-      "label": "Kertas lembaran / majalah",
+      "label": "Loose paper or magazine",
       "category": "PAPER",
       "guide_key": "paper",
       "special_handling": false,
@@ -805,7 +805,7 @@
     },
     {
       "object_key": "drink_carton",
-      "label": "Karton minuman berlapis",
+      "label": "Coated drink carton",
       "category": "PAPER",
       "guide_key": "drink_carton",
       "special_handling": false,
@@ -816,7 +816,7 @@
     },
     {
       "object_key": "plastic_wrapper",
-      "label": "Pembungkus / film plastik",
+      "label": "Plastic wrap or film",
       "category": "PLASTIC",
       "guide_key": "plastic_wrapper",
       "special_handling": false,
@@ -827,7 +827,7 @@
     },
     {
       "object_key": "plastic_food_container",
-      "label": "Wadah makanan plastik / foam (konfirmasi pengguna)",
+      "label": "Plastic or foam food container (confirmed by user)",
       "category": "PLASTIC",
       "guide_key": "plastic_food_container",
       "special_handling": false,
@@ -838,7 +838,7 @@
     },
     {
       "object_key": "plastic_bottle_cap",
-      "label": "Tutup botol plastik",
+      "label": "Plastic bottle cap",
       "category": "PLASTIC",
       "guide_key": "plastic_bottle_cap",
       "special_handling": false,
@@ -849,7 +849,7 @@
     },
     {
       "object_key": "metal_bottle_cap",
-      "label": "Tutup botol logam",
+      "label": "Metal bottle cap",
       "category": "METAL",
       "guide_key": "metal_bottle_cap",
       "special_handling": false,
@@ -860,7 +860,7 @@
     },
     {
       "object_key": "other_organic",
-      "label": "Barang organik lain",
+      "label": "Other organic item",
       "category": "ORGANIC",
       "guide_key": "other_organic",
       "special_handling": false,
@@ -871,7 +871,7 @@
     },
     {
       "object_key": "other_plastic",
-      "label": "Barang plastik lain",
+      "label": "Other plastic item",
       "category": "PLASTIC",
       "guide_key": "other_plastic",
       "special_handling": false,
@@ -882,7 +882,7 @@
     },
     {
       "object_key": "other_paper",
-      "label": "Barang kertas / kardus lain",
+      "label": "Other paper or cardboard item",
       "category": "PAPER",
       "guide_key": "other_paper",
       "special_handling": false,
@@ -893,7 +893,7 @@
     },
     {
       "object_key": "other_glass",
-      "label": "Barang kaca lain",
+      "label": "Other glass item",
       "category": "GLASS",
       "guide_key": "other_glass",
       "special_handling": false,
@@ -904,7 +904,7 @@
     },
     {
       "object_key": "other_metal",
-      "label": "Barang logam lain",
+      "label": "Other metal item",
       "category": "METAL",
       "guide_key": "other_metal",
       "special_handling": false,
@@ -915,7 +915,7 @@
     },
     {
       "object_key": "other_electronic",
-      "label": "Elektronik / baterai lain",
+      "label": "Other electronics or batteries",
       "category": "ELECTRONIC",
       "guide_key": "other_electronic",
       "special_handling": true,
@@ -926,7 +926,7 @@
     },
     {
       "object_key": "other_other",
-      "label": "Barang lain / bahan belum diketahui",
+      "label": "Other item or unknown material",
       "category": "OTHER",
       "guide_key": "other_other",
       "special_handling": false,
