@@ -2,7 +2,7 @@
 setlocal
 pushd "%~dp0"
 if not exist ".venv-ai\Scripts\python.exe" (
-    echo Virtual environment belum tersedia. Ikuti instalasi di README.md.
+    echo Virtual environment not found. Follow the installation steps in README.md.
     popd
     pause
     exit /b 1

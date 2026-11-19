@@ -28,7 +28,7 @@ Dataset hasil berada di `data/local/broad-waste-v5-realwaste-research/data.yaml`
 | Foto baru pada train aktif | 15 |
 | Anotasi kardus train aktif | 93 → 108 |
 
-Seluruh 3.893 record v4 mempertahankan gambar, label dan split. Pilihan 943 foto train aktif v4 juga dipertahankan. Foto RealWaste baru memakai satu kelompok proksi konservatif pada train karena metadata identitas objek fisik/sesi tidak tersedia. Tidak ada foto dari sumber baru ini yang ditambahkan ke validation/test. Checksum, geometri bbox, daftar split, kelompok dan pHash lintas split lulus verifier. [Audit batch](../evaluations/realwaste-v5-audit.json), [verifikasi file nyata](../evaluations/realwaste-v5-verification.json), [keputusan dan bbox manual](../annotations/realwaste-cardboard-v1.json).
+Seluruh 3.893 record v4 mempertahankan gambar, label dan split. Pilihan 943 foto train aktif v4 juga dipertahankan. Foto RealWaste baru memakai satu kelompok proksi konservatif pada train karena metadata identitas objek fisik/sesi tidak tersedia. Tidak ada foto dari sumber baru ini yang ditambahkan ke validation/test. Checksum, geometri bbox, daftar split, kelompok dan pHash lintas split lulus verifier. [Audit batch](../../evaluations/realwaste-v5-audit.json), [verifikasi file nyata](../../evaluations/realwaste-v5-verification.json), [keputusan dan bbox manual](../../annotations/realwaste-cardboard-v1.json).
 
 Ada perbedaan lisensi konkret. UCI menyatakan CC BY 4.0, sementara README penulis dan halaman IEEE DataPort menyatakan CC BY-NC-SA 4.0. Batch lokal memakai ketentuan penulis yang lebih ketat dengan status `EXPERIMENTAL_NONCOMMERCIAL_RESEARCH`. Perbedaan ini perlu diselesaikan sebelum penggunaan yang lebih luas. [UCI](https://archive.ics.uci.edu/dataset/908/realwaste), [repositori penulis](https://github.com/sam-single/realwaste), [IEEE DataPort](https://doi.org/10.21227/65m5-rr72).
 
@@ -47,7 +47,7 @@ Arsip foto asli pada tautan Drive penerbit berukuran **1.162.345.390 byte**. Kon
 | Test | 2.349 | 1.132 | 2.968 |
 | Total | 22.879 | 10.508 | 29.279 |
 
-Sebanyak **242 baris label memuat beberapa record bbox lima kolom yang tersambung dalam satu baris**. Parser audit memisahkan record lengkap tersebut dengan mempertahankan nilai koordinat. Hasilnya 10.508 bbox ponsel, dibanding 10.255 pada README. JSON konversi yang tersedia di GitHub juga memiliki jumlah yang berbeda dari label YOLO asli. Anotasi yang jumlah kolom atau angkanya tidak valid ditolak, dan bbox keluar batas tidak dipotong otomatis. [Audit metadata dan arsip](../evaluations/fpi-det-audit.json).
+Sebanyak **242 baris label memuat beberapa record bbox lima kolom yang tersambung dalam satu baris**. Parser audit memisahkan record lengkap tersebut dengan mempertahankan nilai koordinat. Hasilnya 10.508 bbox ponsel, dibanding 10.255 pada README. JSON konversi yang tersedia di GitHub juga memiliki jumlah yang berbeda dari label YOLO asli. Anotasi yang jumlah kolom atau angkanya tidak valid ditolak, dan bbox keluar batas tidak dipotong otomatis. [Audit metadata dan arsip](../../evaluations/fpi-det-audit.json).
 
 Pada label YOLO asli, **82 bbox ponsel train**, dua validation dan sembilan test terdeteksi keluar batas atau mempunyai ukuran tidak positif pada pemeriksaan geometri ketat. Label kepala/wajah juga mempunyai flag geometri. Flag harus diperiksa terhadap gambar karena sebagian merupakan penyimpangan tepi kecil. Native class 0 adalah `phone` dan class 1 adalah `face` pada YAML penerbit, sementara README menyebut anotasi kepala. Bbox kepala/wajah tidak dapat dipetakan sebagai bbox seluruh tubuh `person` di COCO.
 
@@ -64,11 +64,11 @@ Seluruh 22.879 foto berhasil didekode. Pemeriksaan menggunakan SHA-256 dan pHash
 | Pasangan dengan dataset/benchmark proyek yang dilindungi | 0 |
 | Kelompok gambar identik dengan anotasi berbeda | 60 |
 
-Perbedaan anotasi diukur setelah urutan bbox dinormalisasi dan koordinat dibulatkan ke enam desimal. Perbedaan itu memerlukan rekonsiliasi label sebelum memilih salah satu salinan gambar. Jumlah pasangan tidak sama dengan jumlah foto independen. pHash juga belum membuktikan independensi sesi fisik, sehingga frame berbeda dari adegan yang sama masih bisa tersebar ke split berbeda. [Audit pixel dan contoh pasangan](../evaluations/fpi-det-pixel-audit.json).
+Perbedaan anotasi diukur setelah urutan bbox dinormalisasi dan koordinat dibulatkan ke enam desimal. Perbedaan itu memerlukan rekonsiliasi label sebelum memilih salah satu salinan gambar. Jumlah pasangan tidak sama dengan jumlah foto independen. pHash juga belum membuktikan independensi sesi fisik, sehingga frame berbeda dari adegan yang sama masih bisa tersebar ke split berbeda. [Audit pixel dan contoh pasangan](../../evaluations/fpi-det-pixel-audit.json).
 
 Sampel visual terdiri dari 40 train, 10 validation dan 10 test, dengan bbox ponsel seluas minimal 3% gambar serta geometri valid. Dari 60 foto, **45 lolos screening untuk objek ponsel dan 15 ditunda**. Tiga belas kandidat yang lolos ditandai tampak belakang. Contoh dengan identitas/visibilitas target yang meragukan atau domain video ber-overlay ditunda untuk review lanjutan. Review ini berfokus pada ponsel. Kelengkapan anotasi kepala dan seluruh kelas COCO memerlukan pemeriksaan terpisah.
 
-Foto sampel serta label native satu bbox per baris tersedia di `data/local/fpi-det-audit-sample-v1/`. Folder berstatus `AUDIT_ONLY_NATIVE_PHONE_FACE`. Native label ponsel/wajah memiliki cakupan yang berbeda dari anotasi lengkap COCO 80 kelas. Dataset model umum memerlukan reanotasi kelas lain yang terlihat atau eksperimen specialist yang dievaluasi terpisah. [Keputusan screening](../annotations/fpi-det-sample-v1.json), [ringkasan sampel](../evaluations/fpi-det-sample-audit.json).
+Foto sampel serta label native satu bbox per baris tersedia di `data/local/fpi-det-audit-sample-v1/`. Folder berstatus `AUDIT_ONLY_NATIVE_PHONE_FACE`. Native label ponsel/wajah memiliki cakupan yang berbeda dari anotasi lengkap COCO 80 kelas. Dataset model umum memerlukan reanotasi kelas lain yang terlihat atau eksperimen specialist yang dievaluasi terpisah. [Keputusan screening](../../annotations/fpi-det-sample-v1.json), [ringkasan sampel](../../evaluations/fpi-det-sample-audit.json).
 
 ## Reproduksi
 

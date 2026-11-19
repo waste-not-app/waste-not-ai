@@ -14,14 +14,14 @@ Pembaruan aktif: [pilot-policy-06, kondisi kosong dan audit background](CONDITIO
 
 ## Hasil skenario tetap
 
-[recommendation-cases.json](../evaluations/recommendation-cases.json) berisi **40 kasus** yang ekspektasinya ditulis sebelum percobaan Gemini: kemasan diterima/akses unknown/NO; HDPE bekas pangan, isi unknown/kimia/lainnya; cangkir kotor biasa, syarat cuci kurang, kontaminasi dan pecah; baterai; pencegahan; panduan tidak ada/kedaluwarsa/belum dipublikasikan; serta enam respons model buruk.
+[recommendation-cases.json](../../evaluations/recommendation-cases.json) berisi **40 kasus** yang ekspektasinya ditulis sebelum percobaan Gemini: kemasan diterima/akses unknown/NO; HDPE bekas pangan, isi unknown/kimia/lainnya; cangkir kotor biasa, syarat cuci kurang, kontaminasi dan pecah; baterai; pencegahan; panduan tidak ada/kedaluwarsa/belum dipublikasikan; serta enam respons model buruk.
 
 | Evaluasi | Hasil | Panggilan generate sebenarnya |
 |---|---:|---:|
 | Fixture offline | 40/40 | 0 ke Gemini, 12 ke fixture |
 | Gemini `gemini-3.5-flash-lite` | 40/40 | 12 ke Gemini |
 
-Laporan [fixture](../evaluations/recommendation-fixture-20261020.json) dan [Gemini](../evaluations/recommendation-gemini-20261020.json) mencatat hash skenario/panduan, latensi, metode, alasan, sumber dan kegagalan per kasus. Pada masing-masing run, 22 kasus berhenti sebelum model dan enam kasus memakai **output adversarial fixture yang disuntikkan**, termasuk dalam run Gemini. Jadi 40/40 tidak berarti 40 panggilan Gemini atau keberhasilan Gemini menghadapi semua serangan prompt di dunia nyata. Enam kasus tersebut menguji validator: evidence palsu, metode terlarang, URL tambahan, JSON rusak, flag risiko berubah, dan instruksi bebas yang tidak boleh tampil.
+Laporan [fixture](../../evaluations/recommendation-fixture-20261020.json) dan [Gemini](../../evaluations/recommendation-gemini-20261020.json) mencatat hash skenario/panduan, latensi, metode, alasan, sumber dan kegagalan per kasus. Pada masing-masing run, 22 kasus berhenti sebelum model dan enam kasus memakai **output adversarial fixture yang disuntikkan**, termasuk dalam run Gemini. Jadi 40/40 tidak berarti 40 panggilan Gemini atau keberhasilan Gemini menghadapi semua serangan prompt di dunia nyata. Enam kasus tersebut menguji validator: evidence palsu, metode terlarang, URL tambahan, JSON rusak, flag risiko berubah, dan instruksi bebas yang tidak boleh tampil.
 
 Yang diperiksa: status, satu metode/scope, alasan fallback, missing_context, special_handling, batas panggilan provider, evidence mendukung metode, URL berasal dari evidence, langkah/sumber ada, serta instruksi model tidak bocor menjadi teks publik. Alasannya dirender dari evidence terverifikasi; Gemini memilih metode/evidence yang memenuhi syarat. Belum ada evaluasi preferensi ahli atau uji lapangan populasi pengguna.
 
@@ -44,7 +44,7 @@ Contoh context-glass/PET/battery/HDPE memakai akses YES sebagai **asumsi skenari
 
 Tambahkan `condition.former_contents` dengan enum FOOD_DRINK/CHEMICAL/OTHER/UNKNOWN; default UNKNOWN. Tampilkan field untuk HDPE dan gunakan label missing_context `condition.former_contents`. Mengganti isi sebelumnya, risiko, material, atau akses penerima membatalkan rekomendasi lama. Kondisi asli tidak diubah menjadi bersih hanya karena langkahnya menyarankan pencucian.
 
-Ambil band/profile/mapping dari Python sesuai [kontrak HTTP](AI_HTTP_CONTRACT.md) dan [mutu deteksi](DETECTION_QUALITY.md). Jangan menduplikasi keputusan di Go atau frontend. Contoh request/response dan OpenAPI sudah diregenerasi. Panduan tetap DRAFT sampai penanggung jawab lokal meninjau klaim, fasilitas, syarat tindakan, sumber dan kasus negatif; reviewer/tanggal publikasi tidak diisi otomatis.
+Ambil band/profile/mapping dari Python sesuai [kontrak HTTP](../AI_HTTP_CONTRACT.md) dan [mutu deteksi](DETECTION_QUALITY.md). Jangan menduplikasi keputusan di Go atau frontend. Contoh request/response dan OpenAPI sudah diregenerasi. Panduan tetap DRAFT sampai penanggung jawab lokal meninjau klaim, fasilitas, syarat tindakan, sumber dan kasus negatif; reviewer/tanggal publikasi tidak diisi otomatis.
 
 ## Verifikasi implementasi
 

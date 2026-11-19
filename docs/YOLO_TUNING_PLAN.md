@@ -202,9 +202,9 @@ Dokumen ini belum menjalankan training, benchmark inference, emulator, commit, p
 
 ## Rujukan
 
-- [Kalibrasi v4 dan COCO11s](V4_CALIBRATION_AND_COCO11S.md) — baseline, threshold kardus yang ditolak, batas benchmark.
-- [Hasil fokus v4](FOCUS_V4_RESULTS.md) — parameter training dan dua fine-tune general yang belum berhasil.
-- [Audit dataset eksternal](EXTERNAL_DATASET_AUDIT_V5.md) — RealWaste, FPI-Det, label, duplikasi, dan catatan lisensi.
+- [Kalibrasi v4 dan COCO11s](archive/V4_CALIBRATION_AND_COCO11S.md) — baseline, threshold kardus yang ditolak, batas benchmark.
+- [Hasil fokus v4](archive/FOCUS_V4_RESULTS.md) — parameter training dan dua fine-tune general yang belum berhasil.
+- [Audit dataset eksternal](archive/EXTERNAL_DATASET_AUDIT_V5.md) — RealWaste, FPI-Det, label, duplikasi, dan catatan lisensi.
 - [Benchmark per kelas](../evaluations/camera-replay-v1-v4-coco11s-comparison.md) — dukungan kelas, konflik, dan latency historis.
 - [Ultralytics Train](https://docs.ultralytics.com/modes/train/) — rujukan parameter training. API harus dicocokkan dengan versi repo yang dipatok.
 - [Ultralytics Val](https://docs.ultralytics.com/modes/val/) — rujukan evaluasi dan metrik komponen.

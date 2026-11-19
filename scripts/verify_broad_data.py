@@ -1,8 +1,9 @@
 """Verify the actual split lists, labels, source rights and image hashes used for training."""
+
 import argparse
-from collections import Counter
 import hashlib
 import json
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,12 +34,12 @@ def main():
             assert r["visual_review"]["decision"] == "APPROVED" and r["visual_review"]["general_negative"]
         for a, b in zip(actual, r["boxes"]):
             assert len(a) == 5 and 0 <= a[0] < len(manifest["labels"]) and int(a[0]) == a[0]
-            assert all(abs(x-y) < 1e-7 for x, y in zip(a, b))
+            assert all(abs(x - y) < 1e-7 for x, y in zip(a, b))
             _, x, y, w, h = a
             assert 0 <= x <= 1 and 0 <= y <= 1 and 0 < w <= 1 and 0 < h <= 1
-            excursion = max(0, -(x-w/2), -(y-h/2), x+w/2-1, y+h/2-1)
+            excursion = max(0, -(x - w / 2), -(y - h / 2), x + w / 2 - 1, y + h / 2 - 1)
             # The already-audited original source permits <=.002 boundary rounding.
-            tolerance = .002 if r["source"] == "DrinkingWasteV2" else 1e-7
+            tolerance = 0.002 if r["source"] == "DrinkingWasteV2" else 1e-7
             assert excursion <= tolerance + 1e-8
             if excursion > 1e-7:
                 edge_excursions.append({"image": r["image"], "excursion": excursion})
@@ -60,19 +61,27 @@ def main():
         active_images[split] = len(listed)
         if "active_instances_per_split" in manifest:
             actual = Counter(int(b[0]) for r in records if (data / r["image"]).as_posix() in listed for b in r["boxes"])
-            assert {name: actual[i] for i, name in enumerate(manifest["labels"])} == manifest["active_instances_per_split"][split]
+            assert {name: actual[i] for i, name in enumerate(manifest["labels"])} == manifest[
+                "active_instances_per_split"
+            ][split]
     for i, r in enumerate(records):
         for other in records[:i]:
             if other["split"] != r["split"]:
                 assert (r["phash"] ^ other["phash"]).bit_count() > 5, "Near-duplicate spans splits"
-    output = {"images": len(records), "splits": dict(Counter(r["split"] for r in records)),
-              "image_sha256": "all match manifest", "label_geometry": "normalized centers/sizes valid; original DW edge tolerance .002 retained",
-              "legacy_edge_rounding": edge_excursions,
-              "proxy_group_and_phash_split_overlap": "none", "split_lists": "match manifest", "active_images": active_images,
-              "scope": "Data consistency, not independent field accuracy or full annotation completeness"}
+    output = {
+        "images": len(records),
+        "splits": dict(Counter(r["split"] for r in records)),
+        "image_sha256": "all match manifest",
+        "label_geometry": "normalized centers/sizes valid; original DW edge tolerance .002 retained",
+        "legacy_edge_rounding": edge_excursions,
+        "proxy_group_and_phash_split_overlap": "none",
+        "split_lists": "match manifest",
+        "active_images": active_images,
+        "scope": "Data consistency, not independent field accuracy or full annotation completeness",
+    }
     target = args.output
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(output, indent=2)+"\n", encoding="utf-8")
+    target.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(output))
 
 

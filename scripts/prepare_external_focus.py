@@ -1,19 +1,19 @@
 """Audit publisher samples and build the manually reviewed RealWaste research supplement."""
+
 import argparse
-from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor
 import hashlib
-from io import BytesIO
 import json
 import math
-from pathlib import Path
 import shutil
 import zipfile
-
-import httpx
-from PIL import Image
+from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
+from io import BytesIO
+from pathlib import Path
 
 import expand_broad_waste as expansion
+import httpx
+from PIL import Image
 from prepare_broad_waste import normalized_box
 from prepare_drinking_waste import perceptual_hash
 
@@ -33,15 +33,16 @@ def read(path):
 
 def publisher_file(repository, commit, row, destination):
     if not destination.exists():
-        response = httpx.get(f"https://raw.githubusercontent.com/{repository}/{commit}/{row['path']}",
-                             timeout=60, follow_redirects=True)
+        response = httpx.get(
+            f"https://raw.githubusercontent.com/{repository}/{commit}/{row['path']}", timeout=60, follow_redirects=True
+        )
         response.raise_for_status()
         destination.parent.mkdir(parents=True, exist_ok=True)
         temporary = destination.with_suffix(destination.suffix + ".part")
         temporary.write_bytes(response.content)
         temporary.replace(destination)
     raw = destination.read_bytes()
-    blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+    blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw, usedforsecurity=False).hexdigest()
     if blob != row["sha"]:
         raise ValueError(f"Publisher Git blob differs from the pinned tree: {destination}")
     return destination
@@ -49,11 +50,15 @@ def publisher_file(repository, commit, row, destination):
 
 def acquire():
     CACHE.mkdir(parents=True, exist_ok=True)
-    for prefix, repository, commit in (("fpi", "KvCgRv/FPI-Det", FPI_COMMIT),
-                                        ("realwaste", "sam-single/realwaste", REALWASTE_COMMIT)):
+    for prefix, repository, commit in (
+        ("fpi", "KvCgRv/FPI-Det", FPI_COMMIT),
+        ("realwaste", "sam-single/realwaste", REALWASTE_COMMIT),
+    ):
         tree_path = CACHE / (prefix + "-tree.json")
         if not tree_path.exists():
-            response = httpx.get(f"https://api.github.com/repos/{repository}/git/trees/{commit}?recursive=1", timeout=60)
+            response = httpx.get(
+                f"https://api.github.com/repos/{repository}/git/trees/{commit}?recursive=1", timeout=60
+            )
             response.raise_for_status()
             expansion.write_json(tree_path, response.json())
         tree = read(tree_path)
@@ -62,19 +67,29 @@ def acquire():
         files = {row["path"]: row for row in tree["tree"] if row["type"] == "blob"}
         publisher_file(repository, commit, files["README.md"], CACHE / (prefix + "-README.md"))
         if prefix == "fpi":
-            for source, filename in (("LICENSE", "fpi-LICENSE.txt"), ("Phone.yaml", "fpi-Phone.yaml"),
-                                     ("annotations/instances_train2017.json", "fpi-train.json"),
-                                     ("annotations/instances_val2017.json", "fpi-val.json"),
-                                     ("figure_mopho/datasetsample.png", "fpi-datasetsample.png"),
-                                     ("phone_train_yolo.rar", "fpi-labels.rar")):
+            for source, filename in (
+                ("LICENSE", "fpi-LICENSE.txt"),
+                ("Phone.yaml", "fpi-Phone.yaml"),
+                ("annotations/instances_train2017.json", "fpi-train.json"),
+                ("annotations/instances_val2017.json", "fpi-val.json"),
+                ("figure_mopho/datasetsample.png", "fpi-datasetsample.png"),
+                ("phone_train_yolo.rar", "fpi-labels.rar"),
+            ):
                 publisher_file(repository, commit, files[source], CACHE / filename)
         else:
             candidates = [row for name, row in files.items() if name.startswith("RealWaste/Cardboard/")]
-            candidates.sort(key=lambda row: hashlib.sha256(("external-focus-v5-20261107" + row["path"]).encode()).hexdigest())
+            candidates.sort(
+                key=lambda row: hashlib.sha256(("external-focus-v5-20261107" + row["path"]).encode()).hexdigest()
+            )
 
-            def download(row):
+            def download(row, repository=repository, commit=commit):
                 path = publisher_file(repository, commit, row, CACHE / "realwaste-images" / Path(row["path"]).name)
-                return {**row, "cached_path": str(path.resolve()), "raw_sha256": expansion.digest(path), "source_id": path.stem}
+                return {
+                    **row,
+                    "cached_path": str(path.resolve()),
+                    "raw_sha256": expansion.digest(path),
+                    "source_id": path.stem,
+                }
 
             with ThreadPoolExecutor(max_workers=4) as pool:
                 selected = list(pool.map(download, candidates[:60]))
@@ -92,7 +107,7 @@ def parse_fpi_labels(text):
             raise ValueError("FPI label must contain complete finite five-column records")
         combined_lines += len(values) > 5
         for start in range(0, len(values), 5):
-            cls, x, y, width, height = values[start:start + 5]
+            cls, x, y, width, height = values[start : start + 5]
             if cls not in (0, 1):
                 raise ValueError("Unexpected native FPI class")
             boxes.append([int(cls), x, y, width, height])
@@ -128,8 +143,14 @@ def audit_pixels(archive_path):
                 with Image.open(BytesIO(raw)) as image:
                     image_hash = perceptual_hash(image.convert("RGB"))
                     width, height = image.size
-                return {"source_id": row["source_id"], "source_split": row["source_split"],
-                        "sha256": hashlib.sha256(raw).hexdigest(), "phash": image_hash, "width": width, "height": height}
+                return {
+                    "source_id": row["source_id"],
+                    "source_split": row["source_split"],
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                    "phash": image_hash,
+                    "width": width,
+                    "height": height,
+                }
 
             with ThreadPoolExecutor(max_workers=4) as pool:
                 pixels = list(pool.map(inspect, sources))
@@ -151,35 +172,63 @@ def audit_pixels(archive_path):
         if right.get("protected"):
             cross_source += 1
             if len(examples) < 40:
-                examples.append({"kind": "protected_dataset_match", "fpi": left["source_id"], "protected_image": right["image"]})
+                examples.append(
+                    {"kind": "protected_dataset_match", "fpi": left["source_id"], "protected_image": right["image"]}
+                )
         elif left["source_split"] != right["source_split"]:
             cross_split += 1
             if len(examples) < 40:
-                examples.append({"kind": "cross_publisher_split", "a": left["source_id"], "b": right["source_id"],
-                                 "a_split": left["source_split"], "b_split": right["source_split"]})
+                examples.append(
+                    {
+                        "kind": "cross_publisher_split",
+                        "a": left["source_id"],
+                        "b": right["source_id"],
+                        "a_split": left["source_split"],
+                        "b_split": right["source_split"],
+                    }
+                )
         else:
             within_split += 1
     sha_groups = defaultdict(list)
     for row in pixels:
         sha_groups[row["sha256"]].append(row)
-    annotations = {(row["source_id"], row["source_split"]): row["boxes"]
-                   for row in read(CACHE / "fpi-archive-index.json")["records"]}
+    annotations = {
+        (row["source_id"], row["source_split"]): row["boxes"]
+        for row in read(CACHE / "fpi-archive-index.json")["records"]
+    }
     conflicting_groups = 0
     for group in sha_groups.values():
-        signatures = {tuple(sorted(tuple(round(value, 6) for value in box)
-                                    for box in annotations[(row["source_id"], row["source_split"])])) for row in group}
+        signatures = {
+            tuple(
+                sorted(
+                    tuple(round(value, 6) for value in box)
+                    for box in annotations[(row["source_id"], row["source_split"])]
+                )
+            )
+            for row in group
+        }
         conflicting_groups += len(signatures) > 1
-    report = {"archive_sha256": FPI_ARCHIVE_SHA256, "decoded_images": len(pixels),
-              "protected_waste_manifest_sha256": expansion.digest(protected_manifest),
-              "pixel_cache_sha256": expansion.digest(cache_path), "phash_distance_max": 5,
-              "exact_duplicate_photos": sum(len(group) - 1 for group in sha_groups.values()),
-              "exact_hash_groups_spanning_splits": sum(len({row["source_split"] for row in group}) > 1 for group in sha_groups.values()),
-              "exact_image_groups_with_different_annotations": conflicting_groups,
-              "annotation_comparison": "Order-independent boxes rounded to six normalized decimal places",
-              "near_pairs_cross_publisher_split": cross_split, "near_pairs_within_publisher_split": within_split,
-              "protected_dataset_match_pairs": cross_source, "examples": examples,
-              "limitations": ["pHash is a proxy for visual duplication, not proof of physical-session independence.",
-                              "Match counts are pairs and may include multiple references to the same protected photograph."]}
+    report = {
+        "archive_sha256": FPI_ARCHIVE_SHA256,
+        "decoded_images": len(pixels),
+        "protected_waste_manifest_sha256": expansion.digest(protected_manifest),
+        "pixel_cache_sha256": expansion.digest(cache_path),
+        "phash_distance_max": 5,
+        "exact_duplicate_photos": sum(len(group) - 1 for group in sha_groups.values()),
+        "exact_hash_groups_spanning_splits": sum(
+            len({row["source_split"] for row in group}) > 1 for group in sha_groups.values()
+        ),
+        "exact_image_groups_with_different_annotations": conflicting_groups,
+        "annotation_comparison": "Order-independent boxes rounded to six normalized decimal places",
+        "near_pairs_cross_publisher_split": cross_split,
+        "near_pairs_within_publisher_split": within_split,
+        "protected_dataset_match_pairs": cross_source,
+        "examples": examples,
+        "limitations": [
+            "pHash is a proxy for visual duplication, not proof of physical-session independence.",
+            "Match counts are pairs and may include multiple references to the same protected photograph.",
+        ],
+    }
     expansion.write_json(ROOT / "evaluations/fpi-det-pixel-audit.json", report)
     print(json.dumps(report, indent=2))
 
@@ -211,28 +260,54 @@ def audit_archive(path):
                 if width <= 0 or height <= 0 or excursion > 1e-7:
                     flags[(split, cls)] += 1
                     invalid.append({"class": cls, "excursion": excursion, "nonpositive": width <= 0 or height <= 0})
-            records.append({"source_id": ident, "source_split": split, "image_member": image_member,
-                            "label_member": name, "boxes": boxes, "geometry_flags": invalid,
-                            "class0_area": max((box[3] * box[4] for box in boxes if box[0] == 0), default=0)})
+            records.append(
+                {
+                    "source_id": ident,
+                    "source_split": split,
+                    "image_member": image_member,
+                    "label_member": name,
+                    "boxes": boxes,
+                    "geometry_flags": invalid,
+                    "class0_area": max((box[3] * box[4] for box in boxes if box[0] == 0), default=0),
+                }
+            )
         sample = []
         for split, quota in (("train", 40), ("val", 10), ("test", 10)):
-            pool = [row for row in records if row["source_split"] == split and not row["geometry_flags"] and row["class0_area"] >= .03]
+            pool = [
+                row
+                for row in records
+                if row["source_split"] == split and not row["geometry_flags"] and row["class0_area"] >= 0.03
+            ]
             pool.sort(key=lambda row: hashlib.sha256(("fpi-audit20261107" + row["source_id"]).encode()).hexdigest())
             for row in pool[:quota]:
                 destination = CACHE / "fpi-sample" / (row["source_id"] + ".jpg")
                 destination.parent.mkdir(exist_ok=True)
                 raw = archive.read(row["image_member"])
                 destination.write_bytes(raw)
-                sample.append({**row, "cached_path": str(destination.resolve()), "raw_sha256": hashlib.sha256(raw).hexdigest()})
-    expansion.write_json(CACHE / "fpi-archive-index.json", {"archive_sha256": checksum, "records": records,
-                                                           "reformatted_label_files": combined})
+                sample.append(
+                    {**row, "cached_path": str(destination.resolve()), "raw_sha256": hashlib.sha256(raw).hexdigest()}
+                )
+    expansion.write_json(
+        CACHE / "fpi-archive-index.json",
+        {"archive_sha256": checksum, "records": records, "reformatted_label_files": combined},
+    )
     expansion.write_json(CACHE / "fpi-sample.json", {"records": sample})
-    return {"archive_sha256": checksum, "archive_size_bytes": path.stat().st_size, "crc_integrity": "PASS",
-            "image_label_pairs": len(records), "images_per_split": dict(Counter(row["source_split"] for row in records)),
-            "native_class_counts": {split: {"phone": counts[(split, 0)], "head_face": counts[(split, 1)]} for split in ("train", "val", "test")},
-            "geometry_flag_counts": {split: {"phone": flags[(split, 0)], "head_face": flags[(split, 1)]} for split in ("train", "val", "test")},
-            "labels_with_combined_box_lines": len(combined), "audit_sample_images": len(sample),
-            "sample_selection": "Deterministic 40 train, 10 val, 10 test with valid geometry and phone box area >= 3%"}
+    return {
+        "archive_sha256": checksum,
+        "archive_size_bytes": path.stat().st_size,
+        "crc_integrity": "PASS",
+        "image_label_pairs": len(records),
+        "images_per_split": dict(Counter(row["source_split"] for row in records)),
+        "native_class_counts": {
+            split: {"phone": counts[(split, 0)], "head_face": counts[(split, 1)]} for split in ("train", "val", "test")
+        },
+        "geometry_flag_counts": {
+            split: {"phone": flags[(split, 0)], "head_face": flags[(split, 1)]} for split in ("train", "val", "test")
+        },
+        "labels_with_combined_box_lines": len(combined),
+        "audit_sample_images": len(sample),
+        "sample_selection": "Deterministic 40 train, 10 val, 10 test with valid geometry and phone box area >= 3%",
+    }
 
 
 def audit_fpi(archive=None):
@@ -258,35 +333,50 @@ def audit_fpi(archive=None):
             if box["category_id"] == 0:
                 phone_images.add(image["file_name"])
                 areas.append(width * height / (image["width"] * image["height"]))
-        results[split] = {"images": len(images), "annotations": len(data["annotations"]),
-                          "class_counts": dict(counts), "geometry_flags": dict(geometry),
-                          "images_with_phone": len(phone_images), "images_without_phone": len(images) - len(phone_images),
-                          "phone_boxes_le_1pct_area": sum(area <= .01 for area in areas),
-                          "phone_boxes_le_3pct_area": sum(area <= .03 for area in areas),
-                          "labels_sha256": expansion.digest(CACHE / f"fpi-{split}.json")}
-    results.update(source="https://github.com/KvCgRv/FPI-Det", commit=FPI_COMMIT,
-                   native_classes={"0": "phone", "1": "face"}, images_acquired=0,
-                   status="IMAGES_REQUIRE_AUTHENTICATED_DOWNLOAD",
-                   cross_split_filename_overlap=len(filenames["train"] & filenames["val"]),
-                   inspected_publisher_collage="figure_mopho/datasetsample.png",
-                   published_readme_counts={"images": 22879, "phone_annotations": 10255},
-                   accessible_annotation_counts={"images": sum(row["images"] for row in results.values()),
-                                                 "phone_annotations": sum(row["class_counts"][0] for row in results.values())},
-                   repository_photos="Publisher example collages; the RAR contains training code, not raw dataset photos.",
-                   limitations=["Actual photos require the publisher Drive download, currently showing sign-in.",
-                                "Pixel-level hash/pHash and physical-session grouping require the raw photos.",
-                                "Face boxes must not be mapped to COCO person boxes.",
-                                "Geometry flags require image review; no automatic clipping was performed.",
-                                "Public train/val annotation totals differ from README totals. Reconcile the raw archive/splits before training."])
+        results[split] = {
+            "images": len(images),
+            "annotations": len(data["annotations"]),
+            "class_counts": dict(counts),
+            "geometry_flags": dict(geometry),
+            "images_with_phone": len(phone_images),
+            "images_without_phone": len(images) - len(phone_images),
+            "phone_boxes_le_1pct_area": sum(area <= 0.01 for area in areas),
+            "phone_boxes_le_3pct_area": sum(area <= 0.03 for area in areas),
+            "labels_sha256": expansion.digest(CACHE / f"fpi-{split}.json"),
+        }
+    results.update(
+        source="https://github.com/KvCgRv/FPI-Det",
+        commit=FPI_COMMIT,
+        native_classes={"0": "phone", "1": "face"},
+        images_acquired=0,
+        status="IMAGES_REQUIRE_AUTHENTICATED_DOWNLOAD",
+        cross_split_filename_overlap=len(filenames["train"] & filenames["val"]),
+        inspected_publisher_collage="figure_mopho/datasetsample.png",
+        published_readme_counts={"images": 22879, "phone_annotations": 10255},
+        accessible_annotation_counts={
+            "images": sum(row["images"] for row in results.values()),
+            "phone_annotations": sum(row["class_counts"][0] for row in results.values()),
+        },
+        repository_photos="Publisher example collages; the RAR contains training code, not raw dataset photos.",
+        limitations=[
+            "Actual photos require the publisher Drive download, currently showing sign-in.",
+            "Pixel-level hash/pHash and physical-session grouping require the raw photos.",
+            "Face boxes must not be mapped to COCO person boxes.",
+            "Geometry flags require image review; no automatic clipping was performed.",
+            "Public train/val annotation totals differ from README totals. Reconcile the raw archive/splits before training.",
+        ],
+    )
     if archive is not None:
         results["raw_archive"] = audit_archive(archive)
         results["status"] = "RAW_ARCHIVE_AND_NATIVE_AUDIT_SAMPLE_AVAILABLE"
         results["images_acquired"] = results["raw_archive"]["image_label_pairs"]
-        results["limitations"] = ["Public COCO-converted labels and original YOLO label totals differ; preserve all original five-column records.",
-                                  "Original publisher splits can share physical sessions. Image/session-level leakage must be audited before training.",
-                                  "Face/head boxes cannot be substituted for COCO person boxes.",
-                                  "Native FPI phone/head annotations are incomplete for the full 80-class COCO task.",
-                                  "Only the 60-photo audit sample has been visually inspected in this batch."]
+        results["limitations"] = [
+            "Public COCO-converted labels and original YOLO label totals differ; preserve all original five-column records.",
+            "Original publisher splits can share physical sessions. Image/session-level leakage must be audited before training.",
+            "Face/head boxes cannot be substituted for COCO person boxes.",
+            "Native FPI phone/head annotations are incomplete for the full 80-class COCO task.",
+            "Only the 60-photo audit sample has been visually inspected in this batch.",
+        ]
     expansion.write_json(ROOT / "evaluations/fpi-det-audit.json", results)
     print(json.dumps(results, indent=2))
 
@@ -303,11 +393,20 @@ def export_fpi_sample(output):
     for row in rows:
         if expansion.digest(Path(row["cached_path"])) != reviews[row["source_id"]]["raw_sha256"]:
             raise ValueError("FPI review/photo identity mismatch")
-        labels = "".join(str(box[0]) + " " + " ".join(format(value, ".17g") for value in box[1:]) + "\n" for box in row["boxes"])
+        labels = "".join(
+            str(box[0]) + " " + " ".join(format(value, ".17g") for value in box[1:]) + "\n" for box in row["boxes"]
+        )
         parse_boxes(labels, 2)
-        records.append({**row, "phash": pixels[row["source_id"]]["phash"],
-                        "width": pixels[row["source_id"]]["width"], "height": pixels[row["source_id"]]["height"],
-                        "image": f"images/{row['source_split']}/{row['source_id']}.jpg", "review": reviews[row["source_id"]]})
+        records.append(
+            {
+                **row,
+                "phash": pixels[row["source_id"]]["phash"],
+                "width": pixels[row["source_id"]]["width"],
+                "height": pixels[row["source_id"]]["height"],
+                "image": f"images/{row['source_split']}/{row['source_id']}.jpg",
+                "review": reviews[row["source_id"]],
+            }
+        )
     staging = output.with_name(output.name + ".building")
     if staging.exists():
         raise ValueError("Audit staging folder exists. Choose a fresh --output")
@@ -317,16 +416,28 @@ def export_fpi_sample(output):
         shutil.copyfile(row["cached_path"], destination)
         label = staging / "labels" / row["source_split"] / (row["source_id"] + ".txt")
         label.parent.mkdir(parents=True, exist_ok=True)
-        label.write_text("".join(str(box[0]) + " " + " ".join(format(value, ".17g") for value in box[1:]) + "\n"
-                                 for box in row["boxes"]), encoding="utf-8")
-    manifest = {"status": "AUDIT_ONLY_NATIVE_PHONE_FACE", "labels": ["phone", "face"], "records": records,
-                "archive_sha256": FPI_ARCHIVE_SHA256, "publisher_splits_are_provisional": True,
-                "scope": "Phone target screening only. Full COCO class annotation and physical-session grouping require further review.",
-                "review_counts": dict(Counter(row["review"]["decision"] for row in records))}
+        label.write_text(
+            "".join(
+                str(box[0]) + " " + " ".join(format(value, ".17g") for value in box[1:]) + "\n" for box in row["boxes"]
+            ),
+            encoding="utf-8",
+        )
+    manifest = {
+        "status": "AUDIT_ONLY_NATIVE_PHONE_FACE",
+        "labels": ["phone", "face"],
+        "records": records,
+        "archive_sha256": FPI_ARCHIVE_SHA256,
+        "publisher_splits_are_provisional": True,
+        "scope": "Phone target screening only. Full COCO class annotation and physical-session grouping require further review.",
+        "review_counts": dict(Counter(row["review"]["decision"] for row in records)),
+    }
     expansion.write_json(staging / "manifest.json", manifest)
-    (staging / "DATASET_NOTICES.md").write_text("# FPI-Det audit sample\n\n"
+    (staging / "DATASET_NOTICES.md").write_text(
+        "# FPI-Det audit sample\n\n"
         "Publisher KvCgRv/FPI-Det declares MIT. Source https://github.com/KvCgRv/FPI-Det .\n"
-        "Original phone/head-face annotations retained. Audit-only scope; native face is not a COCO person label.\n", encoding="utf-8")
+        "Original phone/head-face annotations retained. Audit-only scope; native face is not a COCO person label.\n",
+        encoding="utf-8",
+    )
     staging.rename(output)
     print(json.dumps({"audit_sample_images": len(records), "status": manifest["status"]}))
 
@@ -365,50 +476,97 @@ def build(output=OUTPUT):
             continue
         blocked_hashes.append(image_hash)
         box = normalized_box([x1, y1, x2 - x1, y2 - y1], width, height, 5)
-        rows.append({"source": "RealWaste", "source_id": source["source_id"], "cached_path": str(path),
-                     "raw_sha256": source["raw_sha256"], "phash": image_hash, "width": width, "height": height,
-                     "group": "RealWaste-cardboard-single-capture-family", "boxes": [box],
-                     "annotation_source": "Codex manual pixel XYXY bounding box; publisher supplied only image-level material class",
-                     "publisher_git_blob": source["sha"], "publisher_commit": REALWASTE_COMMIT,
-                     "rights": {"accepted": True, "accepted_for": "local_noncommercial_research",
-                                "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-                                "source_page": f"https://github.com/sam-single/realwaste/blob/{REALWASTE_COMMIT}/" + source["path"],
-                                "author": "Sam Single, Saeid Iranmanesh, Raad Raad",
-                                "verification": "Pinned author README declares CC BY-NC-SA 4.0. UCI lists CC BY 4.0; retain stricter author terms.",
-                                "commercial_use": "UNRESOLVED_LICENSE_CONFLICT"}})
+        rows.append(
+            {
+                "source": "RealWaste",
+                "source_id": source["source_id"],
+                "cached_path": str(path),
+                "raw_sha256": source["raw_sha256"],
+                "phash": image_hash,
+                "width": width,
+                "height": height,
+                "group": "RealWaste-cardboard-single-capture-family",
+                "boxes": [box],
+                "annotation_source": "Codex manual pixel XYXY bounding box; publisher supplied only image-level material class",
+                "publisher_git_blob": source["sha"],
+                "publisher_commit": REALWASTE_COMMIT,
+                "rights": {
+                    "accepted": True,
+                    "accepted_for": "local_noncommercial_research",
+                    "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+                    "source_page": f"https://github.com/sam-single/realwaste/blob/{REALWASTE_COMMIT}/" + source["path"],
+                    "author": "Sam Single, Saeid Iranmanesh, Raad Raad",
+                    "verification": "Pinned author README declares CC BY-NC-SA 4.0. UCI lists CC BY 4.0; retain stricter author terms.",
+                    "commercial_use": "UNRESOLVED_LICENSE_CONFLICT",
+                },
+            }
+        )
     if not rows:
         raise ValueError("No approved new photos remain")
     assigned, _ = expansion.split_new_records(base["records"], rows)
     if len(assigned) != len(rows) or any(row["split"] != "train" for row in assigned):
         raise ValueError("This research supplement must keep the entire new capture family on train")
-    state = {"records": rows, "baseline_manifest_sha256": expansion.digest(BASE / "manifest.json"),
-             "source_metadata_sha256": expansion.digest(metadata)}
-    expansion.build_dataset(base, state, reviews, output, 600, base_dir=BASE,
-                            version="broad-waste-v5-realwaste-research", source_metadata_path=metadata,
-                            source_notice="RealWaste by Sam Single, Saeid Iranmanesh and Raad Raad. Author repository CC BY-NC-SA 4.0. Research batch retains these terms despite UCI CC BY 4.0 metadata. Manual bounding boxes and per-photo source citations are recorded in manifest.json.")
+    state = {
+        "records": rows,
+        "baseline_manifest_sha256": expansion.digest(BASE / "manifest.json"),
+        "source_metadata_sha256": expansion.digest(metadata),
+    }
+    expansion.build_dataset(
+        base,
+        state,
+        reviews,
+        output,
+        600,
+        base_dir=BASE,
+        version="broad-waste-v5-realwaste-research",
+        source_metadata_path=metadata,
+        source_notice="RealWaste by Sam Single, Saeid Iranmanesh and Raad Raad. Author repository CC BY-NC-SA 4.0. Research batch retains these terms despite UCI CC BY 4.0 metadata. Manual bounding boxes and per-photo source citations are recorded in manifest.json.",
+    )
     result = read(output / "manifest.json")
     # Keep the v4 training selection so this supplement changes only the new source exposure.
-    baseline_active = {Path(line).resolve().relative_to(BASE.resolve()).as_posix()
-                       for line in (BASE / "train.txt").read_text("utf-8").splitlines() if line}
+    baseline_active = {
+        Path(line).resolve().relative_to(BASE.resolve()).as_posix()
+        for line in (BASE / "train.txt").read_text("utf-8").splitlines()
+        if line
+    }
     baseline_images = {row["image"] for row in base["records"]}
     active_names = baseline_active | {row["image"] for row in result["records"] if row["image"] not in baseline_images}
-    (output / "train.txt").write_text("".join((output / row["image"]).as_posix() + "\n"
-                                               for row in result["records"] if row["image"] in active_names), encoding="utf-8")
+    (output / "train.txt").write_text(
+        "".join((output / row["image"]).as_posix() + "\n" for row in result["records"] if row["image"] in active_names),
+        encoding="utf-8",
+    )
     result["selected_train_images"] = len(active_names)
-    result["active_instances_per_split"] = expansion.counts([row for row in result["records"]
-                                                            if row["split"] != "train" or row["image"] in active_names])
+    result["active_instances_per_split"] = expansion.counts(
+        [row for row in result["records"] if row["split"] != "train" or row["image"] in active_names]
+    )
     result["training_selection"] = "Preserved v4 active train images plus reviewed RealWaste supplement"
-    result.update(status="EXPERIMENTAL_NONCOMMERCIAL_RESEARCH", source_license_conflict=True,
-                  new_source_near_duplicates_excluded=excluded,
-                  benchmark_sha256=expansion.digest(ROOT / "benchmarks/camera-replay-v1.json"))
-    result["limitations"] += ["RealWaste research additions retain author CC BY-NC-SA 4.0 terms; resolve UCI/author license discrepancy before broader use.",
-                              "All new RealWaste photos share one conservative proxy group on train. Existing holdouts are preserved.",
-                              "Manual boxes were screened by Codex; independent human annotation review is pending."]
+    result.update(
+        status="EXPERIMENTAL_NONCOMMERCIAL_RESEARCH",
+        source_license_conflict=True,
+        new_source_near_duplicates_excluded=excluded,
+        benchmark_sha256=expansion.digest(ROOT / "benchmarks/camera-replay-v1.json"),
+    )
+    result["limitations"] += [
+        "RealWaste research additions retain author CC BY-NC-SA 4.0 terms; resolve UCI/author license discrepancy before broader use.",
+        "All new RealWaste photos share one conservative proxy group on train. Existing holdouts are preserved.",
+        "Manual boxes were screened by Codex; independent human annotation review is pending.",
+    ]
     expansion.write_json(output / "manifest.json", result)
     expansion.write_json(output / "publisher-tree-snapshot.json", read(metadata))
-    expansion.write_json(ROOT / "evaluations/realwaste-v5-build.json", {k: v for k, v in result.items() if k not in {"records", "rejected"}})
-    print(json.dumps({"new_images": result["new_images"], "cardboard_train": result["active_instances_per_split"]["train"]["cardboard"],
-                      "status": result["status"]}, indent=2))
+    expansion.write_json(
+        ROOT / "evaluations/realwaste-v5-build.json",
+        {k: v for k, v in result.items() if k not in {"records", "rejected"}},
+    )
+    print(
+        json.dumps(
+            {
+                "new_images": result["new_images"],
+                "cardboard_train": result["active_instances_per_split"]["train"]["cardboard"],
+                "status": result["status"],
+            },
+            indent=2,
+        )
+    )
 
 
 def main():

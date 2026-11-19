@@ -1,0 +1,43 @@
+name: wastenot-ai
+
+services:
+  recommendation:
+    build:
+      context: .
+      target: recommendation
+    image: wastenot-ai-recommendation:local
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      AI_BIND_HOST: 0.0.0.0
+    ports:
+      - 127.0.0.1:${RECOMMENDATION_HOST_PORT:-8093}:8093
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+
+  detection:
+    profiles: [detection]
+    build:
+      context: .
+      target: detection
+    image: wastenot-ai-detection:local
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      AI_BIND_HOST: 0.0.0.0
+      AI_MODEL_DIRECTORY: /models
+    ports:
+      - 127.0.0.1:${DETECTION_HOST_PORT:-8091}:8091
+    volumes:
+      - ./artifacts/models:/models:ro
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 1536m
+    restart: unless-stopped

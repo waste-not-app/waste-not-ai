@@ -8,7 +8,6 @@ from wastenot_ai.contracts import Context
 from wastenot_ai.providers import FixtureProvider
 from wastenot_ai.recommendation import is_reviewed, load_guides, recommend
 
-
 GUIDES = load_guides(Path(__file__).parents[1] / 'guides/pilot-source-reviewed-v6.json')
 
 
@@ -28,14 +27,19 @@ def test_review_metadata_is_honest_and_time_bounded():
 
 def test_can_confirmation_label_excludes_aerosols():
     item = next(row for row in load_catalog()['items'] if row['object_key'] == 'aluminium_can')
-    assert 'non-aerosol' in item['label'] and item['requires_material_confirmation'] is True
+    assert 'non-aerosol' in item['label'].lower() and item['requires_material_confirmation'] is True
 
 
 @pytest.mark.parametrize('guide', GUIDES, ids=lambda guide: guide.object_key)
 def test_source_reviewed_pilot_can_use_production_policy_without_demo_flag(guide):
-    context = Context.model_validate({'object_key': guide.object_key, 'category': guide.category,
-        'condition': {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'former_contents': 'FOOD_DRINK'},
-        'recycling_access': 'YES'})
+    context = Context.model_validate(
+        {
+            'object_key': guide.object_key,
+            'category': guide.category,
+            'condition': {'cleanliness': 'CLEAN', 'integrity': 'INTACT', 'former_contents': 'FOOD_DRINK'},
+            'recycling_access': 'YES',
+        }
+    )
     result = recommend(context, ContractProvider(), GUIDES, today=date(2026, 11, 4))
     assert result.status == 'READY' and result.recommended_method == 'RECYCLE'
     assert result.prototype_only is False and result.provider == 'contract-test'

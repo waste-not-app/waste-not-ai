@@ -1,15 +1,15 @@
 """Operational detection scoring for a frozen, partially annotated image collection."""
-from collections import Counter
+
 import hashlib
-from io import BytesIO
 import json
 import math
+from collections import Counter
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image, ImageEnhance
 
 from .detection_quality import box_iou
-
 
 
 def repository_path(root: Path, relative: str) -> Path:
@@ -58,7 +58,7 @@ def browser_input(path: Path, brightness: float = 1.0) -> bytes:
             raise ValueError("Normalize image orientation and annotations before benchmarking")
         image = source.convert("RGB")
     ratio = min(1, 1600 / max(image.size))
-    size = tuple(max(1, math.floor(side * ratio + .5)) for side in image.size)
+    size = tuple(max(1, math.floor(side * ratio + 0.5)) for side in image.size)
     if image.size != size:
         resized = image.resize(size, Image.Resampling.BILINEAR)
         image.close()
@@ -73,7 +73,7 @@ def browser_input(path: Path, brightness: float = 1.0) -> bytes:
     return content.getvalue()
 
 
-def score_image(objects, truth, evaluated_classes, iou_threshold=.5):
+def score_image(objects, truth, evaluated_classes, iou_threshold=0.5):
     """Class-aware confidence-ordered matching; every detection/truth matches once."""
     selected = [obj for obj in objects if obj["supported_for_review"]]
     scoped = [obj for obj in selected if obj["raw_class"] in evaluated_classes]
@@ -94,11 +94,12 @@ def score_image(objects, truth, evaluated_classes, iou_threshold=.5):
         per_class[label]["fn"] += 1
         errors.append({"kind": "false_negative", "truth": label})
 
-    # Independent geometric matching diagnoses wrong labels, including classes
-    # outside annotation coverage. It does not alter precision/recall counts.
-    edges = [(box_iou(obj["bbox"], target["bbox"]), obj["confidence"], i, j)
-             for i, target in enumerate(truth) for j, obj in enumerate(selected)
-             if box_iou(obj["bbox"], target["bbox"]) >= iou_threshold]
+    edges = [
+        (box_iou(obj["bbox"], target["bbox"]), obj["confidence"], i, j)
+        for i, target in enumerate(truth)
+        for j, obj in enumerate(selected)
+        if box_iou(obj["bbox"], target["bbox"]) >= iou_threshold
+    ]
     matched_truth, matched_predictions = set(), set()
     confusion = Counter()
     for overlap, confidence, i, j in sorted(edges, reverse=True):
@@ -109,8 +110,9 @@ def score_image(objects, truth, evaluated_classes, iou_threshold=.5):
         expected, predicted = truth[i]["label"], selected[j]["raw_class"]
         confusion[(expected, predicted)] += 1
         if expected != predicted:
-            errors.append({"kind": "wrong_label", "truth": expected, "predicted": predicted,
-                           "iou": overlap, "score": confidence})
+            errors.append(
+                {"kind": "wrong_label", "truth": expected, "predicted": predicted, "iou": overlap, "score": confidence}
+            )
     for i, target in enumerate(truth):
         if i not in matched_truth:
             confusion[(target["label"], "__missed__")] += 1
@@ -118,49 +120,70 @@ def score_image(objects, truth, evaluated_classes, iou_threshold=.5):
     duplicate_pairs = 0
     conflicting_pairs = 0
     for i, first in enumerate(selected):
-        for second in selected[i + 1:]:
-            if box_iou(first["bbox"], second["bbox"]) >= .65:
+        for second in selected[i + 1 :]:
+            if box_iou(first["bbox"], second["bbox"]) >= 0.65:
                 if first["raw_class"] == second["raw_class"]:
                     duplicate_pairs += 1
                 else:
                     conflicting_pairs += 1
-    return {"per_class": per_class, "errors": errors,
-            "confusion": [{"truth": expected, "predicted": predicted, "count": count}
-                          for (expected, predicted), count in sorted(confusion.items())],
-            "same_class_duplicate_pairs": duplicate_pairs, "conflicting_label_pairs": conflicting_pairs,
-            "reviewable_candidates": len(selected), "scored_candidates": len(scoped),
-            "unscored_candidates": len(selected) - len(scoped),
-            "empty_target_image": not truth,
-            "false_positive_on_empty": not truth and bool(scoped)}
+    return {
+        "per_class": per_class,
+        "errors": errors,
+        "confusion": [
+            {"truth": expected, "predicted": predicted, "count": count}
+            for (expected, predicted), count in sorted(confusion.items())
+        ],
+        "same_class_duplicate_pairs": duplicate_pairs,
+        "conflicting_label_pairs": conflicting_pairs,
+        "reviewable_candidates": len(selected),
+        "scored_candidates": len(scoped),
+        "unscored_candidates": len(selected) - len(scoped),
+        "empty_target_image": not truth,
+        "false_positive_on_empty": not truth and bool(scoped),
+    }
 
 
 def metrics(counts):
     tp, fp, fn = (counts[key] for key in ("tp", "fp", "fn"))
-    return {**counts, "support": tp + fn,
-            "precision": tp / (tp + fp) if tp + fp else None,
-            "recall": tp / (tp + fn) if tp + fn else None,
-            "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else None}
+    return {
+        **counts,
+        "support": tp + fn,
+        "precision": tp / (tp + fp) if tp + fp else None,
+        "recall": tp / (tp + fn) if tp + fn else None,
+        "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else None,
+    }
 
 
 def aggregate(rows, target_classes):
     per_class = {}
     for label in target_classes:
-        counts = {key: sum(row["score"]["per_class"].get(label, {}).get(key, 0) for row in rows)
-                  for key in ("tp", "fp", "fn")}
+        counts = {
+            key: sum(row["score"]["per_class"].get(label, {}).get(key, 0) for row in rows) for key in ("tp", "fp", "fn")
+        }
         per_class[label] = metrics(counts)
     overall = metrics({key: sum(row[key] for row in per_class.values()) for key in ("tp", "fp", "fn")})
     confusion = Counter()
     for row in rows:
         for pair in row["score"]["confusion"]:
             confusion[(pair["truth"], pair["predicted"])] += pair["count"]
-    return {"images": len(rows), "overall": overall, "per_class": per_class,
-            "wrong_label_instances": sum(pair["count"] for row in rows for pair in row["score"]["confusion"]
-                                         if pair["predicted"] not in {pair["truth"], "__missed__"}),
-            "no_overlapping_candidate_instances": sum(confusion[(label, "__missed__")] for label in target_classes),
-            "same_class_duplicate_pairs": sum(row["score"]["same_class_duplicate_pairs"] for row in rows),
-            "conflicting_label_pairs": sum(row["score"]["conflicting_label_pairs"] for row in rows),
-            "images_without_reviewable_candidate": sum(row["score"]["reviewable_candidates"] == 0 for row in rows),
-            "empty_target_images": sum(row["score"]["empty_target_image"] for row in rows),
-            "images_with_false_positive_on_empty": sum(row["score"]["false_positive_on_empty"] for row in rows),
-            "confusion": [{"truth": expected, "predicted": predicted, "count": count}
-                          for (expected, predicted), count in sorted(confusion.items())]}
+    return {
+        "images": len(rows),
+        "overall": overall,
+        "per_class": per_class,
+        "wrong_label_instances": sum(
+            pair["count"]
+            for row in rows
+            for pair in row["score"]["confusion"]
+            if pair["predicted"] not in {pair["truth"], "__missed__"}
+        ),
+        "no_overlapping_candidate_instances": sum(confusion[(label, "__missed__")] for label in target_classes),
+        "same_class_duplicate_pairs": sum(row["score"]["same_class_duplicate_pairs"] for row in rows),
+        "conflicting_label_pairs": sum(row["score"]["conflicting_label_pairs"] for row in rows),
+        "images_without_reviewable_candidate": sum(row["score"]["reviewable_candidates"] == 0 for row in rows),
+        "empty_target_images": sum(row["score"]["empty_target_image"] for row in rows),
+        "images_with_false_positive_on_empty": sum(row["score"]["false_positive_on_empty"] for row in rows),
+        "confusion": [
+            {"truth": expected, "predicted": predicted, "count": count}
+            for (expected, predicted), count in sorted(confusion.items())
+        ],
+    }

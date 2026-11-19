@@ -1,20 +1,56 @@
-# Usulan panduan untuk ditinjau
+# Guide Proposals
 
-Audit seluruh 78 draf dan 195 evidence ada di [pemeriksaan sumber](../../docs/AI_GUIDE_SOURCE_REVIEW.md). File [pilot-guides.draft.json](pilot-guides.draft.json) memuat empat kandidat versi 6 dengan perubahan konkret berikut. Semua tetap DRAFT, metadata reviewer/tanggal kosong, dan file ini tidak dipasang pada worker produksi.
+[`pilot-guides.draft.json`](pilot-guides.draft.json) contains the four v6 candidate guides. They remain `DRAFT`, have empty reviewer and date metadata, and are never installed on a production worker. The published versions live in [`guides/`](../guides/README.md).
 
-| Kandidat | Syarat daur ulang | Perubahan usulan |
+## Candidates
+
+| Candidate | Recycling conditions | Proposed change |
 |---|---|---|
-| Botol PET | Bersih, utuh, bekas pangan/minuman, penerima dikonfirmasi | Riwayat isi wajib; bukan panduan botol bekas kimia atau jaminan isi ulang. |
-| Botol HDPE | Bersih, utuh, bekas pangan/minuman, penerima dikonfirmasi | Pertahankan batas isi/kode resin; tidak menjamin layak isi ulang. |
-| Kaleng aluminium | Bersih, utuh, bekas pangan/minuman, penerima dikonfirmasi | Batasi ke non-aerosol/tanpa tekanan; pengecualian kimia dan larangan melubangi. |
-| Kardus | Bersih, utuh, penerima dikonfirmasi | Syarat kering/minyak mengikuti penerima; tidak menjadikan aturan satu wilayah sebagai aturan universal. |
+| PET bottle | Clean, intact, former food or drink contents, collector confirmed | Former contents are required. Not a guide for chemical bottles or a refill-safety guarantee |
+| HDPE bottle | Clean, intact, former food or drink contents, collector confirmed | Keep the contents and resin-code limits. No refill-safety guarantee |
+| Aluminium can | Clean, intact, former food or drink contents, collector confirmed | Limited to non-aerosol, unpressurized cans. Chemical exclusions and a warning against puncturing |
+| Cardboard | Clean, intact, collector confirmed | Dryness and grease rules follow the collector. No single region's rule becomes universal |
 
-Masing-masing mempunyai satu evidence RECYCLE dan satu REDUCE. REDUCE hanya untuk tujuan PREVENTION pada pembelian/penggunaan berikutnya, tidak menggantikan penanganan benda saat ini. Material/kondisi/penerimaan tidak disimpulkan dari foto. [EPA bahan umum](https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables), [EPA limbah rumah tangga berbahaya](https://www.epa.gov/hw/household-hazardous-waste-hhw), [BPOM kode resin](https://tasikmalaya.pom.go.id/berita/cerdas-memilih-kemasan-wujudkan-pangan-aman-melalui-pengenalan-kode-plastik).
+Each candidate has one `RECYCLE` evidence item and one `REDUCE` evidence item.
 
-Tujuh puluh empat panduan lainnya tetap memerlukan perbaikan/review yang dirinci dalam audit, terutama gelas/mangkuk plastik, vas, kaca pecah, elektronik, baterai, pisau/gunting dan penerapan rute asing. Empat kandidat ini tidak menggantikan cakupan audit atau menyatakan seluruh AI selesai.
+- **Reduce.** `REDUCE` applies only to `PREVENTION` (the next purchase or use) and never replaces handling of the current item.
+- **No inference from photos.** Material, condition, and collector acceptance are never inferred from a photo.
 
-Sebelum penerbitan, penanggung jawab perlu meninjau isi final, memilih cakupan wilayah, mengisi identitas reviewer serta tanggal/masa berlaku yang nyata. Khusus kaleng, perubahan label katalog/konfirmasi pilot menyebut **“Kaleng aluminium bekas minuman/pangan non-aerosol”**; schema kondisi saat ini tidak mempunyai field khusus aerosol, sehingga konfirmasi cakupan label tetap penting dan file usulan ini tidak dipasang sendiri. Konfirmasi riwayat isi juga harus dapat diberikan Android. Jangan menandai semua draf terbit, mengisi identitas/tanggal review yang tidak benar, atau memakai flag demo pada publik.
+Sources:
 
-Pengujian kandidat memverifikasi schema dan gerbang kondisi: DRAFT ditolak produksi; riwayat isi belum diketahui meminta konteks; akses penerima NO serta kontaminasi kimia tidak menghasilkan saran RECYCLE; input sesuai dapat menjalani jalur prototipe privat. Ini tidak menggantikan peninjauan konten, bukti penerimaan fasilitas, kualitas Gemini atau uji Android. Publikasi dan penyambungan AI_GUIDES_PATH belum dilakukan.
+- [EPA, common recyclables](https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables)
+- [EPA, household hazardous waste](https://www.epa.gov/hw/household-hazardous-waste-hhw)
+- [BPOM, plastic resin codes](https://tasikmalaya.pom.go.id/berita/cerdas-memilih-kemasan-wujudkan-pangan-aman-melalui-pengenalan-kode-plastik)
 
-Keputusan pilot berikutnya menggunakan [artifact terpisah dengan pemeriksaan sumber otomatis](../guides/README.md), dengan identitas Codex yang dinyatakan eksplisit. Tidak ada klaim persetujuan keselamatan manusia. File proposal ini tetap DRAFT.
+## Remaining work
+
+The other 74 draft guides still need correction and review. The highest-priority groups are:
+
+- plastic cups and bowls;
+- vases and broken glass;
+- electronics and batteries;
+- knives and scissors;
+- guides that apply foreign collection routes.
+
+### Before publishing
+
+Before any candidate is published, the owner must:
+
+- review the final text;
+- choose the regional scope;
+- record a real reviewer identity, review date, and expiry.
+
+For cans, the catalog label and pilot confirmation read "non-aerosol aluminium food or drink can", because the condition schema has no aerosol field. Android must also be able to report former contents.
+
+Never mark every draft as published, record a false reviewer or date, or use demo flags in production.
+
+## Tests
+
+The tests cover the schema and the condition gates:
+
+- the production worker rejects `DRAFT` guides;
+- unknown former contents ask for more context;
+- collector access `NO` or chemical contamination never yields `RECYCLE`;
+- matching input passes through the private prototype path.
+
+They do not replace content review, evidence that a facility accepts the material, Gemini quality checks, or Android testing.

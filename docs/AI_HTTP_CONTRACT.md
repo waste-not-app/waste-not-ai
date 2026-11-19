@@ -1,262 +1,175 @@
-# Kontrak HTTP AI v1 dan pembagian tanggung jawab
+# AI HTTP Contract v1
 
-Status 7 November 2026: backend Go dan sesi produksi sudah tersedia. Kontrak publik/snapshot Go terkini serta status wiring Android dijelaskan di [INTEGRATION.md](INTEGRATION.md), dan worker/deploy pada [DEPLOYMENT.md](DEPLOYMENT.md). Pernyataan belum diimplementasikan pada uraian historis di bawah berlaku pada checkpoint demo awal, bukan kondisi layanan saat ini.
+This document defines how the Android app, the Go backend, and the Python AI workers divide responsibilities, and which contract artifacts each consumer relies on.
 
-Pembaruan aktif: [pilot-policy-06, kondisi kosong dan audit background](CONDITIONAL_AND_BACKGROUND.md). UNKNOWN biasa boleh mendapat READY/CONDITIONAL; syarat yang belum diketahui muncul di conditions_to_verify. Bagian policy-05/evaluasi 40 kasus di bawah adalah perilaku/run sebelumnya; allow_conditional=false mempertahankan mode ketat tersebut. Suite aktif kini 44 kasus, dengan 40 kasus lama diuji dalam mode ketat dan empat kasus kondisi kosong. Hash report lama merujuk snapshot skenario sebelum perubahan, bukan byte file skenario aktif.
+## Contract artifacts
 
-Keputusan 20 Oktober 2026: **Python memiliki satu implementasi aturan AI**.
-Go mengaksesnya melalui HTTP privat. Frontend memakai HTTP publik Go.
-Kontrak bertipe, mock publik dan adapter Python tersedia di repo ini. Backend Go dan sesi produksi kini tersedia di repo backend; wiring Android berada pada PR integrasi dan penerimaan perangkat masih perlu diselesaikan. Pembaruan poin 3-4 menambahkan profil deteksi per kelas dan panduan pilot; lihat [mutu deteksi](DETECTION_QUALITY.md) dan [evaluasi rekomendasi](RECOMMENDATION_EVALUATION.md).
+All artifacts live in [`contracts/v1`](../contracts/v1) and are generated from the Python models. Never edit them by hand.
 
-## Artifact yang menjadi acuan tim
-
-| File | Pemakai |
+| Artifact | Consumer |
 |---|---|
-| [public.openapi.json](../contracts/v1/public.openapi.json) | Go dan Android/frontend; kontrak empat endpoint `/v1/ai/*` |
-| [private-detection.openapi.json](../contracts/v1/private-detection.openapi.json) | Go → worker YOLO |
-| [private-recommendation.openapi.json](../contracts/v1/private-recommendation.openapi.json) | Go → modul keputusan Python |
-| [errors.json](../contracts/v1/errors.json) | Status HTTP, kode stabil, pesan dan retryability |
-| [examples](../contracts/v1/examples) | Request/response empat metode, kebutuhan konteks, error dan referensi deteksi |
+| [`public.openapi.json`](../contracts/v1/public.openapi.json) | Go and Android: the four public `/v1/ai/*` endpoints |
+| [`private-detection.openapi.json`](../contracts/v1/private-detection.openapi.json) | Go → detection worker |
+| [`private-recommendation.openapi.json`](../contracts/v1/private-recommendation.openapi.json) | Go → recommendation worker |
+| [`errors.json`](../contracts/v1/errors.json) | HTTP status, stable code, message, and retryability for every error |
+| [`examples/`](../contracts/v1/examples) | Requests and responses for each method, missing context, errors, and detection references |
 
-Versi envelope `api_version=1.0.0`; URL publik memakai `/v1`. Fields JSON
-snake_case, UUID string, waktu RFC3339 UTC, bbox `[xmin,ymin,xmax,ymax]` 0..1
-terhadap gambar setelah orientasi dinormalisasi. Kategori dan label metode
-adalah enum, bukan teks tampilan. Object key stabil; label Indonesia boleh
-berubah tanpa mengganti object key. Daftar guide/evidence memakai ID string,
-bukan selalu UUID. Source detail mencatat judul/penerbit/wilayah/batas cakupan.
+In the source, `wire.py` defines the transport schema and `decisions.py` defines the decision interface. `recommendation.py`, `catalog.py`, and `providers.py` implement the rules.
 
-`wire.py` adalah schema transport, `decisions.py` adalah interface keputusan,
-`recommendation.py`/`catalog.py`/`providers.py` adalah implementasi aturan AI.
-OpenAPI dan contoh digenerate dari model/adapter tersebut. Perubahan schema
-memerlukan regenerasi, pemeriksaan kompatibilitas Go/Android, serta pembaruan
-versi jika mematahkan kontrak; jangan mengedit JSON hasil generate secara manual.
+After an intentional change, regenerate the artifacts and check them:
 
-```powershell
-.\.venv-ai\Scripts\python.exe -m pip install -e ".[worker,test]" -c constraints.txt
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli export-contracts
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli export-contracts --check
-$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = '1'
-.\.venv-ai\Scripts\python.exe -m pytest tests -q -p no:cacheprovider
+```sh
+make export-contracts   # regenerate
+make contracts          # verify generated files and the backend pin
 ```
 
-CI memvalidasi tiga dokumen OpenAPI, contoh terhadap JSON Schema, conditional
-status/metode/scope, dan drift artifact. Tidak membutuhkan YOLO, key, atau
-request Gemini. Pemeriksaan format OpenAPI mengacu pada
-[OpenAPI 3.1](https://spec.openapis.org/oas/v3.1.0.html); ekspor route mengikuti
-[mekanisme FastAPI](https://fastapi.tiangolo.com/how-to/extending-openapi/).
+CI validates the three OpenAPI documents, checks every example against its JSON Schema, and fails on any drift between source and artifacts. It needs no YOLO weights, API keys, or Gemini calls.
 
-## Pemilik aturan
+## Conventions
 
-| Modul | Memiliki | Memakai hasil dari modul lain |
+- **Envelope.** Responses carry `api_version` `1.0.0`, and public URLs use the `/v1` prefix.
+- **JSON values.**
+  - Fields are `snake_case`.
+  - IDs are UUID strings.
+  - Timestamps are RFC 3339 in UTC.
+- **Bounding boxes.** Use `[xmin, ymin, xmax, ymax]`, normalized to 0–1 against the image after orientation correction.
+- **Enums.** Categories and methods are enums, not display text.
+- **Object keys.** Object keys are stable; display labels may change without changing them.
+- **Guide and evidence IDs.** These are strings and are not always UUIDs.
+- **Additive changes.** New optional fields may be added within `1.0.0`. Consumers must ignore unknown fields. Breaking changes require a new version.
+
+## Ownership
+
+| Component | Owns | Does not own |
 |---|---|---|
-| Python YOLO | Decode/orientasi, model/checksum, bbox, threshold/band, mapping kelas, capability model aktif | Tidak memiliki akun, database atau key Gemini |
-| Python keputusan | Validasi object/category, propagasi risiko, panduan dan expiry editorial, allowed methods, Gemini/pool key, validasi evidence, alasan/langkah/sumber, policy version | Menerima konteks yang dikonfirmasi dan snapshot deteksi dari Go yang terautentikasi |
-| Go | JWT/ownership, feature flag, rate limit/budget akun, sesi/TTL, dedup/in-flight, snapshot provenance, transaksi waste log/XP, validasi struktur respons Python | Tidak mengimplementasikan ulang mapping/evidence/prompt/aturan penanganan |
-| Android/frontend | Kamera, persetujuan kirim, memilih objek/koreksi, mengisi konteks, menampilkan hasil, konfirmasi simpan | Tidak memilih sumber/allowed methods dan tidak memanggil worker atau Gemini langsung |
+| Detection worker | Image decoding and orientation, model checksum, bounding boxes, per-class thresholds and confidence bands, class-to-catalog mapping, model capabilities | Accounts, databases, Gemini keys |
+| Recommendation worker | Object and category validation, risk propagation, guide selection and expiry, allowed methods, Gemini calls and key pool, evidence validation, reasons, steps, sources, policy version | Sessions, ownership, storage |
+| Go backend | JWT and ownership, feature flags, per-account rate limits and budgets, sessions and TTL, durable deduplication, provenance snapshots, waste log and XP transactions, structural validation of worker responses | Mapping, evidence, prompts, or handling rules |
+| Android app | Camera, consent to send, object selection and correction, context input, displaying results, confirming saves | Choosing sources or allowed methods; calling workers or Gemini directly |
+
+## Request flow
 
 ```mermaid
 sequenceDiagram
-    participant A as Android/frontend
+    participant A as Android
     participant G as Go API
-    participant Y as Python YOLO
-    participant P as Python keputusan
+    participant Y as Detection worker
+    participant P as Recommendation worker
     participant L as Gemini
     A->>G: POST /v1/ai/detections (JWT, multipart)
-    G->>Y: POST /internal/v1/detect (service token, bytes)
-    Y-->>G: Deteksi + mapping + snapshot model
-    G-->>A: detection_id + objects + expires_at
-    A->>G: POST /v1/ai/recommendations (konfirmasi + konteks)
-    G->>G: Ownership + TTL + idempotensi + pilih snapshot tersimpan
+    G->>Y: POST /internal/v1/detect (service token, image bytes)
+    Y-->>G: Detections, mapping, model snapshot
+    G-->>A: detection_id, objects, expires_at
+    A->>G: POST /v1/ai/recommendations (confirmation and context)
+    G->>G: Ownership, TTL, idempotency, stored snapshot
     G->>P: POST /internal/v1/recommendations
-    P->>P: Katalog + risiko + guide + allowed methods
-    opt Evidence cukup dan panduan diizinkan
-        P->>L: Metadata dan evidence tanpa foto/identitas pengguna
-        L-->>P: Satu metode + evidence
-        P->>P: Validasi dan render teks dari evidence
+    P->>P: Catalog, risk, guide, allowed methods
+    opt Enough evidence and an eligible guide
+        P->>L: Object metadata and evidence, no photo or identity
+        L-->>P: One method with evidence
+        P->>P: Validate and render text from evidence
     end
-    P-->>G: READY / NEEDS_CONTEXT / UNAVAILABLE
-    G-->>A: recommendation_id + context_revision + expiry
-    A->>G: POST /v1/waste-logs setelah konfirmasi dan jumlah
+    P-->>G: READY, NEEDS_CONTEXT, or UNAVAILABLE
+    G-->>A: recommendation_id, context_revision, expires_at
+    A->>G: POST /v1/waste-logs after confirmation and quantity
 ```
 
-## Mock untuk frontend dan backend
+## Private endpoints
 
-```powershell
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-mock --port 8094
-```
+| Worker | Endpoint | Body |
+|---|---|---|
+| Detection (port 8091) | `POST /internal/v1/detect` | Raw JPEG or PNG bytes |
+| Detection | `GET /internal/v1/capabilities` | |
+| Recommendation (port 8093) | `GET /internal/v1/objects` | |
+| Recommendation | `POST /internal/v1/recommendations` | JSON, at most 16 KiB |
+| Both | `GET /health/ready` | |
 
-Buka `http://127.0.0.1:8094/docs`. Authorize memakai **`mock-user-a`** atau
-**`mock-user-b`**. Token ini hanya identitas fixture; mock tidak memverifikasi
-JWT dan tidak boleh menjadi backend produksi. Setiap respons mempunyai
-`X-WasteNot-Mock: true`. Data rekomendasi memakai provider `fixture` dan
-`prototype_only=true`. Model fixture tidak membaca isi gambar untuk mengenali
-benda; decode gambar hanya menguji batas media. Tidak ada panggilan YOLO,
-Gemini, database atau endpoint penyimpanan catatan.
+- **Authentication.** Every request needs `Authorization: Bearer <service-token>`. Each worker has its own token, and the detection worker strips Gemini keys and the recommendation token from its environment at startup.
+- **Request IDs.** Go may send a UUID `X-Request-ID` for correlation.
+- **Caching.** Errors and private responses use `Cache-Control: no-store`.
+- **Network exposure.** Both workers bind to loopback by default and expose neither HTTP docs nor access logs.
+- **Image limits.** At most 5 MiB, 12 megapixels, and 4096 px per side.
+- **Concurrency.** Each process runs one job at a time. A busy worker returns `503` with `Retry-After`, and a missed deadline returns `504`.
+- **Deadline overruns.** A native inference or provider call that overruns its deadline keeps its slot until it finishes.
+- **Legacy route.** `/internal/detect` remains as a compatibility route. New integrations must use the versioned routes.
 
-```powershell
-$headers = @{Authorization='Bearer mock-user-a'}
-Invoke-RestMethod http://127.0.0.1:8094/v1/ai/objects -Headers $headers
-$body = Get-Content contracts/v1/examples/recycle-request.json -Raw
-Invoke-RestMethod http://127.0.0.1:8094/v1/ai/recommendations -Method Post -Headers $headers -ContentType 'application/json' -Body $body
-```
+### Detection snapshot
 
-Contoh request manual tidak membutuhkan upload. Untuk alur deteksi, kirim
-multipart `image` JPEG/PNG dan `client_request_id` UUID ke detections, lalu
-pakai detection_id/object_id yang **baru diterima**, bukan ID statis contoh.
-Gambar tidak masuk sesi/cache; parser multipart memakai penyimpanan sementara
-yang ditutup setelah request. Mock memiliki batas body, 64 sesi dan 128
-request replay di memori, dengan TTL 24 jam; restart menghapus seluruh state.
+Go builds the `selection` field of a recommendation request from the detection result it stored. The snapshot contains:
 
-Skenario startup (restart server untuk mengganti):
+- `model_version`, `model_sha256`, and `mapping_version`;
+- `class_names`;
+- the chosen object.
 
-```powershell
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-mock --scenario uncertain
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-mock --scenario no-detections
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-mock --scenario provider-unavailable
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-mock --scenario rate-limited
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-mock --scenario timeout
-```
+The public endpoint never accepts these fields from Android. The recommendation worker rechecks the label, mapping, thresholds, and risk even after the user corrects an object. For manual input, `selection` is `null`. See [`internal-recommendation-request.json`](../contracts/v1/examples/internal-recommendation-request.json).
 
-`normal` memakai aturan Python nyata dengan provider fixture. Contoh reuse,
-recycle, reduce, trash dan needs-context mengubah **input kondisi**, bukan
-memaksa metode dari query/header publik. Scenario provider-unavailable
-menyimulasikan hasil 200/UNAVAILABLE; timeout adalah HTTP 504, rate-limited
-HTTP 429 + `Retry-After: 30`. Flag scenario bukan bagian API produksi.
+## Go adapter obligations
 
-## Menjalankan interface privat
+1. **Snapshots.** Load the catalog from the recommendation worker and the capabilities from the active detection worker. Store their versions and checksums together, and refresh both when the model or mapping changes.
+2. **Validation before inference.** Validate the JWT, media size, and quota before inference. Parse worker responses against the schema, and store the user's detection metadata for the session TTL.
+3. **Recommendation checks.** Check ownership and expiry before using the cache or calling a worker. Reject client fields outside `RecommendationInput`, such as `confidence`, `raw_class`, `guide`, `allowed_methods`, `provider`, or `user_id`.
+4. **Idempotency.** Store idempotency keys atomically, scoped to `(user, operation, client_request_id)`.
+   - A different canonical digest returns `409`.
+   - Concurrent identical requests share one job.
+   - An identical replay returns the same ID, expiry, and data.
+5. **No hidden retries.** The private recommendation endpoint is stateless and does not deduplicate provider calls. Go tracks `IN_PROGRESS`, `COMPLETED`, and `FAILED_UNCERTAIN`.
+   - When a transport timeout leaves the outcome unknown, store the uncertainty instead of silently resending.
+   - A new generation requires an explicit user action and a new `client_request_id`.
+6. **Wrapping decisions.** Wrap each decision with `recommendation_id`, `category`, `confirmed_object_key`, `context_revision`, and an `expires_at` no later than the detection session's. Never change the method, add evidence, or replace `UNAVAILABLE` with advice generated by Go.
+7. **Session deletion.** Deleting a session invalidates its recommendations, including replays. A late result never revives a deleted session.
+8. **Storage.** `POST /v1/waste-logs` is the only storage path. It confirms the object and method, takes a manual quantity, and links the recommendation once, all in one transaction. Recommendations never award XP.
 
-Isi token berbeda dan acak, minimal 24 karakter, pada konfigurasi lokal:
-`AI_SERVICE_TOKEN` untuk YOLO, `AI_RECOMMENDATION_TOKEN` untuk keputusan.
-`.env.example` menyediakan nama variabelnya; jangan commit nilainya.
+## Client obligations
 
-```powershell
-# Terminal 1, hanya perlu untuk deteksi nyata:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-worker --port 8091
-# Terminal 2, tanpa key untuk uji aturan dan draft yang diberi label:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-recommendations --port 8093 --provider fixture --demo-guides
-# Atau Gemini nyata memakai .env:
-.\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-recommendations --port 8093 --demo-guides
-```
+- **Confirmation fields.** `confirmed_object=true` must be set explicitly. `input_source=DETECTION` requires both the detection ID and the object ID; `MANUAL` sends neither.
+- **Context revisions.** Increase `context_revision` whenever the selection or conditions change. Send a new request UUID, and discard responses that do not match the current detection ID or revision.
 
-Untuk panduan PUBLISHED nyata, gunakan `--guides path/to/reviewed-guides.json`
-dan hilangkan `--demo-guides`. Default tidak meloloskan draft. Tidak ada
-reviewer/status publikasi yang dibuat otomatis. Modul keputusan tidak perlu
-Ultralytics, model `.pt`, atau GPU. Modul deteksi CLI membuang env key Gemini
-dan token rekomendasi sebelum melayani request; modul keputusan tidak memakai
-token deteksi. Keduanya bind loopback, tanpa docs HTTP dan tanpa access log.
-
-Endpoint privat:
-
-- YOLO: `POST /internal/v1/detect` raw JPEG/PNG, `GET /internal/v1/capabilities`.
-- Keputusan: `GET /internal/v1/objects`, `POST /internal/v1/recommendations` JSON.
-- Keduanya: `GET /health/ready` memakai credential masing-masing.
-- `/internal/detect` lama tetap tersedia sebagai adapter kompatibilitas;
-  integrasi baru memakai route versioned dan envelope bersama.
-
-Go mengirim `Authorization: Bearer <service-token>` dan boleh mengirim
-`X-Request-ID` UUID untuk korelasi. Header dan envelope endpoint v1 memuat request_id;
-error dan respons pribadi memakai `Cache-Control: no-store`. Timestamp tidak
-dipakai sebagai ID. Input keputusan dibatasi 16 KiB; gambar maksimal 5 MiB,
-12 MP dan sisi 4096. Satu job per proses; busy 503 + Retry-After, deadline 504.
-Job native/provider yang belum selesai tetap memegang slot setelah deadline.
-
-Contoh [internal-recommendation-request.json](../contracts/v1/examples/internal-recommendation-request.json)
-berisi `context` dan `selection`. **Go membangun selection dari hasil Python
-yang tersimpan**, berisi model_version, model_sha256, mapping_version, class_names dan
-objek terpilih. Field ini tidak diterima endpoint publik dari Android.
-Python memeriksa ulang label, mapping, threshold dan risiko meskipun pengguna
-mengoreksi benda. Untuk manual yang tidak berasal dari deteksi, selection=null.
-Interface privat mempercayai Go sebagai pemilik snapshot; token privat tidak
-menggantikan pemeriksaan ownership sesi pada Go.
-
-## Kewajiban adapter Go
-
-1. Ambil katalog dari modul keputusan dan capability dari worker aktif.
-   Simpan versi/checksum bersama; ganti snapshot saat model/mapping berubah.
-2. Validasi JWT, ukuran media dan quota sebelum inference. Parse respons
-   privat terhadap schema; simpan metadata deteksi milik user selama TTL.
-3. Pada rekomendasi, validasi ownership/expiry sebelum cache atau panggilan
-   privat. Client hanya boleh mengirim field pada RecommendationInput;
-   confidence, raw_class, guide, allowed_methods, provider dan user_id ditolak.
-4. Simpan idempotensi secara atomik, scoped `(user, operation, client_request_id)`.
-   Digest kanonis berbeda →409. Request bersamaan berbagi satu pekerjaan,
-   bukan masing-masing memanggil Python. Identical replay mengembalikan ID,
-   expiry dan data yang sama dengan request_id transport baru.
-5. Private recommendation **stateless** dan tidak menjamin dedup provider.
-   Go memiliki status IN_PROGRESS/COMPLETED/FAILED_UNCERTAIN. Jika timeout
-   transport membuat hasil panggilan tidak diketahui, jangan mengirim ulang
-   RPC diam-diam: simpan hasil error/uncertainty untuk request ID tersebut.
-   Replay mengembalikan status tersimpan. Percobaan generasi baru memerlukan
-   tindakan eksplisit dan client_request_id baru. Private HTTP client tidak
-   mengaktifkan retry generation otomatis.
-6. Bungkus keputusan Python dengan recommendation_id, category,
-   confirmed_object_key, context_revision dan expires_at yang tidak melebihi
-   sesi deteksi. Jangan mengubah metode, menambah evidence, atau mengganti
-   UNAVAILABLE dengan saran buatan Go. Validasi struktur/domain tetap milik Go.
-7. Hapus sesi membatalkan penggunaan rekomendasi terkait, termasuk replay;
-   hasil terlambat tidak menghidupkan sesi kembali. Ownership tidak bocor.
-8. POST waste-logs tetap satu-satunya penyimpanan: konfirmasi objek/metode,
-   jumlah manual, ownership, TTL, category dan unique recommendation linkage
-   dalam transaksi. REDUCE masih dicatat manual sampai provenance pencegahan
-   didukung backend. Rekomendasi tidak menghasilkan XP.
-
-Go memerlukan implementasi DB/in-flight/budget sendiri; struktur memori mock
-bukan jaminan lintas proses atau contoh autentikasi produksi. Secret Gemini
-berada pada modul Python keputusan; Go hanya memiliki URL privat dan token.
-
-## Kewajiban frontend
-
-`confirmed_object=true` wajib eksplisit. `input_source=DETECTION` memerlukan
-dua ID; MANUAL tidak membawa keduanya. `context_revision` naik ketika pilihan
-atau kondisi berubah; gunakan request UUID baru dan buang respons yang tidak
-cocok dengan fase, detection_id atau revision terbaru.
-
-| Hasil | Perilaku frontend |
+| Result | Client behavior |
 |---|---|
-| REVIEW_REQUIRED | Bbox/daftar, band confidence dan konfirmasi material; model tidak mengisi kategori sebagai fakta |
-| MANUAL_REQUIRED | Pilih katalog atau ambil ulang; jangan membuat saran deteksi palsu |
-| READY | Satu label, scope, alasan, langkah, sumber dan caution; tunggu konfirmasi simpan |
-| NEEDS_CONTEXT | Render field pada missing_context, pertahankan isian lain; metode/scope null |
-| UNAVAILABLE | Tampilkan reason_code, caution dan sumber yang tersedia, lalu manual/retry eksplisit |
-| 401/404/410/409 | Tangani sesi/login/konflik sesuai error code dan pertahankan draft |
-| 429/503/504 | Hormati Retry-After bila ada; tidak retry loop atau mengulang dengan UUID baru otomatis |
+| `REVIEW_REQUIRED` | Show boxes or a list with the server's confidence band, and ask the user to confirm the material |
+| `MANUAL_REQUIRED` | Offer catalog selection or a retake; never invent a detection |
+| `READY` | Show one method with its scope, reason, steps, sources, and cautions, then wait for the user to confirm saving |
+| `NEEDS_CONTEXT` | Render the fields in `missing_context` and keep the other inputs; the method and scope are `null` |
+| `UNAVAILABLE` | Show the `reason_code`, cautions, and sources, then offer manual entry or an explicit retry |
+| `401`, `404`, `409`, `410` | Handle the session, login, or conflict according to the error code, and keep the draft |
+| `429`, `503`, `504` | Respect `Retry-After`; never retry in a loop or swap the UUID automatically |
 
-201 adalah pembuatan sesi/hasil READY pertama; 200 adalah replay atau
-hasil rekomendasi NEEDS_CONTEXT/UNAVAILABLE. 204 untuk delete tanpa body.
-Jangan menyamakan HTTP 200 dengan rekomendasi yang siap. `prototype_only`
-dan `provider=fixture` harus terlihat sebagai simulasi/draft pada UI pengujian.
+`201` means a session or a first `READY` result was created. `200` means a replay, or a `NEEDS_CONTEXT` or `UNAVAILABLE` result. `204` is a delete with no body. An HTTP `200` does not mean a recommendation is ready.
 
-## Status verifikasi
+## Policy fields
 
-Tes kontrak mencakup validitas OpenAPI/JSON Schema, empat label, missing context,
-enum/scope invalid, request spoofing, auth, replay/conflict, lintas akun,
-delete/expiry, media/body limit, propagasi risiko dan native timeout lock.
-Integrasi Go, JWT produksi, DB, concurrency lintas proses, kamera Android,
-dan transaksi penyimpanan tetap pekerjaan tim backend/frontend. Peningkatan
-YOLO/threshold dan kurasi/evaluasi kualitas panduan/LLM adalah tahap berikutnya.
+The current policy adds these optional fields:
 
-Verifikasi 20 Oktober 2026: **146 tes Python lulus**, tiga dokumen OpenAPI
-valid, 26 artifact hasil generate konsisten. Mock diuji melalui HTTP loopback
-nyata: Swagger tersedia, POST pertama 201 dan replay identik 200 dengan ID/data
-tetap. YOLO nyata → adapter HTTP privat versi baru → keputusan Python →
-Gemini langsung menghasilkan READY/RECYCLE dan sumber yang lolos schema.
-Smoke tersebut melalui ASGI TestClient, bukan backend Go.
+| Field | Location |
+|---|---|
+| `condition.former_contents` | Request condition. Values: `FOOD_DRINK`, `CHEMICAL`, `OTHER`, `UNKNOWN` |
+| `review_profile` | Results and capabilities |
+| `review_thresholds`, `review_reasons`, `ambiguous_with` | Each detected object |
+| `class_thresholds`, `review_only_classes` | Capabilities and the merged catalog |
 
-Demo kamera lama juga kembali lulus 14 pemeriksaan browser (kamera palsu,
-YOLO nyata, rekomendasi fixture), tanpa error JavaScript. Kamera fisik belum
-diuji. Seluruh hasil lokal tersimpan di `artifacts`, tidak memuat key.
+- **Model profiles.** For a registered checkpoint, Go must send `model_sha256` in the private `selection` so replays apply the same thresholds. A profiled mapping without matching provenance is rejected.
+- **Recycling access.** A pilot `RECYCLE` result requires confirmed collector access.
+- **HDPE contents.** HDPE needs `former_contents=FOOD_DRINK`. `UNKNOWN` returns `NEEDS_CONTEXT`, and a chemical history blocks the regular rules even when the item looks clean.
 
-```powershell
-# Smoke memakai model/sampel lokal; default provider fixture:
-.\.venv-ai\Scripts\python.exe scripts/verify_http_integration.py
-# Satu request Gemini nyata, tetap dengan guide draft berlabel demo:
-.\.venv-ai\Scripts\python.exe scripts/verify_http_integration.py --live-gemini
+## Mock server
+
+The mock implements the public contract without YOLO, Gemini, or a database. It is for frontend and backend development only.
+
+```sh
+PYTHONPATH=src python -m wastenot_ai.cli serve-mock --port 8094
 ```
 
-## Pembaruan kualitas policy-05
+Open <http://127.0.0.1:8094/docs> and authorize as `mock-user-a` or `mock-user-b`. These are fixture identities; the mock does not verify JWTs.
 
-Schema v1 menambahkan field dengan default: condition.former_contents (FOOD_DRINK/CHEMICAL/OTHER/UNKNOWN), review_profile pada hasil/capability, review_thresholds/review_reasons/ambiguous_with per objek, class_thresholds/review_only_classes pada capability/katalog gabungan. Frontend memakai confidence_band server dan menampilkan konflik; JSON consumer perlu menerima field tambahan. Penambahan field tidak mengubah URL/envelope 1.0.0. Keputusan berubah secara eksplisit melalui recommendation_version=pilot-policy-05 dan mapping/profile version.
+- **Responses.** Every response carries `X-WasteNot-Mock: true`. Recommendations use `provider=fixture` and `prototype_only=true`.
+- **State.** State lives in memory: 64 sessions and 128 replays, each with a 24-hour TTL. A restart clears it.
+- **Scenarios.** Choose one at startup with `--scenario`:
 
-Untuk checkpoint terdaftar, Go harus mengirim model_sha256 dari model.sha256 pada selection privat agar replay threshold sama; model_version saja tidak mengaktifkan profil. Mapping berprofil tanpa provenance yang cocok ditolak, bukan diturunkan diam-diam. Field ini berasal dari snapshot Python tersimpan, bukan body frontend. Profil dipilih Python, bukan dikirim sebagai konfigurasi oleh client.
-
-RECYCLE pilot memerlukan akses penerima YES. HDPE meminta former_contents=FOOD_DRINK; UNKNOWN menghasilkan NEEDS_CONTEXT dengan field condition.former_contents. Chemical history memblokir aturan biasa walaupun foto tampak bersih. UI demo sudah menyediakan field/reset hasil. Go/Android produksi tetap perlu mengimplementasikan kontrak ini.
+| Scenario | Behavior |
+|---|---|
+| `normal` | Real Python rules with the fixture provider |
+| `uncertain` | Low-confidence detections |
+| `no-detections` | Empty detection result |
+| `provider-unavailable` | `200` with an `UNAVAILABLE` result |
+| `rate-limited` | `429` with `Retry-After: 30` |
+| `timeout` | `504` |

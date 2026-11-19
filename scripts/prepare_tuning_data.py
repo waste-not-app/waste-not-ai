@@ -2,17 +2,17 @@
 
 This command never trains a model or approves annotations on a reviewer's behalf.
 """
+
 import argparse
-from collections import Counter
 import hashlib
 import json
 import math
-from pathlib import Path
 import shutil
 import textwrap
+from collections import Counter
+from pathlib import Path
 
 import yaml
-
 from prepare_broad_waste import LABELS
 
 FOCUS = ("cardboard", "plastic_wrapper", "paper", "drink_carton")
@@ -41,18 +41,27 @@ def inside(root, relative):
     return resolved
 
 
-def validate_boxes(boxes, class_count=len(LABELS), edge_tolerance=1e-12):
+def validate_boxes(boxes, class_count=None, edge_tolerance=1e-12):
+    if class_count is None:
+        class_count = len(LABELS)
     for box in boxes:
-        if len(box) != 5 or not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in box):
+        if len(box) != 5 or not all(
+            isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in box
+        ):
             raise ValueError("Invalid or nonfinite bbox")
         cls, x, y, w, h = box
         if isinstance(cls, bool) or int(cls) != cls or not 0 <= cls < class_count:
             raise ValueError("Invalid class ID")
         # Preserve source coordinates; tolerate binary rounding, never clip real excursions.
         epsilon = edge_tolerance
-        if not (0 < w <= 1 and 0 < h <= 1 and 0 <= x <= 1 and 0 <= y <= 1
-                and -epsilon <= x-w/2 < x+w/2 <= 1+epsilon
-                and -epsilon <= y-h/2 < y+h/2 <= 1+epsilon):
+        if not (
+            0 < w <= 1
+            and 0 < h <= 1
+            and 0 <= x <= 1
+            and 0 <= y <= 1
+            and -epsilon <= x - w / 2 < x + w / 2 <= 1 + epsilon
+            and -epsilon <= y - h / 2 < y + h / 2 <= 1 + epsilon
+        ):
             raise ValueError("Box edges outside image")
 
 
@@ -74,7 +83,7 @@ def restore(source, output, labels=LABELS):
         label = inside(source, f"labels/{row['split']}/{image.stem}.txt")
         actual = [list(map(float, line.split())) for line in label.read_text().splitlines() if line.strip()]
         if len(actual) != len(row["boxes"]) or any(
-            len(a) != 5 or len(b) != 5 or any(not math.isfinite(x) or abs(x-y) > 1e-7 for x, y in zip(a, b))
+            len(a) != 5 or len(b) != 5 or any(not math.isfinite(x) or abs(x - y) > 1e-7 for x, y in zip(a, b))
             for a, b in zip(actual, row["boxes"])
         ):
             raise ValueError("Stored labels differ from manifest")
@@ -122,11 +131,15 @@ def restore(source, output, labels=LABELS):
         (output / name).write_text("".join((output / entry).as_posix() + "\n" for entry in entries), encoding="utf-8")
     config["path"] = output.as_posix()
     (output / "data.yaml").write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
-    report = {"source_manifest_sha256": digest(source / "manifest.json"),
-              "restored_manifest_sha256": digest(output / "manifest.json"),
-              "images": len(images), "split_list_counts": {k: len(v) for k, v in lists.items()},
-              "changed": ["data.yaml path", "absolute split-list roots"],
-              "new_training_photos": 0, "new_holdout_photos": 0}
+    report = {
+        "source_manifest_sha256": digest(source / "manifest.json"),
+        "restored_manifest_sha256": digest(output / "manifest.json"),
+        "images": len(images),
+        "split_list_counts": {k: len(v) for k, v in lists.items()},
+        "changed": ["data.yaml path", "absolute split-list roots"],
+        "new_training_photos": 0,
+        "new_holdout_photos": 0,
+    }
     write(output / "relocation.json", report)
     return report
 
@@ -134,6 +147,7 @@ def restore(source, output, labels=LABELS):
 def stage_review(cache, base, output):
     """Recover unused TACO candidates without changing historical review decisions."""
     from PIL import Image, ImageDraw
+
     cache, output = cache.resolve(), output.resolve()
     if output.exists():
         raise ValueError("Review output already exists")
@@ -157,33 +171,50 @@ def stage_review(cache, base, output):
         target = output / "images" / image.name
         target.parent.mkdir(exist_ok=True)
         shutil.copyfile(image, target)
-        records.append({**row, "cached_path": target.relative_to(output).as_posix(),
-                        "prior_reviews": decisions.get(str(row["source_id"]), []),
-                        "status": "REVIEW_REQUIRED_NOT_TRAINING_DATA",
-                        "holdout_eligible": False})
+        records.append(
+            {
+                **row,
+                "cached_path": target.relative_to(output).as_posix(),
+                "prior_reviews": decisions.get(str(row["source_id"]), []),
+                "status": "REVIEW_REQUIRED_NOT_TRAINING_DATA",
+                "holdout_eligible": False,
+            }
+        )
     for start in range(0, len(records), 12):
         sheet = Image.new("RGB", (1200, 1000), "white")
         draw = ImageDraw.Draw(sheet)
-        for offset, row in enumerate(records[start:start+12]):
+        for offset, row in enumerate(records[start : start + 12]):
             with Image.open(output / row["cached_path"]) as original:
                 thumb = original.convert("RGB")
                 thumb.thumbnail((290, 270))
             x, y = offset % 4 * 300, offset // 4 * 330
             sheet.paste(thumb, (x, y))
             for cls, cx, cy, w, h in row["boxes"]:
-                draw.rectangle((x+(cx-w/2)*thumb.width, y+(cy-h/2)*thumb.height,
-                                x+(cx+w/2)*thumb.width, y+(cy+h/2)*thumb.height), outline="red", width=2)
-            draw.text((x, y+275), f"TACO {row['source_id']} - REVIEW REQUIRED", fill="black")
+                draw.rectangle(
+                    (
+                        x + (cx - w / 2) * thumb.width,
+                        y + (cy - h / 2) * thumb.height,
+                        x + (cx + w / 2) * thumb.width,
+                        y + (cy + h / 2) * thumb.height,
+                    ),
+                    outline="red",
+                    width=2,
+                )
+            draw.text((x, y + 275), f"TACO {row['source_id']} - REVIEW REQUIRED", fill="black")
             labels = ", ".join(sorted({LABELS[int(b[0])] for b in row["boxes"]}))
             for line_index, line in enumerate(textwrap.wrap(labels, width=45)):
-                draw.text((x, y+290+line_index*12), line, fill="black")
+                draw.text((x, y + 290 + line_index * 12), line, fill="black")
             thumb.close()
-        sheet.save(output / f"contact-{start//12+1:02}.jpg")
+        sheet.save(output / f"contact-{start // 12 + 1:02}.jpg")
         sheet.close()
     write(output / "review-queue.json", {"status": "REVIEW_REQUIRED_NOT_TRAINING_DATA", "records": records})
-    summary = {"candidates": len(records), "approved_training_images": 0, "new_holdout_images": 0,
-               "candidate_instances": dict(Counter(LABELS[int(b[0])] for r in records for b in r["boxes"])),
-               "prior_decisions_preserved": True}
+    summary = {
+        "candidates": len(records),
+        "approved_training_images": 0,
+        "new_holdout_images": 0,
+        "candidate_instances": dict(Counter(LABELS[int(b[0])] for r in records for b in r["boxes"])),
+        "prior_decisions_preserved": True,
+    }
     write(output / "summary.json", summary)
     return summary
 
@@ -221,6 +252,7 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
             # Recompute pixel evidence; never trust the intake's duplicate claims.
             from PIL import Image
             from prepare_drinking_waste import perceptual_hash
+
             with Image.open(image) as opened:
                 if opened.getexif().get(274, 1) != 1:
                     raise ValueError("Normalize orientation and bbox before intake")
@@ -231,13 +263,23 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
                 raise ValueError("Near-duplicate of protected data")
             validate_boxes(row["boxes"], len(labels))
             rights = row.get("rights", {})
-            if not (rights.get("accepted") is True and rights.get("status") == "RELEASE_ELIGIBLE"
-                    and rights.get("license_url") and rights.get("source_page") and rights.get("attribution")):
+            if not (
+                rights.get("accepted") is True
+                and rights.get("status") == "RELEASE_ELIGIBLE"
+                and rights.get("license_url")
+                and rights.get("source_page")
+                and rights.get("attribution")
+            ):
                 raise ValueError("Release rights/attribution unresolved")
             review = row.get("visual_review", {})
-            if not (review.get("decision") == "APPROVED" and review.get("reviewer")
-                    and review.get("reviewer_type") == "human" and review.get("reviewed_at")
-                    and review.get("all_objects_annotated") is True and review.get("labels") == list(labels)):
+            if not (
+                review.get("decision") == "APPROVED"
+                and review.get("reviewer")
+                and review.get("reviewer_type") == "human"
+                and review.get("reviewed_at")
+                and review.get("all_objects_annotated") is True
+                and review.get("labels") == list(labels)
+            ):
                 raise ValueError("Independent complete human review pending")
             if not row["boxes"] and not review.get("verified_negative"):
                 raise ValueError("Empty labels lack verified-negative review")
@@ -251,7 +293,8 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
     for i, row in enumerate(valid):
         for j, other in enumerate(valid[:i]):
             if row["split"] != other["split"] and (
-                row["group"] == other["group"] or row["session_id"] == other["session_id"]
+                row["group"] == other["group"]
+                or row["session_id"] == other["session_id"]
                 or (row["phash"] ^ other["phash"]).bit_count() <= 5
             ):
                 collisions.update((i, j))
@@ -269,8 +312,11 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
 
     for i, row in enumerate(valid):
         for j, other in enumerate(valid[:i]):
-            if (row["group"] == other["group"] or row["session_id"] == other["session_id"]
-                    or (row["phash"] ^ other["phash"]).bit_count() <= 5):
+            if (
+                row["group"] == other["group"]
+                or row["session_id"] == other["session_id"]
+                or (row["phash"] ^ other["phash"]).bit_count() <= 5
+            ):
                 parents[find(i)] = find(j)
     capture_groups = {r["id"]: find(i) for i, r in enumerate(valid)}
     support = {}
@@ -284,18 +330,30 @@ def readiness(base, intake, intake_root, protected=(), *, labels=LABELS, focus=F
             target = train_targets[label] if split == "train" else 50
             count = len(matching) if split == "train" else instances
             independent = len({capture_groups[r["id"]] for r in matching})
-            support[split][label] = {"images": len(matching), "instances": instances,
-                "groups": independent, "target": target,
-                "count_deficit": max(0, target-count),
-                "group_deficit": max(0, 20-independent) if split != "train" else 0}
-    ready = not rejected and all(not v["count_deficit"] and not v["group_deficit"]
-                               for split in support.values() for v in split.values())
-    legacy = {split: dict(Counter(labels[int(b[0])] for r in base["records"]
-                                 if r["split"] == split for b in r["boxes"])) for split in SPLITS}
-    return {"status": "READY_FOR_TRAINING_EXPERIMENT" if ready else "INCOMPLETE_DATA_REVIEW",
-            "legacy_instances": legacy, "new_support": support, "accepted_new_images": len(valid),
-            "rejected": rejected, "holdout_policy": "new test split is final holdout; never select on it",
-            "scope": "Data readiness only; does not establish model accuracy"}
+            support[split][label] = {
+                "images": len(matching),
+                "instances": instances,
+                "groups": independent,
+                "target": target,
+                "count_deficit": max(0, target - count),
+                "group_deficit": max(0, 20 - independent) if split != "train" else 0,
+            }
+    ready = not rejected and all(
+        not v["count_deficit"] and not v["group_deficit"] for split in support.values() for v in split.values()
+    )
+    legacy = {
+        split: dict(Counter(labels[int(b[0])] for r in base["records"] if r["split"] == split for b in r["boxes"]))
+        for split in SPLITS
+    }
+    return {
+        "status": "READY_FOR_TRAINING_EXPERIMENT" if ready else "INCOMPLETE_DATA_REVIEW",
+        "legacy_instances": legacy,
+        "new_support": support,
+        "accepted_new_images": len(valid),
+        "rejected": rejected,
+        "holdout_policy": "new test split is final holdout; never select on it",
+        "scope": "Data readiness only; does not establish model accuracy",
+    }
 
 
 def build(base_root, intake_path, protected, output, *, labels=LABELS, focus=FOCUS, train_targets=TRAIN_TARGET):
@@ -304,7 +362,9 @@ def build(base_root, intake_path, protected, output, *, labels=LABELS, focus=FOC
     if output.exists() or output.is_relative_to(base_root) or base_root.is_relative_to(output):
         raise ValueError("Choose a new output separate from baseline")
     base, intake = read(base_root / "manifest.json"), read(intake_path)
-    report = readiness(base, intake, intake_path.parent, protected, labels=labels, focus=focus, train_targets=train_targets)
+    report = readiness(
+        base, intake, intake_path.parent, protected, labels=labels, focus=focus, train_targets=train_targets
+    )
     if report["status"] != "READY_FOR_TRAINING_EXPERIMENT":
         raise ValueError("Intake data/review quotas incomplete; inspect audit report before build")
     records = []
@@ -324,10 +384,17 @@ def build(base_root, intake_path, protected, output, *, labels=LABELS, focus=FOC
         review = dict(row["visual_review"])
         if not row["boxes"]:
             review["general_negative"] = True
-        records.append({**row, "image": relative, "source": "NewCapture", "source_id": row["id"],
-                        "original_source": row.get("source", "NewCapture"),
-                        "visual_review": review,
-                        "kind": "VERIFIED_NEGATIVE" if not row["boxes"] else "ANNOTATED_OBJECTS"})
+        records.append(
+            {
+                **row,
+                "image": relative,
+                "source": "NewCapture",
+                "source_id": row["id"],
+                "original_source": row.get("source", "NewCapture"),
+                "visual_review": review,
+                "kind": "VERIFIED_NEGATIVE" if not row["boxes"] else "ANNOTATED_OBJECTS",
+            }
+        )
         files.append((source, relative, None))
     if len({r["image"] for r in records}) != len(records):
         raise ValueError("Output filename collision")
@@ -342,34 +409,67 @@ def build(base_root, intake_path, protected, output, *, labels=LABELS, focus=FOC
             shutil.copyfile(label_source, label)
         else:
             label.write_text("".join(" ".join(map(str, b)) + "\n" for b in row["boxes"]), encoding="utf-8")
-    active = [r for r in records if r["split"] != "train" or r["source"] == "NewCapture"
-              or Path(r["image"]).name in old_active]
-    counts = lambda rows: {s: {name: sum(int(b[0]) == i for r in rows if r["split"] == s for b in r["boxes"])
-                              for i, name in enumerate(labels)} for s in SPLITS}
-    manifest = {"version": "broad-waste-issue8-v5" if list(labels) == LABELS else "general-focus-issue9-v2",
-                "status": "EXPERIMENTAL_NOT_PROMOTED", "labels": list(labels),
-                "records": records, "baseline_manifest_sha256": digest(base_root / "manifest.json"),
-                "intake_sha256": digest(intake_path), "instances_per_split": counts(records),
-                "active_instances_per_split": counts(active),
-                "selected_train_images": sum(r["split"] == "train" for r in active),
-                "legacy_test_policy": "Retained in baseline dataset for regression; never mixed into new test holdout"}
+    active = [
+        r
+        for r in records
+        if r["split"] != "train" or r["source"] == "NewCapture" or Path(r["image"]).name in old_active
+    ]
+
+    def counts(rows):
+        return {
+            s: {
+                name: sum(int(b[0]) == i for r in rows if r["split"] == s for b in r["boxes"])
+                for i, name in enumerate(labels)
+            }
+            for s in SPLITS
+        }
+
+    manifest = {
+        "version": "broad-waste-issue8-v5" if list(labels) == LABELS else "general-focus-issue9-v2",
+        "status": "EXPERIMENTAL_NOT_PROMOTED",
+        "labels": list(labels),
+        "records": records,
+        "baseline_manifest_sha256": digest(base_root / "manifest.json"),
+        "intake_sha256": digest(intake_path),
+        "instances_per_split": counts(records),
+        "active_instances_per_split": counts(active),
+        "selected_train_images": sum(r["split"] == "train" for r in active),
+        "legacy_test_policy": "Retained in baseline dataset for regression; never mixed into new test holdout",
+    }
     write(output / "manifest.json", manifest)
     for split in SPLITS:
-        (output / f"{split}.txt").write_text("".join((output / r["image"]).as_posix()+"\n"
-                                                    for r in active if r["split"] == split), encoding="utf-8")
-    (output / "train-full.txt").write_text("".join((output / r["image"]).as_posix()+"\n"
-                                                    for r in records if r["split"] == "train"), encoding="utf-8")
-    (output / "data.yaml").write_text(yaml.safe_dump({"path": output.as_posix(), "names": dict(enumerate(labels)),
-                                                      **{s: s+".txt" for s in SPLITS}}), encoding="utf-8")
+        (output / f"{split}.txt").write_text(
+            "".join((output / r["image"]).as_posix() + "\n" for r in active if r["split"] == split), encoding="utf-8"
+        )
+    (output / "train-full.txt").write_text(
+        "".join((output / r["image"]).as_posix() + "\n" for r in records if r["split"] == "train"), encoding="utf-8"
+    )
+    (output / "data.yaml").write_text(
+        yaml.safe_dump(
+            {"path": output.as_posix(), "names": dict(enumerate(labels)), **{s: s + ".txt" for s in SPLITS}}
+        ),
+        encoding="utf-8",
+    )
     notices = (base_root / "DATASET_NOTICES.md").read_text(encoding="utf-8")
     notices += "\n\n## New capture attribution\n\n" + "\n".join(
         f"- {r['id']}: {r['rights']['attribution']} — {r['rights']['source_page']} — {r['rights']['license_url']}"
-        for r in intake["records"])
-    (output / "DATASET_NOTICES.md").write_text(notices+"\n", encoding="utf-8")
-    write(output / "readiness.json", {**report, "dataset_manifest_sha256": digest(output/"manifest.json"),
-                                     "intake_sha256": manifest["intake_sha256"]})
-    return {"status": manifest["status"], "images": len(records), "new_images": len(intake["records"]),
-            "next_check": "Run verify_broad_data.py on the completed output before any training"}
+        for r in intake["records"]
+    )
+    (output / "DATASET_NOTICES.md").write_text(notices + "\n", encoding="utf-8")
+    write(
+        output / "readiness.json",
+        {
+            **report,
+            "dataset_manifest_sha256": digest(output / "manifest.json"),
+            "intake_sha256": manifest["intake_sha256"],
+        },
+    )
+    return {
+        "status": manifest["status"],
+        "images": len(records),
+        "new_images": len(intake["records"]),
+        "next_check": "Run verify_broad_data.py on the completed output before any training",
+    }
 
 
 def main():

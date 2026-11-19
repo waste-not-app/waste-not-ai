@@ -13,23 +13,25 @@ def load_catalog() -> dict:
 def confirm_context(context: Context) -> dict:
     item = next((x for x in load_catalog()["items"] if x["object_key"] == context.object_key), None)
     if item is None or item["category"] != context.category:
-        raise ValueError("Objek/kategori tidak cocok dengan katalog pilot.")
+        raise ValueError("Object or category does not match the pilot catalog.")
     return item
 
 
 def preserve_detected_risk(context: Context, selected: dict) -> Context:
-    risk = any(item["special_handling"] for item in load_catalog()["items"]
-               if item["baseline_class_id"] == selected["class_id"]
-               and item["baseline_raw_class"] == selected["raw_class"])
+    risk = any(
+        item["special_handling"]
+        for item in load_catalog()["items"]
+        if item["baseline_class_id"] == selected["class_id"] and item["baseline_raw_class"] == selected["raw_class"]
+    )
     if not risk:
         return context
-    kind = "SHARP" if selected["raw_class"] in {"knife","scissors"} else "ELECTRICAL"
-    return context.model_copy(update={"risk_flag":True,
-                                      "risk_type":kind if context.risk_type == "UNKNOWN" else context.risk_type})
+    kind = "SHARP" if selected["raw_class"] in {"knife", "scissors"} else "ELECTRICAL"
+    return context.model_copy(
+        update={"risk_flag": True, "risk_type": kind if context.risk_type == "UNKNOWN" else context.risk_type}
+    )
 
 
 def _detection_mapping(labels: dict[int, str], catalog: dict):
-    # Custom IDs 0..3 are not COCO IDs. Recognize the entire registered taxonomy.
     waste_labels = {0: "aluminium_can", 1: "glass_bottle", 2: "hdpe_bottle", 3: "plastic_bottle"}
     waste_profile = labels == waste_labels
     broad_profile = labels == dict(enumerate(BROAD_LABELS))
@@ -40,62 +42,107 @@ def _detection_mapping(labels: dict[int, str], catalog: dict):
         if broad_profile or (combined_profile and raw in BROAD_OBJECT_KEYS):
             mapping[cls] = [item for item in catalog["items"] if item["object_key"] in BROAD_OBJECT_KEYS[raw]]
             continue
-        mapping[cls] = [item for item in catalog["items"] if (
-            item["object_key"] in waste_keys[cls] if waste_profile else
-            item["baseline_class_id"] == cls and item["baseline_raw_class"] == raw)]
-    version = "broad-coco-objects-01" if combined_profile else "broad-waste-objects-01" if broad_profile else (
-        "drinking-waste-reviewed-02" if waste_profile else catalog["mapping_version"])
+        mapping[cls] = [
+            item
+            for item in catalog["items"]
+            if (
+                item["object_key"] in waste_keys[cls]
+                if waste_profile
+                else item["baseline_class_id"] == cls and item["baseline_raw_class"] == raw
+            )
+        ]
+    version = (
+        "broad-coco-objects-01"
+        if combined_profile
+        else "broad-waste-objects-01"
+        if broad_profile
+        else ("drinking-waste-reviewed-02" if waste_profile else catalog["mapping_version"])
+    )
     return version, mapping
 
 
-def detection_capabilities(labels: dict[int, str], *, model_version=None, model_sha256=None) -> dict:
-    version, mapping = _detection_mapping(labels, load_catalog())
+def calibrated_thresholds(model):
+    return dict(model.get("calibration", {}).get("thresholds", ()))
+
+
+def _review_settings(labels, model_version, model_sha256, thresholds, lower_thresholds):
     profile = review_profile(labels, model_version, model_sha256)
+    if not lower_thresholds:
+        return profile
+    if not model_sha256 or labels != dict(enumerate(COMBINED_LABELS)):
+        raise ValueError("Calibration requires a registered combined model identity")
+    classes = dict(profile["classes"])
+    for label, lower in lower_thresholds.items():
+        current = classes.get(label, {})
+        classes[label] = {
+            "lower": lower,
+            "offered": max(lower, current.get("offered", thresholds["offered"])),
+            "offered_enabled": current.get("offered_enabled", True),
+        }
+    return {**profile, "id": f"combined-calibration-{model_sha256[:12]}", "classes": classes}
+
+
+def detection_capabilities(
+    labels: dict[int, str], *, model_version=None, model_sha256=None, lower_thresholds=None
+) -> dict:
+    catalog = load_catalog()
+    version, mapping = _detection_mapping(labels, catalog)
+    profile = _review_settings(labels, model_version, model_sha256, catalog["thresholds"], lower_thresholds)
     if profile["id"] != DEFAULT_PROFILE:
         version += "+" + profile["id"]
-    return {"mapping_version": version, "supported_visual_classes": sum(bool(rows) for rows in mapping.values()),
-            "supported_object_labels": {item["object_key"]: labels[cls] for cls, rows in mapping.items() for item in rows},
-            "review_profile": profile["id"],
-            "class_thresholds": {name: {key: value[key] for key in ("lower", "offered")}
-                                 for name, value in profile["classes"].items()},
-            "review_only_classes": [name for name, value in profile["classes"].items() if not value["offered_enabled"]]}
+    return {
+        "mapping_version": version,
+        "supported_visual_classes": sum(bool(rows) for rows in mapping.values()),
+        "supported_object_labels": {item["object_key"]: labels[cls] for cls, rows in mapping.items() for item in rows},
+        "review_profile": profile["id"],
+        "class_thresholds": {
+            name: {key: value[key] for key in ("lower", "offered")} for name, value in profile["classes"].items()
+        },
+        "review_only_classes": [name for name, value in profile["classes"].items() if not value["offered_enabled"]],
+    }
 
 
-def review_detections(objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None,
-                      lower_thresholds=None) -> dict:
+def review_detections(
+    objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None, lower_thresholds=None
+) -> dict:
     catalog = load_catalog()
     version, mapping = _detection_mapping(labels, catalog)
     thresholds = catalog["thresholds"]
-    profile = review_profile(labels, model_version, model_sha256)
+    profile = _review_settings(labels, model_version, model_sha256, thresholds, lower_thresholds)
     if profile["id"] != DEFAULT_PROFILE:
         version += "+" + profile["id"]
     result = []
     for index, obj in enumerate(objects):
         if labels.get(obj.class_id) != obj.raw_class:
-            raise ValueError("Class ID dan label tidak cocok dengan artifact model.")
+            raise ValueError("Class ID and label do not match the model artifact.")
         matches = mapping[obj.class_id]
         supported = bool(matches)
         selected = profile["classes"].get(obj.raw_class, {})
         limits = {key: selected.get(key, thresholds[key]) for key in ("lower", "offered")}
-        if lower_thresholds and obj.raw_class in lower_thresholds:
-            limits["lower"] = lower_thresholds[obj.raw_class]
-            limits["offered"] = max(limits["offered"], limits["lower"])
         reviewable = supported and obj.confidence >= limits["lower"]
         reasons = ["CLASS_REVIEW_ONLY"] if reviewable and not selected.get("offered_enabled", True) else []
         band = "MANUAL_REQUIRED"
         if reviewable:
             band = "OFFERED" if obj.confidence >= limits["offered"] and not reasons else "UNCERTAIN"
-        result.append({
-            **obj.model_dump(mode="json"), "object_id": f"object-{index + 1}",
-            "confidence_band": band, "object_key": None, "category": None,
-            "requires_material_confirmation": reviewable,
-            "supported_for_review": reviewable,
-            "suggested_object_keys": [item["object_key"] for item in matches] if reviewable else [],
-            "review_thresholds": limits, "review_reasons": reasons,
-        })
+        result.append(
+            {
+                **obj.model_dump(mode="json"),
+                "object_id": f"object-{index + 1}",
+                "confidence_band": band,
+                "object_key": None,
+                "category": None,
+                "requires_material_confirmation": reviewable,
+                "supported_for_review": reviewable,
+                "suggested_object_keys": [item["object_key"] for item in matches] if reviewable else [],
+                "review_thresholds": limits,
+                "review_reasons": reasons,
+            }
+        )
     annotate_ambiguity(result, profile["overlap_iou"])
     return {
         "status": "REVIEW_REQUIRED" if any(x["supported_for_review"] for x in result) else "MANUAL_REQUIRED",
         "mapping_version": version,
-        "thresholds": thresholds, "review_profile": profile["id"], "objects": result,
+        "thresholds": thresholds,
+        "review_profile": profile["id"],
+        "objects": result,
     }

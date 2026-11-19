@@ -9,9 +9,18 @@ from wastenot_ai.recommendation import ProviderError, load_guides, recommend
 
 
 def context(**updates):
-    return Context.model_validate_json(json.dumps({"object_key": "glass_bottle", "category": "GLASS",
-        "condition": {"cleanliness": "CLEAN", "integrity": "INTACT", "reusable": "YES"},
-        "reuse_intention": True, "recycling_access": "YES", **updates}))
+    return Context.model_validate_json(
+        json.dumps(
+            {
+                "object_key": "glass_bottle",
+                "category": "GLASS",
+                "condition": {"cleanliness": "CLEAN", "integrity": "INTACT", "reusable": "YES"},
+                "reuse_intention": True,
+                "recycling_access": "YES",
+                **updates,
+            }
+        )
+    )
 
 
 def test_screenshot_sharp_risk_with_confirmed_intact_glass_has_a_method_and_warning():
@@ -26,9 +35,21 @@ def test_screenshot_sharp_risk_with_confirmed_intact_glass_has_a_method_and_warn
 def test_every_catalog_item_has_handling_steps_even_when_no_method_can_be_selected(risk):
     guides = load_guides()
     for item in load_catalog()["items"]:
-        result = recommend(Context.model_validate_json(json.dumps({"object_key": item["object_key"],
-            "category": item["category"], "risk_flag": risk is not None, "risk_type": risk or "UNKNOWN"})),
-            FixtureProvider(), guides, demo_guides=True)
+        result = recommend(
+            Context.model_validate_json(
+                json.dumps(
+                    {
+                        "object_key": item["object_key"],
+                        "category": item["category"],
+                        "risk_flag": risk is not None,
+                        "risk_type": risk or "UNKNOWN",
+                    }
+                )
+            ),
+            FixtureProvider(),
+            guides,
+            demo_guides=True,
+        )
         assert result.steps and result.reason, (item["object_key"], risk, result.reason_code)
         assert result.source_urls, item["object_key"]
 
@@ -37,6 +58,7 @@ def test_provider_failure_uses_eligible_rules_and_preserves_failure_provenance()
     class Offline(FixtureProvider):
         def generate(self, payload):
             raise ProviderError("LLM_TIMEOUT")
+
     result = recommend(context(risk_flag=False), Offline(), load_guides(), demo_guides=True)
     assert result.status == 'READY' and result.reason_code == 'LLM_TIMEOUT'
     assert result.provider == 'rules' and result.recommended_method in {'REUSE', 'RECYCLE', 'TRASH'}
@@ -45,8 +67,12 @@ def test_provider_failure_uses_eligible_rules_and_preserves_failure_provenance()
 
 @pytest.mark.parametrize("category", ["ORGANIC", "PLASTIC", "PAPER", "GLASS", "METAL", "ELECTRONIC", "OTHER"])
 def test_items_outside_named_catalog_have_explicit_manual_material_choices(category):
-    result = recommend(Context.model_validate_json(json.dumps({"object_key": "other_" + category.lower(),
-        "category": category})), FixtureProvider(), load_guides(), demo_guides=True)
+    result = recommend(
+        Context.model_validate_json(json.dumps({"object_key": "other_" + category.lower(), "category": category})),
+        FixtureProvider(),
+        load_guides(),
+        demo_guides=True,
+    )
     assert result.steps and result.source_urls and result.recommended_method == 'RECYCLE'
     assert result.recommendation_basis == 'CONDITIONAL' and 'recycling_access' in result.conditions_to_verify
 

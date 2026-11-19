@@ -1,21 +1,22 @@
 """Acquire and prepare cardboard and general-object confusion training supplements."""
+
 import argparse
-from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor
 import csv
 import hashlib
 import json
-from pathlib import Path
 import shutil
 import zipfile
-
-import httpx
-from PIL import Image, ImageDraw
-import yaml
+from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 import expand_broad_waste as expansion
+import httpx
+import yaml
+from PIL import Image, ImageDraw
 from prepare_broad_waste import normalized_box
 from prepare_drinking_waste import perceptual_hash
+
 from wastenot_ai.taxonomy import COCO_LABELS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,17 +47,31 @@ def acquire_cardboard(max_requests):
     base, benchmark = frozen_images()
     taco = read_json(expansion.SOURCE / "taco.json")
     plan = expansion.make_plan(base, taco, 300)
-    deferred = {row["source_id"] for row in read_json(BASE / "review-snapshot.json")
-                if row["decision"] != "APPROVED"}
-    plan["candidates"] = [row for row in plan["candidates"] if row["source_id"] not in deferred
-                          and any(box[0] == 5 for box in row["boxes"]) and "flickr" in row["original_url"]]
-    plan.update(baseline_manifest_sha256=expansion.digest(BASE / "manifest.json"),
-                source_metadata_sha256=expansion.digest(expansion.SOURCE / "taco.json"),
-                benchmark_sha256=expansion.digest(BENCHMARK))
+    deferred = {row["source_id"] for row in read_json(BASE / "review-snapshot.json") if row["decision"] != "APPROVED"}
+    plan["candidates"] = [
+        row
+        for row in plan["candidates"]
+        if row["source_id"] not in deferred
+        and any(box[0] == 5 for box in row["boxes"])
+        and "flickr" in row["original_url"]
+    ]
+    plan.update(
+        baseline_manifest_sha256=expansion.digest(BASE / "manifest.json"),
+        source_metadata_sha256=expansion.digest(expansion.SOURCE / "taco.json"),
+        benchmark_sha256=expansion.digest(BENCHMARK),
+    )
     expansion.write_json(CACHE / "cardboard/plan.json", plan)
     state = expansion.acquire(plan, CACHE / "cardboard", max_requests)
-    print(json.dumps({"cardboard_candidates": len(plan["candidates"]), "acquired": len(state["records"]),
-                      "status": state["status"], "last_error": state.get("last_error")}))
+    print(
+        json.dumps(
+            {
+                "cardboard_candidates": len(plan["candidates"]),
+                "acquired": len(state["records"]),
+                "status": state["status"],
+                "last_error": state.get("last_error"),
+            }
+        )
+    )
     make_sheets(state["records"], CACHE / "cardboard/sheets", expansion.LABELS, "cardboard")
 
 
@@ -65,7 +80,7 @@ def make_sheets(records, destination, labels, prefix):
     for start in range(0, len(records), 20):
         canvas = Image.new("RGB", (1400, 1100), "white")
         draw = ImageDraw.Draw(canvas)
-        for index, row in enumerate(records[start:start + 20]):
+        for index, row in enumerate(records[start : start + 20]):
             with Image.open(row["cached_path"]) as opened:
                 image = opened.convert("RGB")
             image.thumbnail((272, 232))
@@ -77,12 +92,20 @@ def make_sheets(records, destination, labels, prefix):
                 if prefix == "general" and label not in TARGETS:
                     continue
                 targets.append(label)
-                draw.rectangle((left + (x-width/2)*image.width, top + (y-height/2)*image.height,
-                                left + (x+width/2)*image.width, top + (y+height/2)*image.height), outline="red", width=2)
-            draw.text((left, top+236), str(row["source_id"]), fill="black")
-            draw.text((left, top+250), ",".join(sorted(set(targets)))[:43], fill="black")
+                draw.rectangle(
+                    (
+                        left + (x - width / 2) * image.width,
+                        top + (y - height / 2) * image.height,
+                        left + (x + width / 2) * image.width,
+                        top + (y + height / 2) * image.height,
+                    ),
+                    outline="red",
+                    width=2,
+                )
+            draw.text((left, top + 236), str(row["source_id"]), fill="black")
+            draw.text((left, top + 250), ",".join(sorted(set(targets)))[:43], fill="black")
             image.close()
-        canvas.save(destination / f"{prefix}-{start//20+1:02}.jpg")
+        canvas.save(destination / f"{prefix}-{start // 20 + 1:02}.jpg")
         canvas.close()
 
 
@@ -104,18 +127,34 @@ def coco_candidates(data, split, excluded_ids):
         if max(image["width"], image["height"]) > 4096:
             continue
         try:
-            boxes = [normalized_box(row["bbox"], image["width"], image["height"],
-                                    COCO_LABELS.index(categories[row["category_id"]])) for row in anns]
+            boxes = [
+                normalized_box(
+                    row["bbox"], image["width"], image["height"], COCO_LABELS.index(categories[row["category_id"]])
+                )
+                for row in anns
+            ]
         except ValueError:
             continue
-        result.append({"source": "COCO2017", "source_id": str(image["id"]), "source_split": split,
-            "group": f"COCO-{split}-{image['id']}", "filename": image["file_name"],
-            "width": image["width"], "height": image["height"], "boxes": boxes,
-            "rights": {"accepted": True, "license_url": licenses[image["license"]]["url"],
-                       "source_page": image.get("flickr_url") or image["coco_url"],
-                       "license_name": licenses[image["license"]]["name"],
-                       "verification": "image-specific publisher COCO license metadata"},
-            "url": f"https://s3.amazonaws.com/images.cocodataset.org/{split}/{image['file_name']}"})
+        result.append(
+            {
+                "source": "COCO2017",
+                "source_id": str(image["id"]),
+                "source_split": split,
+                "group": f"COCO-{split}-{image['id']}",
+                "filename": image["file_name"],
+                "width": image["width"],
+                "height": image["height"],
+                "boxes": boxes,
+                "rights": {
+                    "accepted": True,
+                    "license_url": licenses[image["license"]]["url"],
+                    "source_page": image.get("flickr_url") or image["coco_url"],
+                    "license_name": licenses[image["license"]]["name"],
+                    "verification": "image-specific publisher COCO license metadata",
+                },
+                "url": f"https://s3.amazonaws.com/images.cocodataset.org/{split}/{image['file_name']}",
+            }
+        )
     return sorted(result, key=lambda row: rank(row["source_id"]))
 
 
@@ -123,13 +162,24 @@ def select_candidates(rows, quotas):
     selected, used = [], set()
     for label, count in quotas:
         cls = COCO_LABELS.index(label) if label in TARGETS else None
-        candidates = [row for row in rows if row["source_id"] not in used and
-                      (any(int(box[0]) == cls for box in row["boxes"]) if cls is not None else
-                       all(COCO_LABELS[int(box[0])] not in TARGETS for box in row["boxes"]))]
+        candidates = [
+            row
+            for row in rows
+            if row["source_id"] not in used
+            and (
+                any(int(box[0]) == cls for box in row["boxes"])
+                if cls is not None
+                else all(COCO_LABELS[int(box[0])] not in TARGETS for box in row["boxes"])
+            )
+        ]
         # Half of each target stratum emphasizes larger objects; the rest retains small/occluded scenes.
         if cls is not None:
-            large = [row for row in candidates if max((box[3]*box[4] for box in row["boxes"] if int(box[0]) == cls), default=0) >= .03]
-            order = large[:count//2] + candidates
+            large = [
+                row
+                for row in candidates
+                if max((box[3] * box[4] for box in row["boxes"] if int(box[0]) == cls), default=0) >= 0.03
+            ]
+            order = large[: count // 2] + candidates
         else:
             order = candidates
         accepted = 0
@@ -154,7 +204,7 @@ def download_general(row):
             with httpx.Client(timeout=30, follow_redirects=True) as client:
                 response = client.get(row["url"])
                 response.raise_for_status()
-            if len(response.content) > 5*1024*1024:
+            if len(response.content) > 5 * 1024 * 1024:
                 raise ValueError("Image exceeds media limit")
             temporary = path.with_suffix(".part")
             temporary.write_bytes(response.content)
@@ -178,13 +228,20 @@ def acquire_general():
     selected = []
     with zipfile.ZipFile(archive_path) as archive:
         for split, excluded, quotas in (
-            ("train2017", excluded_train, [("cell phone",220),("remote",120),("refrigerator",80),("replay",80)]),
-            ("val2017", excluded_val, [("cell phone",30),("remote",12),("refrigerator",20),("replay",25)])):
+            ("train2017", excluded_train, [("cell phone", 220), ("remote", 120), ("refrigerator", 80), ("replay", 80)]),
+            ("val2017", excluded_val, [("cell phone", 30), ("remote", 12), ("refrigerator", 20), ("replay", 25)]),
+        ):
             raw = archive.read(f"annotations/instances_{split}.json")
             selected.extend(select_candidates(coco_candidates(json.loads(raw), split, excluded), quotas))
-    expansion.write_json(CACHE / "general/plan.json", {"selected": selected,
-        "baseline_sha256": expansion.digest(BASE / "manifest.json"), "benchmark_sha256": expansion.digest(BENCHMARK),
-        "annotations_archive_sha256": expansion.digest(archive_path)})
+    expansion.write_json(
+        CACHE / "general/plan.json",
+        {
+            "selected": selected,
+            "baseline_sha256": expansion.digest(BASE / "manifest.json"),
+            "benchmark_sha256": expansion.digest(BENCHMARK),
+            "annotations_archive_sha256": expansion.digest(archive_path),
+        },
+    )
     blocked = [int(row["phash"]) for row in base["records"] + benchmark["records"]]
     accepted, rejected, seen = [], [], []
     with ThreadPoolExecutor(max_workers=4) as pool:
@@ -192,17 +249,37 @@ def acquire_general():
             if "rejected" in result:
                 rejected.append(result)
             elif any((result["phash"] ^ value).bit_count() <= 5 for value in blocked + seen):
-                rejected.append({"source_id": result["source_id"], "source_split": result["source_split"], "rejected": "near_duplicate_reserved_or_selected"})
+                rejected.append(
+                    {
+                        "source_id": result["source_id"],
+                        "source_split": result["source_split"],
+                        "rejected": "near_duplicate_reserved_or_selected",
+                    }
+                )
             else:
                 accepted.append(result)
                 seen.append(result["phash"])
-            if (index+1) % 25 == 0:
+            if (index + 1) % 25 == 0:
                 expansion.write_json(CACHE / "general/acquisition.json", {"records": accepted, "rejected": rejected})
-                print(f"General objects {index+1}/{len(selected)}; accepted {len(accepted)}", flush=True)
+                print(f"General objects {index + 1}/{len(selected)}; accepted {len(accepted)}", flush=True)
     expansion.write_json(CACHE / "general/acquisition.json", {"records": accepted, "rejected": rejected})
     make_sheets(accepted, CACHE / "general/sheets", COCO_LABELS, "general")
-    print(json.dumps({"general_images": len(accepted), "rejected": len(rejected),
-                      "target_instances": dict(Counter(COCO_LABELS[int(box[0])] for row in accepted for box in row["boxes"] if COCO_LABELS[int(box[0])] in TARGETS))}))
+    print(
+        json.dumps(
+            {
+                "general_images": len(accepted),
+                "rejected": len(rejected),
+                "target_instances": dict(
+                    Counter(
+                        COCO_LABELS[int(box[0])]
+                        for row in accepted
+                        for box in row["boxes"]
+                        if COCO_LABELS[int(box[0])] in TARGETS
+                    )
+                ),
+            }
+        )
+    )
 
 
 def acquire_openimages():
@@ -231,12 +308,18 @@ def acquire_openimages():
     selected = []
     for ident, boxes in sorted(annotations.items(), key=lambda pair: rank(pair[0])):
         meta = metadata[ident]
-        if meta["License"] != "https://creativecommons.org/licenses/by/2.0/" or meta["Rotation"] not in {"", "0", "0.0"}:
+        if meta["License"] != "https://creativecommons.org/licenses/by/2.0/" or meta["Rotation"] not in {
+            "",
+            "0",
+            "0.0",
+        }:
             continue
         if any(box["IsGroupOf"] != "0" or box["IsDepiction"] != "0" for box in boxes):
             continue
-        if not any((float(box["XMax"])-float(box["XMin"]))*
-                   (float(box["YMax"])-float(box["YMin"])) >= .15 for box in boxes):
+        if not any(
+            (float(box["XMax"]) - float(box["XMin"])) * (float(box["YMax"]) - float(box["YMin"])) >= 0.15
+            for box in boxes
+        ):
             continue
         labels = {box["LabelName"] for box in boxes}
         if len(labels) != 1:
@@ -259,17 +342,34 @@ def acquire_openimages():
         normalized = []
         for box in boxes:
             x1, y1, x2, y2 = (float(box[key]) for key in ("XMin", "YMin", "XMax", "YMax"))
-            normalized.append([cls, (x1+x2)/2, (y1+y2)/2, x2-x1, y2-y1])
-        selected.append({"source": "OpenImages", "source_id": ident, "source_split": "validation",
-            "intended_split": "train", "role": role, "group": "OpenImages-" + ident,
-            "boxes": normalized, "cached_path": str(path), "raw_sha256": expansion.digest(path), "phash": image_hash,
-            "rights": {"accepted": True, "license_url": meta["License"], "source_page": meta["OriginalLandingURL"],
-                "creator_page": meta["AuthorProfileURL"], "author": meta["Author"],
-                "verification": "image-specific publisher Open Images metadata"},
-            "source_annotation_class": "Mobile phone" if role == "phone" else "Box",
-            "annotation_review_required": "isolation and completeness; Box also needs visually confirmed cardboard material",
-            "url": url, "title": meta["Title"],
-            "source_metadata_sha256": metadata_hashes})
+            normalized.append([cls, (x1 + x2) / 2, (y1 + y2) / 2, x2 - x1, y2 - y1])
+        selected.append(
+            {
+                "source": "OpenImages",
+                "source_id": ident,
+                "source_split": "validation",
+                "intended_split": "train",
+                "role": role,
+                "group": "OpenImages-" + ident,
+                "boxes": normalized,
+                "cached_path": str(path),
+                "raw_sha256": expansion.digest(path),
+                "phash": image_hash,
+                "rights": {
+                    "accepted": True,
+                    "license_url": meta["License"],
+                    "source_page": meta["OriginalLandingURL"],
+                    "creator_page": meta["AuthorProfileURL"],
+                    "author": meta["Author"],
+                    "verification": "image-specific publisher Open Images metadata",
+                },
+                "source_annotation_class": "Mobile phone" if role == "phone" else "Box",
+                "annotation_review_required": "isolation and completeness; Box also needs visually confirmed cardboard material",
+                "url": url,
+                "title": meta["Title"],
+                "source_metadata_sha256": metadata_hashes,
+            }
+        )
         if len(selected) % 20 == 0:
             expansion.write_json(cache / "acquisition.json", {"records": selected})
             print(f"Open Images candidates {len(selected)}", flush=True)
@@ -285,10 +385,14 @@ def build_cardboard():
     review = read_json(CACHE / "cardboard/review.json")
     if (CACHE / "openimages/review.json").exists():
         extra_review = read_json(CACHE / "openimages/review.json")
-        approved_boxes = {row["source_id"] for row in extra_review
-                          if row["decision"] == "APPROVED" and row.get("role") == "box"}
-        extra = [row for row in read_json(CACHE / "openimages/acquisition.json")["records"]
-                 if row["source_id"] in approved_boxes]
+        approved_boxes = {
+            row["source_id"] for row in extra_review if row["decision"] == "APPROVED" and row.get("role") == "box"
+        }
+        extra = [
+            row
+            for row in read_json(CACHE / "openimages/acquisition.json")["records"]
+            if row["source_id"] in approved_boxes
+        ]
         state = {**state, "records": state["records"] + extra}
         review.extend(row for row in extra_review if row["source_id"] in approved_boxes)
     benchmark_hashes = [int(row["phash"]) for row in benchmark["records"]]
@@ -298,7 +402,10 @@ def build_cardboard():
             image_hash = perceptual_hash(opened.convert("RGB"))
         if any((image_hash ^ value).bit_count() <= 5 for value in benchmark_hashes):
             excluded.append(row["source_id"])
-    reviews = [dict(row, decision="DEFERRED", reason="near frozen benchmark") if row["source_id"] in excluded else row for row in review]
+    reviews = [
+        dict(row, decision="DEFERRED", reason="near frozen benchmark") if row["source_id"] in excluded else row
+        for row in review
+    ]
     expansion.build_dataset(base, state, reviews, WASTE, 600, base_dir=BASE, version="broad-waste-v4")
     result = read_json(WASTE / "manifest.json")
     result["benchmark_sha256"] = expansion.digest(BENCHMARK)
@@ -306,11 +413,20 @@ def build_cardboard():
     expansion.write_json(WASTE / "manifest.json", result)
     notices = WASTE / "DATASET_NOTICES.md"
     with notices.open("a", encoding="utf-8") as handle:
-        handle.write("\n\nOpen Images, Google/CVDF, https://storage.googleapis.com/openimages/web/download.html .\n"
-                     "Included Open Images photos carry publisher-declared CC BY 2.0 metadata.\n"
-                     "Per-photo authors, original URLs, rights and reviewed Box-to-cardboard mapping are in manifest.json.\n")
-    expansion.write_json(ROOT / "evaluations/focus-v4-cardboard-build.json", {key: value for key, value in result.items() if key not in {"records","rejected"}})
-    print(json.dumps({"new_images":result["new_images"], "active_instances":result["active_instances_per_split"]},indent=2))
+        handle.write(
+            "\n\nOpen Images, Google/CVDF, https://storage.googleapis.com/openimages/web/download.html .\n"
+            "Included Open Images photos carry publisher-declared CC BY 2.0 metadata.\n"
+            "Per-photo authors, original URLs, rights and reviewed Box-to-cardboard mapping are in manifest.json.\n"
+        )
+    expansion.write_json(
+        ROOT / "evaluations/focus-v4-cardboard-build.json",
+        {key: value for key, value in result.items() if key not in {"records", "rejected"}},
+    )
+    print(
+        json.dumps(
+            {"new_images": result["new_images"], "active_instances": result["active_instances_per_split"]}, indent=2
+        )
+    )
 
 
 def assign_general_splits(rows, waste_records):
@@ -328,11 +444,20 @@ def assign_general_splits(rows, waste_records):
             split = "train"
         else:
             split = "val" if row["source_id"] in val_ids else "test"
-        conflicts = [other for other in waste_records if other["split"] != split
-                     and (int(other["phash"]) ^ int(row["phash"])).bit_count() <= 5]
+        conflicts = [
+            other
+            for other in waste_records
+            if other["split"] != split and (int(other["phash"]) ^ int(row["phash"])).bit_count() <= 5
+        ]
         if conflicts:
-            rejected.append({"source_id": row["source_id"], "reason": "cross_model_split_conflict",
-                             "waste_image": conflicts[0]["image"], "waste_split": conflicts[0]["split"]})
+            rejected.append(
+                {
+                    "source_id": row["source_id"],
+                    "reason": "cross_model_split_conflict",
+                    "waste_image": conflicts[0]["image"],
+                    "waste_split": conflicts[0]["split"],
+                }
+            )
         else:
             assigned.append({**row, "split": split})
     return assigned, rejected
@@ -359,14 +484,21 @@ def build_general():
             if review["role"] == "phone":
                 acquisition["records"].append(row)
             elif review.get("general_negative"):
-                acquisition["records"].append({**row, "boxes": [], "kind": "VERIFIED_NEGATIVE",
-                    "source_boxes": row["boxes"], "selection_stratum": "cardboard_counterexample"})
+                acquisition["records"].append(
+                    {
+                        **row,
+                        "boxes": [],
+                        "kind": "VERIFIED_NEGATIVE",
+                        "source_boxes": row["boxes"],
+                        "selection_stratum": "cardboard_counterexample",
+                    }
+                )
         reviews.update({row["source_id"]: row for row in extra_reviews})
-    rows = [row for row in acquisition["records"]
-            if reviews.get(row["source_id"], {}).get("decision") == "APPROVED"]
+    rows = [row for row in acquisition["records"] if reviews.get(row["source_id"], {}).get("decision") == "APPROVED"]
     if not rows or GENERAL.exists() or GENERAL.with_suffix(".building").exists():
         raise ValueError("Need approved photos and a fresh output path")
     from prepare_drinking_waste import parse_boxes
+
     for row in rows:
         review = reviews[row["source_id"]]
         if review["raw_sha256"] != row["raw_sha256"] or expansion.digest(Path(row["cached_path"])) != row["raw_sha256"]:
@@ -397,53 +529,88 @@ def build_general():
         shutil.copy2(row["cached_path"], destination)
         label = staging / "labels" / split / (destination.stem + ".txt")
         label.parent.mkdir(parents=True, exist_ok=True)
-        label.write_text("".join(f"{int(box[0])} " + " ".join(f"{value:.8f}" for value in box[1:]) + "\n"
-                                 for box in row["boxes"]), encoding="utf-8")
-        records.append({**row, "split": split, "image": relative,
-                        "prepared_sha256": expansion.digest(destination),
-                        "visual_review": reviews[row["source_id"]]})
+        label.write_text(
+            "".join(f"{int(box[0])} " + " ".join(f"{value:.8f}" for value in box[1:]) + "\n" for box in row["boxes"]),
+            encoding="utf-8",
+        )
+        records.append(
+            {
+                **row,
+                "split": split,
+                "image": relative,
+                "prepared_sha256": expansion.digest(destination),
+                "visual_review": reviews[row["source_id"]],
+            }
+        )
     for split in expansion.SPLITS:
         (staging / (split + ".txt")).write_text(
             "".join((GENERAL / row["image"]).as_posix() + "\n" for row in records if row["split"] == split),
-            encoding="utf-8")
-    configuration = {"path": GENERAL.as_posix(), "train": "train.txt", "val": "val.txt", "test": "test.txt",
-                     "names": dict(enumerate(COCO_LABELS))}
+            encoding="utf-8",
+        )
+    configuration = {
+        "path": GENERAL.as_posix(),
+        "train": "train.txt",
+        "val": "val.txt",
+        "test": "test.txt",
+        "names": dict(enumerate(COCO_LABELS)),
+    }
     (staging / "data.yaml").write_text(yaml.safe_dump(configuration, sort_keys=False), encoding="utf-8")
     instance_counts = {}
     for split in expansion.SPLITS:
         counts = Counter(int(box[0]) for row in records if row["split"] == split for box in row["boxes"])
         instance_counts[split] = {name: counts[index] for index, name in enumerate(COCO_LABELS)}
-    manifest = {"version": "general-confusion-v1", "labels": list(COCO_LABELS), "records": records,
-        "focus_classes": list(TARGETS), "status": "EXPERIMENTAL", "benchmark_sha256": expansion.digest(BENCHMARK),
+    manifest = {
+        "version": "general-confusion-v1",
+        "labels": list(COCO_LABELS),
+        "records": records,
+        "focus_classes": list(TARGETS),
+        "status": "EXPERIMENTAL",
+        "benchmark_sha256": expansion.digest(BENCHMARK),
         "source_plan_sha256": expansion.digest(CACHE / "general/plan.json"),
         "images_per_split": dict(Counter(row["split"] for row in records)),
         "instances_per_split": instance_counts,
         "negative_images": sum(row.get("kind") == "VERIFIED_NEGATIVE" for row in records),
         "waste_manifest_sha256": expansion.digest(WASTE / "manifest.json"),
         "cross_model_split_rejections": split_rejections,
-        "limitations": ["COCO train photos were available in general-model pretraining; this is task-focused resampling for fine-tuning.",
+        "limitations": [
+            "COCO train photos were available in general-model pretraining; this is task-focused resampling for fine-tuning.",
             "COCO val photos supply fresh fine-tuning val/test, with frozen camera benchmark and broad v3 photographs excluded.",
             "Approved Open Images phone and cardboard negative supplements use project train split.",
             "Open Images target boxes have not been independently audited for completeness of every COCO class.",
             "Modern three-camera rear phone views remain underrepresented.",
             "COCO image IDs and pHash approximate independent physical scenes.",
-            "Visual screening is by Codex contact sheets; independent human review remains pending."]}
+            "Visual screening is by Codex contact sheets; independent human review remains pending.",
+        ],
+    }
     expansion.write_json(staging / "manifest.json", manifest)
     expansion.write_json(staging / "review-snapshot.json", list(reviews.values()))
     expansion.write_json(staging / "source-plan-snapshot.json", plan)
-    notices = ("# General-object confusion subset\n\n"
+    notices = (
+        "# General-object confusion subset\n\n"
         "COCO Consortium, Lin et al., Microsoft COCO: Common Objects in Context. https://cocodataset.org/\n"
         "COCO annotations CC BY 4.0. Image-specific licenses and source URLs are retained in manifest.json.\n\n"
         "Open Images, Google/CVDF, https://storage.googleapis.com/openimages/web/download.html .\n"
         "Open Images annotations CC BY 4.0 and included photos publisher-declared CC BY 2.0.\n"
-        "Per-photo author, license and original landing URL are retained in manifest.json.\n")
+        "Per-photo author, license and original landing URL are retained in manifest.json.\n"
+    )
     (staging / "DATASET_NOTICES.md").write_text(notices, encoding="utf-8")
     staging.replace(GENERAL)
-    expansion.write_json(ROOT / "evaluations/focus-v4-general-build.json",
-                         {key: value for key, value in manifest.items() if key != "records"})
-    print(json.dumps({"images_per_split": manifest["images_per_split"], "negative_images": manifest["negative_images"],
-        "focus_instances": {split: {label: instance_counts[split][label] for label in TARGETS}
-                            for split in expansion.SPLITS}}, indent=2))
+    expansion.write_json(
+        ROOT / "evaluations/focus-v4-general-build.json",
+        {key: value for key, value in manifest.items() if key != "records"},
+    )
+    print(
+        json.dumps(
+            {
+                "images_per_split": manifest["images_per_split"],
+                "negative_images": manifest["negative_images"],
+                "focus_instances": {
+                    split: {label: instance_counts[split][label] for label in TARGETS} for split in expansion.SPLITS
+                },
+            },
+            indent=2,
+        )
+    )
 
 
 def audit_focus_datasets():
@@ -486,26 +653,53 @@ def audit_focus_datasets():
                 continue
             if row["split"] != other["split"]:
                 raise ValueError(f"Cross-model split leakage: {row['image']} / {other['image']}")
-            shared.append({"general_image": row["image"], "waste_image": other["image"],
-                           "split": row["split"], "identical_sha256": same_image})
+            shared.append(
+                {
+                    "general_image": row["image"],
+                    "waste_image": other["image"],
+                    "split": row["split"],
+                    "identical_sha256": same_image,
+                }
+            )
 
-    result = {"status": "PASS", "benchmark_sha256": benchmark_digest,
-              "inherited_images_preserved": len(inherited),
-              "new_waste_images": len(current) - len(inherited),
-              "general_images": len(general["records"]),
-              "existing_waste_test_benchmark_matches": reserved_matches,
-              "cross_model_shared_or_near_images": shared,
-              "new_data_benchmark_matches": 0, "cross_model_split_conflicts": 0,
-              "scope": "Manifest identity and proxy-group/pHash leakage checks. Pair with verify_broad_data.py for file and label checks."}
+    result = {
+        "status": "PASS",
+        "benchmark_sha256": benchmark_digest,
+        "inherited_images_preserved": len(inherited),
+        "new_waste_images": len(current) - len(inherited),
+        "general_images": len(general["records"]),
+        "existing_waste_test_benchmark_matches": reserved_matches,
+        "cross_model_shared_or_near_images": shared,
+        "new_data_benchmark_matches": 0,
+        "cross_model_split_conflicts": 0,
+        "scope": "Manifest identity and proxy-group/pHash leakage checks. Pair with verify_broad_data.py for file and label checks.",
+    }
     expansion.write_json(ROOT / "evaluations/focus-v4-leakage-audit.json", result)
-    print(json.dumps({key: value for key, value in result.items()
-                      if key not in {"existing_waste_test_benchmark_matches", "cross_model_shared_or_near_images"}}, indent=2))
+    print(
+        json.dumps(
+            {
+                key: value
+                for key, value in result.items()
+                if key not in {"existing_waste_test_benchmark_matches", "cross_model_shared_or_near_images"}
+            },
+            indent=2,
+        )
+    )
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("stage", choices=["acquire-cardboard", "acquire-general", "acquire-openimages",
-                                          "build-cardboard", "build-general", "audit"])
+    parser.add_argument(
+        "stage",
+        choices=[
+            "acquire-cardboard",
+            "acquire-general",
+            "acquire-openimages",
+            "build-cardboard",
+            "build-general",
+            "audit",
+        ],
+    )
     parser.add_argument("--max-requests", type=int, default=180)
     args = parser.parse_args()
     CACHE.mkdir(parents=True, exist_ok=True)

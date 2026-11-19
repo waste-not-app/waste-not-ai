@@ -4,4 +4,4 @@
 
 `fpi-det-sample-v1.json` records phone-scope screening of 60 publisher images by Codex. Source: [FPI-Det](https://github.com/KvCgRv/FPI-Det/tree/83c452d1a1e5b1bac88afe1a6834cb9c25e036eb), commit `83c452d1a1e5b1bac88afe1a6834cb9c25e036eb`, whose publisher states MIT licensing. Changes: hashes, review status and view tags; phone/face label scope is retained. This is audit metadata and does not certify complete COCO annotations or independent sessions.
 
-Raw source photographs, archives, local datasets and trained weights are excluded from Git. See [the audit and limitations](../docs/EXTERNAL_DATASET_AUDIT_V5.md).
+Raw source photographs, archives, local datasets and trained weights are excluded from Git. See [the audit and limitations](../docs/archive/EXTERNAL_DATASET_AUDIT_V5.md).

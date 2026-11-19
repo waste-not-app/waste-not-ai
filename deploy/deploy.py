@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Verify a bounded worker release, activate it and restore the prior source on failure."""
+
 import fcntl
 import gzip
 import hashlib
@@ -7,7 +8,6 @@ import http.cookiejar
 import io
 import json
 import os
-from pathlib import Path, PurePosixPath
 import re
 import shutil
 import subprocess
@@ -16,6 +16,7 @@ import tarfile
 import tempfile
 import time
 import urllib.request
+from pathlib import Path, PurePosixPath
 
 ROOT = Path('/opt/wastenot-ai')
 CONFIG = Path('/etc/wastenot')
@@ -37,12 +38,22 @@ def parse_release(raw):
     with tarfile.open(fileobj=io.BytesIO(expanded), mode='r:') as archive:
         for entry in archive:
             path = PurePosixPath(entry.name)
-            if (len(files) >= 128 or not entry.isfile() or entry.name in files
-                    or path.is_absolute() or '..' in path.parts or '\\' in entry.name
-                    or str(path) != entry.name or not 0 < entry.size <= 2 * 1024 * 1024
-                    or entry.pax_headers
-                    or not (entry.name.startswith('src/wastenot_ai/') or entry.name in {
-                        'serve.py', 'model.json', 'requirements-cpu.lock', 'contracts/backend-pin.json', 'release.json'})):
+            if (
+                len(files) >= 128
+                or not entry.isfile()
+                or entry.name in files
+                or path.is_absolute()
+                or '..' in path.parts
+                or '\\' in entry.name
+                or str(path) != entry.name
+                or not 0 < entry.size <= 2 * 1024 * 1024
+                or entry.pax_headers
+                or not (
+                    entry.name.startswith('src/wastenot_ai/')
+                    or entry.name
+                    in {'serve.py', 'model.json', 'requirements-cpu.lock', 'contracts/backend-pin.json', 'release.json'}
+                )
+            ):
                 raise ValueError('Unexpected release member')
             total += entry.size
             if total > 8 * 1024 * 1024:
@@ -52,9 +63,15 @@ def parse_release(raw):
     commit = manifest['commit']
     if not re.fullmatch('[a-f0-9]{40}', commit) or set(manifest['sha256']) != set(files) - {'release.json'}:
         raise ValueError('Invalid release manifest')
-    required = {'serve.py', 'model.json', 'requirements-cpu.lock', 'contracts/backend-pin.json',
-                'src/wastenot_ai/__init__.py', 'src/wastenot_ai/worker.py',
-                'src/wastenot_ai/recommendation_worker.py'}
+    required = {
+        'serve.py',
+        'model.json',
+        'requirements-cpu.lock',
+        'contracts/backend-pin.json',
+        'src/wastenot_ai/__init__.py',
+        'src/wastenot_ai/worker.py',
+        'src/wastenot_ai/recommendation_worker.py',
+    }
     if not required <= set(files):
         raise ValueError('Incomplete release')
     for name, digest in manifest['sha256'].items():
@@ -72,8 +89,7 @@ def environment(name):
     info = path.stat()
     if info.st_uid != 0 or info.st_mode & 0o077:
         raise ValueError('Worker environment must be root-owned and mode 0600')
-    return dict(line.split('=', 1) for line in path.read_text().splitlines()
-                if line and not line.startswith('#'))
+    return dict(line.split('=', 1) for line in path.read_text().splitlines() if line and not line.startswith('#'))
 
 
 def verify_runtime(files):
@@ -81,12 +97,15 @@ def verify_runtime(files):
     if (CONFIG / 'ai-requirements.sha256').read_text().strip() != hashlib.sha256(lock).hexdigest():
         raise ValueError('Prepare the new locked CPU environment before deploying dependency changes')
     versions = dict(re.findall(r'^([a-zA-Z0-9_-]+)==([^\s]+)', lock.decode(), re.MULTILINE))
-    # Inspect actual installed versions too: a matching marker cannot hide a changed environment.
-    run(str(ROOT / 'venv/bin/python'), '-I', '-c',
+    run(
+        str(ROOT / 'venv/bin/python'),
+        '-I',
+        '-c',
         'import importlib.metadata as m,json,sys; expected=json.load(sys.stdin); '
         'assert sys.version_info[:2]==(3,12); '
         'assert all(m.version(name)==version for name,version in expected.items())',
-        input=json.dumps(versions).encode())
+        input=json.dumps(versions).encode(),
+    )
     model = json.loads(files['model.json'])
     detection = environment('ai-detection.env')
     if detection.get('AI_MODEL_DIRECTORY'):
@@ -99,8 +118,11 @@ def verify_runtime(files):
             path = Path(detection['AI_MODEL_DIRECTORY']) / artifact['filename']
             if hashlib.sha256(path.read_bytes()).hexdigest() != artifact['sha256']:
                 raise ValueError('Installed model differs from release manifest')
-    elif (model.get('general_model') or detection['AI_MODEL_SHA256'] != model['sha256']
-          or hashlib.sha256(Path(detection['AI_MODEL_PATH']).read_bytes()).hexdigest() != model['sha256']):
+    elif (
+        model.get('general_model')
+        or detection['AI_MODEL_SHA256'] != model['sha256']
+        or hashlib.sha256(Path(detection['AI_MODEL_PATH']).read_bytes()).hexdigest() != model['sha256']
+    ):
         raise ValueError('Installed model differs from release manifest')
 
 
@@ -114,16 +136,22 @@ def link(name, target):
 def dropin(service):
     kind = {'wastenot-yolo': 'detection', 'wastenot-decisions': 'recommendation', 'wastenot-demo': 'demo'}[service]
     model_environment = f'Environment=AI_MODEL_DIRECTORY={ROOT}/models\n' if kind == 'demo' else ''
-    return (f'[Service]\nWorkingDirectory={ROOT}/current\n'
-            f'Environment=PYTHONPATH={ROOT}/current/src\n{model_environment}ExecStart=\n'
-            f'ExecStart={ROOT}/venv/bin/python {ROOT}/current/serve.py {kind}\n').encode()
+    return (
+        f'[Service]\nWorkingDirectory={ROOT}/current\n'
+        f'Environment=PYTHONPATH={ROOT}/current/src\n{model_environment}ExecStart=\n'
+        f'ExecStart={ROOT}/venv/bin/python {ROOT}/current/serve.py {kind}\n'
+    ).encode()
 
 
 def demo_active():
     if not (UNITS / 'wastenot-demo.service').is_file():
         return False
-    return subprocess.run(['systemctl', 'is-active', '--quiet', 'wastenot-demo'],
-                          capture_output=True, timeout=10).returncode == 0
+    return (
+        subprocess.run(
+            ['systemctl', 'is-active', '--quiet', 'wastenot-demo'], capture_output=True, timeout=10
+        ).returncode
+        == 0
+    )
 
 
 def restart(*, include_demo=False):
@@ -138,8 +166,9 @@ def demo_ready(opener, *, verify_model=True):
     nonce = re.search(rb'name="wastenot-demo" content="([^"]+)"', page)
     if nonce is None:
         raise ValueError('Demo session could not be initialized')
-    request = urllib.request.Request('http://127.0.0.1:8092/demo/api/config',
-                                     headers={'X-WasteNot-Demo': nonce.group(1).decode()})
+    request = urllib.request.Request(
+        'http://127.0.0.1:8092/demo/api/config', headers={'X-WasteNot-Demo': nonce.group(1).decode()}
+    )
     with opener.open(request, timeout=2) as response:
         config = json.load(response)
     if not verify_model:
@@ -149,14 +178,21 @@ def demo_ready(opener, *, verify_model=True):
 
 
 def ready(commit, *, include_demo=False):
-    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar())) if include_demo else None
+    opener = (
+        urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+        if include_demo
+        else None
+    )
     for _ in range(60):
         try:
-            for port, name, key in ((8091, 'ai-detection.env', 'AI_SERVICE_TOKEN'),
-                                    (8093, 'ai-recommendation.env', 'AI_RECOMMENDATION_TOKEN')):
+            for port, name, key in (
+                (8091, 'ai-detection.env', 'AI_SERVICE_TOKEN'),
+                (8093, 'ai-recommendation.env', 'AI_RECOMMENDATION_TOKEN'),
+            ):
                 token = environment(name)[key]
-                request = urllib.request.Request(f'http://127.0.0.1:{port}/health/ready',
-                                                 headers={'Authorization': 'Bearer ' + token})
+                request = urllib.request.Request(
+                    f'http://127.0.0.1:{port}/health/ready', headers={'Authorization': 'Bearer ' + token}
+                )
                 with urllib.request.urlopen(request, timeout=2) as response:
                     value = json.load(response)
                     if not (value.get('ready') is True or value.get('data', {}).get('ready') is True):
@@ -239,4 +275,4 @@ if __name__ == '__main__':
             print(json.dumps(deploy(sys.stdin.buffer.read(MAX_ARCHIVE + 1))))
     except Exception:
         print('AI deployment failed; inspect the release and worker state on the host.', file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from None

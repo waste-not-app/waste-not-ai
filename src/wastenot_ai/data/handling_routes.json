@@ -3,7 +3,7 @@
     {
       "id": "reuse",
       "method": "REUSE",
-      "text": "Gunakan kembali benda yang bersih, utuh dan masih layak sesuai fungsi yang memang dirancang untuk digunakan berulang.",
+      "text": "Reuse items that are clean, intact, still usable, and designed to be used again.",
       "requires": {
         "cleanliness": "CLEAN",
         "integrity": "INTACT",
@@ -14,15 +14,15 @@
         "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
       ],
       "steps": [
-        "Periksa kondisi dan fungsi benda sebelum digunakan kembali.",
-        "Gunakan sesuai petunjuk bahan/pabrikan dan fungsi yang aman."
+        "Check the item's condition and function before using it again.",
+        "Use it the way the material or manufacturer instructions say, and only for safe purposes."
       ],
       "risk_compatible": false
     },
     {
       "id": "recycle",
       "method": "RECYCLE",
-      "text": "Serahkan benda untuk Recycle melalui pengelola yang mengonfirmasi menerima jenis dan kondisi benda ini.",
+      "text": "Recycle the item through a collector that confirms they accept this type and condition.",
       "requires": {
         "recycling_access": "YES"
       },
@@ -31,16 +31,16 @@
         "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
       ],
       "steps": [
-        "Konfirmasikan material dan penerimaan jenis serta kondisi benda kepada pengelola.",
-        "Pisahkan komponen yang diminta dan ikuti petunjuk persiapan pengelola.",
-        "Serahkan ke jalur yang telah dikonfirmasi, termasuk penerima khusus bila diperlukan."
+        "Confirm the material with the collector, and that they accept this type of item in this condition.",
+        "Separate any parts they ask for and follow the collector's preparation instructions.",
+        "Hand it over through the route you confirmed, including a specialist collector where needed."
       ],
       "risk_compatible": false
     },
     {
       "id": "trash-unusable",
       "method": "TRASH",
-      "text": "Pilih Trash sebagai residu nonberbahaya setelah benda tidak layak dipakai dan tidak ada jalur daur ulang yang menerima.",
+      "text": "Choose Trash for non-hazardous residual waste once the item is no longer usable and no recycling route accepts it.",
       "requires": {
         "recycling_access": "NO",
         "reusable": "NO"
@@ -49,16 +49,16 @@
         "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
       ],
       "steps": [
-        "Pastikan benda tidak mengandung baterai, bahan kimia atau kontaminasi biologis.",
-        "Pisahkan komponen yang masih dapat diterima pengelola bila ada.",
-        "Ikuti pengumpulan residu resmi setempat."
+        "Make sure the item has no batteries, chemicals, or biological contamination.",
+        "Separate any parts a collector can still accept.",
+        "Use your official local residual waste collection."
       ],
       "risk_compatible": false
     },
     {
       "id": "trash-no-reuse",
       "method": "TRASH",
-      "text": "Pilih Trash sebagai residu nonberbahaya ketika penggunaan ulang tidak dipilih dan tidak ada penerima daur ulang untuk benda ini.",
+      "text": "Choose Trash for non-hazardous residual waste when you aren't reusing the item and no recycler accepts it.",
       "requires": {
         "recycling_access": "NO",
         "reuse_intention": false
@@ -67,9 +67,9 @@
         "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
       ],
       "steps": [
-        "Periksa peluang penggunaan ulang atau penyerahan kepada pihak yang memerlukan.",
-        "Pastikan benda tidak mengandung baterai, bahan kimia atau kontaminasi biologis.",
-        "Ikuti pengumpulan residu resmi setempat."
+        "Look for ways to reuse it or give it to someone who needs it.",
+        "Make sure the item has no batteries, chemicals, or biological contamination.",
+        "Use your official local residual waste collection."
       ],
       "risk_compatible": false
     }
@@ -78,7 +78,7 @@
     {
       "id": "compost",
       "method": "RECYCLE",
-      "text": "Recycle organik berarti penyerahan ke program pengomposan yang menerima jenis sisa organik ini.",
+      "text": "Recycling organic waste means taking it to a composting program that accepts this kind of scrap.",
       "requires": {
         "recycling_access": "YES"
       },
@@ -87,16 +87,16 @@
         "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
       ],
       "steps": [
-        "Pisahkan sisa organik dari plastik, stiker dan kemasan.",
-        "Konfirmasikan program menerima jenis sisa makanan/tanaman ini; bahan seperti daging, minyak dan makanan olahan memerlukan program yang sesuai.",
-        "Ikuti petunjuk pengumpulan program pengomposan."
+        "Separate organic scraps from plastic, stickers, and packaging.",
+        "Confirm the program accepts this kind of food or plant waste. Meat, oil, and processed food need a program that takes them.",
+        "Follow the composting program's collection instructions."
       ],
       "risk_compatible": false
     },
     {
       "id": "organic-residue",
       "method": "TRASH",
-      "text": "Pilih Trash untuk sisa organik nonberbahaya bila tidak tersedia jalur pengomposan atau pengumpulan organik yang menerima.",
+      "text": "Choose Trash for non-hazardous organic scraps when no composting or organic collection is available to take them.",
       "requires": {
         "recycling_access": "NO"
       },
@@ -105,8 +105,8 @@
         "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy"
       ],
       "steps": [
-        "Pisahkan kemasan dan benda lain dari sisa organik.",
-        "Gunakan pengumpulan residu resmi sesuai aturan setempat."
+        "Separate packaging and other items from the organic scraps.",
+        "Use your official residual waste collection under local rules."
       ],
       "risk_compatible": false
     }
@@ -115,7 +115,7 @@
     {
       "id": "electronics-reuse",
       "method": "REUSE",
-      "text": "Gunakan kembali atau serahkan perangkat elektronik yang masih layak sesuai fungsi dan petunjuk produsennya.",
+      "text": "Reuse working electronics, or pass them on, following their purpose and the manufacturer's instructions.",
       "requires": {
         "cleanliness": "CLEAN",
         "integrity": "INTACT",
@@ -128,15 +128,15 @@
         "https://www.epa.gov/recycle/electronics-donation-and-recycling"
       ],
       "steps": [
-        "Periksa kerusakan, panas berlebih atau baterai menggembung sebelum digunakan kembali.",
-        "Hapus data pribadi sebelum menyerahkan perangkat kepada orang lain."
+        "Check for damage, overheating, or a swollen battery before using it again.",
+        "Wipe your personal data before giving the device to someone else."
       ],
       "risk_compatible": true
     },
     {
       "id": "electronics-recycle",
       "method": "RECYCLE",
-      "text": "Serahkan elektronik ke program pengumpulan khusus yang mengonfirmasi menerima perangkat dan kondisinya.",
+      "text": "Take the electronics to a specialist collection program that confirms they accept the device in its condition.",
       "requires": {
         "recycling_access": "YES"
       },
@@ -144,9 +144,9 @@
         "https://www.epa.gov/recycle/electronics-donation-and-recycling"
       ],
       "steps": [
-        "Hubungi penerima elektronik untuk memastikan jenis dan kondisi perangkat diterima.",
-        "Lindungi data pribadi sebelum penyerahan bila aman dilakukan.",
-        "Ikuti arahan pengemasan dan jangan masukkan ke sampah atau daur ulang campur."
+        "Contact the electronics collector to confirm they accept this device type and condition.",
+        "Protect your personal data before handing it over, if you can do so safely.",
+        "Follow their packaging instructions, and don't put it in the trash or mixed recycling."
       ],
       "risk_compatible": true
     }

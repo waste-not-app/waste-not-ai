@@ -1,4 +1,5 @@
 """Replay frozen phone/remote diagnostics from verified existing predictions, without inference."""
+
 import argparse
 import hashlib
 import json
@@ -39,16 +40,26 @@ def diagnose(manifest, report, manifest_sha):
             for a, b in (("cell phone", "remote"), ("remote", "cell phone")):
                 wrong = sum(p["count"] for p in summary["confusion"] if p["truth"] == a and p["predicted"] == b)
                 support = summary["per_class"][a]["support"]
-                directions[f"{a} -> {b}"] = {"count": wrong, "support": support,
-                                             "rate": wrong/support if support else None}
+                directions[f"{a} -> {b}"] = {
+                    "count": wrong,
+                    "support": support,
+                    "rate": wrong / support if support else None,
+                }
             results[profile][model] = {"per_class": summary["per_class"], "directions": directions}
-    return {"status": "LEGACY_DIAGNOSIS_NOT_NEW_HOLDOUT", "images": len(selected),
-            "image_ids": sorted(selected), "manifest_sha256": manifest_sha,
-            "models": report["models"], "results": results,
-            "limitations": ["Subset includes images with annotation coverage for phone or remote, including negatives.",
-                            "Wrong-label geometry and class-aware precision/recall are separate diagnostics.",
-                            "No new inference, tuning or holdout selection was performed.",
-                            "Rear-view capture tags need independent review; absence of tags is not evidence of front view."]}
+    return {
+        "status": "LEGACY_DIAGNOSIS_NOT_NEW_HOLDOUT",
+        "images": len(selected),
+        "image_ids": sorted(selected),
+        "manifest_sha256": manifest_sha,
+        "models": report["models"],
+        "results": results,
+        "limitations": [
+            "Subset includes images with annotation coverage for phone or remote, including negatives.",
+            "Wrong-label geometry and class-aware precision/recall are separate diagnostics.",
+            "No new inference, tuning or holdout selection was performed.",
+            "Rear-view capture tags need independent review; absence of tags is not evidence of front view.",
+        ],
+    }
 
 
 def main():
@@ -66,7 +77,7 @@ def main():
     result["baseline_general_model_sha256"] = expected_sha
     result["prediction_cache_sha256"] = hashlib.sha256(args.predictions.read_bytes()).hexdigest()
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, indent=2)+"\n", encoding="utf-8")
+    args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"images": result["images"], "status": result["status"]}))
 
 

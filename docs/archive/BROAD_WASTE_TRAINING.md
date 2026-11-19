@@ -25,8 +25,8 @@ Jumlah instance tidak sama dengan jumlah gambar. Delapan kelas tambahan mempunya
 
 Sumber dan keputusan pemakaian:
 
-- **Drinking Waste v2:** data lama tetap beratribusi Serezhkin/TrashNet. Tiga label material botol digabung menjadi `bottle`, dan aluminium can menjadi `can`. Train diambil deterministik maksimal 400 gambar per kelas material asal agar botol tidak mendominasi; validation/test lama tetap dicadangkan. [Riset dan atribusi awal](DATASET_RESEARCH.md), [notices](DATASET_NOTICES.md).
-- **COCO 2017:** anotasi dari [bucket resmi](https://s3.amazonaws.com/images.cocodataset.org/annotations/annotations_trainval2017.zip), subset foto dengan bbox cup dan seluruh bottle yang teranotasi pada foto tersebut. Pemilihan dibatasi license ID 4/5/7/8 pada metadata gambar penerbit. URL asli dan lisensi masing-masing dicatat; ini bukti deklarasi penerbit, bukan pemeriksaan ulang semua halaman Flickr. Anotasi COCO tidak memiliki semua kelas sampah tambahan. Dari 900 foto awal, **20 dikeluarkan** setelah screening visual karena ada/suspek target tambahan yang belum dianotasi; daftar audit memuat 23 ID, tiga di antaranya tidak terdapat dalam subset. [COCO](https://cocodataset.org/), [audit lokal](../evaluations/broad-waste-v1-data-audit.json).
+- **Drinking Waste v2:** data lama tetap beratribusi Serezhkin/TrashNet. Tiga label material botol digabung menjadi `bottle`, dan aluminium can menjadi `can`. Train diambil deterministik maksimal 400 gambar per kelas material asal agar botol tidak mendominasi; validation/test lama tetap dicadangkan. [Riset dan atribusi awal](DATASET_RESEARCH.md), [notices](../DATASET_NOTICES.md).
+- **COCO 2017:** anotasi dari [bucket resmi](https://s3.amazonaws.com/images.cocodataset.org/annotations/annotations_trainval2017.zip), subset foto dengan bbox cup dan seluruh bottle yang teranotasi pada foto tersebut. Pemilihan dibatasi license ID 4/5/7/8 pada metadata gambar penerbit. URL asli dan lisensi masing-masing dicatat; ini bukti deklarasi penerbit, bukan pemeriksaan ulang semua halaman Flickr. Anotasi COCO tidak memiliki semua kelas sampah tambahan. Dari 900 foto awal, **20 dikeluarkan** setelah screening visual karena ada/suspek target tambahan yang belum dianotasi; daftar audit memuat 23 ID, tiga di antaranya tidak terdapat dalam subset. [COCO](https://cocodataset.org/), [audit lokal](../../evaluations/broad-waste-v1-data-audit.json).
 - **TACO:** [anotasi utama penulis](https://github.com/pedropro/TACO), bukan unofficial. Sebanyak **109** foto lolos pemeriksaan lisensi langsung pada halaman foto Flickr saat ini. Pembatasan HTTP 429 menyebabkan banyak foto lain belum terverifikasi; itu tidak berarti foto tersebut pasti tidak berlisensi. Foto dengan hak belum jelas, atau URL OpenLitterMap dengan ketentuan foto belum dipastikan, tidak dimasukkan. MIT toolkit tidak dianggap lisensi semua foto.
 - **Open Images tidak dipakai dalam run ini:** metadata train bbox dan metadata gambar masing-masing berukuran sekitar 2,26 GB dan 2,68 GB. COCO menyediakan anotasi cup yang dapat dipilih lebih langsung untuk eksperimen lokal ini. Jangan melaporkan run ini sebagai training Open Images.
 
@@ -65,7 +65,7 @@ Katalog kini 78 pilihan dengan panduan DRAFT. Tambahan kantong/film, kertas, kal
 
 ## Integrasi backend dan frontend
 
-Kontrak HTTP tetap [HTTP AI v1](AI_HTTP_CONTRACT.md). Jalankan worker YOLO dengan checkpoint kandidat dan padding yang sama:
+Kontrak HTTP tetap [HTTP AI v1](../AI_HTTP_CONTRACT.md). Jalankan worker YOLO dengan checkpoint kandidat dan padding yang sama:
 
 ```powershell
 .\.venv-ai\Scripts\python.exe -m wastenot_ai.cli serve-worker --port 8091 --model artifacts/training/broad-waste-v2-yolo11s/weights/best.pt --input-shape square
@@ -77,7 +77,7 @@ Tidak ada perubahan endpoint Go/Android produksi dalam eksperimen ini. Tidak ada
 
 ## Membaca hasil
 
-Putaran pertama YOLO11n selesai **30 epoch**, early stopping, best epoch 20. Bobot SHA-256 `cea6211513e461fcd7acb6717332e3c8426521466c46d471baf6878e7d96510f`. [Report putaran pertama](../evaluations/broad-waste-v1-20261020.json).
+Putaran pertama YOLO11n selesai **30 epoch**, early stopping, best epoch 20. Bobot SHA-256 `cea6211513e461fcd7acb6717332e3c8426521466c46d471baf6878e7d96510f`. [Report putaran pertama](../../evaluations/broad-waste-v1-20261020.json).
 
 Pada validation yang sama, confidence 0,50 dan square 640:
 
@@ -107,7 +107,7 @@ Putaran kedua selesai **18 epoch**, best epoch **8**, early stopping. SHA-256 bo
 
 V2 lebih baik dari v1 untuk precision dan recall cup, tetapi dibanding COCO recall naik dengan penurunan precision. Pada cutoff yang sama, belum ada true positive validation untuk kelas langka tambahan; drink_carton tetap tanpa GT validation. Gate kegunaan awal untuk bottle (P≥0,85/R≥0,60), can (P≥0,80/R≥0,65), cup (P≥0,80/R≥0,40) belum semuanya terpenuhi. **Tidak ada promosi menjadi model default, dan tidak ada klaim bahwa sepuluh kelas sudah andal.** Launcher broad memilih v2 untuk mencoba cakupan eksperimen dengan semua hasil UNCERTAIN.
 
-[Perbandingan dua run](../evaluations/broad-waste-comparison-20261020.json), [report lengkap v2](../evaluations/broad-waste-v2-yolo11s-20261020.json), [confusion matrix v2 pada cutoff 0,50](../evaluations/broad-waste-v2-yolo11s-val-conf050-confusion_matrix.png).
+[Perbandingan dua run](../../evaluations/broad-waste-comparison-20261020.json), [report lengkap v2](../../evaluations/broad-waste-v2-yolo11s-20261020.json), [confusion matrix v2 pada cutoff 0,50](../../evaluations/broad-waste-v2-yolo11s-val-conf050-confusion_matrix.png).
 
 Verifikasi: **186 tes Python**, **44/44 skenario rekomendasi offline**, 34 artifact kontrak cocok dengan generator, wheel beserta resource lolos pemeriksaan, dan seluruh 3.699 hash foto/split/label sesuai manifest. Terdapat 15 bbox lama dengan pembulatan tepi sampai 0,001954, tetap dalam toleransi audit sumber 0,002; anotasi lama tidak diam-diam diubah saat training.
 

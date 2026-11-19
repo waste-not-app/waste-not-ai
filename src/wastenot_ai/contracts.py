@@ -1,7 +1,6 @@
-from enum import StrEnum
 import math
-from typing import Literal
-from typing import Annotated
+from enum import StrEnum
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -57,7 +56,7 @@ class RawDetection(Contract):
     def check_box(self):
         x1, y1, x2, y2 = self.bbox
         if not all(math.isfinite(x) and 0 <= x <= 1 for x in self.bbox):
-            raise ValueError("Bbox harus finite dan normalized 0..1.")
+            raise ValueError("Bounding boxes must be finite and normalized to 0..1.")
         if x1 >= x2 or y1 >= y2:
             raise ValueError("Bbox harus memiliki luas positif.")
         return self
@@ -121,19 +120,19 @@ class Recommendation(Contract):
     @model_validator(mode="after")
     def check_status(self):
         if (self.status == "NEEDS_CONTEXT") != bool(self.missing_context):
-            raise ValueError("NEEDS_CONTEXT wajib menyebut isian yang kurang; status lain tidak memilikinya.")
+            raise ValueError("NEEDS_CONTEXT must list the missing fields, and other statuses must not.")
         if self.status != "READY" and (self.recommended_method or self.recommendation_scope):
-            raise ValueError("Fallback harus method dan scope null.")
+            raise ValueError("A fallback must have a null method and scope.")
         if self.status == "READY" and not self.recommended_method:
-            raise ValueError("READY membutuhkan satu metode.")
+            raise ValueError("READY requires exactly one method.")
         if self.status == "READY":
             expected = "PREVENTION" if self.recommended_method == "REDUCE" else "HANDLING"
             if self.recommendation_scope != expected or not self.evidence_ids or not self.source_urls:
-                raise ValueError("READY membutuhkan scope, evidence dan sumber panduan yang sesuai.")
+                raise ValueError("READY requires a scope, evidence, and matching guide sources.")
             if self.recommendation_basis not in {"CONFIRMED", "CONDITIONAL"}:
                 raise ValueError("READY membutuhkan basis rekomendasi.")
             if (self.recommendation_basis == "CONDITIONAL") != bool(self.conditions_to_verify):
-                raise ValueError("Saran bersyarat wajib menyebut hal yang perlu diperiksa.")
+                raise ValueError("Conditional advice must list what still needs checking.")
         elif self.recommendation_basis is not None or self.conditions_to_verify:
-            raise ValueError("Fallback tidak memiliki basis/metode bersyarat.")
+            raise ValueError("A fallback cannot have a conditional basis or method.")
         return self

@@ -4,7 +4,7 @@
 
 ## Pengukuran dan keputusan
 
-681 gambar validation, 681 anotasi, matching kelas yang sama dengan IoU ≥0,50; satu ground truth hanya boleh dipasangkan sekali, prediksi berlebih menjadi FP. Inference: 640, conf 0,25, class-aware NMS IoU 0,70, max_det 50, GPU. Threshold dipilih **hanya pada val**, tanpa membaca test untuk penyetelan. Data/split/model dikunci dengan SHA-256 pada [laporan JSON](../evaluations/yolo-validation-20261020.json).
+681 gambar validation, 681 anotasi, matching kelas yang sama dengan IoU ≥0,50; satu ground truth hanya boleh dipasangkan sekali, prediksi berlebih menjadi FP. Inference: 640, conf 0,25, class-aware NMS IoU 0,70, max_det 50, GPU. Threshold dipilih **hanya pada val**, tanpa membaca test untuk penyetelan. Data/split/model dikunci dengan SHA-256 pada [laporan JSON](../../evaluations/yolo-validation-20261020.json).
 
 | Kelas | Batas tinjau | Batas OFFERED | Keputusan |
 |---|---:|---:|---|
@@ -31,7 +31,7 @@ Prediksi berbeda kelas dengan IoU ≥0,65 dan keduanya lolos batas tinjau tetap 
 
 Frontend menampilkan “Kelas bertumpuk · periksa” dan menyarankan memilih lewat daftar. Ini heuristik peninjauan, bukan bukti bahwa kedua bbox pasti satu benda fisik. Pengguna tetap mengonfirmasi material, termasuk OFFERED.
 
-Profil `dw-val-01` hanya aktif untuk **checksum penuh, model_version dan taksonomi lengkap** yang cocok dengan [detection_profile.json](../src/wastenot_ai/data/detection_profile.json). Mapping aktif kandidat menjadi `drinking-waste-reviewed-02+dw-val-01`. Checkpoint lain tetap memakai batas katalog. Jangan menyalin cutoff ke model lain tanpa pengukuran.
+Profil `dw-val-01` hanya aktif untuk **checksum penuh, model_version dan taksonomi lengkap** yang cocok dengan [detection_profile.json](../../src/wastenot_ai/data/detection_profile.json). Mapping aktif kandidat menjadi `drinking-waste-reviewed-02+dw-val-01`. Checkpoint lain tetap memakai batas katalog. Jangan menyalin cutoff ke model lain tanpa pengukuran.
 
 ## Integrasi
 
@@ -54,9 +54,9 @@ Cache raw prediksi berada di `artifacts/calibration/validation-predictions.json`
 
 ## Negatif, OOD dan holdout kamera
 
-Enam gambar sintetis (empat warna polos, dua checkerboard) menghasilkan nol kandidat tinjau/OFFERED pada checkpoint ini; [laporan](../evaluations/detection-synthetic-20261020.json). **Ini sanity check, bukan pengukuran penolakan objek nyata di luar cakupan.** Belum ada holdout kamera Indonesia berlabel atau negative/OOD terverifikasi; tidak ada angka akurasi dunia nyata yang dibuat dari pola tersebut.
+Enam gambar sintetis (empat warna polos, dua checkerboard) menghasilkan nol kandidat tinjau/OFFERED pada checkpoint ini; [laporan](../../evaluations/detection-synthetic-20261020.json). **Ini sanity check, bukan pengukuran penolakan objek nyata di luar cakupan.** Belum ada holdout kamera Indonesia berlabel atau negative/OOD terverifikasi; tidak ada angka akurasi dunia nyata yang dibuat dari pola tersebut.
 
-Gunakan template [camera-holdout-manifest.json](../examples/camera-holdout-manifest.json), salin ke `data/local/camera-holdout/manifest.json`, lalu isi foto sendiri yang memang boleh digunakan. Ambil sesi dan benda fisik baru, pisahkan dari training/val. Target awal pengumpulan: ≥20 benda fisik per kelas dalam beberapa latar/pencahayaan, ≥50 foto negatif (ruang kosong, orang, meja tanpa target), dan ≥50 OOD (cangkir, keramik, mainan, baterai/kardus tanpa empat target). Angka tersebut adalah rencana pengumpulan, bukan dataset yang sudah ada atau ukuran release gate statistik.
+Gunakan template [camera-holdout-manifest.json](../../examples/camera-holdout-manifest.json), salin ke `data/local/camera-holdout/manifest.json`, lalu isi foto sendiri yang memang boleh digunakan. Ambil sesi dan benda fisik baru, pisahkan dari training/val. Target awal pengumpulan: ≥20 benda fisik per kelas dalam beberapa latar/pencahayaan, ≥50 foto negatif (ruang kosong, orang, meja tanpa target), dan ≥50 OOD (cangkir, keramik, mainan, baterai/kardus tanpa empat target). Angka tersebut adalah rencana pengumpulan, bukan dataset yang sudah ada atau ukuran release gate statistik.
 
 Setiap record:
 

@@ -29,14 +29,25 @@ class FusionPolicy:
         object.__setattr__(self, "thresholds", tuple(sorted(thresholds.items())))
 
 
-def fuse(predictions, policy=FusionPolicy(), *, floor=0.25):
+DEFAULT_FUSION = FusionPolicy()
+
+
+def fuse(predictions, policy=DEFAULT_FUSION, *, floor=0.25):
     thresholds = dict(policy.thresholds)
     candidates = []
     for source, rows in predictions.items():
         for row in rows:
-            raw = row if isinstance(row, RawDetection) else (
-                RawDetection(class_id=row["class_id"], raw_class=row["raw_class"], confidence=row["confidence"],
-                             bbox=tuple(row["bbox"]))
+            raw = (
+                row
+                if isinstance(row, RawDetection)
+                else (
+                    RawDetection(
+                        class_id=row["class_id"],
+                        raw_class=row["raw_class"],
+                        confidence=row["confidence"],
+                        bbox=tuple(row["bbox"]),
+                    )
+                )
             )
             if raw.class_id >= len(NATIVE_LABELS[source]) or NATIVE_LABELS[source][raw.class_id] != raw.raw_class:
                 raise ValueError("Native class provenance mismatch")
@@ -46,8 +57,9 @@ def fuse(predictions, policy=FusionPolicy(), *, floor=0.25):
     candidates.sort(key=lambda item: (-item[1].confidence, item[0]))
     kept = []
     for source, raw in candidates:
-        if any(other.raw_class == raw.raw_class and box_iou(other.bbox, raw.bbox) >= policy.merge_iou
-               for _, other in kept):
+        if any(
+            other.raw_class == raw.raw_class and box_iou(other.bbox, raw.bbox) >= policy.merge_iou for _, other in kept
+        ):
             continue
         kept.append((source, raw.model_copy(update={"class_id": LABEL_IDS[raw.raw_class]})))
         if len(kept) == MAX_DETECTIONS:

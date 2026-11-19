@@ -1,6 +1,6 @@
 # Dataset dan evaluasi pilot
 
-Eksperimen publik botol/kaleng sudah disiapkan terpisah dari taksonomi usulan lima kelas berikut. Lihat [fine-tuning](FINE_TUNING.md), [sumber dataset](DATASET_RESEARCH.md), dan [atribusi](DATASET_NOTICES.md). Empat kelas checkpoint Drinking Waste mempunyai ID sendiri; evaluasinya eksploratif karena sumber tidak menyediakan identitas benda/sesi yang terverifikasi.
+Eksperimen publik botol/kaleng sudah disiapkan terpisah dari taksonomi usulan lima kelas berikut. Lihat [fine-tuning](FINE_TUNING.md), [sumber dataset](DATASET_RESEARCH.md), dan [atribusi](../DATASET_NOTICES.md). Empat kelas checkpoint Drinking Waste mempunyai ID sendiri; evaluasinya eksploratif karena sumber tidak menyediakan identitas benda/sesi yang terverifikasi.
 
 Run pertama selesai pada epoch 30, checkpoint terbaik epoch 18. [Hasil evaluasi](FINETUNING_RESULTS.md) mencatat metrik tiap kelas serta perubahan recall dan precision dibanding baseline.
 

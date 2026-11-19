@@ -1,54 +1,104 @@
-# Deployment AI pada cp-bcc
+# Deployment
 
-Hanya worker AI yang dikelola repo ini. Go blue-green dan PostgreSQL dikelola backend; deploy AI tidak menyalin source ke rilis Go, memigrasikan DB atau mengubah routing Nginx.
+This repository deploys only the AI workers. The Go backend and PostgreSQL are deployed from the backend repository. An AI deployment never touches backend releases, migrates databases, or changes Nginx routing.
 
-## Prasyarat host yang sudah diprovisi
+## Host prerequisites
 
-- SSH `proxy.bccdev.id:11049`, alias operator `cp-bcc`; deployment memerlukan hak administrator untuk helper/systemd.
-- Python3.12 CPU venv `/opt/wastenot-ai/venv`, dipasang dengan `--require-hashes -r requirements-cpu.lock` dan pemeriksaan dependency. Fingerprint yang ditinjau tersimpan root-only di `/etc/wastenot/ai-requirements.sha256`.
-- Direktori model `/opt/wastenot-ai/models` memuat setiap checkpoint yang dipatok `model.json`. Isi `AI_MODEL_DIRECTORY=/opt/wastenot-ai/models` pada konfigurasi worker untuk memilih bundle sesuai manifest release. Runtime dan helper deployment memeriksa checksum setiap komponen serta identitas model gabungan. Konfigurasi lama dengan `AI_MODEL_PATH` dan `AI_MODEL_SHA256` tetap didukung untuk release satu model.
-- Akun OS `wastenot-yolo` dan `wastenot-decisions`, unit hardened dari [deploy/systemd](../deploy/systemd/), serta rilis awal valid pada `/opt/wastenot-ai/current`. Helper menolak first install tanpa rilis pemulihan; provisioning host baru adalah langkah operator terpisah.
-- `/etc/wastenot/ai-detection.env` dan `ai-recommendation.env` root:root0600. Dua token layanan berbeda; key/model Gemini hanya di file rekomendasi. Jangan menaruh key di repo, log atau parameter command.
-- File policy guide operator di luar direktori release tetap read-only dan tidak ditimpa CD. Source draf di repo tidak otomatis diterbitkan.
+The staging host needs the following before the first deployment.
+
+| Component | Requirement |
+|---|---|
+| Runtime | A Python 3.12 CPU virtual environment at `/opt/wastenot-ai/venv`, installed with `--require-hashes -r requirements-cpu.lock`. The reviewed lock fingerprint is stored root-only in `/etc/wastenot/ai-requirements.sha256` |
+| Models | `/opt/wastenot-ai/models` holds every checkpoint that `model.json` pins. Set `AI_MODEL_DIRECTORY=/opt/wastenot-ai/models` so each release loads the bundle its manifest names. The legacy single-model `AI_MODEL_PATH` and `AI_MODEL_SHA256` are still supported |
+| Services | The `wastenot-yolo` and `wastenot-decisions` OS accounts, the hardened units from [`deploy/systemd`](../deploy/systemd), and a valid initial release at `/opt/wastenot-ai/current`. The deploy helper refuses a first install without a recovery release |
+| Secrets | `/etc/wastenot/ai-detection.env` and `/etc/wastenot/ai-recommendation.env`, owned by `root:root` with mode `0600`. The two service tokens must differ, and Gemini keys belong only in the recommendation file |
+| Guides | The operator's guide policy file lives outside the release directory, is read-only, and is never overwritten by CD. Draft guides in this repository are never published automatically |
 
 ## CI
 
-Pada PR/main: dependency runtime dan alat CI dipasang dari `requirements-ci.lock` dengan hash; Ruff; audit versi CPU lock; generator kontrak `--check`; pin 34 artifact; pytest (termasuk rollback/arsip rusak); dan unduh/verifikasi SHA-256 bobot sebenarnya. Tidak menggunakan Gemini berbayar atau kamera di CI.
+On every pull request and push to `main`:
 
-Actions dipin ke commit. Permissions hanya contents:read. Job verify15menit/deploy10menit; main tidak dibatalkan di tengah deploy, PR lama boleh dibatalkan. Deploy host juga mempunyai file lock agar dua operator/workflow tidak beraktivasi bersamaan.
+1. Install runtime and CI tools from `requirements-ci.lock` with hashes.
+2. Run Ruff lint and format checks.
+3. Audit the CPU lock with pip-audit.
+4. Run the contract generator in `--check` mode and verify the 34-artifact pin.
+5. Run pytest, including rollback and corrupt-archive cases.
+6. Download the real model weights and verify their SHA-256.
 
-## Rilis dan pemulihan
+CI never calls the paid Gemini API or a camera.
 
-1. `scripts/package_release.py` mengemas source `src/wastenot_ai`, entrypoint, manifest model, CPU lock dan pin kontrak. `release.json` mengikat full source SHA serta SHA-256 setiap file. Key, environment, model, training, foto dan dataset tidak masuk paket.
-2. Artifact yang telah diuji dikirim melalui SSH dengan known-hosts wajib. Helper terpasang root:root pada `/usr/local/sbin/wastenot-ai-deploy`; arsip dikirim lewat stdin, tanpa path home pengguna yang dihardcode.
-3. Helper memvalidasi batas compressed/expanded, regular files, traversal/symlink/duplikasi, kelengkapan dan checksum. Commit yang sudah mempunyai isi berbeda ditolak; rilis tidak diekstrak di atas rilis lama.
-4. Sebelum aktivasi, fingerprint lock, **versi paket yang benar-benar terpasang**, Python3.12 serta checksum bobot harus cocok. Lock berubah → deploy berhenti dengan layanan lama tetap hidup. Tidak ada instalasi dependency otomatis di VM.
-5. Rilis distage lalu dipindah ke `/opt/wastenot-ai/releases/<sha>`. Symlink `current` diganti atomik. Drop-in systemd mengarahkan ExecStart ke `current/serve.py` dan PYTHONPATH ke `current/src`, dengan hardening unit lama tetap berlaku.
-6. Kedua worker direstart; health terautentikasi wajib mengirim `X-WasteNot-Release` sesuai commit baru. Jika gagal, source dan drop-in sebelumnya dikembalikan, worker direstart dan readiness pemulihan diperiksa. Worker restart tetap mempunyai jeda singkat; ini bukan blue-green AI atau jaminan tanpa downtime.
-7. Sukses memperbarui symlink `previous`; rilis lama tidak dimutasi. Rilis lama dipertahankan untuk inspeksi/rollback dan perlu retensi operator sesuai kapasitas disk.
+- **Actions.** All actions are pinned to commit SHAs, and permissions are limited to `contents: read`.
+- **Concurrency.** Runs on `main` are never cancelled mid-deploy, while superseded pull request runs may be.
+- **Host lock.** The host also holds a file lock so two deployments never activate at once.
 
-YOLO loopback8091: MemoryMax1280MiB, CPUQuota75%, satu thread, egress ditolak kecuali localhost. Keputusan loopback8093: MemoryMax256MiB, CPUQuota25%, HTTPS keluar untuk Gemini diperlukan. Batas tersebut membatasi worker, bukan menjamin seluruh VM bebas overload.
+## Release and recovery
 
-## Mengubah dependency/model atau memulihkan
+CD runs on the self-hosted `alberd-staging-ai` runner only after CI succeeds on `main`.
 
-Perubahan dependency adalah rollout operator terpisah: buat venv staging dari lock baru dengan hash, periksa package/CPU/model dan startup worker pada port staging, hentikan worker selama pengalihan environment yang disengaja, lalu perbarui venv serta marker sebagai satu perubahan yang dapat dipulihkan. Simpan venv/marker sebelumnya; kegagalan aktivasi source tidak otomatis mengembalikan upgrade venv yang dikerjakan di luar helper. Jangan hanya mengganti marker agar gate lolos.
+1. **Package.** `scripts/package_release.py` packages:
+   - `src/wastenot_ai` and the entrypoint;
+   - the model manifest;
+   - the CPU lock;
+   - the contract pin.
 
-Perubahan model harus menyediakan bobot/manifest/checksum dan evaluasi yang sesuai; jangan mengganti model aktif hanya berdasarkan hasil validation training. Restore source sebelumnya memakai artifact dari commit tersebut melalui helper yang sama, sehingga checksum/runtime/readiness tetap diperiksa. Bila dependency berbeda, pulihkan environment/model yang cocok dahulu. Helper menolak paket lama pra-manifest; untuk migrasi pertama, rollback otomatis tetap dapat kembali ke jalur unit sebelumnya.
+   `release.json` binds the full commit SHA and the SHA-256 of every file. Keys, environment files, models, training output, photos, and datasets are never packaged.
+2. **Install the helper.** The workflow installs `deploy/deploy.py` as `/usr/local/sbin/wastenot-ai-deploy`, owned by `root:root`, and streams the archive to it on stdin.
+3. **Validate the archive.** The helper validates compressed and expanded size limits and accepts only regular files. It rejects path traversal, symlinks, duplicates, missing files, and checksum mismatches. A commit that already exists with different content is rejected, and a release is never extracted over an existing one.
+4. **Check the environment.** Before activation, these must all match the release:
+   - the lock fingerprint;
+   - the installed package versions;
+   - Python 3.12;
+   - the model checksums.
+
+   If the lock changed, the deployment stops and the old services keep running. Dependencies are never installed automatically on the host.
+5. **Activate.** The release is staged, then moved to `/opt/wastenot-ai/releases/<sha>`, and the `current` symlink is swapped atomically. A systemd drop-in points `ExecStart` at `current/serve.py` and `PYTHONPATH` at `current/src`, keeping the existing unit hardening.
+6. **Verify or roll back.** Both workers restart, and their authenticated health checks must report the new commit in `X-WasteNot-Release`. On failure, the previous source and drop-in are restored, the workers restart, and recovery readiness is verified. Restarts cause a short gap; this is not a zero-downtime deployment.
+7. **Keep history.** On success, the `previous` symlink is updated. Old releases are never modified and are kept for inspection and rollback. Prune them according to the host's disk capacity.
+
+## Resource limits
+
+| Worker | Listen address | Memory | CPU | Network |
+|---|---|---|---|---|
+| Detection | `127.0.0.1:8091` | 1280 MiB | 75%, one thread | No egress except localhost |
+| Recommendation | `127.0.0.1:8093` | 256 MiB | 25% | HTTPS egress to Gemini |
+
+These limits constrain the workers; they do not protect the whole host from overload.
+
+## Changing dependencies or models
+
+**Dependency upgrades** are a separate operator rollout:
+
+1. Build a staging virtual environment from the new hashed lock.
+2. Check the packages, the CPU build, the model, and worker startup on a staging port.
+3. Stop the workers for the planned switch.
+4. Replace the virtual environment and the fingerprint marker together, as one reversible change.
+
+Keep the previous environment and marker. A failed source activation does not roll back an environment upgrade made outside the helper. Never edit the marker just to pass the gate.
+
+**Model changes** must ship weights, the manifest, checksums, and a matching evaluation. Never promote a model on validation metrics alone.
+
+**Rollbacks** redeploy the artifact from the earlier commit through the same helper, so checksums, runtime, and readiness are checked again. If dependencies differ, restore the matching environment and model first.
+
+## Pilot model bundle
+
+`model.json` selects `broad-coco-b0f633193403`: a square 640 px input with 88 merged labels.
+
+- **Downloading weights.** The waste checkpoint and its dataset attribution are attached to the GitHub release `models-v4-coco11s-20261107`. The COCO11s companion comes from the official Ultralytics release. `make model` (`scripts/fetch_model.py`) downloads both and verifies their hashes.
+- **Access token.** Private release assets need a `GITHUB_TOKEN` with read access. The token is sent only to the GitHub API over HTTPS and is stripped on cross-origin redirects.
+- **Installing on the host.** Before merging a manifest change, install both files on the host as root-owned and read-only. Keep every checkpoint that a recovery release still needs.
+
+On the two-vCPU staging host (one thread, 75% CPU quota, 1280 MiB memory), the detection worker measured:
+
+- **Warm inference.** 6.4–6.6 seconds per photo, with a peak RSS of about 570 MiB.
+- **First call.** About 15 seconds. The entrypoint therefore warms up both models before accepting requests.
+
+These were exploratory measurements; parallel capacity still needs load testing.
+
+## Operations
 
 ```sh
-ssh cp-bcc 'readlink -f /opt/wastenot-ai/current; systemctl show wastenot-yolo wastenot-decisions -p ExecStart -p ActiveState'
-# Kirim artifact yang telah diunduh dari run sukses:
-cat wastenot-ai-<full-sha>.tar.gz | ssh cp-bcc 'sudo -n /usr/local/sbin/wastenot-ai-deploy'
+readlink -f /opt/wastenot-ai/current
+systemctl show wastenot-yolo wastenot-decisions -p ExecStart -p ActiveState
 ```
 
-Secrets GitHub: SSH_PRIVATE_KEY/SSH_KNOWN_HOSTS. Variables: VM_HOST/VM_PORT/VM_USER. Tidak memakai OAuth pribadi untuk membaca peer repo privat. Health proses tidak membuktikan key/model Google sedang tersedia atau kualitas panduan; lakukan smoke melalui Go setelah perubahan operasional yang relevan.
-
-## Bundle pilot v4 dan COCO11s
-
-Manifest memilih `broad-coco-b0f633193403`, square640, dengan 88 label gabungan. Checkpoint waste dan atribusi dataset tersedia pada GitHub Release `models-v4-coco11s-20261107`. Pendamping COCO11s berasal dari rilis resmi Ultralytics. `scripts/fetch_model.py` memverifikasi kedua hash. Unduhan aset release privat memerlukan `GITHUB_TOKEN` dengan akses baca repo. Token hanya dikirim ke API GitHub melalui HTTPS dan dihapus dari request redirect lintas origin. CI memakai token job dengan permission contents read.
-
-Service demo yang sudah terpasang juga menerima drop-in release untuk menjalankan `serve.py demo` pada port8092 dengan `AI_MODEL_DIRECTORY`. Entrypoint membaca manifest dan menjalankan pemanasan yang sama seperti worker deteksi. Bila demo sedang aktif, deployment merestart demo dan mewajibkan versi model pada endpoint konfigurasi cocok dengan manifest. Deployment menyimpan serta mengembalikan override demo sebelumnya bila aktivasi gagal. Pemulihan memeriksa demo dapat merespons, termasuk command lama. Demo yang sengaja dihentikan tetap dihentikan. Mode panduan draf mengikuti pengaturan demo yang sudah tersedia.
-
-Sebelum merge manifest, operator memasang kedua file model sebagai root-owned/read-only di direktori model. `AI_MODEL_DIRECTORY` memungkinkan pemilihan model mengikuti source release sehingga rollback ke manifest sebelumnya juga memilih checkpoint sebelumnya. Simpan checkpoint yang diperlukan release pemulihan.
-
-Uji staging pada VM dua CPU menggunakan satu thread, kuota CPU75% dan batas memori1280MiB. Tiga foto publik menghasilkan waktu hangat 6,4–6,6 detik per foto dan peak RSS sekitar570MiB. Panggilan pertama sekitar15detik. Entrypoint menjalankan inferensi pemanasan kedua komponen sebelum server HTTP menerima request. Pengukuran ini mencakup sembilan inferensi eksploratif. Kapasitas paralel dan beban pengguna masih memerlukan pengujian terpisah.
+A healthy process does not prove that the Gemini key or model is available, or that the guides are correct. After any relevant operational change, run a smoke test through the Go API.

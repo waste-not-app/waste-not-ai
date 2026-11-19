@@ -3,160 +3,176 @@
     "url": "https://www.epa.gov/greenerproducts/identifying-sustainable-food-service-and-food-service-ware",
     "title": "Reusable food service ware: collection, washing and return",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-10-20",
-    "scope_note": "Prinsip penggunaan ulang peralatan makan/minum yang dirancang untuk digunakan berulang. Bukan sertifikasi keamanan objek dari foto."
+    "scope_note": "Principles for reusing tableware designed for repeated use. Not a safety certification of an item from a photo."
   },
   {
     "url": "https://banjarnegarakab.go.id/2026/06/11/banjarnegara-terapkan-aturan-baru-kelola-sampah-wajib-dari-hulu/",
-    "title": "Guna ulang peralatan makan-minum dan pemilahan dari sumber",
-    "publisher": "Pemerintah Kabupaten Banjarnegara",
+    "title": "Reusable tableware and sorting at the source",
+    "publisher": "Banjarnegara Regency Government",
     "region": "Banjarnegara, Indonesia",
     "checked_at": "2026-10-20",
-    "scope_note": "Contoh kebijakan lokal yang mendorong peralatan guna ulang. Tidak menjadi aturan penerimaan fasilitas seluruh Indonesia."
+    "scope_note": "An example of a local policy that encourages reusable tableware. It isn't an acceptance rule for facilities across Indonesia."
   },
   {
     "url": "https://19january2021snapshot.epa.gov/recycle/reducing-and-reusing-basics_.html",
-    "title": "Reducing and Reusing Basics (arsip 2021)",
+    "title": "Reducing and Reusing Basics (2021 archive)",
     "publisher": "US EPA",
-    "region": "Amerika Serikat; arsip 2021",
+    "region": "United States; 2021 archive",
     "checked_at": "2026-10-20",
-    "scope_note": "Prinsip umum penggunaan ulang, perbaikan dan donasi. Bukan standar kelayakan teknis setiap barang."
+    "scope_note": "General principles for reuse, repair, and donation. Not a technical fitness standard for every item."
   },
   {
     "url": "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste",
     "title": "Waste prevention, reuse and recycling",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-11-04",
-    "scope_note": "Pencegahan pembelian/penggunaan berikutnya. Tidak membuktikan jumlah Reduce yang telah dilakukan."
+    "scope_note": "About preventing the next purchase or use. It doesn't prove how much the user has already reduced."
   },
   {
     "url": "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables",
     "title": "How Do I Recycle Common Recyclables",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-11-04",
-    "scope_note": "Panduan bahan umum; jenis dan kebersihan tidak memastikan fasilitas lokal menerima benda tersebut."
+    "scope_note": "General material guidance. The type and cleanliness of an item don't guarantee that a local facility accepts it."
   },
   {
     "url": "https://www.epa.gov/recycle/used-household-batteries",
     "title": "Used Household Batteries",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-10-20",
-    "scope_note": "Jenis baterai menentukan prosedur; arahkan ke pengumpul khusus. Bukan tong daur ulang biasa."
+    "scope_note": "The battery type decides the procedure. Send batteries to a specialist collector, not a regular recycling bin."
   },
   {
     "url": "https://www.epa.gov/recycle/electronics-donation-and-recycling",
     "title": "Electronics Donation and Recycling",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-10-20",
-    "scope_note": "Program produsen/pengelola elektronik dan perlindungan data. Penerimaan serta prosedur tetap diperiksa lokal."
+    "scope_note": "Manufacturer and handler programs for electronics, and data protection. Acceptance and procedures still need a local check."
   },
   {
     "url": "https://www.epa.gov/sustainable-management-food/sustainable-management-food-basics",
     "title": "Sustainable Management of Food Basics",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-10-20",
-    "scope_note": "Pencegahan sisa makanan dan pengelolaan organik. Foto tidak menetapkan makanan aman dikonsumsi."
+    "scope_note": "Preventing food waste and managing organic scraps. A photo can't establish that food is safe to eat."
   },
   {
     "url": "https://www.epa.gov/hw/household-hazardous-waste-hhw",
     "title": "Household Hazardous Waste: safe management",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-11-04",
-    "scope_note": "Jangan mencampur atau membuang limbah kimia sembarangan; ikuti label dan tanyakan pengelola setempat."
+    "scope_note": "Don't mix or dump chemical waste. Follow the label and ask your local handler."
   },
   {
     "url": "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/",
     "title": "Broken glass: protective packaging and rubbish route",
     "publisher": "Cornwall Council",
-    "region": "Cornwall, Inggris",
+    "region": "Cornwall, UK",
     "checked_at": "2026-10-20",
-    "scope_note": "Contoh residu kaca pecah dengan pelindung dan label; bukan aturan penerimaan Indonesia."
+    "scope_note": "An example of putting broken glass in residual waste with wrapping and a label. Not an Indonesian acceptance rule."
   },
   {
     "url": "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/toothbrushes/",
     "title": "Plastic toothbrushes and toothbrush heads",
     "publisher": "Cornwall Council",
-    "region": "Cornwall, Inggris",
+    "region": "Cornwall, UK",
     "checked_at": "2026-10-20",
-    "scope_note": "Hanya sikat plastik manual; tidak digeneralisasi ke sikat elektrik, baterai, atau semua plastik."
+    "scope_note": "Manual plastic toothbrushes only. Doesn't extend to electric toothbrushes, batteries, or all plastics."
   },
   {
     "url": "https://www.islington.gov.uk/recycling-and-rubbish/recycling/what-we-pick-up-as-household-rubbish",
     "title": "Household rubbish: crockery and broken glass",
     "publisher": "Islington Council",
-    "region": "Islington, Inggris",
+    "region": "Islington, UK",
     "checked_at": "2026-10-20",
-    "scope_note": "Contoh yurisdiksi yang memasukkan keramik pada residu rumah tangga. Periksa ketentuan lokal."
+    "scope_note": "An example of a jurisdiction that puts ceramics in household residual waste. Check your local rules."
   },
   {
     "url": "https://www.wandsworth.gov.uk/rubbish-and-recycling/recycle-and-reuse/waste-and-recycling-a-z/kitchen-knives/",
     "title": "Kitchen knives: specialist metal collection",
     "publisher": "Wandsworth Council",
-    "region": "Wandsworth, Inggris",
+    "region": "Wandsworth, UK",
     "checked_at": "2026-10-20",
-    "scope_note": "Pisau dapur logam pada pengelola khusus dengan perlindungan bilah; bukan limbah medis atau tong biasa."
+    "scope_note": "Metal kitchen knives go to a specialist handler with the blade protected. Not medical waste and not for regular bins."
   },
   {
     "url": "https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/get-rid-unwanted-items/organisation/331.html",
     "title": "Manurewa Community Recycling Centre: scissors",
     "publisher": "Auckland Council",
-    "region": "Auckland, Selandia Baru",
+    "region": "Auckland, New Zealand",
     "checked_at": "2026-10-20",
-    "scope_note": "Contoh pusat penerima gunting. Keberadaan layanan di wilayah pengguna belum diverifikasi."
+    "scope_note": "An example of a center that accepts scissors. Service in the user's area hasn't been verified."
   },
   {
     "url": "https://tasikmalaya.pom.go.id/berita/cerdas-memilih-kemasan-wujudkan-pangan-aman-melalui-pengenalan-kode-plastik",
-    "title": "Cerdas Memilih Kemasan: pengenalan kode plastik",
-    "publisher": "Balai POM di Tasikmalaya",
+    "title": "Choosing Packaging Wisely: understanding plastic codes",
+    "publisher": "BPOM Office in Tasikmalaya",
     "region": "Indonesia",
     "checked_at": "2026-11-04",
-    "scope_note": "Kode resin mengenali bahan; tidak membuktikan keamanan kontak pangan, kelayakan penggunaan ulang atau penerimaan daur ulang."
+    "scope_note": "Resin codes identify the material. They don't prove food-contact safety, fitness for reuse, or recycling acceptance."
   },
   {
     "url": "https://www3.epa.gov/recyclecity/recovery.htm",
     "title": "Recycle City: Materials Recovery Center",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-11-04",
-    "scope_note": "Edukasi PET resin 1 dan HDPE resin 2; bukan daftar penerima lokal atau identifikasi material dari foto."
+    "scope_note": "Education on PET resin 1 and HDPE resin 2. Not a list of local collectors or a way to identify materials from a photo."
   },
   {
     "url": "https://lingkunganhidup.jakarta.go.id/layanan/ewaste",
-    "title": "Layanan E-Waste: dropbox limbah elektronik kecil",
-    "publisher": "Dinas Lingkungan Hidup Provinsi DKI Jakarta",
-    "region": "DKI Jakarta, Indonesia",
+    "title": "E-Waste Service: drop boxes for small electronic waste",
+    "publisher": "Jakarta Provincial Environment Agency",
+    "region": "Jakarta, Indonesia",
     "checked_at": "2026-10-20",
-    "scope_note": "Contoh jalur baterai melalui dropbox. Konfirmasi jenis dan kondisi yang diterima; penjemputan memiliki syarat tersendiri, bukan jaminan layanan nasional."
+    "scope_note": "An example of a battery route through drop boxes. Confirm which types and conditions they accept. Pickup has its own requirements and isn't a nationwide service."
   },
   {
     "url": "https://www.who.int/news-room/fact-sheets/detail/health-care-waste",
     "title": "Health-care waste",
     "publisher": "World Health Organization",
-    "region": "Global; penerapan dan penerima mengikuti aturan setempat",
+    "region": "Global; local rules and collectors apply",
     "checked_at": "2026-11-07",
-    "scope_note": "Prinsip pemisahan limbah infeksius/medis dan risiko penanganannya; bukan janji penerimaan fasilitas kesehatan tertentu."
+    "scope_note": "Principles for separating infectious and medical waste and the risks of handling it. Not a promise that a particular health facility will accept it."
   },
   {
     "url": "https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy",
     "title": "Non-hazardous materials and waste management hierarchy",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-11-13",
-    "scope_note": "Prinsip penggunaan ulang, daur ulang/pengomposan dan residu nonberbahaya. Bukan bukti penerimaan suatu fasilitas Indonesia."
+    "scope_note": "Principles for reuse, recycling and composting, and non-hazardous residual waste. Not proof that any facility in Indonesia accepts an item."
   },
   {
     "url": "https://www.epa.gov/recycle/composting-home",
     "title": "Composting At Home",
     "publisher": "US EPA",
-    "region": "Amerika Serikat",
+    "region": "United States",
     "checked_at": "2026-11-13",
-    "scope_note": "Prinsip pengomposan dan batas bahan yang diterima. Konfirmasikan program setempat menerima jenis sisa organik tertentu."
+    "scope_note": "Composting principles and the limits on accepted materials. Confirm that your local program accepts the specific organic scraps."
+  },
+  {
+    "url": "https://www.epa.gov/recycle/preventing-wasted-food-home",
+    "title": "Preventing Wasted Food At Home",
+    "publisher": "US EPA",
+    "region": "United States",
+    "checked_at": "2026-11-16",
+    "scope_note": "Planning and storage habits that prevent food waste. Advice for next time, not a food safety check of the item in front of you."
+  },
+  {
+    "url": "https://www.jakarta.go.id/e-waste",
+    "title": "E-Waste",
+    "publisher": "Jakarta Provincial Government",
+    "region": "Jakarta, Indonesia",
+    "checked_at": "2026-11-16",
+    "scope_note": "Electronic waste collection in Jakarta. Other regions need their own official collector."
   }
 ]

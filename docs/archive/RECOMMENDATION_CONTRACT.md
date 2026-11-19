@@ -6,7 +6,7 @@ Pembaruan 7 November 2026, `pilot-policy-08`: botol kaca CLEAN/INTACT dengan ris
 
 Pembaruan 7 November 2026, `pilot-policy-07`: seluruh status juga menyediakan [panduan awal bersumber](HANDLING_GUIDANCE.md). `NEEDS_CONTEXT`/`UNAVAILABLE` tetap tidak mengarang metode, tetapi mempunyai langkah penanganan; UI tidak berhenti di “Saran belum tersedia”. Tujuh pilihan “barang lain” mencakup barang yang belum disebut namanya di katalog. Perilaku policy-06 di bawah tetap berlaku untuk pemilihan empat metode.
 
-Pembaruan 20 Oktober 2026 mengikuti keputusan pengguna: Gemini memilih **tepat satu** dari `REDUCE`, `REUSE`, `RECYCLE`, `TRASH`, beserta alasan dan sumber panduan. Implementasi tunggal berada di Python, termasuk adapter HTTP privat. Go/Android mengintegrasikan [kontrak HTTP/OpenAPI](AI_HTTP_CONTRACT.md); tidak menyalin policy atau prompt ke Go.
+Pembaruan 20 Oktober 2026 mengikuti keputusan pengguna: Gemini memilih **tepat satu** dari `REDUCE`, `REUSE`, `RECYCLE`, `TRASH`, beserta alasan dan sumber panduan. Implementasi tunggal berada di Python, termasuk adapter HTTP privat. Go/Android mengintegrasikan [kontrak HTTP/OpenAPI](../AI_HTTP_CONTRACT.md); tidak menyalin policy atau prompt ke Go.
 
 Policy `pilot-policy-06`: penanganan khusus adalah peringatan tambahan. Cangkir kotor biasa bisa mendapat Reuse setelah dicuci; risiko yang belum jelas meminta informasi tambahan. REDUCE hanya untuk fokus PREVENTION yang dipilih pengguna. Dasar sumber dan evaluasinya dijelaskan pada [mutu panduan](GUIDE_QUALITY.md).
 
@@ -80,7 +80,7 @@ Jalankan `demo-camera.bat` dari root repo. Pilih Gemini untuk model sungguhan at
 
 Katalog manual tersedia untuk menyiapkan skenario tanpa mengulang kamera. Label YOLO `toothbrush` belum membuktikan plastik manual: pengguna wajib mengonfirmasi bahan dan tidak adanya baterai/listrik. Sikat gigi elektrik harus mengikuti penanganan elektronik khusus. Panduan Trash spesifik sikat plastik manual; tidak digeneralisasi ke semua barang campuran.
 
-Konteks CLI: [Reduce](../examples/context-reduce.json), [Reuse](../examples/context-reuse.json), [Recycle](../examples/context-glass.json), [Trash](../examples/context-trash.json), [kaca pecah](../examples/context-broken-glass.json), [baterai](../examples/context-battery.json). Gunakan `recommend --context <path> --provider gemini --demo-guides` dengan interpreter venv seperti pada [README](../README.md#gemini-api).
+Konteks CLI: [Reduce](../../examples/context-reduce.json), [Reuse](../../examples/context-reuse.json), [Recycle](../../examples/context-glass.json), [Trash](../../examples/context-trash.json), [kaca pecah](../../examples/context-broken-glass.json), [baterai](../../examples/context-battery.json). Gunakan `recommend --context <path> --provider gemini --demo-guides` dengan interpreter venv seperti pada [README](../../README.md#gemini-api).
 
 ## Integrasi Go dan Android
 
@@ -90,7 +90,7 @@ Konteks CLI: [Reduce](../examples/context-reduce.json), [Reuse](../examples/cont
 
 ## Sumber draf
 
-- [EPA: What You Can Do About Climate Change — Waste](https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste): prinsip pencegahan, penggunaan ulang dan daur ulang.
+- [EPA: What You Can Do About Climate Change, Waste](https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste): prinsip pencegahan, penggunaan ulang dan daur ulang.
 - [EPA: Common Recyclables](https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables): panduan bahan yang dapat didaur ulang.
 - [Cornwall Council: Toothbrushes](https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/toothbrushes/): contoh sikat plastik yang tidak masuk pengumpulan daur ulang biasa, sebagai sumber spesifik draf Trash.
 - [Cornwall Council: Broken glass](https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/): jalur residu untuk pecahan kaca dengan pengemasan pelindung dan label.

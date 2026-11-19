@@ -17,7 +17,7 @@ Konfigurasi: YOLO11s pretrained COCO, transfer baris bottle/cup yang sama dengan
 
 ## Perbandingan yang setara
 
-AP test kedua checkpoint dihitung pada dataset/split/taksonomi yang sama, conf awal 0,001, NMS IoU 0,70, max_det 50, square 640. Jangan membandingkan langsung agregat ini dengan angka v2 tanggal 20 Oktober yang memakai test 656 gambar dan sembilan kelas dengan GT. [Perbandingan lengkap](../evaluations/broad-waste-v3-batch2-yolo11s-20261107-comparison.json), [report kandidat](../evaluations/broad-waste-v3-batch2-yolo11s-20261107.json).
+AP test kedua checkpoint dihitung pada dataset/split/taksonomi yang sama, conf awal 0,001, NMS IoU 0,70, max_det 50, square 640. Jangan membandingkan langsung agregat ini dengan angka v2 tanggal 20 Oktober yang memakai test 656 gambar dan sembilan kelas dengan GT. [Perbandingan lengkap](../../evaluations/broad-waste-v3-batch2-yolo11s-20261107-comparison.json), [report kandidat](../../evaluations/broad-waste-v3-batch2-yolo11s-20261107.json).
 
 | Test identik | Broad v2 | Kandidat v3 |
 |---|---:|---:|

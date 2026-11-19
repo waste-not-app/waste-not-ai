@@ -11,17 +11,17 @@
     "source_urls": [
       "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
     ],
-    "scope_note": "Referensi AS; perlu review penerapan lokal Indonesia.",
+    "scope_note": "US reference. Local use in Indonesia still needs review.",
     "special_handling": false,
     "steps": [
-      "Kosongkan botol dan periksa ketentuan fasilitas penerima."
+      "Empty the bottle and check what the collection facility accepts."
     ],
-    "caution": "Jangan anggap semua fasilitas menerima plastik ini.",
+    "caution": "Don't assume every facility accepts this plastic.",
     "evidence": [
       {
         "id": "pet-clean-recycle-v1",
         "method": "RECYCLE",
-        "text": "Botol plastik pet yang bersih dapat diarahkan ke Recycle karena kamu sudah mengonfirmasi pengelola yang menerima jenis dan kondisinya. Ikuti persyaratan penerima; skor YOLO tidak membuktikan penerimaan fasilitas.",
+        "text": "You confirmed that your collector accepts clean PET plastic bottles in this condition, so this one can go to Recycle. Follow the collector's requirements. A YOLO score doesn't prove that a facility will accept it.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -31,9 +31,9 @@
           "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
         ],
         "steps": [
-          "Pastikan material botol plastik PET dan pengelola yang menerima kondisi benda ini benar.",
-          "Kosongkan dan bersihkan sisa biasa sesuai petunjuk penerima; hentikan bila ada dugaan kontaminasi berbahaya.",
-          "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+          "Make sure the bottle really is PET plastic and that your collector accepts it in this condition.",
+          "Empty it and rinse out ordinary residue as the collector asks. Stop if you suspect hazardous contamination.",
+          "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
         ]
       },
       {
@@ -41,12 +41,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]
@@ -63,17 +63,17 @@
     "source_urls": [
       "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
     ],
-    "scope_note": "Referensi AS; perlu review penerapan lokal Indonesia.",
+    "scope_note": "US reference. Local use in Indonesia still needs review.",
     "special_handling": false,
     "steps": [
-      "Periksa ketentuan penerimaan wadah kaca."
+      "Check the rules for accepting glass containers."
     ],
-    "caution": "Kaca pecah memerlukan panduan penanganan khusus.",
+    "caution": "Broken glass needs special handling.",
     "evidence": [
       {
         "id": "glass-intact-recycle-v1",
         "method": "RECYCLE",
-        "text": "Botol kaca yang bersih dapat diarahkan ke Recycle karena kamu sudah mengonfirmasi pengelola yang menerima jenis dan kondisinya. Ikuti persyaratan penerima; skor YOLO tidak membuktikan penerimaan fasilitas.",
+        "text": "You confirmed that your collector accepts clean glass bottles in this condition, so this one can go to Recycle. Follow the collector's requirements. A YOLO score doesn't prove that a facility will accept it.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -83,9 +83,9 @@
           "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
         ],
         "steps": [
-          "Pastikan material botol kaca dan pengelola yang menerima kondisi benda ini benar.",
-          "Kosongkan dan bersihkan sisa biasa sesuai petunjuk penerima; hentikan bila ada dugaan kontaminasi berbahaya.",
-          "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+          "Make sure the bottle really is glass and that your collector accepts it in this condition.",
+          "Empty it and rinse out ordinary residue as the collector asks. Stop if you suspect hazardous contamination.",
+          "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
         ]
       },
       {
@@ -93,12 +93,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       },
       {
@@ -109,14 +109,14 @@
           "category": "GLASS",
           "integrity": "DAMAGED"
         },
-        "text": "Kaca pecah diarahkan ke Trash sebagai residu dengan pengemasan pelindung agar tidak melukai petugas. Panduan Cornwall menempatkan pecahan kaca pada jalur residu; konfirmasikan aturan penerima setempat.",
+        "text": "Broken glass goes to Trash as residual waste, wrapped so it can't cut the people who collect it. Cornwall's guidance puts broken glass in residual waste. Check your local collector's rules.",
         "source_urls": [
           "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
         ],
         "steps": [
-          "Jangan gunakan kembali kaca yang retak atau pecah dan hindari kontak langsung dengan tepi tajam.",
-          "Gunakan pembungkus pelindung atau wadah kokoh dan beri label berisi pecahan kaca; minta bantuan petugas bila tidak aman.",
-          "Serahkan melalui jalur residu sesuai petunjuk pengelola setempat; jangan campur pecahan lepas dengan daur ulang biasa."
+          "Don't reuse cracked or broken glass, and avoid touching sharp edges.",
+          "Wrap it or put it in a sturdy container labelled as broken glass. Ask the collection staff for help if it isn't safe to handle.",
+          "Put it out with residual waste as your local collector instructs. Don't mix loose shards with regular recycling."
         ]
       },
       {
@@ -130,15 +130,15 @@
           "risk_type": "SHARP",
           "recycling_access": "YES"
         },
-        "text": "Botol kaca dikonfirmasi utuh dan pengelola menerima jenis serta kondisi tajam yang kamu laporkan. Arahkan ke Recycle mengikuti petunjuk pengemasan penerima; jangan gunakan ulang bagian yang tajam.",
+        "text": "You confirmed that the bottle is intact and that your collector accepts it with the sharp-edge risk you reported. Send it to Recycle and package it the way the collector asks. Don't reuse any sharp parts.",
         "source_urls": [
           "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables",
           "https://www.cornwall.gov.uk/rubbish-recycling-and-waste/recycling/recycling-items/broken-glass/"
         ],
         "steps": [
-          "Konfirmasikan kepada pengelola bahwa botol tetap utuh tetapi memiliki risiko tepi tajam; pastikan kondisi ini memang diterima.",
-          "Hindari kontak langsung dengan tepi tajam dan ikuti pengemasan pelindung serta label sesuai arahan penerima; jangan memecahkan botol.",
-          "Serahkan melalui jalur daur ulang yang telah dikonfirmasi. Jika ternyata retak/pecah atau ada kontaminasi, perbarui kondisi sebelum mengikuti saran."
+          "Tell the collector that the bottle is intact but has a sharp edge, and make sure they accept it in that condition.",
+          "Avoid touching the sharp edge, and wrap and label it as the collector asks. Don't break the bottle.",
+          "Hand it over through the recycling route you confirmed. If it turns out to be cracked, broken, or contaminated, update its condition before following this advice."
         ]
       }
     ]
@@ -155,17 +155,17 @@
     "source_urls": [
       "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
     ],
-    "scope_note": "Referensi AS; perlu review penerapan lokal Indonesia.",
+    "scope_note": "US reference. Local use in Indonesia still needs review.",
     "special_handling": false,
     "steps": [
-      "Periksa aturan fasilitas untuk kaleng aluminium."
+      "Check the facility's rules for aluminium cans."
     ],
-    "caution": "Penerimaan tetap bergantung fasilitas setempat.",
+    "caution": "Whether it's accepted still depends on your local facility.",
     "evidence": [
       {
         "id": "can-clean-recycle-v1",
         "method": "RECYCLE",
-        "text": "Kaleng aluminium yang bersih dapat diarahkan ke Recycle karena kamu sudah mengonfirmasi pengelola yang menerima jenis dan kondisinya. Ikuti persyaratan penerima; skor YOLO tidak membuktikan penerimaan fasilitas.",
+        "text": "You confirmed that your collector accepts clean aluminium cans in this condition, so this one can go to Recycle. Follow the collector's requirements. A YOLO score doesn't prove that a facility will accept it.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -175,9 +175,9 @@
           "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
         ],
         "steps": [
-          "Pastikan material kaleng aluminium dan pengelola yang menerima kondisi benda ini benar.",
-          "Kosongkan dan bersihkan sisa biasa sesuai petunjuk penerima; hentikan bila ada dugaan kontaminasi berbahaya.",
-          "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+          "Make sure the can really is aluminium and that your collector accepts it in this condition.",
+          "Empty it and rinse out ordinary residue as the collector asks. Stop if you suspect hazardous contamination.",
+          "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
         ]
       },
       {
@@ -185,12 +185,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]
@@ -207,17 +207,17 @@
     "source_urls": [
       "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
     ],
-    "scope_note": "Referensi AS; perlu review penerapan lokal Indonesia.",
+    "scope_note": "US reference. Local use in Indonesia still needs review.",
     "special_handling": false,
     "steps": [
-      "Periksa kebersihan dan aturan penerimaan kardus."
+      "Check that the cardboard is clean and what the collector accepts."
     ],
-    "caution": "Kardus tercemar makanan tidak otomatis layak didaur ulang.",
+    "caution": "Cardboard with food on it isn't automatically recyclable.",
     "evidence": [
       {
         "id": "cardboard-clean-recycle-v1",
         "method": "RECYCLE",
-        "text": "Kardus yang bersih dapat diarahkan ke Recycle karena kamu sudah mengonfirmasi pengelola yang menerima jenis dan kondisinya. Ikuti persyaratan penerima; skor YOLO tidak membuktikan penerimaan fasilitas.",
+        "text": "You confirmed that your collector accepts clean cardboard in this condition, so this piece can go to Recycle. Follow the collector's requirements. A YOLO score doesn't prove that a facility will accept it.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -227,9 +227,9 @@
           "https://www.epa.gov/recycle/how-do-i-recycle-common-recyclables"
         ],
         "steps": [
-          "Pastikan material kardus dan pengelola yang menerima kondisi benda ini benar.",
-          "Pisahkan kardus bersih dan kering dari bagian basah, berminyak atau tercemar; ikuti syarat penerima.",
-          "Pisahkan sesuai jenis dan serahkan mengikuti prosedur pengelola; jangan memotong atau menghancurkan benda secara otomatis."
+          "Make sure the item really is cardboard and that your collector accepts it in this condition.",
+          "Separate clean, dry cardboard from wet, greasy, or dirty parts, and follow the collector's requirements.",
+          "Sort it by type and hand it over the way the collector asks. Don't cut or crush it unless they ask you to."
         ]
       },
       {
@@ -237,12 +237,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]
@@ -260,24 +260,24 @@
       "https://www.epa.gov/recycle/used-household-batteries",
       "https://lingkunganhidup.jakarta.go.id/layanan/ewaste"
     ],
-    "scope_note": "EPA: referensi AS; DLH DKI: contoh dropbox lokal. Jenis, kondisi dan layanan penerima wajib dikonfirmasi; bukan janji penjemputan satu baterai.",
+    "scope_note": "EPA is a US reference, and the Jakarta Environment Agency drop box is one local example. Confirm the battery type, its condition, and the collection service. This is not a promise that anyone will pick up a single battery.",
     "special_handling": true,
     "steps": [
-      "Cari fasilitas atau petugas resmi yang menerima jenis baterai tersebut."
+      "Find an official facility or collector that accepts this type of battery."
     ],
-    "caution": "Jangan membongkar atau membakar baterai. Ikuti panduan petugas setempat.",
+    "caution": "Don't take batteries apart or burn them. Follow your local collector's instructions.",
     "evidence": [
       {
         "id": "battery-prevent-waste-v2",
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       },
       {
@@ -287,15 +287,15 @@
         "requires": {
           "recycling_access": "YES"
         },
-        "text": "Baterai bekas diarahkan ke Recycle melalui pengumpul khusus yang kamu konfirmasi menerima jenis dan kondisinya. Jangan campur baterai yang belum teridentifikasi ke tong sampah atau daur ulang umum. Layanan dropbox DKI adalah contoh lokal, bukan jaminan layanan di semua wilayah.",
+        "text": "Used batteries go to Recycle through a specialist collector that you confirmed accepts this type and condition. Don't put an unidentified battery in the trash or in general recycling. The Jakarta drop box service is a local example, not a guarantee of service everywhere.",
         "source_urls": [
           "https://www.epa.gov/recycle/used-household-batteries",
           "https://lingkunganhidup.jakarta.go.id/layanan/ewaste"
         ],
         "steps": [
-          "Hubungi pengumpul baterai atau pengelola limbah khusus untuk memastikan jenis baterai diterima.",
-          "Jika baterai rusak, bocor atau menggembung, minta prosedur penanganan kepada produsen/petugas dan jangan membongkarnya.",
-          "Serahkan sesuai prosedur layanan khusus; jangan dibakar atau dimasukkan ke tong sampah/daur ulang biasa."
+          "Contact a battery collector or a specialist waste handler to confirm they accept this type of battery.",
+          "If the battery is damaged, leaking, or swollen, ask the manufacturer or the collector how to handle it, and don't take it apart.",
+          "Hand it over through the specialist service. Don't burn it or put it in the regular trash or recycling."
         ]
       }
     ]
@@ -314,17 +314,17 @@
       "https://www3.epa.gov/recyclecity/recovery.htm",
       "https://tasikmalaya.pom.go.id/berita/cerdas-memilih-kemasan-wujudkan-pangan-aman-melalui-pengenalan-kode-plastik"
     ],
-    "scope_note": "HDPE kode 2 bekas pangan/minuman dikonfirmasi pengguna; sumber BPOM untuk identitas/peruntukan, EPA untuk prinsip daur ulang. Penerimaan wajib dikonfirmasi lokal.",
+    "scope_note": "You confirmed it's a code 2 HDPE bottle that held food or drink. BPOM covers the material and its intended use, and EPA covers recycling principles. Acceptance must be confirmed locally.",
     "special_handling": false,
     "steps": [
-      "Periksa isi sebelumnya dan penerimaan pengelola."
+      "Check what it held before and whether your collector accepts it."
     ],
-    "caution": "Kode 2 dan bentuk botol bukan bukti aman untuk dipakai ulang atau kontak pangan. Isi sebelumnya yang tidak diketahui atau bahan kimia tidak memakai aturan botol pangan ini.",
+    "caution": "Resin code 2 and a bottle shape don't prove it's safe to reuse or to hold food. Bottles with unknown or chemical contents can't follow this food bottle guide.",
     "evidence": [
       {
         "id": "hdpe-food-recycle-v5",
         "method": "RECYCLE",
-        "text": "Botol HDPE bekas pangan/minuman yang bersih dapat diarahkan ke Recycle karena isi sebelumnya dan penerimaan pengelola telah kamu konfirmasi. Kode resin 2 tidak menjamin aman dipakai ulang atau diterima semua fasilitas.",
+        "text": "You confirmed what this clean HDPE bottle held and that your collector accepts it, so it can go to Recycle. Resin code 2 doesn't guarantee it's safe to reuse or that every facility accepts it.",
         "requires": {
           "cleanliness": "CLEAN",
           "integrity": "INTACT",
@@ -337,9 +337,9 @@
           "https://tasikmalaya.pom.go.id/berita/cerdas-memilih-kemasan-wujudkan-pangan-aman-melalui-pengenalan-kode-plastik"
         ],
         "steps": [
-          "Konfirmasi bahan HDPE/kode 2 dan riwayat bekas pangan/minuman; jangan memakai aturan ini untuk bekas kimia atau isi yang tidak diketahui.",
-          "Kosongkan dan bersihkan sisa pangan sesuai petunjuk penerima; pisahkan sesuai jenis.",
-          "Serahkan kepada pengelola yang dikonfirmasi menerima HDPE dengan kondisi tersebut. Jangan menganggap botol bekas otomatis aman diisi ulang."
+          "Confirm that it's HDPE (code 2) and that it held food or drink. Don't use this guide for bottles that held chemicals or unknown contents.",
+          "Empty it, rinse out food residue as the collector asks, and sort it by type.",
+          "Hand it to a collector you confirmed accepts HDPE in this condition. Don't assume a used bottle is safe to refill."
         ]
       },
       {
@@ -347,12 +347,12 @@
         "method": "REDUCE",
         "requires": {},
         "risk_compatible": true,
-        "text": "Untuk mencegah sampah berikutnya, kurangi pembelian yang tidak diperlukan dan pilih produk tahan lama atau kemasan lebih sedikit. Ini saran pencegahan, bukan pembuangan benda saat ini.",
+        "text": "To avoid the next piece of waste, skip purchases you don't need and choose durable products or less packaging. This is advice for next time, not for getting rid of the item you have now.",
         "source_urls": [
           "https://www.epa.gov/climate-change/what-you-can-do-about-climate-change-waste"
         ],
         "steps": [
-          "Pada pembelian berikutnya, beli sesuai kebutuhan dan pertimbangkan produk tahan lama atau kemasan lebih sedikit."
+          "Next time you shop, buy only what you need and look for durable products or less packaging."
         ]
       }
     ]

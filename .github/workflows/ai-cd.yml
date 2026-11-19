@@ -1,12 +1,17 @@
 name: CD Staging
 
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
+
+env:
+  RELEASE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
 
 concurrency:
   group: cd-ai-${{ github.ref }}
@@ -15,14 +20,17 @@ concurrency:
 jobs:
   package:
     name: Package AI Release
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
     runs-on: [self-hosted, alberd-staging-ai]
     timeout-minutes: 10
     env:
       PYTHONPATH: src
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.RELEASE_SHA }}
       - name: Package runtime release
-        run: python3 scripts/package_release.py "/tmp/wastenot-ai-${{ github.sha }}.tar.gz"
+        run: python3 scripts/package_release.py "/tmp/wastenot-ai-${{ env.RELEASE_SHA }}.tar.gz"
 
   deploy:
     name: Deploy AI Workers
@@ -30,14 +38,16 @@ jobs:
     needs: package
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.RELEASE_SHA }}
 
       - name: Deploy release on staging host
         run: |
           set -e
-          trap 'rm -f "/tmp/wastenot-ai-${{ github.sha }}.tar.gz"' EXIT
+          trap 'rm -f "/tmp/wastenot-ai-${{ env.RELEASE_SHA }}.tar.gz"' EXIT
           sudo -n install -m 0755 -o root -g root deploy/deploy.py /usr/local/sbin/wastenot-ai-deploy
-          sudo -n /usr/local/sbin/wastenot-ai-deploy < "/tmp/wastenot-ai-${{ github.sha }}.tar.gz"
+          sudo -n /usr/local/sbin/wastenot-ai-deploy < "/tmp/wastenot-ai-${{ env.RELEASE_SHA }}.tar.gz"
 
       - name: Post-deployment health check
         run: |

@@ -2,6 +2,7 @@
 
 Runner preflight and holdout isolation are tested in test_training_experiments.py.
 """
+
 import importlib.util
 import json
 from pathlib import Path
@@ -22,8 +23,11 @@ def test_general_focus_dataset_requires_native_taxonomy_and_complete_split_lists
     manifest = {"labels": labels, "records": records}
     manifest_path = tmp_path / "manifest.json"
     manifest_path.write_text(json.dumps(manifest))
-    config = {"path": str(tmp_path), "names": dict(enumerate(labels)),
-              **{split: split + ".txt" for split in ("train", "val", "test")}}
+    config = {
+        "path": str(tmp_path),
+        "names": dict(enumerate(labels)),
+        **{split: split + ".txt" for split in ("train", "val", "test")},
+    }
     (tmp_path / "data.yaml").write_text(yaml.safe_dump(config))
     for row in records:
         (tmp_path / (row["split"] + ".txt")).write_text((tmp_path / row["image"]).as_posix() + "\n")

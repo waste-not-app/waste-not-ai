@@ -1,4 +1,4 @@
-# Drinking Waste v2 — attribution and notices
+# Drinking Waste v2: attribution and notices
 
 Dataset publisher: **Arkadiy Serezhkin**, Drinking Waste Classification v2, 2020.
 Source: https://www.kaggle.com/datasets/arkadiyhacks/drinking-waste-classification

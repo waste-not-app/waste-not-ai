@@ -1,18 +1,18 @@
 """Acquire rare-class TACO examples without modifying the audited baseline dataset."""
+
 import argparse
-from collections import Counter, defaultdict
-from datetime import datetime, timezone
 import hashlib
 import json
-from pathlib import Path
 import random
 import re
 import shutil
 import urllib.error
 import urllib.request
+from collections import Counter, defaultdict
+from datetime import UTC, datetime
+from pathlib import Path
 
 from PIL import Image
-
 from prepare_broad_waste import LABELS, LICENSES, TACO_MAP, normalized_box
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,8 +36,13 @@ def write_json(path, value):
 
 
 def counts(records):
-    return {s: {name: sum(int(b[0]) == cls for r in records if r["split"] == s
-                         for b in r["boxes"]) for cls, name in enumerate(LABELS)} for s in SPLITS}
+    return {
+        s: {
+            name: sum(int(b[0]) == cls for r in records if r["split"] == s for b in r["boxes"])
+            for cls, name in enumerate(LABELS)
+        }
+        for s in SPLITS
+    }
 
 
 def make_plan(base, taco, target):
@@ -62,31 +67,46 @@ def make_plan(base, taco, target):
         if not number:
             raise ValueError("TACO filename cannot establish the baseline proxy group")
         try:
-            boxes = [normalized_box(a["bbox"], image["width"], image["height"], TACO_MAP[a["category_id"]])
-                     for a in anns]
+            boxes = [
+                normalized_box(a["bbox"], image["width"], image["height"], TACO_MAP[a["category_id"]]) for a in anns
+            ]
         except ValueError as exc:
             rejected.append({"source_id": str(image["id"]), "reason": str(exc)})
             continue
-        pool.append({"source": "TACO", "source_id": str(image["id"]),
-                     "url": image.get("flickr_640_url") or image["flickr_url"],
-                     "original_url": image["flickr_url"], "width": image["width"], "height": image["height"],
-                     "group": "TACO-" + filename.parent.name + "-" + str(int(number.group()) // 20),
-                     "boxes": boxes})
+        pool.append(
+            {
+                "source": "TACO",
+                "source_id": str(image["id"]),
+                "url": image.get("flickr_640_url") or image["flickr_url"],
+                "original_url": image["flickr_url"],
+                "width": image["width"],
+                "height": image["height"],
+                "group": "TACO-" + filename.parent.name + "-" + str(int(number.group()) // 20),
+                "boxes": boxes,
+            }
+        )
     available = Counter(int(b[0]) for r in pool for b in r["boxes"])
     baseline = counts(base["records"])
     deficits = {name: max(0, target - baseline["train"][name]) for name in LABELS}
     # Rare classes first; retain every mapped target box in every selected scene.
     random.Random(42).shuffle(pool)
     pool.sort(key=lambda r: min(available[int(b[0])] for b in r["boxes"] if int(b[0]) in RARE))
-    return {"version": "broad-waste-v3", "target_train_instances_per_class": target,
-            "baseline_counts": baseline, "train_deficit": deficits,
-            "candidate_images": len(pool),
-            "candidate_instances_upper_bound": {name: available[i] for i, name in enumerate(LABELS)},
-            "limitations": ["Candidate counts are not acquired or approved training examples.",
-                "Counts precede rights checks, download failures, visual review, deduplication and splitting.",
-                "TACO alone cannot necessarily meet the per-class target; additional sources or own photos are needed.",
-                "Do not use classification labels or whole-image boxes as detection ground truth."],
-            "invalid_annotation_images": rejected, "candidates": pool}
+    return {
+        "version": "broad-waste-v3",
+        "target_train_instances_per_class": target,
+        "baseline_counts": baseline,
+        "train_deficit": deficits,
+        "candidate_images": len(pool),
+        "candidate_instances_upper_bound": {name: available[i] for i, name in enumerate(LABELS)},
+        "limitations": [
+            "Candidate counts are not acquired or approved training examples.",
+            "Counts precede rights checks, download failures, visual review, deduplication and splitting.",
+            "TACO alone cannot necessarily meet the per-class target; additional sources or own photos are needed.",
+            "Do not use classification labels or whole-image boxes as detection ground truth.",
+        ],
+        "invalid_annotation_images": rejected,
+        "candidates": pool,
+    }
 
 
 def read_url(url):
@@ -108,11 +128,15 @@ def check_rights(url):
     if not license_match:
         return {"accepted": False, "reason": "missing_image_license"}
     license_id = int(license_match.group(1))
-    return {"accepted": license_id in LICENSES, "license_id": license_id,
-            "license_url": LICENSES.get(license_id), "source_page": final,
-            "creator_page": final.rsplit("/" + photo_id, 1)[0] + "/",
-            "verification": "image-specific Flickr page, not toolkit or archive license",
-            "checked_at": datetime.now(timezone.utc).isoformat()}
+    return {
+        "accepted": license_id in LICENSES,
+        "license_id": license_id,
+        "license_url": LICENSES.get(license_id),
+        "source_page": final,
+        "creator_page": final.rsplit("/" + photo_id, 1)[0] + "/",
+        "verification": "image-specific Flickr page, not toolkit or archive license",
+        "checked_at": datetime.now(UTC).isoformat(),
+    }
 
 
 def acquire(plan, cache, max_requests):
@@ -123,8 +147,11 @@ def acquire(plan, cache, max_requests):
             raise ValueError("Source snapshot changed; use a new cache version instead of mixing acquisitions")
         state[key] = plan[key]
     acquired = {r["source_id"] for r in state["records"]}
-    cached_rights = {str(r["taco_image_id"]): r for r in json.loads((SOURCE / "taco-rights.json").read_text("utf-8"))
-                     if r["accepted"]}
+    cached_rights = {
+        str(r["taco_image_id"]): r
+        for r in json.loads((SOURCE / "taco-rights.json").read_text("utf-8"))
+        if r["accepted"]
+    }
     cached_rights.update(state["rights"])
     requests = 0
     state.update(status="RUNNING", last_error=None)
@@ -160,10 +187,17 @@ def acquire(plan, cache, max_requests):
                     opened.verify()
                 temp.replace(path)
             with Image.open(path) as opened:
-                if abs(opened.width / opened.height - row["width"] / row["height"]) > .01:
+                if abs(opened.width / opened.height - row["width"] / row["height"]) > 0.01:
                     raise ValueError("Downloaded aspect ratio differs from source annotations")
-            state["records"].append({**row, "rights": right, "raw_sha256": digest(path),
-                                      "cached_path": str(path.resolve()), "visual_review": "PENDING"})
+            state["records"].append(
+                {
+                    **row,
+                    "rights": right,
+                    "raw_sha256": digest(path),
+                    "cached_path": str(path.resolve()),
+                    "visual_review": "PENDING",
+                }
+            )
             acquired.add(ident)
             if len(acquired) % 10 == 0:
                 print(f"Acquired {len(acquired)} images; requests this run: {requests}", flush=True)
@@ -198,15 +232,21 @@ def import_browser_downloads(plan, cache, downloads):
         photo_id = re.search(r"/([0-9]+)_", row["original_url"]).group(1)
         if not re.fullmatch(r"https://www\.flickr\.com/photos/[^/]+/" + photo_id + "/", evidence["source_page"]):
             raise ValueError("Browser photo identity differs from the annotations")
-        if not re.fullmatch(r"https://live\.staticflickr\.com/\d+/" + photo_id + r"_[a-z0-9]+_[a-z]\.jpg", evidence["download_url"]):
+        if not re.fullmatch(
+            r"https://live\.staticflickr\.com/\d+/" + photo_id + r"_[a-z0-9]+_[a-z]\.jpg", evidence["download_url"]
+        ):
             raise ValueError("Browser media URL differs from the photo identity")
-        if evidence["license_url"] not in LICENSES.values() or not evidence.get("author") or not evidence.get("checked_at"):
+        if (
+            evidence["license_url"] not in LICENSES.values()
+            or not evidence.get("author")
+            or not evidence.get("checked_at")
+        ):
             raise ValueError("Missing accepted image-specific attribution")
         datetime.fromisoformat(evidence["checked_at"])
         source = Path(evidence["local_path"])
         image_hash = digest(source)
         with Image.open(source) as opened:
-            if abs(opened.width / opened.height - row["width"] / row["height"]) > .01:
+            if abs(opened.width / opened.height - row["width"] / row["height"]) > 0.01:
                 raise ValueError("Browser image aspect ratio differs from source annotations")
             opened.verify()
         if row["source_id"] in known:
@@ -218,9 +258,20 @@ def import_browser_downloads(plan, cache, downloads):
             raise ValueError("Refusing to overwrite a different cached image")
         right = {k: evidence[k] for k in ("source_page", "creator_page", "license_url", "author", "checked_at")}
         right.update(accepted=True, verification="Flickr image license and attribution observed in browser DOM")
-        additions.append(({**row, "url": evidence["download_url"], "rights": right,
-                           "raw_sha256": image_hash, "cached_path": str(dest.resolve()),
-                           "visual_review": "PENDING"}, source, dest))
+        additions.append(
+            (
+                {
+                    **row,
+                    "url": evidence["download_url"],
+                    "rights": right,
+                    "raw_sha256": image_hash,
+                    "cached_path": str(dest.resolve()),
+                    "visual_review": "PENDING",
+                },
+                source,
+                dest,
+            )
+        )
         known[row["source_id"]] = {"raw_sha256": image_hash}
     # Validate the entire batch before changing the acquisition checkpoint.
     for row, source, dest in additions:
@@ -229,8 +280,12 @@ def import_browser_downloads(plan, cache, downloads):
             shutil.copy2(source, dest)
         state["records"].append(row)
         state["rights"][row["source_id"]] = row["rights"]
-    state.update(status="PARTIALLY_ACQUIRED", last_error=None, requests_this_run=0,
-                 browser_images_imported_last_batch=len(additions))
+    state.update(
+        status="PARTIALLY_ACQUIRED",
+        last_error=None,
+        requests_this_run=0,
+        browser_images_imported_last_batch=len(additions),
+    )
     write_json(path, state)
     return state
 
@@ -279,7 +334,11 @@ def split_new_records(base_records, new_records):
         if not component_counts:
             continue
         rarest = min(component_counts, key=lambda cls: totals[cls])
-        split = next(iter(locked)) if locked else min(SPLITS, key=lambda s: current[s][rarest] / {"train": .7, "val": .15, "test": .15}[s])
+        split = (
+            next(iter(locked))
+            if locked
+            else min(SPLITS, key=lambda s: current[s][rarest] / {"train": 0.7, "val": 0.15, "test": 0.15}[s])
+        )
         for i in additions:
             row = rows[i]
             if row["raw_sha256"] in seen:
@@ -305,10 +364,20 @@ def balanced_train(records, cap):
     return selected
 
 
-def build_dataset(base, state, review, output, cap, *, base_dir=None, version="broad-waste-v3",
-                  source_metadata_path=None, source_notice=None):
-    from prepare_drinking_waste import parse_boxes, perceptual_hash
+def build_dataset(
+    base,
+    state,
+    review,
+    output,
+    cap,
+    *,
+    base_dir=None,
+    version="broad-waste-v3",
+    source_metadata_path=None,
+    source_notice=None,
+):
     import yaml
+    from prepare_drinking_waste import parse_boxes, perceptual_hash
 
     base_dir = base_dir or BASE
     source_metadata_path = source_metadata_path or SOURCE / "taco.json"
@@ -358,34 +427,63 @@ def build_dataset(base, state, review, output, cap, *, base_dir=None, version="b
         shutil.copy2(source, dest)
         label = staging / "labels" / row["split"] / (dest.stem + ".txt")
         label.parent.mkdir(parents=True, exist_ok=True)
-        label.write_text("".join(f"{int(b[0])} " + " ".join(f"{v:.8f}" for v in b[1:]) + "\n" for b in row["boxes"]), encoding="utf-8")
+        label.write_text(
+            "".join(f"{int(b[0])} " + " ".join(f"{v:.8f}" for v in b[1:]) + "\n" for b in row["boxes"]),
+            encoding="utf-8",
+        )
         records.append({**row, "image": relative, "prepared_sha256": digest(dest)})
     selected = balanced_train(records, cap)
     active = selected + [r for r in records if r["split"] != "train"]
     for split in SPLITS:
-        (staging / (split + ".txt")).write_text("".join((output / r["image"]).as_posix() + "\n"
-            for r in active if r["split"] == split), encoding="utf-8")
-    (staging / "train-full.txt").write_text("".join((output / r["image"]).as_posix() + "\n"
-        for r in records if r["split"] == "train"), encoding="utf-8")
-    (staging / "data.yaml").write_text(yaml.safe_dump({"path": output.as_posix(), "train": "train.txt",
-        "val": "val.txt", "test": "test.txt", "names": dict(enumerate(LABELS))}, sort_keys=False), encoding="utf-8")
-    manifest = {"version": version, "labels": LABELS, "seed": 42,
-                "status": "EXPERIMENTAL", "records": records, "rejected": rejected,
-                "baseline_manifest_sha256": digest(base_dir / "manifest.json"),
-                "instances_per_split": counts(records), "active_instances_per_split": counts(active),
-                "train_instance_cap_per_class": cap,
-                "new_images": len(assigned), "selected_train_images": len(selected),
-                "limitations": ["Whole-image selection: a co-occurring class can exceed the instance cap.",
-                    "Selection does not create new images or guarantee the target count.",
-                    "All old split assignments are preserved; test was inspected in previous experiments.",
-                    "TACO filename groups and pHash are proxies, not independently verified physical-object identities."]}
+        (staging / (split + ".txt")).write_text(
+            "".join((output / r["image"]).as_posix() + "\n" for r in active if r["split"] == split), encoding="utf-8"
+        )
+    (staging / "train-full.txt").write_text(
+        "".join((output / r["image"]).as_posix() + "\n" for r in records if r["split"] == "train"), encoding="utf-8"
+    )
+    (staging / "data.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "path": output.as_posix(),
+                "train": "train.txt",
+                "val": "val.txt",
+                "test": "test.txt",
+                "names": dict(enumerate(LABELS)),
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+    manifest = {
+        "version": version,
+        "labels": LABELS,
+        "seed": 42,
+        "status": "EXPERIMENTAL",
+        "records": records,
+        "rejected": rejected,
+        "baseline_manifest_sha256": digest(base_dir / "manifest.json"),
+        "instances_per_split": counts(records),
+        "active_instances_per_split": counts(active),
+        "train_instance_cap_per_class": cap,
+        "new_images": len(assigned),
+        "selected_train_images": len(selected),
+        "limitations": [
+            "Whole-image selection: a co-occurring class can exceed the instance cap.",
+            "Selection does not create new images or guarantee the target count.",
+            "All old split assignments are preserved; test was inspected in previous experiments.",
+            "TACO filename groups and pHash are proxies, not independently verified physical-object identities.",
+        ],
+    }
     write_json(staging / "manifest.json", manifest)
     write_json(staging / "acquisition-snapshot.json", state)
     write_json(staging / "review-snapshot.json", review)
-    source_notice = source_notice or "Additional TACO images: Pedro F. Proença and Pedro Simões; image-specific rights, original URLs and reviewer records are in manifest.json."
-    (staging / "DATASET_NOTICES.md").write_text((base_dir / "DATASET_NOTICES.md").read_text("utf-8") +
-        "\n\n" + source_notice + "\n",
-        encoding="utf-8")
+    source_notice = (
+        source_notice
+        or "Additional TACO images: Pedro F. Proença and Pedro Simões; image-specific rights, original URLs and reviewer records are in manifest.json."
+    )
+    (staging / "DATASET_NOTICES.md").write_text(
+        (base_dir / "DATASET_NOTICES.md").read_text("utf-8") + "\n\n" + source_notice + "\n", encoding="utf-8"
+    )
     staging.rename(output)
     return {k: v for k, v in manifest.items() if k not in {"records", "rejected"}}
 
@@ -396,7 +494,9 @@ def main():
     parser.add_argument("--target", type=int, default=300)
     parser.add_argument("--max-requests", type=int, default=100)
     parser.add_argument("--review", type=Path, help="JSON array of image-specific visual review decisions")
-    parser.add_argument("--browser-import", type=Path, help="Actual browser downloads and observed image-specific rights")
+    parser.add_argument(
+        "--browser-import", type=Path, help="Actual browser downloads and observed image-specific rights"
+    )
     parser.add_argument("--output", type=Path, default=ROOT / "data/local/broad-waste-v3")
     parser.add_argument("--train-cap", type=int, default=600, help="Whole-image majority-class instance cap")
     args = parser.parse_args()
@@ -406,12 +506,20 @@ def main():
     if args.stage == "build":
         if not args.review:
             parser.error("build needs --review; unreviewed downloads cannot enter training")
-        result = build_dataset(base, json.loads((CACHE / "acquisition.json").read_text("utf-8")),
-                               json.loads(args.review.read_text("utf-8")), args.output.resolve(), args.train_cap)
-        result.update(prepared_manifest_sha256=digest(args.output / "manifest.json"),
-                      review_sha256=digest(args.review), acquisition_sha256=digest(CACHE / "acquisition.json"),
-                      acquisition_snapshot_sha256=digest(args.output / "acquisition-snapshot.json"),
-                      review_snapshot_sha256=digest(args.output / "review-snapshot.json"))
+        result = build_dataset(
+            base,
+            json.loads((CACHE / "acquisition.json").read_text("utf-8")),
+            json.loads(args.review.read_text("utf-8")),
+            args.output.resolve(),
+            args.train_cap,
+        )
+        result.update(
+            prepared_manifest_sha256=digest(args.output / "manifest.json"),
+            review_sha256=digest(args.review),
+            acquisition_sha256=digest(CACHE / "acquisition.json"),
+            acquisition_snapshot_sha256=digest(args.output / "acquisition-snapshot.json"),
+            review_snapshot_sha256=digest(args.output / "review-snapshot.json"),
+        )
         result["dataset"] = args.output.name
         write_json(ROOT / "evaluations" / (args.output.name + "-build.json"), result)
         print(json.dumps(result, indent=2))
@@ -436,12 +544,18 @@ def main():
     prepared = json.loads(prepared_path.read_text("utf-8")) if prepared_path.exists() else None
     if prepared and prepared.get("baseline_manifest_sha256") != plan["baseline_manifest_sha256"]:
         prepared = None
-    report.update(status=state["status"] if state else "PLANNED", new_images_acquired=len(state["records"]) if state else 0,
-                  ready_for_training=prepared is not None, baseline_modified=False,
-                  prepared_dataset=args.output.name if prepared else None,
-                  training_scope="EXPERIMENTAL_ONLY" if prepared else None,
-                  new_images_in_dataset=prepared["new_images"] if prepared else 0,
-                  training_target_met=bool(prepared and all(v >= args.target for v in prepared["active_instances_per_split"]["train"].values())))
+    report.update(
+        status=state["status"] if state else "PLANNED",
+        new_images_acquired=len(state["records"]) if state else 0,
+        ready_for_training=prepared is not None,
+        baseline_modified=False,
+        prepared_dataset=args.output.name if prepared else None,
+        training_scope="EXPERIMENTAL_ONLY" if prepared else None,
+        new_images_in_dataset=prepared["new_images"] if prepared else 0,
+        training_target_met=bool(
+            prepared and all(v >= args.target for v in prepared["active_instances_per_split"]["train"].values())
+        ),
+    )
     if state:
         report.update(last_error=state["last_error"], requests_this_run=state["requests_this_run"])
     write_json(REPORT, report)
