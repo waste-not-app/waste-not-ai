@@ -198,7 +198,7 @@ waste-not-ai/
 ├── src/wastenot_ai/       Workers, decision rules, providers, CLI, demo, and mock
 │   └── data/              Catalog, guides, sources, and templates
 ├── contracts/v1/          Generated OpenAPI contracts, errors, examples, and the backend pin
-├── guides/                Published pilot guides
+├── guides/                Published guide bundles built from the backend's reviewed articles
 ├── guide-proposals/       Draft guide proposals under review
 ├── examples/              Context fixtures for the CLI
 ├── tests/                 Pytest suite
@@ -223,7 +223,7 @@ The workers deploy to staging through a self-hosted runner as systemd services, 
 | [AI HTTP contract](docs/AI_HTTP_CONTRACT.md) | Contract artifacts, ownership, private endpoints, and adapter obligations |
 | [Integration](docs/INTEGRATION.md) | End-to-end flow between Android, Go, and AI, plus the pilot scope |
 | [Deployment](docs/DEPLOYMENT.md) | Host setup, CI, release, recovery, and resource limits |
-| [Pilot guides](guides/README.md) | Published guide bundle and its review status |
+| [Recommendation guides](guides/README.md) | Published guide bundles, what they cover, and how to install them |
 | [Archived reports](docs/archive/README.md) | Historical dataset, training, and evaluation reports |
 
 ## Data and licensing

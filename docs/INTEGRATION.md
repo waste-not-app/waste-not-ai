@@ -59,7 +59,7 @@ A schema change also requires updates to the affected Android DTOs, fixtures, an
 | Component | Pilot configuration |
 |---|---|
 | Detection | The v4 waste model with the COCO11s companion (`broad-coco-b0f633193403`): 88 labels, square 640 px input. Both checkpoints must be verified in `AI_MODEL_DIRECTORY` |
-| Recommendations | Four source-reviewed v6 guides: PET, HDPE, non-aerosol aluminium cans, and cardboard. They are valid until 4 December 2026 and require confirmed local collector access |
+| Recommendations | The core bundle built from the 16 reviewed backend articles covers 34 catalog objects and is valid until 16 May 2027. Recycle advice still needs confirmed collector access. See [guides/README.md](../guides/README.md) |
 
 Unit, schema, and HTTP tests do not prove any of the following:
 
