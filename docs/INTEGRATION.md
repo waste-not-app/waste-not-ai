@@ -1,23 +1,23 @@
-# Integrasi Android, Go dan AI
+# Android, Go, and AI Integration
 
-Diperiksa 7 November 2026. Android memakai `https://pred-autoscaler.bccdev.id/wastenot/api/v1/`. Handoff utama ada pada [docs/ANDROID.md backend](https://github.com/waste-not-app/waste-not-backend/blob/main/docs/ANDROID.md); source mobile yang ditinjau berada pada [PR #102](https://github.com/waste-not-app/waste-not-android/pull/102), bukan main/rilis yang sudah diterima.
+The Android app talks only to the Go API at `https://waste-not-api.bccdev.id/v1/`. The AI workers are private, Gemini is called only by the recommendation worker, and the model detects shapes and classes but never decides the material from a photo.
 
-## Pemilik tanggung jawab
+## Responsibilities
 
-| Lapisan | Tanggung jawab |
+| Layer | Responsibility |
 |---|---|
-| Android | Kamera satu foto, orientasi/preview bbox, konfirmasi objek/material/kondisi, tampilan status/sumber, UUID operasi dan save eksplisit |
-| Go | JWT/sesi pengguna, validasi media/schema, quota, ownership, TTL, dedup durable, provenance, transaksi log dan XP/statistik |
-| YOLO | Inferensi CPU, model/checksum, raw class/bbox, band/threshold dan mapping kandidat |
-| Keputusan | Policy/panduan yang tersedia, validasi konteks/evidence, panggilan Gemini dan satu metode atau hasil non-READY |
+| Android | Single-photo capture, orientation and bounding box preview, confirmation of object, material, and condition, status and source display, operation UUIDs, explicit saves |
+| Go | User JWT and sessions, media and schema validation, quotas, ownership, TTL, durable deduplication, provenance, waste log transactions, XP and statistics |
+| Detection worker | CPU inference, model checksum, raw classes and boxes, confidence bands and thresholds, candidate mapping |
+| Recommendation worker | Guide policy, context and evidence validation, Gemini calls, and exactly one method or a non-`READY` result |
 
-Port 8091/8093 privat pada loopback, memakai token layanan berbeda. Android tidak menerima token/key tersebut. Gemini tidak dipanggil oleh Go. Model mendeteksi bentuk/kelas, bukan memastikan material dari foto.
+Ports 8091 and 8093 listen on loopback with separate service tokens. Android never receives those tokens or the Gemini keys.
 
-## Kontrak dan perubahan pasangan
+## Paired contract changes
 
-`contracts/v1/public.openapi.json` adalah kontrak yang dikonsumsi mobile. Dua OpenAPI privat adalah kontrak Go–Python. Snapshot yang disepakati disimpan pada `contracts/ai/` di backend. [backend-pin.json](../contracts/backend-pin.json) dan `contracts/ai.lock.json` backend mengunci 34 artifact yang identik.
+`contracts/v1/public.openapi.json` is the contract the mobile app consumes. The two private OpenAPI documents form the Go–Python contract. The backend keeps a reviewed snapshot in `contracts/ai/`. [`contracts/backend-pin.json`](../contracts/backend-pin.json) here and `contracts/ai.lock.json` in the backend pin the same 34 artifacts.
 
-CI tidak meregenerasi kontrak untuk membuat tes lolos. Jalankan ekspor hanya ketika memang mengubah kontrak, tinjau diff, sinkronkan snapshot/pin kedua repo dan periksa keduanya sebelum merge:
+CI never regenerates contracts to make tests pass. Regenerate them only for an intentional change. Then review the diff, sync the snapshot and pin in both repositories, and check both checkouts together before merging:
 
 ```sh
 PYTHONPATH=src python -m wastenot_ai.cli export-contracts --check
@@ -25,22 +25,48 @@ python scripts/check_contracts.py contracts/v1 contracts/backend-pin.json \
   --peer ../waste-not-backend/contracts/ai
 ```
 
-`--check` memakai dependency dari `requirements-ci.lock`, yang dibatasi oleh lock runtime. CI setiap repo memeriksa pin lokal; akses langsung antar repo privat tidak diasumsikan. Perubahan pin harus melalui perubahan pasangan, bukan hanya menaikkan checksum di satu repo. Perubahan schema membutuhkan pembaruan DTO/fixtures/tes Android yang relevan. Contoh fixture tetap simulasi dan tidak boleh menjadi fallback sukses produksi.
+A schema change also requires updates to the affected Android DTOs, fixtures, and tests. Fixture examples are simulations and must never become a production success fallback.
 
-## Alur dan hasil yang perlu dibedakan
+## Flow
 
-1. GET `metadata` dan `ai/objects` melalui Go dengan bearer pengguna. Patuhi capability dan guide status.
-2. POST `ai/detections`, multipart `image` JPEG/PNG + `client_request_id` UUID. Tidak ada base64, video streaming atau penyimpanan foto permanen. Batas 5 MiB/12 MP/sisi4096. Gunakan band dan threshold server.
-3. Pengguna mengonfirmasi object key/category/material dan konteks independen. Kirim `input_source`, detection/object ID bila berasal dari scan, `confirmed_object=true` dan `context_revision`. Jangan menyuntikkan prompt/model/provider/raw class/confidence dari client.
-4. POST `ai/recommendations`: READY dapat membawa satu metode HANDLING atau PREVENTION; NEEDS_CONTEXT/UNAVAILABLE tidak boleh dianggap rekomendasi siap. CONDITIONAL menyimpan kondisi yang belum dibuktikan. Sumber/caution tetap terlihat. Tidak ada aktivitas atau XP pada tahap ini.
-5. Save dilakukan lewat POST `waste-logs` setelah pengguna mengonfirmasi metode dan jumlah. Provenance READY/HANDLING memakai recommendation ID dan dua flag konfirmasi; Reduce pencegahan/kategori baru memakai pencatatan manual. Hapus sesi sementara melalui DELETE `ai/detections/{id}`.
+1. **Load metadata.** Read `metadata` and `ai/objects` through Go with the user's bearer token. Respect the capabilities and guide status they report.
+2. **Detect.** Call `POST ai/detections` with a multipart `image` (JPEG or PNG) and a `client_request_id` UUID.
+   - There is no base64 upload, no video streaming, and no permanent photo storage.
+   - Images are limited to 5 MiB, 12 megapixels, and 4096 px per side.
+   - Use the confidence bands and thresholds the server returns.
+3. **Confirm.** The user confirms the object key, category, and material, and fills in the context. Send:
+   - `input_source`;
+   - the detection and object IDs when the object came from a scan;
+   - `confirmed_object=true`;
+   - `context_revision`.
 
-UUID yang sama selalu berarti operasi yang sama. Catatan dengan hasil tidak diketahui direplay memakai payload/UUID awal agar tidak menggandakan data. AI mereplay hasil/error tersimpan tanpa panggilan provider; generasi baru setelah kegagalan memerlukan tindakan eksplisit dan UUID baru. Mengganti UUID otomatis atau mereplay refresh yang tidak diketahui adalah salah.
+   Never send prompts, model names, providers, raw classes, or confidence values from the client.
+4. **Recommend.** Call `POST ai/recommendations`.
+   - `READY` carries exactly one method, scoped to `HANDLING` or `PREVENTION`.
+   - Never treat `NEEDS_CONTEXT` or `UNAVAILABLE` as a ready recommendation.
+   - Conditional results list the conditions that still need to be verified. Sources and cautions stay visible.
+   - Nothing is logged and no XP is awarded at this stage.
+5. **Save.** Call `POST waste-logs` only after the user confirms the method and enters a quantity. Handling provenance uses the recommendation ID and both confirmation flags; Reduce (prevention) is logged manually. Discard the session with `DELETE ai/detections/{id}`.
 
-Provider17s → worker18s → Android read20s → Go header23s/total25s. Budget ini tidak menjamin respons pasti sampai sebelum Android timeout. Jangan menambah timeout satu lapisan atau meluncurkan retry generasi tersembunyi.
+### Idempotency and timeouts
 
-## Batas pilot
+- **One UUID, one operation.** The same UUID always means the same operation. Replay a request with an unknown outcome using its original UUID and payload so data is never duplicated.
+- **Replays.** The AI layer replays stored results and errors without calling the provider again. A new generation after a failure requires an explicit user action and a new UUID.
+- **Timeout budget.** The deadlines are layered: provider 17 s, worker 18 s, Android read 20 s, then Go 23 s for headers and 25 s in total. Do not extend a single layer or add hidden retries.
 
-Manifest rollout memilih bundle v4 + COCO11s dengan versi `broad-coco-b0f633193403`, 88 label dan input square640. Aktivasi memerlukan kedua checkpoint terverifikasi pada `AI_MODEL_DIRECTORY`. Snapshot model/kelas dari worker aktif tetap menjadi acuan Go. Empat policy guide versi6 (PET, HDPE, kaleng aluminium non-aerosol, kardus) diperiksa sumber otomatis, berlaku sampai 4 Desember2026 dan memerlukan konfirmasi penerima lokal. Panduan pilot yang tersedia menentukan cakupan rekomendasi produksi. Artikel panduan umum Go memakai schema terpisah dan masih kosong.
+## Pilot scope
 
-Unit/schema/HTTP tests tidak membuktikan akurasi material, independent holdout, keselamatan manusia, kapasitas/SLA provider, kamera perangkat atau penerimaan visual. Uji Android minimal API30 dan runtime terbaru; catatan TLS API24 tidak lagi menjadi baseline rilis.
+| Component | Pilot configuration |
+|---|---|
+| Detection | The v4 waste model with the COCO11s companion (`broad-coco-b0f633193403`): 88 labels, square 640 px input. Both checkpoints must be verified in `AI_MODEL_DIRECTORY` |
+| Recommendations | Four source-reviewed v6 guides: PET, HDPE, non-aerosol aluminium cans, and cardboard. They are valid until 4 December 2026 and require confirmed local collector access |
+
+Unit, schema, and HTTP tests do not prove any of the following:
+
+- material accuracy on an independent holdout;
+- safety for human handling;
+- provider capacity;
+- real device camera behavior;
+- visual acceptance.
+
+Android must be tested on API 30 and on the latest Android release.
