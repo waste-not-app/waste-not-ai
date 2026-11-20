@@ -1,0 +1,424 @@
+{
+  "status": "THREE_EXPLORATORY_RUNS_COMPLETED",
+  "protocol": "Legacy validation only. Each checkpoint starts from pinned model.json weights.",
+  "publisher_train_only_additions": {
+    "added_photos": 286,
+    "added_target_photo_counts": {
+      "cell phone": 164,
+      "remote": 134
+    },
+    "intake_sha256": "d1d87993af741e2942dc59d79acee049ecd6bb3d6c91d5c28ff52bbd910cd39f",
+    "legacy_snapshot": {
+      "manifest": "d83d22c0b81be7712cc2705006033be207cf2922f011154f1d441b863818dec3",
+      "train_list": "df7779f12437714a09800e20896fe8624dcc694025a40a4528e7f1e7c9d46703",
+      "val_list": "0adba90cf6f6cda11f8edf47b8e6df6c372270f0235579a08b2a73f19f0e8d43",
+      "source_yaml": "b60a7d8be4893e46f92e498d1c049286d99cd27a53dcaec79422f046c4c9b770",
+      "train_count": 535,
+      "val_count": 43,
+      "active_pixels": "4ce55edbdafb0def43405b376d90614346049c771918188bbf1cc6fea7f7f8b4",
+      "active_labels": "03c3dd50c00797751bd69ef8419de395daad1b193808250342de72067c2bf6c5"
+    },
+    "pilot_snapshot": {
+      "manifest": "ef939ca6819b16e14cbe09358cd3a0363db6ae6e278a25e3469838b9f4441072",
+      "train_list": "c6f507d7caa6a35b66e8340985b44ad1c025add7ae9d487374e2d9ae4e26d164",
+      "val_list": "a8173b25d9b6fe48fc28d7174c5479d23d9a56f0a6aca348bfa6eada35662af6",
+      "source_yaml": "7816d704584d8c3cb3816452b9951d09e3e1dca7254c69e1fb88b4ec4d5f98f5",
+      "train_count": 821,
+      "val_count": 43,
+      "active_pixels": "f06cdf9b58bfb6e3d21a7a138051d31c15404f906500d2704720129dc1711ff0",
+      "active_labels": "362ccb87a07eacefd93fa20e3d032e79dda780af4e55dcf9882dc32acb429578"
+    },
+    "validation_pixels_and_labels_equal": true,
+    "scope": "Provisional train-only COCO publisher annotations with attribution"
+  },
+  "limitations": [
+    "Four epochs per run with seed 42 and freeze 10; small legacy validation support in focus classes.",
+    "COCO additions are publisher-annotated training images with verified source attribution, scoped to this pilot."
+  ],
+  "runs": [
+    {
+      "scope": "EXPLORATORY_LEGACY_VALIDATION_ONLY",
+      "branch": "broad",
+      "run": "issue10-pilot-broad-20261120",
+      "dataset": "broad-waste-v4",
+      "input_sha256": {
+        "manifest": "846f9a112db657c0352582acaa25aa935eed32ea18ec6a6a626373d790816c8a",
+        "train_list": "7311559799bd2785bc623e4e3d7db1967c19f47b924de19d965d7b6d270d0a4c",
+        "val_list": "aeafd8787cbb97b4eabdc561c010de2d680fe0b372f7fc62aa207a9844a570eb",
+        "source_yaml": "121cc88029637702ca27b8a2b86a8e0d688f9862e4ed72f20e51c61a25aa58bf",
+        "train_count": 943,
+        "val_count": 975,
+        "active_pixels": "34c9d4dd821c744fa73d1d4066a70b951f9bf58e45614a0b3b47f3e1eade6ea0",
+        "active_labels": "1151a1b0ccce1998d1568a821abe234b60344bd10185ed8729dfaca517290898",
+        "initial_model": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f"
+      },
+      "config": {
+        "epochs": 4,
+        "imgsz": 640,
+        "batch": 8,
+        "workers": 0,
+        "patience": 4,
+        "seed": 42,
+        "freeze": 10,
+        "lr0": 0.0001,
+        "lrf": 0.01,
+        "nbs": 64,
+        "warmup_epochs": 1,
+        "warmup_bias_lr": 0.1,
+        "close_mosaic": 1,
+        "mosaic": 0.5,
+        "degrees": 15.0,
+        "scale": 0.35,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "translate": 0.1
+      },
+      "amp": true,
+      "holdout_opened": false,
+      "promoted": false,
+      "environment": {
+        "python": "3.13.1",
+        "torch": "2.9.1+cu128",
+        "ultralytics": "8.4.183",
+        "cuda": "12.8",
+        "device": "NVIDIA GeForce RTX 4070 Laptop GPU"
+      },
+      "status": "COMPLETED",
+      "created_at": "2026-11-20T03:07:32.818278+00:00",
+      "elapsed_seconds": 210.8981255000108,
+      "epochs_completed": 4,
+      "best_epoch": 3,
+      "candidate_sha256": "60478545b367ef1f713bc19c34d8120365657cab22b2d38a8668ff75e87c4455",
+      "curves_sha256": "e7b434e53b05d166a6e2d3a95c5840e54eb435d64c0dbc735f78c20a44c2698a",
+      "comparison": {
+        "baseline": {
+          "map50": 0.36061499479781645,
+          "map50_95": 0.26098218679414936,
+          "focus_at_confidence_050": {
+            "cardboard": {
+              "tp": 17,
+              "fp": 23,
+              "fn": 34,
+              "precision": 0.425,
+              "recall": 0.3333333333333333,
+              "support": 51,
+              "f1": 0.37362637362637363
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 9,
+              "fn": 16,
+              "precision": 0.1,
+              "recall": 0.058823529411764705,
+              "support": 17,
+              "f1": 0.07407407407407407
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 5,
+              "precision": null,
+              "recall": 0.0,
+              "support": 5,
+              "f1": 0.0
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "support": 2,
+              "f1": 0.0
+            }
+          },
+          "phone_remote_cross_class_confusion": []
+        },
+        "candidate": {
+          "map50": 0.3218649297654445,
+          "map50_95": 0.23212293224915326,
+          "focus_at_confidence_050": {
+            "cardboard": {
+              "tp": 18,
+              "fp": 18,
+              "fn": 33,
+              "precision": 0.5,
+              "recall": 0.35294117647058826,
+              "support": 51,
+              "f1": 0.41379310344827586
+            },
+            "plastic_wrapper": {
+              "tp": 1,
+              "fp": 12,
+              "fn": 16,
+              "precision": 0.07692307692307693,
+              "recall": 0.058823529411764705,
+              "support": 17,
+              "f1": 0.06666666666666667
+            },
+            "paper": {
+              "tp": 0,
+              "fp": 5,
+              "fn": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "support": 5,
+              "f1": 0.0
+            },
+            "drink_carton": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "support": 2,
+              "f1": 0.0
+            }
+          },
+          "phone_remote_cross_class_confusion": []
+        }
+      },
+      "weights_local": "artifacts/training/issue10-pilot-broad-20261120/weights/best.pt",
+      "observed_effective_batches": [
+        64
+      ],
+      "pilot_report_sha256": "19b7ea1d6ab190753a794528b9555b642f81cf0156e3e6980b247e330580878d",
+      "decision": "BASELINE_PREFERRED_IN_PILOT"
+    },
+    {
+      "scope": "EXPLORATORY_LEGACY_VALIDATION_ONLY",
+      "branch": "general",
+      "run": "issue10-pilot-general-20261120",
+      "dataset": "general-confusion-v1",
+      "input_sha256": {
+        "manifest": "d83d22c0b81be7712cc2705006033be207cf2922f011154f1d441b863818dec3",
+        "train_list": "df7779f12437714a09800e20896fe8624dcc694025a40a4528e7f1e7c9d46703",
+        "val_list": "0adba90cf6f6cda11f8edf47b8e6df6c372270f0235579a08b2a73f19f0e8d43",
+        "source_yaml": "b60a7d8be4893e46f92e498d1c049286d99cd27a53dcaec79422f046c4c9b770",
+        "train_count": 535,
+        "val_count": 43,
+        "active_pixels": "4ce55edbdafb0def43405b376d90614346049c771918188bbf1cc6fea7f7f8b4",
+        "active_labels": "03c3dd50c00797751bd69ef8419de395daad1b193808250342de72067c2bf6c5",
+        "initial_model": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5"
+      },
+      "config": {
+        "epochs": 4,
+        "imgsz": 640,
+        "batch": 8,
+        "workers": 0,
+        "patience": 4,
+        "seed": 42,
+        "freeze": 10,
+        "lr0": 0.0001,
+        "lrf": 0.01,
+        "nbs": 64,
+        "warmup_epochs": 1,
+        "warmup_bias_lr": 0.1,
+        "close_mosaic": 1,
+        "mosaic": 0.5,
+        "degrees": 15.0,
+        "scale": 0.35,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "translate": 0.1
+      },
+      "amp": true,
+      "holdout_opened": false,
+      "promoted": false,
+      "environment": {
+        "python": "3.13.1",
+        "torch": "2.9.1+cu128",
+        "ultralytics": "8.4.183",
+        "cuda": "12.8",
+        "device": "NVIDIA GeForce RTX 4070 Laptop GPU"
+      },
+      "status": "COMPLETED",
+      "created_at": "2026-11-20T03:03:47.063015+00:00",
+      "elapsed_seconds": 84.01140070002293,
+      "epochs_completed": 4,
+      "best_epoch": 1,
+      "candidate_sha256": "a9e1f0d2ca7cded70fd5b0b3dcd24dfc1e111f5c6af538662494307e2101c857",
+      "curves_sha256": "d5e6a63e013328ebf99168ef01c29e56300140db496ccda6a5b0f0024d1ba4bc",
+      "comparison": {
+        "baseline": {
+          "map50": 0.6949982462091392,
+          "map50_95": 0.509721010460457,
+          "focus_at_confidence_050": {
+            "cell phone": {
+              "tp": 8,
+              "fp": 0,
+              "fn": 11,
+              "precision": 1.0,
+              "recall": 0.42105263157894735,
+              "support": 19,
+              "f1": 0.5925925925925926
+            },
+            "remote": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.2222222222222222,
+              "support": 9,
+              "f1": 0.36363636363636365
+            }
+          },
+          "phone_remote_cross_class_confusion": []
+        },
+        "candidate": {
+          "map50": 0.6163149333767505,
+          "map50_95": 0.39212545111714864,
+          "focus_at_confidence_050": {
+            "cell phone": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 17,
+              "precision": 1.0,
+              "recall": 0.10526315789473684,
+              "support": 19,
+              "f1": 0.19047619047619047
+            },
+            "remote": {
+              "tp": 2,
+              "fp": 1,
+              "fn": 7,
+              "precision": 0.6666666666666666,
+              "recall": 0.2222222222222222,
+              "support": 9,
+              "f1": 0.3333333333333333
+            }
+          },
+          "phone_remote_cross_class_confusion": []
+        }
+      },
+      "weights_local": "artifacts/training/issue10-pilot-general-20261120/weights/best.pt",
+      "observed_effective_batches": [
+        64
+      ],
+      "pilot_report_sha256": "4e24ce315b02790b5112ce18e874e4c5da9123e7feb48dcb9d1cfb7c79bddcfa",
+      "decision": "BASELINE_PREFERRED_IN_PILOT"
+    },
+    {
+      "scope": "EXPLORATORY_PUBLISHER_COCO_TRAIN_ONLY",
+      "branch": "general",
+      "run": "issue10-pilot-general-coco-20261120",
+      "dataset": "issue10-pilot-general-coco",
+      "input_sha256": {
+        "manifest": "ef939ca6819b16e14cbe09358cd3a0363db6ae6e278a25e3469838b9f4441072",
+        "train_list": "c6f507d7caa6a35b66e8340985b44ad1c025add7ae9d487374e2d9ae4e26d164",
+        "val_list": "a8173b25d9b6fe48fc28d7174c5479d23d9a56f0a6aca348bfa6eada35662af6",
+        "source_yaml": "7816d704584d8c3cb3816452b9951d09e3e1dca7254c69e1fb88b4ec4d5f98f5",
+        "train_count": 821,
+        "val_count": 43,
+        "active_pixels": "f06cdf9b58bfb6e3d21a7a138051d31c15404f906500d2704720129dc1711ff0",
+        "active_labels": "362ccb87a07eacefd93fa20e3d032e79dda780af4e55dcf9882dc32acb429578",
+        "initial_model": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5"
+      },
+      "config": {
+        "epochs": 4,
+        "imgsz": 640,
+        "batch": 8,
+        "workers": 0,
+        "patience": 4,
+        "seed": 42,
+        "freeze": 10,
+        "lr0": 0.0001,
+        "lrf": 0.01,
+        "nbs": 64,
+        "warmup_epochs": 1,
+        "warmup_bias_lr": 0.1,
+        "close_mosaic": 1,
+        "mosaic": 0.5,
+        "degrees": 15.0,
+        "scale": 0.35,
+        "hsv_h": 0.015,
+        "hsv_s": 0.7,
+        "hsv_v": 0.4,
+        "flipud": 0.0,
+        "fliplr": 0.5,
+        "translate": 0.1
+      },
+      "amp": true,
+      "holdout_opened": false,
+      "promoted": false,
+      "environment": {
+        "python": "3.13.1",
+        "torch": "2.9.1+cu128",
+        "ultralytics": "8.4.183",
+        "cuda": "12.8",
+        "device": "NVIDIA GeForce RTX 4070 Laptop GPU"
+      },
+      "status": "COMPLETED",
+      "created_at": "2026-11-20T03:09:34.683249+00:00",
+      "elapsed_seconds": 117.01919289998477,
+      "epochs_completed": 4,
+      "best_epoch": 1,
+      "candidate_sha256": "a66ca7f3ed5df175a4bdd1c734998e77e2e40ce59391681275a6577ed7cf61f6",
+      "curves_sha256": "95e28972fec2f96ff1d1ddac5d0caf3e8b5f6598151391410a395c95073a4580",
+      "comparison": {
+        "baseline": {
+          "map50": 0.6949982462091392,
+          "map50_95": 0.509721010460457,
+          "focus_at_confidence_050": {
+            "cell phone": {
+              "tp": 8,
+              "fp": 0,
+              "fn": 11,
+              "precision": 1.0,
+              "recall": 0.42105263157894735,
+              "support": 19,
+              "f1": 0.5925925925925926
+            },
+            "remote": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.2222222222222222,
+              "support": 9,
+              "f1": 0.36363636363636365
+            }
+          },
+          "phone_remote_cross_class_confusion": []
+        },
+        "candidate": {
+          "map50": 0.6053279028672849,
+          "map50_95": 0.37150454719781606,
+          "focus_at_confidence_050": {
+            "cell phone": {
+              "tp": 7,
+              "fp": 5,
+              "fn": 12,
+              "precision": 0.5833333333333334,
+              "recall": 0.3684210526315789,
+              "support": 19,
+              "f1": 0.45161290322580644
+            },
+            "remote": {
+              "tp": 2,
+              "fp": 0,
+              "fn": 7,
+              "precision": 1.0,
+              "recall": 0.2222222222222222,
+              "support": 9,
+              "f1": 0.36363636363636365
+            }
+          },
+          "phone_remote_cross_class_confusion": []
+        }
+      },
+      "weights_local": "artifacts/training/issue10-pilot-general-coco-20261120/weights/best.pt",
+      "observed_effective_batches": [
+        64
+      ],
+      "pilot_report_sha256": "3f9269d984b10c866ddf870e9b7adbeada6c8fc6dd0add34e46b2014d7b07dd9",
+      "decision": "BASELINE_PREFERRED_IN_PILOT"
+    }
+  ]
+}

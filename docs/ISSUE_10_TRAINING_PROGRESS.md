@@ -1,6 +1,6 @@
 # Issue #10 — tooling fine-tuning dan run yang ditunda
 
-Status: **implementasi kode siap diuji/review; eksperimen model nyata belum dijalankan**. PR ditumpuk di atas implementasi issue #9. Review data issue #8/#9 tetap ditunda sampai akhir sesuai arahan pengguna.
+Status **tiga pilot training selesai pada 20 November 2026**. Pilot dijalankan setelah pengguna meminta mulai training dengan data yang tersedia. Rangkaian eksperimen terkontrol dan uji kestabilan seed masih terbuka.
 
 ## Perubahan
 
@@ -16,14 +16,28 @@ Status: **implementasi kode siap diuji/review; eksperimen model nyata belum dija
 
 ## Rencana dan status aktual
 
-[Rencana B0–B3](../evaluations/issue10-experiment-plan.json) memuat delapan entri untuk dua model: dua B0 evaluasi dan enam training run B1/B2/B3. Seluruh preflight tertunda karena dataset final dengan review/bukti build belum tersedia. Tidak ada dataset review-only yang dipakai training.
+[Rencana B0–B3](../evaluations/issue10-experiment-plan.json) memuat delapan entri untuk dua model, yaitu dua evaluasi B0 dan enam training run B1/B2/B3. Preflight rangkaian ini menunggu dataset final dengan bukti build. Pilot di bawah memakai jalur eksperimen lokal dan validation legacy.
 
 | Cabang | B0 | B1 | B2 | B3 | Seed tambahan |
 |---|---|---|---|---|---|
 | Broad Waste | Ditunda | Ditunda | Ditunda | Menunggu data dan seleksi B1/B2 | Menunggu kandidat |
 | General COCO11s | Ditunda | Ditunda | Ditunda | Menunggu data dan seleksi B1/B2 | Menunggu kandidat |
 
-Preflight pada dataset legacy yang sudah dipulihkan juga menolak memulai eksperimen karena belum memiliki readiness dataset baru. Ini sesuai penundaan review, bukan hasil training yang gagal. Baseline produksi tetap dipertahankan, dan belum ada kandidat nyata yang dinyatakan lebih baik/stabil.
+## Hasil pilot validation legacy
+
+Setiap run memakai RTX 4070 Laptop, Ultralytics 8.4.183, square640, seed 42, batch 8, nominal batch 64, freeze 10, dan empat epoch. AdamW memakai laju awal 0,0001 dan warmup satu epoch. Bobot awal cocok dengan SHA-256 registry. Validation per cabang memakai gambar dan label yang sama pada kedua sisi perbandingan.
+
+| Run | Gambar train / validation | mAP50–95 bobot awal | mAP50–95 kandidat | Epoch checkpoint |
+|---|---:|---:|---:|---:|
+| Broad Waste legacy | 943 / 975 | 26,10% | 23,21% | 3 |
+| General legacy | 535 / 43 | 50,97% | 39,21% | 1 |
+| General dengan tambahan COCO | 821 / 43 | 50,97% | 37,15% | 1 |
+
+Run tambahan general memakai 286 foto COCO train2017 yang memiliki bbox penerbit dan atribusi terverifikasi. Foto tambahan hanya dimasukkan ke train. Semua checksum gambar dan label validation cocok dengan general legacy. F1 ponsel pada confidence 0,50 bergerak dari 59,26% pada bobot awal menjadi 19,05% pada pilot legacy dan 45,16% pada pilot tambahan COCO. F1 remote masing-masing 36,36%, 33,33%, dan 36,36%. Validation general memuat 19 objek ponsel dan 9 remote.
+
+F1 kardus Broad pada confidence 0,50 naik dari 37,36% ke 41,38%. F1 wrapper turun dari 7,41% ke 6,67%. Validation hanya memiliki lima objek kertas dan dua karton minuman. mAP50–95 masing-masing kandidat memberi alasan untuk memilih baseline pada pilot ini.
+
+Semua kurva, checksum dan bobot `best.pt` disimpan di `artifacts/training/issue10-pilot-*-20261120/`. Laporan mencatat kandidat sebagai eksperimen validation lama. [Hasil dan checksum ketiga run](../evaluations/issue10-training-pilots.json).
 
 ## Verifikasi
 
