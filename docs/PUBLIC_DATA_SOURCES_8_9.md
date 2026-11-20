@@ -38,3 +38,16 @@ Jumlah berkas Commons dan jumlah pasangan di ORBIT adalah batas sebelum audit ob
 Antrean lokal `data/local/issue8-9-public-intake/` berisi `issue8-intake.json` dengan 84 foto dan `issue9-intake.json` dengan 28 foto atau frame. Manifest menyimpan atribusi, URL, checksum, bbox sementara, dan kelompok konservatif. Pemeriksaan pHash membandingkan kandidat dengan baseline, replay, antrean sebelumnya, dan antarsumber pilot. Contact sheet serta `visual-screening.json` tersedia di penyimpanan lokal untuk review. Status `train` pada antrean adalah usulan penggunaan sesudah persetujuan. [Hasil pilot dan audit](../evaluations/issue8-9-public-intake-pilot.json).
 
 Kedua audit intake menghasilkan `INCOMPLETE_DATA_REVIEW`, dengan 0 foto baru diterima. #8 memerlukan review lengkap oleh manusia independen. #9 memerlukan anotasi COCO80 dan tag sudut pandang yang ditinjau. Jumlah kelompok awal untuk remote adalah empat dan masih jauh dari target validation maupun holdout. Target tiap split tersebut tetap 50 instance dari minimal 20 kelompok independen per kelas fokus. [Panduan #8](TUNING_DATA_ANNOTATION_GUIDE.md), [panduan #9](GENERAL_FOCUS_DATA_GUIDE.md), [hasil audit antrean sebelumnya](PUBLIC_DATA_REVIEW_8_9.md).
+
+## Audit lanjutan dan kesiapan training
+
+Audit lanjutan memperluas #9 dengan 48 foto dari split test Open Images. Penyaringan metadata menemukan 18 foto remote dari 18 akun Flickr dan 338 foto ponsel dari 306 akun sebelum sampling. Batch yang diunduh mencakup 18 kandidat remote dan 30 kandidat ponsel. Foto diunduh untuk diperiksa dan seluruhnya tetap berstatus kandidat. Screening visual menemukan GPS dan game controller berlabel remote serta beberapa tangkapan layar aplikasi berlabel ponsel. [Metadata resmi Open Images V7](https://storage.googleapis.com/openimages/web/download_v7.html).
+
+Codex memeriksa 160 gambar awal dari segi checksum, pHash, orientasi, dan geometri. Sembilan kandidat dipisahkan setelah screening, dua dari CLICK dan tujuh dari Open Images. Bbox sementara direvisi pada tujuh foto #8 dan dua belas foto #9. Contohnya mencakup mug di samping karton susu, TV dan keyboard dalam adegan ponsel, dan pembungkus plastik dalam kotak kardus. Catatan menyimpan objek yang masih meragukan untuk pemeriksaan lanjutan. [Laporan audit lanjutan](../evaluations/issue8-9-assistant-review.json).
+
+| Issue | Kandidat setelah screening | Dukungan sementara | Audit resmi |
+|---|---:|---|---|
+| #8 | 82 | 40 foto kardus, 13 kertas, 15 karton minuman, 20 bungkus plastik. Setiap foto bisa memuat beberapa kelas. | 0 diterima. Review anotasi lengkap oleh manusia independen masih tertunda. |
+| #9 | 69 | 43 foto ponsel dan 27 foto remote, termasuk kotak tambahan dari screening. Remote tersebar pada 19 kunci sesi sementara. | 0 diterima. Anotasi COCO80 lengkap dan review masih tertunda. |
+
+Jumlah di atas adalah cakupan kandidat dari antrean ini. Sembilan belas kunci sesi remote masih di bawah target 20 kelompok independen untuk satu split, dan independensinya masih harus diperiksa. File kandidat terbaru adalah `issue8-intake-reviewed-draft.json` dan `issue9-intake-reviewed-draft.json` di `data/local/issue8-9-public-intake/`. Preflight #10 menunda delapan run B0–B3 karena kedua output build dataset belum tersedia. [Sasaran dan hasil audit](../evaluations/issue8-9-assistant-review.json).

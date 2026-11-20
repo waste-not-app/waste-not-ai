@@ -1,0 +1,253 @@
+{
+  "issue_summaries": {
+    "8": {
+      "candidate_records": 82,
+      "scanned_records": 84,
+      "assistant_bbox_revisions": 7,
+      "candidate_photos_by_label": {
+        "bottle": 1,
+        "cardboard": 40,
+        "cup": 2,
+        "drink_carton": 15,
+        "paper": 13,
+        "paper_pack_type_pending": 12,
+        "plastic_bag": 2,
+        "plastic_wrapper": 20
+      },
+      "distinct_provisional_session_keys_by_label": {
+        "bottle": 1,
+        "cardboard": 8,
+        "cup": 2,
+        "drink_carton": 6,
+        "paper": 2,
+        "paper_pack_type_pending": 1,
+        "plastic_bag": 1,
+        "plastic_wrapper": 2
+      },
+      "candidate_photos_by_source": {
+        "CLICK Trash v2": 29,
+        "D.Waste Post-Event": 31,
+        "WaRP-D": 10,
+        "Wikimedia Commons": 12
+      },
+      "intake_sha256": "44390f4d006c242f2002c645d1579703dfde13d48fcd5629ae1bb1d49c4965f0",
+      "official_audit": {
+        "status": "INCOMPLETE_DATA_REVIEW",
+        "exit_code": 2,
+        "accepted_images": 0,
+        "rejected_reason_counts": {
+          "Independent complete human review pending": 82
+        }
+      },
+      "minimum_more_train_photos_if_entire_pilot_passed": {
+        "cardboard": 110,
+        "plastic_wrapper": 80,
+        "paper": 87,
+        "drink_carton": 85
+      },
+      "required_evaluation_support_per_class_per_split": {
+        "instances": 50,
+        "independent_groups": 20
+      },
+      "approved_evaluation_support": {
+        "val": {
+          "cardboard": {
+            "instances": 0,
+            "groups": 0
+          },
+          "plastic_wrapper": {
+            "instances": 0,
+            "groups": 0
+          },
+          "paper": {
+            "instances": 0,
+            "groups": 0
+          },
+          "drink_carton": {
+            "instances": 0,
+            "groups": 0
+          }
+        },
+        "test": {
+          "cardboard": {
+            "instances": 0,
+            "groups": 0
+          },
+          "plastic_wrapper": {
+            "instances": 0,
+            "groups": 0
+          },
+          "paper": {
+            "instances": 0,
+            "groups": 0
+          },
+          "drink_carton": {
+            "instances": 0,
+            "groups": 0
+          }
+        }
+      }
+    },
+    "9": {
+      "candidate_records": 69,
+      "scanned_records": 76,
+      "assistant_bbox_revisions": 12,
+      "candidate_photos_by_label": {
+        "book": 1,
+        "bowl": 1,
+        "cell phone": 43,
+        "cup": 1,
+        "dining table": 2,
+        "keyboard": 1,
+        "person": 2,
+        "remote": 27,
+        "scissors": 1,
+        "tv": 1
+      },
+      "distinct_provisional_session_keys_by_label": {
+        "book": 1,
+        "bowl": 1,
+        "cell phone": 35,
+        "cup": 1,
+        "dining table": 2,
+        "keyboard": 1,
+        "person": 2,
+        "remote": 19,
+        "scissors": 1,
+        "tv": 1
+      },
+      "candidate_photos_by_source": {
+        "ORBIT": 20,
+        "Open Images": 41,
+        "Wikimedia Commons": 8
+      },
+      "intake_sha256": "aec877fafe594b1f58313ac13ef661d0cfe8484079647680bc98d25da4687de4",
+      "official_audit": {
+        "status": "INCOMPLETE_DATA_REVIEW",
+        "exit_code": 2,
+        "accepted_images": 0,
+        "rejected_reason_counts": {
+          "Full COCO80 annotation and review required": 69
+        }
+      },
+      "minimum_more_train_photos_if_entire_pilot_passed": {
+        "cell phone": 157,
+        "remote": 123
+      },
+      "required_evaluation_support_per_class_per_split": {
+        "instances": 50,
+        "independent_groups": 20
+      },
+      "approved_evaluation_support": {
+        "val": {
+          "cell phone": {
+            "instances": 0,
+            "groups": 0
+          },
+          "remote": {
+            "instances": 0,
+            "groups": 0
+          }
+        },
+        "test": {
+          "cell phone": {
+            "instances": 0,
+            "groups": 0
+          },
+          "remote": {
+            "instances": 0,
+            "groups": 0
+          }
+        }
+      }
+    }
+  },
+  "deferred": [
+    {
+      "issue": 8,
+      "id": "click-v2:trash (302).jpg",
+      "reason": "The draft wrapper box covers a cup-like object and material needs identification."
+    },
+    {
+      "issue": 8,
+      "id": "click-v2:trash (1073).jpg",
+      "reason": "The proposed plastic wrapper is a rigid printed snack box."
+    },
+    {
+      "issue": 9,
+      "id": "openimages-test-focus-v1:7575cd9abbeb82f0",
+      "reason": "Wired game controller, outside the domestic remote focus."
+    },
+    {
+      "issue": 9,
+      "id": "openimages-test-focus-v1:8ed967d3783558cd",
+      "reason": "The target is a Garmin GPS receiver."
+    },
+    {
+      "issue": 9,
+      "id": "openimages-test-focus-v1:10e0f8261feb1736",
+      "reason": "Promotional composite, unsuitable for near-field camera evaluation."
+    },
+    {
+      "issue": 9,
+      "id": "openimages-test-focus-v1:fa0a82022c76db52",
+      "reason": "Review watermark attribution before use, and remote is a peripheral object."
+    },
+    {
+      "issue": 9,
+      "id": "openimages-test-focus-v1:6f75dfb114422561",
+      "reason": "App home screen capture without physical handset."
+    },
+    {
+      "issue": 9,
+      "id": "openimages-test-focus-v1:99508baef715c091",
+      "reason": "App screen capture without physical handset."
+    },
+    {
+      "issue": 9,
+      "id": "openimages-test-focus-v1:f06256108e8b294e",
+      "reason": "Keyboard screen capture without physical handset."
+    }
+  ],
+  "openimages_test": {
+    "status": "PENDING_FULL_REVIEW",
+    "candidates": 48,
+    "target_counts": {
+      "remote": 18,
+      "cell phone": 30
+    },
+    "publisher": "https://storage.googleapis.com/openimages/web/download_v7.html",
+    "planned_downloads": 48,
+    "metadata_capacity": {
+      "remote": {
+        "photos": 18,
+        "source_accounts": 18
+      },
+      "cell phone": {
+        "photos": 338,
+        "source_accounts": 306
+      }
+    },
+    "metadata_skips": {
+      "rotation_needs_review": 9,
+      "no_source_account": 1
+    },
+    "source_split": "test",
+    "metadata_sha256": {
+      "boxes.csv": "fe22e579b9453875601576859d14ef3304058165de139c66b725e599202bd7b1",
+      "images.csv": "de55c6b8cbda32a79f4a20f28572d54e9c49d527a4006725675764074a51a36d"
+    }
+  },
+  "review_scope": "All 160 incoming images were checked for hashes, orientation and bbox geometry. All 48 Open Images samples were screened on contact sheets. Selected corrected boxes were drawn by Codex on enlarged panels and remain drafts.",
+  "verified_on": "2026-11-20",
+  "issue10_preflight": {
+    "status": "PLAN_ONLY_NO_EXPERIMENT_EXECUTED",
+    "runs": {
+      "DEFERRED_DATA_OR_BASELINE": 8
+    },
+    "missing_datasets": [
+      "broad-waste-issue8-v5",
+      "general-focus-issue9-v2"
+    ]
+  }
+}

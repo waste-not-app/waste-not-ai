@@ -364,7 +364,7 @@ def audit_intake(base, intake, root, protected):
             extra.append(
                 {
                     "id": row.get("id"),
-                    "reasons": ["Full COCO80 reannotation/review required; native FPI labels are not training labels"],
+                    "reasons": ["Full COCO80 annotation and review required"],
                 }
             )
         elif row.get("source") == "FPI-Det" and row.get("reannotated_from_native") is not True:
