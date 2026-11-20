@@ -1,0 +1,21 @@
+{
+  "scope": "Publisher metadata upper bounds; not acquired, reviewed or holdout-eligible data",
+  "all_publisher_instances": {
+    "cardboard": 206,
+    "plastic_wrapper": 750,
+    "drink_carton": 45,
+    "paper": 106
+  },
+  "all_publisher_images": {
+    "cardboard": 155,
+    "plastic_wrapper": 475,
+    "drink_carton": 41,
+    "paper": 82
+  },
+  "instances_outside_v4_upper_bound": {
+    "plastic_wrapper": 651,
+    "drink_carton": 28,
+    "paper": 79,
+    "cardboard": 52
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "version": "issue8-evaluation-v1",
+  "baseline": {
+    "version": "broad-coco-b0f633193403",
+    "broad_sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+    "general_sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+    "ultralytics": "8.4.183",
+    "input_size": 640,
+    "input_shape": "square",
+    "review_threshold": 0.5,
+    "matching_iou": 0.5,
+    "combined_class_count": 88
+  },
+  "focus_classes": ["cardboard", "plastic_wrapper", "paper", "drink_carton", "cell phone", "remote"],
+  "selection_split": "validation_only",
+  "legacy_replay_usage": "REGRESSION_ONLY_ALREADY_OBSERVED",
+  "final_holdout": "NEW_OBJECT_SESSION_GROUPS_UNOPENED_UNTIL_CANDIDATE_FROZEN",
+  "minimum_validation_and_holdout_support_per_focus_class": {"instances": 50, "independent_groups": 20},
+  "promotion_gates": {
+    "focus_macro_f1_gain_percentage_points": 5,
+    "maximum_per_class_precision_recall_loss_percentage_points": 2,
+    "maximum_supported_control_f1_loss_percentage_points": 2,
+    "combined_micro_f1_must_not_decline": true,
+    "maximum_cpu_p95_ratio_to_matched_baseline": 1.25,
+    "confidence_interval_percent": 95,
+    "resampling_unit": "connected_object_session_group"
+  },
+  "new_data_approval": "COMPLETE_INDEPENDENT_HUMAN_REVIEW_AND_RELEASE_ELIGIBLE_RIGHTS",
+  "training_selection_test_separation_implementation": "issue_10_before_first_training_run"
+}

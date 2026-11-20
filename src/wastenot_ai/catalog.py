@@ -61,9 +61,33 @@ def _detection_mapping(labels: dict[int, str], catalog: dict):
     return version, mapping
 
 
-def detection_capabilities(labels: dict[int, str], *, model_version=None, model_sha256=None) -> dict:
-    version, mapping = _detection_mapping(labels, load_catalog())
+def calibrated_thresholds(model):
+    return dict(model.get("calibration", {}).get("thresholds", ()))
+
+
+def _review_settings(labels, model_version, model_sha256, thresholds, lower_thresholds):
     profile = review_profile(labels, model_version, model_sha256)
+    if not lower_thresholds:
+        return profile
+    if not model_sha256 or labels != dict(enumerate(COMBINED_LABELS)):
+        raise ValueError("Calibration requires a registered combined model identity")
+    classes = dict(profile["classes"])
+    for label, lower in lower_thresholds.items():
+        current = classes.get(label, {})
+        classes[label] = {
+            "lower": lower,
+            "offered": max(lower, current.get("offered", thresholds["offered"])),
+            "offered_enabled": current.get("offered_enabled", True),
+        }
+    return {**profile, "id": f"combined-calibration-{model_sha256[:12]}", "classes": classes}
+
+
+def detection_capabilities(
+    labels: dict[int, str], *, model_version=None, model_sha256=None, lower_thresholds=None
+) -> dict:
+    catalog = load_catalog()
+    version, mapping = _detection_mapping(labels, catalog)
+    profile = _review_settings(labels, model_version, model_sha256, catalog["thresholds"], lower_thresholds)
     if profile["id"] != DEFAULT_PROFILE:
         version += "+" + profile["id"]
     return {
@@ -79,12 +103,12 @@ def detection_capabilities(labels: dict[int, str], *, model_version=None, model_
 
 
 def review_detections(
-    objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None
+    objects: list[RawDetection], labels: dict[int, str], *, model_version=None, model_sha256=None, lower_thresholds=None
 ) -> dict:
     catalog = load_catalog()
     version, mapping = _detection_mapping(labels, catalog)
     thresholds = catalog["thresholds"]
-    profile = review_profile(labels, model_version, model_sha256)
+    profile = _review_settings(labels, model_version, model_sha256, thresholds, lower_thresholds)
     if profile["id"] != DEFAULT_PROFILE:
         version += "+" + profile["id"]
     result = []

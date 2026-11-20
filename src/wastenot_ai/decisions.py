@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from .catalog import load_catalog, preserve_detected_risk, review_detections
+from .catalog import calibrated_thresholds, load_catalog, preserve_detected_risk, review_detections
 from .contracts import Category
 from .recommendation import is_reviewed, recommend
 from .wire import CatalogItem, DecisionInput, ObjectCatalog, RecommendationResult
@@ -15,20 +15,29 @@ class DecisionError(ValueError):
 
 
 class Decisions:
-    def __init__(self, provider, guides, *, demo_guides=False, today=None):
+    def __init__(self, provider, guides, *, demo_guides=False, today=None, calibrated_model=None):
         self.provider, self.guides, self.demo_guides = provider, guides, demo_guides
         self.today = today or date.today
+        self.calibrated_model = calibrated_model
 
     def evaluate(self, value: DecisionInput) -> RecommendationResult:
         context = value.context
         if value.selection is not None:
             selection = value.selection
+            profile = self.calibrated_model or {}
+            lower_thresholds = None
+            if (selection.model_version, selection.model_sha256) == (
+                profile.get("model_version"),
+                profile.get("sha256"),
+            ):
+                lower_thresholds = calibrated_thresholds(profile)
             try:
                 result = review_detections(
                     [selection.object],
                     dict(enumerate(selection.class_names)),
                     model_version=selection.model_version,
                     model_sha256=selection.model_sha256,
+                    lower_thresholds=lower_thresholds,
                 )
             except ValueError:
                 raise DecisionError("INVALID_AI_REFERENCE") from None

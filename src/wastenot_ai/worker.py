@@ -120,7 +120,7 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
     @app.get("/internal/v1/capabilities", response_model=Envelope[DetectionCapabilities])
     async def capabilities(request: Request):
         authorize(request)
-        from .catalog import detection_capabilities, load_catalog
+        from .catalog import calibrated_thresholds, detection_capabilities, load_catalog
 
         model = app.state.detector.artifact
         labels = app.state.detector.labels
@@ -130,7 +130,12 @@ def create_app(detector=None, token: str | None = None, timeout: float = 10) -> 
             {
                 "model": {"model_version": model["model_version"], "sha256": model["sha256"], "class_names": names},
                 "thresholds": load_catalog()["thresholds"],
-                **detection_capabilities(labels, model_version=model["model_version"], model_sha256=model["sha256"]),
+                **detection_capabilities(
+                    labels,
+                    model_version=model["model_version"],
+                    model_sha256=model["sha256"],
+                    lower_thresholds=calibrated_thresholds(model),
+                ),
             },
         )
 

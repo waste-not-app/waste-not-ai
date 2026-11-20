@@ -1,0 +1,8 @@
+{
+  "replay_manifest_sha256_matches": true,
+  "input_sha256_matches_all_records": true,
+  "overall_matches_all_profiles_models": true,
+  "images": 117,
+  "record_count": 702,
+  "timing_note": "Timing changed across runs; no speed improvement claimed. Rebenchmark baseline alongside future candidates on matched hardware and workload."
+}

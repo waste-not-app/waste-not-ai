@@ -1,0 +1,17 @@
+# YOLO issues 8 through 12 readiness review
+
+The November 19 review compares the tuning stack with `main` and the acceptance criteria from GitHub. The checked-in evidence supports tooling and baseline reproduction. The cycle still needs reviewed data and measurements before model promotion and merge.
+
+| Issue | Evidence available | Remaining acceptance |
+|---|---|---|
+| [#8](https://github.com/waste-not-app/waste-not-ai/issues/8) | Broad v4 dataset and checkpoint hashes verified, 117-photo baseline reproduced, 48 TACO candidates screened | 45 TACO candidates share a protected source group. The dataset still needs approved annotations, verified rights and independent validation and holdout groups. |
+| [#9](https://github.com/waste-not-app/waste-not-ai/issues/9) | General dataset restored, 400 native FPI and 260 COCO candidates audited, 17 Open Images pilot photos screened, phone and remote legacy errors reported | Correct annotations, verify rights and front, rear and side coverage, complete COCO annotations for selected FPI images and source independent groups. The pilot has insufficient remote coverage. |
+| [#10](https://github.com/waste-not-app/waste-not-ai/issues/10) | Validation-only trainer, frozen inputs and candidate selection, seed checks. Three exploratory training runs completed on legacy validation. | Run the planned comparison and stability checks on the required dataset. Legacy pilot mAP50–95 favors the starting checkpoints. |
+| [#11](https://github.com/waste-not-app/waste-not-ai/issues/11) | Size profiles, upload-path audit, timed comparisons and budget checks | Measure 640 and 768 on the frozen components, then 960 if warranted. Record matched CPU, AP, quality, memory and HTTP evidence. The preflight is deferred. |
+| [#12](https://github.com/waste-not-app/waste-not-ai/issues/12) | Cache-bound calibration, shared fusion, one-time holdout runner and tested paired worker profile lookup | Produce a real validation calibration and frozen candidate, evaluate it once on the reserved holdout, verify the Go and worker release path, then produce the measured model card, release assets and rollback evidence. |
+
+The standards review identified conflicts with current `main`, its expanded Ruff rules, and obsolete historical CLI examples. The integration resolves the conflicts, formats changed code under the current rules, and points archived trainer instructions to the historical revision. Existing detector responses retain their schema and baseline identity. Calibration is an explicit option for paired worker instances.
+
+The spec review identified validation and holdout leakage risks across public session IDs, near duplicates and previously observed tests. Intake now checks protected sessions and explicit holdout eligibility, counts near-duplicate groups together, matches controlled training settings across comparisons, and measures component AP on the browser-profile images used for the resolution experiment. The final evaluator also checks the original legacy tests against the reserved holdout.
+
+The [expanded public data review](PUBLIC_DATA_SOURCES_8_9.md#ekspansi-kandidat-dan-rancangan-split) documents 545 waste and 756 general candidates. The proposed general split reaches the planned counts on draft annotations while preserving enough train candidates with attribution. The waste evaluation still needs independent camera-like samples for all four focus classes. The intake audits approved zero new images, and both builds and all eight training preflights remain deferred.

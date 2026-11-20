@@ -1,0 +1,149 @@
+{
+  "status": "INCOMPLETE_DATA_REVIEW",
+  "legacy_instances": {
+    "train": {
+      "bottle": 1778,
+      "can": 461,
+      "plastic_wrapper": 60,
+      "bottle_cap": 34,
+      "food_container": 28,
+      "paper": 18,
+      "cup": 1341,
+      "cardboard": 93,
+      "plastic_bag": 20,
+      "drink_carton": 10
+    },
+    "val": {
+      "bottle": 693,
+      "can": 182,
+      "plastic_bag": 8,
+      "bottle_cap": 9,
+      "plastic_wrapper": 17,
+      "food_container": 7,
+      "cup": 281,
+      "paper": 5,
+      "cardboard": 51,
+      "drink_carton": 2
+    },
+    "test": {
+      "bottle": 508,
+      "can": 142,
+      "bottle_cap": 9,
+      "cup": 279,
+      "plastic_wrapper": 22,
+      "plastic_bag": 15,
+      "food_container": 7,
+      "paper": 4,
+      "cardboard": 30,
+      "drink_carton": 5
+    }
+  },
+  "new_support": {
+    "train": {
+      "cardboard": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 150,
+        "count_deficit": 150,
+        "group_deficit": 0
+      },
+      "plastic_wrapper": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 100,
+        "count_deficit": 100,
+        "group_deficit": 0
+      },
+      "paper": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 100,
+        "count_deficit": 100,
+        "group_deficit": 0
+      },
+      "drink_carton": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 100,
+        "count_deficit": 100,
+        "group_deficit": 0
+      }
+    },
+    "val": {
+      "cardboard": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      },
+      "plastic_wrapper": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      },
+      "paper": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      },
+      "drink_carton": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      }
+    },
+    "test": {
+      "cardboard": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      },
+      "plastic_wrapper": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      },
+      "paper": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      },
+      "drink_carton": {
+        "images": 0,
+        "instances": 0,
+        "groups": 0,
+        "target": 50,
+        "count_deficit": 50,
+        "group_deficit": 20
+      }
+    }
+  },
+  "accepted_new_images": 0,
+  "rejected": [],
+  "holdout_policy": "new test split is final holdout; never select on it",
+  "scope": "Data readiness only; does not establish model accuracy"
+}

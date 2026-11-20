@@ -1,0 +1,18 @@
+{
+  "publisher_images": 22879,
+  "combined_label_lines": 242,
+  "quarantined_images": 13869,
+  "quarantine_reasons": {
+    "conflicting_annotations_for_identical_pixels": 120,
+    "cross_publisher_split_duplicate": 118,
+    "within_split_duplicate": 701,
+    "no_phone_annotation": 12624,
+    "invalid_native_geometry": 1032
+  },
+  "candidate_images": 400,
+  "approved_training_images": 0,
+  "new_holdout_images": 0,
+  "historically_screened_rear_candidates": 9,
+  "native_face_to_coco_person_mapping": "FORBIDDEN",
+  "status": "AUDIT_ONLY_NATIVE_PHONE_FACE"
+}

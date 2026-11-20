@@ -1,0 +1,319 @@
+{
+  "issues": {
+    "8": {
+      "candidate_count": 545,
+      "intake_sha256": "85bd4180a8030e0599483b288d176d03b4db7a67af125d5e41d6510007b1fc7c",
+      "quarantine_counts": {
+        "visual scope review": 1
+      },
+      "all_candidates": {
+        "photos_by_provisional_box_label": {
+          "cardboard": 182,
+          "paper": 187,
+          "drink_carton": 162,
+          "plastic_wrapper": 205
+        },
+        "instances_by_provisional_box_label": {
+          "cardboard": 328,
+          "paper": 484,
+          "drink_carton": 199,
+          "plastic_wrapper": 632
+        },
+        "distinct_provisional_session_keys": {
+          "cardboard": 10,
+          "paper": 3,
+          "drink_carton": 6,
+          "plastic_wrapper": 3
+        },
+        "photos_by_source": {
+          "CLICK Trash v2": 228,
+          "D.Waste Post-Event": 31,
+          "PlasticObs+ v3": 114,
+          "TrashNet": 27,
+          "WaRP-D": 133,
+          "Wikimedia Commons": 12
+        }
+      },
+      "candidates_excluding_heuristic_only": {
+        "photos_by_provisional_box_label": {
+          "cardboard": 155,
+          "paper": 187,
+          "drink_carton": 162,
+          "plastic_wrapper": 205
+        },
+        "instances_by_provisional_box_label": {
+          "cardboard": 301,
+          "paper": 484,
+          "drink_carton": 199,
+          "plastic_wrapper": 632
+        },
+        "distinct_provisional_session_keys": {
+          "cardboard": 9,
+          "paper": 3,
+          "drink_carton": 6,
+          "plastic_wrapper": 3
+        },
+        "photos_by_source": {
+          "CLICK Trash v2": 228,
+          "D.Waste Post-Event": 31,
+          "PlasticObs+ v3": 114,
+          "WaRP-D": 133,
+          "Wikimedia Commons": 12
+        }
+      },
+      "camera_like_candidate_sources": {
+        "photos_by_provisional_box_label": {
+          "cardboard": 7,
+          "paper": 0,
+          "drink_carton": 4,
+          "plastic_wrapper": 1
+        },
+        "instances_by_provisional_box_label": {
+          "cardboard": 7,
+          "paper": 0,
+          "drink_carton": 4,
+          "plastic_wrapper": 1
+        },
+        "distinct_provisional_session_keys": {
+          "cardboard": 6,
+          "paper": 0,
+          "drink_carton": 4,
+          "plastic_wrapper": 1
+        },
+        "photos_by_source": {
+          "Wikimedia Commons": 12
+        }
+      },
+      "minimum_additional_train_candidates_if_all_their_boxes_passed": {
+        "cardboard": 0,
+        "paper": 0,
+        "drink_carton": 0,
+        "plastic_wrapper": 0
+      },
+      "new_candidates_by_batch": {
+        "previous-audit": 82,
+        "click-expanded-v1": 199,
+        "warp-expanded-v1": 123,
+        "trashnet-cardboard-v1": 27,
+        "plasticobs-cardboard-v1": 114
+      },
+      "missing_or_pending_attributions": 0,
+      "official_audit": {
+        "accepted": 0,
+        "exit_code": 2,
+        "status": "INCOMPLETE_DATA_REVIEW",
+        "reasons": {
+          "Independent complete human review pending": 545
+        }
+      },
+      "official_build": {
+        "output_created": false,
+        "reason": "Intake review and support requirements unmet"
+      },
+      "draft_split_capacity": {
+        "status": "NO_NUMERICAL_SPLIT_PLAN",
+        "candidates_for_capacity_only": 12,
+        "upper_bounds": {
+          "cardboard": {
+            "potential_group_keys": 6,
+            "provisional_instances": 7,
+            "more_group_keys_needed_for_both_splits": 34,
+            "more_instances_needed_for_both_splits": 93
+          },
+          "paper": {
+            "potential_group_keys": 0,
+            "provisional_instances": 0,
+            "more_group_keys_needed_for_both_splits": 40,
+            "more_instances_needed_for_both_splits": 100
+          },
+          "drink_carton": {
+            "potential_group_keys": 4,
+            "provisional_instances": 4,
+            "more_group_keys_needed_for_both_splits": 36,
+            "more_instances_needed_for_both_splits": 96
+          },
+          "plastic_wrapper": {
+            "potential_group_keys": 1,
+            "provisional_instances": 1,
+            "more_group_keys_needed_for_both_splits": 39,
+            "more_instances_needed_for_both_splits": 99
+          }
+        },
+        "intake_sha256": "85bd4180a8030e0599483b288d176d03b4db7a67af125d5e41d6510007b1fc7c",
+        "scope": "Draft bounding boxes and metadata groups with known exact COCO Flickr matches excluded",
+        "solver_exit_code": 2
+      }
+    },
+    "9": {
+      "candidate_count": 756,
+      "intake_sha256": "d1d87993af741e2942dc59d79acee049ecd6bb3d6c91d5c28ff52bbd910cd39f",
+      "quarantine_counts": {
+        "visual scope review": 4
+      },
+      "all_candidates": {
+        "photos_by_provisional_box_label": {
+          "cell phone": 367,
+          "remote": 416
+        },
+        "instances_by_provisional_box_label": {
+          "cell phone": 468,
+          "remote": 592
+        },
+        "distinct_provisional_session_keys": {
+          "cell phone": 46,
+          "remote": 44
+        },
+        "photos_by_source": {
+          "COCO2017": 460,
+          "ORBIT": 247,
+          "Open Images": 41,
+          "Wikimedia Commons": 8
+        }
+      },
+      "candidates_excluding_heuristic_only": {
+        "photos_by_provisional_box_label": {
+          "cell phone": 367,
+          "remote": 416
+        },
+        "instances_by_provisional_box_label": {
+          "cell phone": 468,
+          "remote": 592
+        },
+        "distinct_provisional_session_keys": {
+          "cell phone": 46,
+          "remote": 44
+        },
+        "photos_by_source": {
+          "COCO2017": 460,
+          "ORBIT": 247,
+          "Open Images": 41,
+          "Wikimedia Commons": 8
+        }
+      },
+      "camera_like_candidate_sources": {
+        "photos_by_provisional_box_label": {
+          "cell phone": 105,
+          "remote": 192
+        },
+        "instances_by_provisional_box_label": {
+          "cell phone": 106,
+          "remote": 202
+        },
+        "distinct_provisional_session_keys": {
+          "cell phone": 45,
+          "remote": 43
+        },
+        "photos_by_source": {
+          "ORBIT": 247,
+          "Open Images": 41,
+          "Wikimedia Commons": 8
+        }
+      },
+      "minimum_additional_train_candidates_if_all_their_boxes_passed": {
+        "cell phone": 0,
+        "remote": 0
+      },
+      "new_candidates_by_batch": {
+        "previous-audit": 69,
+        "orbit-test-expanded-v1": 85,
+        "orbit-train-expanded-v1": 142,
+        "issue9-coco-review": 260,
+        "issue9-coco-expanded": 200
+      },
+      "missing_or_pending_attributions": 108,
+      "coco_attribution_resolution": {
+        "verified": 352,
+        "identity_unconfirmed": 13,
+        "http_404": 95
+      },
+      "official_audit": {
+        "accepted": 0,
+        "exit_code": 2,
+        "status": "INCOMPLETE_DATA_REVIEW",
+        "reasons": {
+          "Full COCO80 annotation and review required": 756
+        }
+      },
+      "official_build": {
+        "output_created": false,
+        "reason": "Intake review and support requirements unmet"
+      },
+      "draft_split_capacity": {
+        "status": "NUMERIC_CAPACITY_ON_DRAFT_LABELS_ONLY",
+        "candidates_for_capacity_only": 296,
+        "upper_bounds": {
+          "cell phone": {
+            "potential_group_keys": 45,
+            "provisional_instances": 106,
+            "more_group_keys_needed_for_both_splits": 0,
+            "more_instances_needed_for_both_splits": 0
+          },
+          "remote": {
+            "potential_group_keys": 43,
+            "provisional_instances": 202,
+            "more_group_keys_needed_for_both_splits": 0,
+            "more_instances_needed_for_both_splits": 0
+          }
+        },
+        "intake_sha256": "d1d87993af741e2942dc59d79acee049ecd6bb3d6c91d5c28ff52bbd910cd39f",
+        "scope": "Draft bounding boxes and metadata groups with known exact COCO Flickr matches excluded",
+        "projected_split_support": {
+          "val": {
+            "cell phone": {
+              "instance_count": 50,
+              "group_key_count": 20
+            },
+            "remote": {
+              "instance_count": 95,
+              "group_key_count": 20
+            }
+          },
+          "holdout": {
+            "cell phone": {
+              "instance_count": 51,
+              "group_key_count": 20
+            },
+            "remote": {
+              "instance_count": 79,
+              "group_key_count": 20
+            }
+          }
+        },
+        "reserved_candidate_photos_by_class": {
+          "cell phone": 100,
+          "remote": 164
+        },
+        "solver_exit_code": 0
+      },
+      "remaining_train_candidate_photos_after_draft_reservation_with_attribution": {
+        "cell phone": 206,
+        "remote": 200
+      }
+    }
+  },
+  "visual_holds": {
+    "issue8-9-public-intake/trashnet-cardboard-v1/020.jpg": "Printed package looks like a coated drink carton; review material.",
+    "issue8-9-public-intake/orbit-test-expanded-v1/076.jpg": "Closed case conceals phone identity.",
+    "issue8-9-public-intake/orbit-test-expanded-v1/072.jpg": "Selected crop provides no identifiable remote controls.",
+    "issue8-9-public-intake/orbit-train-expanded-v1/050.jpg": "Closed wallet-style case conceals the phone.",
+    "issue8-9-public-intake/orbit-train-expanded-v1/087.jpg": "Crop shows only a dark rounded edge, remote identity is unconfirmed."
+  },
+  "openimages_coco_check": {
+    "reference": "COCO train2017 official Flickr URLs",
+    "openimages_candidate_ids_checked": 41,
+    "matched_image_ids": []
+  },
+  "visual_review_scope": {
+    "CLICK enlarged": 12,
+    "WaRP enlarged": 12,
+    "TrashNet proposed masks": 28,
+    "PlasticObs+ RGB": 12,
+    "ORBIT expanded test groups": 13,
+    "ORBIT expanded train groups": 21,
+    "COCO expanded": 12
+  },
+  "verified_on": "2026-11-20",
+  "issue10_preflight": {
+    "DEFERRED_DATA_OR_BASELINE": 8
+  }
+}

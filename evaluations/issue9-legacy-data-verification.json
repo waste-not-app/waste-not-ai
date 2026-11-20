@@ -1,0 +1,19 @@
+{
+  "images": 620,
+  "splits": {
+    "train": 535,
+    "val": 43,
+    "test": 42
+  },
+  "image_sha256": "all match manifest",
+  "label_geometry": "normalized centers/sizes valid; original DW edge tolerance .002 retained",
+  "legacy_edge_rounding": [],
+  "proxy_group_and_phash_split_overlap": "none",
+  "split_lists": "match manifest",
+  "active_images": {
+    "train": 535,
+    "val": 43,
+    "test": 42
+  },
+  "scope": "Data consistency, not independent field accuracy or full annotation completeness"
+}

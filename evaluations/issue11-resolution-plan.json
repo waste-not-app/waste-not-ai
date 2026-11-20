@@ -1,0 +1,21 @@
+{
+  "status": "DEFERRED_FROZEN_CANDIDATES_OR_REVIEWED_DATA",
+  "initial_sizes": [
+    640,
+    768
+  ],
+  "conditional_size": 960,
+  "input_profiles": {
+    "browser_jpeg90": 1.0,
+    "simulated_dim055": 0.55,
+    "android_jpeg85_gateway90": 1.0
+  },
+  "threads": 8,
+  "repeats": 3,
+  "warmup": 5,
+  "requires": "issue #10 frozen components and reviewed validation datasets",
+  "cpu_p95_budget_ratio": 1.25,
+  "active_input_size": 640,
+  "promoted": false,
+  "holdout_opened": false
+}

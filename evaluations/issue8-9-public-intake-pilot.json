@@ -1,0 +1,333 @@
+{
+  "status": "PENDING_FULL_REVIEW",
+  "staged_photos_by_issue": {
+    "8": 84,
+    "9": 28
+  },
+  "sources": {
+    "warp-d": {
+      "candidates": 10,
+      "issues": {
+        "8": 10
+      },
+      "candidate_labels": {
+        "drink_carton": 10
+      },
+      "source_manifest_sha256": "211a681042120ff692085e249acda121eca6996c8c0b2108c9dd3779d830ce41",
+      "acquisition_omissions": {}
+    },
+    "click-v2": {
+      "candidates": 31,
+      "issues": {
+        "8": 31
+      },
+      "candidate_labels": {
+        "cardboard": 2,
+        "paper_pack_type_pending": 13,
+        "plastic_wrapper": 21,
+        "paper": 10
+      },
+      "source_manifest_sha256": "4c096f4ea4a1ab8bd33792adb26be235e826ba39702d9ef9121b1b4c21ab27ff",
+      "acquisition_omissions": {}
+    },
+    "dwaste-v1": {
+      "candidates": 31,
+      "issues": {
+        "8": 31
+      },
+      "candidate_labels": {
+        "cardboard": 31,
+        "paper": 3
+      },
+      "source_manifest_sha256": "4ee40d7295298cf9378088d331ab78d537510dd0631882cca2c2df20d35ca4ce",
+      "acquisition_omissions": {
+        "Box edges outside image": 3
+      }
+    },
+    "wikimedia-v1": {
+      "candidates": 14,
+      "issues": {
+        "8": 12,
+        "9": 2
+      },
+      "candidate_labels": {
+        "drink_carton": 5,
+        "cardboard": 7,
+        "remote": 2
+      },
+      "source_manifest_sha256": "9f1a5669eb334f918da9e568e8f5f79857e048c27aacf386c58b24d2e1374ce1",
+      "acquisition_omissions": {
+        "license/attribution outside this Commons pilot": 3,
+        "HTTP Error 429": 23,
+        "'LicenseUrl'": 1
+      },
+      "visually_excluded": [
+        {
+          "id": "wikimedia-v1:17204773",
+          "reason": "Pallets of cartons shrink-wrapped in bulk with no separable close-range targets."
+        },
+        {
+          "id": "wikimedia-v1:19337148",
+          "reason": "Bulk pile at distance makes individual object boundaries unclear."
+        },
+        {
+          "id": "wikimedia-v1:61240188",
+          "reason": "Rounded bottle-like milk packaging is visually ambiguous; confirm material before using as drink carton."
+        }
+      ],
+      "draft_box_photos": 13
+    },
+    "wikimedia-phone-v1": {
+      "candidates": 6,
+      "issues": {
+        "9": 6
+      },
+      "candidate_labels": {
+        "cell phone": 6
+      },
+      "source_manifest_sha256": "62c0caeb470f5f38127ad28ea5ef2bf930950f4c0d8824a852bcfc793968ceb1",
+      "acquisition_omissions": {},
+      "draft_box_photos": 6
+    },
+    "orbit-validation": {
+      "candidates": 20,
+      "issues": {
+        "9": 20
+      },
+      "candidate_labels": {
+        "cell phone": 10,
+        "remote": 10
+      },
+      "source_manifest_sha256": "fa0b162deb4be33fe160736df1cb2ba597e9efbb52bb98a1fde87cf50f63572d",
+      "acquisition_omissions": {
+        "near-duplicate of protected data or earlier candidate": 1
+      }
+    }
+  },
+  "cross_source_duplicates": [],
+  "scope": "Candidate integrity, source license metadata, and provisional bounding-box geometry. No final annotation, split, or holdout approvals.",
+  "visual_screening": {
+    "commons_photos_screened": 23,
+    "commons_photos_with_provisional_boxes": 19,
+    "commons_photos_excluded": 3,
+    "other_screened_contact_sheets": [
+      "CLICK v2 sheets 1 and 2",
+      "D.Waste sheets 1 and 2",
+      "ORBIT both sheets",
+      "WaRP-D 10-photo pilot"
+    ]
+  },
+  "audits": {
+    "8": {
+      "status": "INCOMPLETE_DATA_REVIEW",
+      "exit_code": 2,
+      "candidate_intake_sha256": "73932f6c1d37d4f0226b32c933f6f3081a1c5181035af1ad40d395a8163eda14",
+      "accepted_new_images": 0,
+      "rejected_pending_review": 84,
+      "primary_blocker": "Independent complete human review pending",
+      "provisional_photos_by_candidate_label": {
+        "cardboard": 40,
+        "drink_carton": 15,
+        "paper": 13,
+        "paper_pack_type_pending": 13,
+        "plastic_wrapper": 21
+      },
+      "provisional_boxes": {
+        "bottle": 1,
+        "cardboard": 86,
+        "cup": 1,
+        "drink_carton": 16,
+        "paper": 17,
+        "plastic_bag": 2,
+        "plastic_wrapper": 36
+      },
+      "provisional_source_groups": {
+        "cardboard": 8,
+        "drink_carton": 6,
+        "paper": 2,
+        "paper_pack_type_pending": 1,
+        "plastic_wrapper": 1
+      },
+      "approved_support": {
+        "train": {
+          "cardboard": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 150,
+            "count_deficit": 150,
+            "group_deficit": 0
+          },
+          "plastic_wrapper": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 100,
+            "count_deficit": 100,
+            "group_deficit": 0
+          },
+          "paper": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 100,
+            "count_deficit": 100,
+            "group_deficit": 0
+          },
+          "drink_carton": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 100,
+            "count_deficit": 100,
+            "group_deficit": 0
+          }
+        },
+        "val": {
+          "cardboard": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "plastic_wrapper": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "paper": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "drink_carton": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          }
+        },
+        "test": {
+          "cardboard": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "plastic_wrapper": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "paper": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "drink_carton": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          }
+        }
+      }
+    },
+    "9": {
+      "status": "INCOMPLETE_DATA_REVIEW",
+      "exit_code": 2,
+      "candidate_intake_sha256": "c146188487f91d1f7dd80d9b805076b153efbc596bcd4162aeac1e963edd12ec",
+      "accepted_new_images": 0,
+      "rejected_pending_review": 28,
+      "primary_blocker": "Full COCO80 annotation and review pending",
+      "provisional_photos_by_candidate_label": {
+        "cell phone": 16,
+        "remote": 12
+      },
+      "provisional_boxes": {
+        "cell phone": 16,
+        "remote": 12
+      },
+      "provisional_source_groups": {
+        "cell phone": 8,
+        "remote": 4
+      },
+      "approved_support": {
+        "train": {
+          "cell phone": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 200,
+            "count_deficit": 200,
+            "group_deficit": 0
+          },
+          "remote": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 150,
+            "count_deficit": 150,
+            "group_deficit": 0
+          }
+        },
+        "val": {
+          "cell phone": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "remote": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          }
+        },
+        "test": {
+          "cell phone": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          },
+          "remote": {
+            "images": 0,
+            "instances": 0,
+            "groups": 0,
+            "target": 50,
+            "count_deficit": 50,
+            "group_deficit": 20
+          }
+        }
+      }
+    }
+  }
+}

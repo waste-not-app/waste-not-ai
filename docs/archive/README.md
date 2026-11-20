@@ -4,6 +4,8 @@ Historical research notes, experiment reports, and review logs from the pilot ph
 
 For current behavior, see the [README](../../README.md), the [HTTP contract](../AI_HTTP_CONTRACT.md), [integration](../INTEGRATION.md), and [deployment](../DEPLOYMENT.md).
 
+The trainer commands in these historical reports use the interface from revision [feb61aa](https://github.com/waste-not-app/waste-not-ai/tree/feb61aa). Use the [controlled training guide](../CONTROLLED_TRAINING_GUIDE.md) for the current experiment CLI.
+
 ## Datasets
 
 | Report | Topic |

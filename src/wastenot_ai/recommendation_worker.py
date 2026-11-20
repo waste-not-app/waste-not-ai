@@ -15,7 +15,9 @@ from .recommendation import load_guides
 from .wire import API_VERSION, DecisionInput, Envelope, ObjectCatalog, RecommendationResult
 
 
-def create_recommendation_app(*, token=None, provider=None, guides=None, demo_guides=False, timeout=18, today=None):
+def create_recommendation_app(
+    *, token=None, provider=None, guides=None, demo_guides=False, timeout=18, today=None, calibrated_model=None
+):
     service_token = token if token is not None else os.getenv("AI_RECOMMENDATION_TOKEN", "")
     if len(service_token) < 24:
         raise ValueError("AI_RECOMMENDATION_TOKEN wajib minimal 24 karakter.")
@@ -24,6 +26,7 @@ def create_recommendation_app(*, token=None, provider=None, guides=None, demo_gu
         guides if guides is not None else load_guides(),
         demo_guides=demo_guides,
         today=today,
+        calibrated_model=calibrated_model,
     )
     busy = Lock()
     bearer = HTTPBearer(auto_error=False)

@@ -1,0 +1,521 @@
+{
+  "status": "LEGACY_DIAGNOSIS_NOT_NEW_HOLDOUT",
+  "images": 70,
+  "image_ids": [
+    "COCO-val-110449",
+    "COCO-val-1268",
+    "COCO-val-13004",
+    "COCO-val-147415",
+    "COCO-val-147729",
+    "COCO-val-157046",
+    "COCO-val-157601",
+    "COCO-val-182417",
+    "COCO-val-192871",
+    "COCO-val-194724",
+    "COCO-val-202339",
+    "COCO-val-222317",
+    "COCO-val-222735",
+    "COCO-val-229358",
+    "COCO-val-233825",
+    "COCO-val-234607",
+    "COCO-val-23899",
+    "COCO-val-240250",
+    "COCO-val-241319",
+    "COCO-val-266768",
+    "COCO-val-269632",
+    "COCO-val-286523",
+    "COCO-val-287714",
+    "COCO-val-288391",
+    "COCO-val-29596",
+    "COCO-val-311303",
+    "COCO-val-318114",
+    "COCO-val-32038",
+    "COCO-val-325838",
+    "COCO-val-336356",
+    "COCO-val-351530",
+    "COCO-val-35682",
+    "COCO-val-367569",
+    "COCO-val-371677",
+    "COCO-val-383842",
+    "COCO-val-389109",
+    "COCO-val-397639",
+    "COCO-val-411817",
+    "COCO-val-416991",
+    "COCO-val-430056",
+    "COCO-val-430286",
+    "COCO-val-441543",
+    "COCO-val-446207",
+    "COCO-val-448076",
+    "COCO-val-459272",
+    "COCO-val-465718",
+    "COCO-val-491366",
+    "COCO-val-520531",
+    "COCO-val-527427",
+    "COCO-val-528524",
+    "COCO-val-532690",
+    "COCO-val-537270",
+    "COCO-val-53909",
+    "COCO-val-539883",
+    "COCO-val-549674",
+    "COCO-val-556000",
+    "COCO-val-561366",
+    "COCO-val-571857",
+    "COCO-val-572620",
+    "COCO-val-578922",
+    "COCO-val-66231",
+    "COCO-val-66635",
+    "COCO-val-68765",
+    "COCO-val-75612",
+    "COCO-val-7574",
+    "COCO-val-80949",
+    "COCO-val-90108",
+    "COCO-val-92053",
+    "COCO-val-96493",
+    "COCO-val-98392"
+  ],
+  "manifest_sha256": "fa83d698c132e6bdda33a2c7cffcf8e501001b40b62e4d92eb0d704bedf72aaa",
+  "models": {
+    "v4": {
+      "model_version": "candidate-3fc8b7a0baf1-square640",
+      "sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+      "labels": {
+        "0": "bottle",
+        "1": "can",
+        "2": "cup",
+        "3": "plastic_bag",
+        "4": "paper",
+        "5": "cardboard",
+        "6": "drink_carton",
+        "7": "plastic_wrapper",
+        "8": "food_container",
+        "9": "bottle_cap"
+      },
+      "ultralytics_version": "8.4.183",
+      "device": "cpu",
+      "input_size": 640,
+      "input_shape": "square",
+      "preprocessing": "EXIF transpose, RGB, Ultralytics letterbox",
+      "license": "Ultralytics AGPL-3.0 / Enterprise; see provenance documentation",
+      "scope": "checkpoint-native-labels"
+    },
+    "coco11s": {
+      "model_version": "candidate-85a76fe86dd8-square640",
+      "sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+      "labels": {
+        "0": "person",
+        "1": "bicycle",
+        "2": "car",
+        "3": "motorcycle",
+        "4": "airplane",
+        "5": "bus",
+        "6": "train",
+        "7": "truck",
+        "8": "boat",
+        "9": "traffic light",
+        "10": "fire hydrant",
+        "11": "stop sign",
+        "12": "parking meter",
+        "13": "bench",
+        "14": "bird",
+        "15": "cat",
+        "16": "dog",
+        "17": "horse",
+        "18": "sheep",
+        "19": "cow",
+        "20": "elephant",
+        "21": "bear",
+        "22": "zebra",
+        "23": "giraffe",
+        "24": "backpack",
+        "25": "umbrella",
+        "26": "handbag",
+        "27": "tie",
+        "28": "suitcase",
+        "29": "frisbee",
+        "30": "skis",
+        "31": "snowboard",
+        "32": "sports ball",
+        "33": "kite",
+        "34": "baseball bat",
+        "35": "baseball glove",
+        "36": "skateboard",
+        "37": "surfboard",
+        "38": "tennis racket",
+        "39": "bottle",
+        "40": "wine glass",
+        "41": "cup",
+        "42": "fork",
+        "43": "knife",
+        "44": "spoon",
+        "45": "bowl",
+        "46": "banana",
+        "47": "apple",
+        "48": "sandwich",
+        "49": "orange",
+        "50": "broccoli",
+        "51": "carrot",
+        "52": "hot dog",
+        "53": "pizza",
+        "54": "donut",
+        "55": "cake",
+        "56": "chair",
+        "57": "couch",
+        "58": "potted plant",
+        "59": "bed",
+        "60": "dining table",
+        "61": "toilet",
+        "62": "tv",
+        "63": "laptop",
+        "64": "mouse",
+        "65": "remote",
+        "66": "keyboard",
+        "67": "cell phone",
+        "68": "microwave",
+        "69": "oven",
+        "70": "toaster",
+        "71": "sink",
+        "72": "refrigerator",
+        "73": "book",
+        "74": "clock",
+        "75": "vase",
+        "76": "scissors",
+        "77": "teddy bear",
+        "78": "hair drier",
+        "79": "toothbrush"
+      },
+      "ultralytics_version": "8.4.183",
+      "device": "cpu",
+      "input_size": 640,
+      "input_shape": "square",
+      "preprocessing": "EXIF transpose, RGB, Ultralytics letterbox",
+      "license": "Ultralytics AGPL-3.0 / Enterprise; see provenance documentation",
+      "scope": "checkpoint-native-labels"
+    },
+    "combined": {
+      "model_version": "broad-coco-b0f633193403",
+      "sha256": "b0f633193403d0f6c475f3ebd616ce55d47b738ff115d867efed92de193c687c",
+      "labels": {
+        "0": "person",
+        "1": "bicycle",
+        "2": "car",
+        "3": "motorcycle",
+        "4": "airplane",
+        "5": "bus",
+        "6": "train",
+        "7": "truck",
+        "8": "boat",
+        "9": "traffic light",
+        "10": "fire hydrant",
+        "11": "stop sign",
+        "12": "parking meter",
+        "13": "bench",
+        "14": "bird",
+        "15": "cat",
+        "16": "dog",
+        "17": "horse",
+        "18": "sheep",
+        "19": "cow",
+        "20": "elephant",
+        "21": "bear",
+        "22": "zebra",
+        "23": "giraffe",
+        "24": "backpack",
+        "25": "umbrella",
+        "26": "handbag",
+        "27": "tie",
+        "28": "suitcase",
+        "29": "frisbee",
+        "30": "skis",
+        "31": "snowboard",
+        "32": "sports ball",
+        "33": "kite",
+        "34": "baseball bat",
+        "35": "baseball glove",
+        "36": "skateboard",
+        "37": "surfboard",
+        "38": "tennis racket",
+        "39": "bottle",
+        "40": "wine glass",
+        "41": "cup",
+        "42": "fork",
+        "43": "knife",
+        "44": "spoon",
+        "45": "bowl",
+        "46": "banana",
+        "47": "apple",
+        "48": "sandwich",
+        "49": "orange",
+        "50": "broccoli",
+        "51": "carrot",
+        "52": "hot dog",
+        "53": "pizza",
+        "54": "donut",
+        "55": "cake",
+        "56": "chair",
+        "57": "couch",
+        "58": "potted plant",
+        "59": "bed",
+        "60": "dining table",
+        "61": "toilet",
+        "62": "tv",
+        "63": "laptop",
+        "64": "mouse",
+        "65": "remote",
+        "66": "keyboard",
+        "67": "cell phone",
+        "68": "microwave",
+        "69": "oven",
+        "70": "toaster",
+        "71": "sink",
+        "72": "refrigerator",
+        "73": "book",
+        "74": "clock",
+        "75": "vase",
+        "76": "scissors",
+        "77": "teddy bear",
+        "78": "hair drier",
+        "79": "toothbrush",
+        "80": "can",
+        "81": "plastic_bag",
+        "82": "paper",
+        "83": "cardboard",
+        "84": "drink_carton",
+        "85": "plastic_wrapper",
+        "86": "food_container",
+        "87": "bottle_cap"
+      },
+      "scope": "broad-waste-plus-coco-experimental",
+      "components": [
+        {
+          "model_version": "candidate-3fc8b7a0baf1-square640",
+          "sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+          "input_shape": "square"
+        },
+        {
+          "model_version": "candidate-85a76fe86dd8-square640",
+          "sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+          "input_shape": "square"
+        }
+      ],
+      "merge_policy": "same-class-iou065-max50-v1"
+    }
+  },
+  "results": {
+    "browser_jpeg90": {
+      "coco11s": {
+        "per_class": {
+          "cell phone": {
+            "tp": 12,
+            "fp": 3,
+            "fn": 11,
+            "support": 23,
+            "precision": 0.8,
+            "recall": 0.5217391304347826,
+            "f1": 0.631578947368421
+          },
+          "remote": {
+            "tp": 9,
+            "fp": 3,
+            "fn": 28,
+            "support": 37,
+            "precision": 0.75,
+            "recall": 0.24324324324324326,
+            "f1": 0.3673469387755102
+          }
+        },
+        "directions": {
+          "cell phone -> remote": {
+            "count": 0,
+            "support": 23,
+            "rate": 0.0
+          },
+          "remote -> cell phone": {
+            "count": 3,
+            "support": 37,
+            "rate": 0.08108108108108109
+          }
+        }
+      },
+      "combined": {
+        "per_class": {
+          "cell phone": {
+            "tp": 12,
+            "fp": 3,
+            "fn": 11,
+            "support": 23,
+            "precision": 0.8,
+            "recall": 0.5217391304347826,
+            "f1": 0.631578947368421
+          },
+          "remote": {
+            "tp": 9,
+            "fp": 3,
+            "fn": 28,
+            "support": 37,
+            "precision": 0.75,
+            "recall": 0.24324324324324326,
+            "f1": 0.3673469387755102
+          }
+        },
+        "directions": {
+          "cell phone -> remote": {
+            "count": 0,
+            "support": 23,
+            "rate": 0.0
+          },
+          "remote -> cell phone": {
+            "count": 3,
+            "support": 37,
+            "rate": 0.08108108108108109
+          }
+        }
+      },
+      "v4": {
+        "per_class": {
+          "cell phone": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 23,
+            "support": 23,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "remote": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 37,
+            "support": 37,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "directions": {
+          "cell phone -> remote": {
+            "count": 0,
+            "support": 23,
+            "rate": 0.0
+          },
+          "remote -> cell phone": {
+            "count": 0,
+            "support": 37,
+            "rate": 0.0
+          }
+        }
+      }
+    },
+    "simulated_dim055": {
+      "coco11s": {
+        "per_class": {
+          "cell phone": {
+            "tp": 11,
+            "fp": 4,
+            "fn": 12,
+            "support": 23,
+            "precision": 0.7333333333333333,
+            "recall": 0.4782608695652174,
+            "f1": 0.5789473684210527
+          },
+          "remote": {
+            "tp": 7,
+            "fp": 3,
+            "fn": 30,
+            "support": 37,
+            "precision": 0.7,
+            "recall": 0.1891891891891892,
+            "f1": 0.2978723404255319
+          }
+        },
+        "directions": {
+          "cell phone -> remote": {
+            "count": 0,
+            "support": 23,
+            "rate": 0.0
+          },
+          "remote -> cell phone": {
+            "count": 3,
+            "support": 37,
+            "rate": 0.08108108108108109
+          }
+        }
+      },
+      "combined": {
+        "per_class": {
+          "cell phone": {
+            "tp": 11,
+            "fp": 4,
+            "fn": 12,
+            "support": 23,
+            "precision": 0.7333333333333333,
+            "recall": 0.4782608695652174,
+            "f1": 0.5789473684210527
+          },
+          "remote": {
+            "tp": 7,
+            "fp": 3,
+            "fn": 30,
+            "support": 37,
+            "precision": 0.7,
+            "recall": 0.1891891891891892,
+            "f1": 0.2978723404255319
+          }
+        },
+        "directions": {
+          "cell phone -> remote": {
+            "count": 0,
+            "support": 23,
+            "rate": 0.0
+          },
+          "remote -> cell phone": {
+            "count": 3,
+            "support": 37,
+            "rate": 0.08108108108108109
+          }
+        }
+      },
+      "v4": {
+        "per_class": {
+          "cell phone": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 23,
+            "support": 23,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "remote": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 37,
+            "support": 37,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "directions": {
+          "cell phone -> remote": {
+            "count": 0,
+            "support": 23,
+            "rate": 0.0
+          },
+          "remote -> cell phone": {
+            "count": 0,
+            "support": 37,
+            "rate": 0.0
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Subset includes images with annotation coverage for phone or remote, including negatives.",
+    "Wrong-label geometry and class-aware precision/recall are separate diagnostics.",
+    "No new inference, tuning or holdout selection was performed.",
+    "Rear-view capture tags need independent review; absence of tags is not evidence of front view."
+  ],
+  "baseline_general_model_sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+  "prediction_cache_sha256": "5863bec310bcd1962e81b62de4bd7e602a2b9990914274033e0d02ebdf320af3"
+}
