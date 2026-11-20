@@ -1,0 +1,4787 @@
+{
+  "status": "LEGACY_VALIDATION_PILOT",
+  "created_at": "2026-11-20T03:42:58.347235+00:00",
+  "environment": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "logical_cpu_count": 28,
+    "pytorch": "2.9.1+cu128",
+    "pytorch_cpu_threads": 8,
+    "pytorch_interop_threads": 1,
+    "ultralytics": "8.4.183",
+    "python": "3.13.1",
+    "cpu": "Intel Core i7-14700HX",
+    "Pillow": "11.2.1",
+    "FastAPI": "0.115.14",
+    "Uvicorn": "0.35.0",
+    "httpx": "0.28.1"
+  },
+  "frozen_components": {
+    "broad": {
+      "weights_sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+      "legacy_data": "broad-waste-v4",
+      "snapshot": {
+        "manifest": "846f9a112db657c0352582acaa25aa935eed32ea18ec6a6a626373d790816c8a",
+        "train_list": "7311559799bd2785bc623e4e3d7db1967c19f47b924de19d965d7b6d270d0a4c",
+        "val_list": "aeafd8787cbb97b4eabdc561c010de2d680fe0b372f7fc62aa207a9844a570eb",
+        "source_yaml": "121cc88029637702ca27b8a2b86a8e0d688f9862e4ed72f20e51c61a25aa58bf",
+        "train_count": 943,
+        "val_count": 975,
+        "active_pixels": "34c9d4dd821c744fa73d1d4066a70b951f9bf58e45614a0b3b47f3e1eade6ea0",
+        "active_labels": "1151a1b0ccce1998d1568a821abe234b60344bd10185ed8729dfaca517290898"
+      }
+    },
+    "general": {
+      "weights_sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+      "legacy_data": "general-confusion-v1",
+      "snapshot": {
+        "manifest": "d83d22c0b81be7712cc2705006033be207cf2922f011154f1d441b863818dec3",
+        "train_list": "df7779f12437714a09800e20896fe8624dcc694025a40a4528e7f1e7c9d46703",
+        "val_list": "0adba90cf6f6cda11f8edf47b8e6df6c372270f0235579a08b2a73f19f0e8d43",
+        "source_yaml": "b60a7d8be4893e46f92e498d1c049286d99cd27a53dcaec79422f046c4c9b770",
+        "train_count": 535,
+        "val_count": 43,
+        "active_pixels": "4ce55edbdafb0def43405b376d90614346049c771918188bbf1cc6fea7f7f8b4",
+        "active_labels": "03c3dd50c00797751bd69ef8419de395daad1b193808250342de72067c2bf6c5"
+      }
+    }
+  },
+  "selection": {
+    "selected_input_size": 640,
+    "decisions": {
+      "768": {
+        "accepted_for_further_evaluation": false,
+        "reasons": [
+          "cpu_p95_budget",
+          "insufficient_support_plastic_wrapper",
+          "insufficient_support_paper",
+          "insufficient_support_drink_carton",
+          "insufficient_support_cell phone",
+          "insufficient_support_remote",
+          "overall_f1_regression",
+          "no_focus_quality_gain",
+          "object_size_regression_large",
+          "android_jpeg85_gateway90:cpu_p95_budget",
+          "android_jpeg85_gateway90:insufficient_support_plastic_wrapper",
+          "android_jpeg85_gateway90:insufficient_support_paper",
+          "android_jpeg85_gateway90:insufficient_support_drink_carton",
+          "android_jpeg85_gateway90:insufficient_support_cell phone",
+          "android_jpeg85_gateway90:insufficient_support_remote",
+          "android_jpeg85_gateway90:class_regression_cardboard",
+          "android_jpeg85_gateway90:overall_f1_regression",
+          "android_jpeg85_gateway90:object_size_regression_large",
+          "simulated_dim055:cpu_p95_budget",
+          "simulated_dim055:insufficient_support_plastic_wrapper",
+          "simulated_dim055:insufficient_support_paper",
+          "simulated_dim055:insufficient_support_drink_carton",
+          "simulated_dim055:insufficient_support_cell phone",
+          "simulated_dim055:insufficient_support_remote",
+          "simulated_dim055:class_regression_cardboard",
+          "simulated_dim055:overall_f1_regression",
+          "simulated_dim055:object_size_regression_medium",
+          "simulated_dim055:object_size_regression_large"
+        ],
+        "focus_macro_f1_gain": -0.025391575391575376
+      }
+    },
+    "promoted": false,
+    "holdout_opened": false,
+    "next_step": "calibration and final review required; no active worker/model config changed"
+  },
+  "manifest_sha256": "5140b2c8968c6dd2fc5349a2a5125ee8185ee435bd4adfde5a85d69f042e71ee",
+  "pilot_photos_by_component": {
+    "broad": 57,
+    "general": 43
+  },
+  "match_sampling": "All general validation and broad validation containing a tuning focus label; up to four additional broad controls per source by ascending prepared image SHA-256.",
+  "cache_sha256": "ab28ab6e9c749ec4bccede5aaa602168c73f96ce21c1c65a93a77010eb271a90",
+  "per_input_records_sha256": "e0310ecf7a7f270984b74b4d996931c072e1c8dd9a07d08b58f33167eaa9deb9",
+  "pilot_image_hashes": [
+    "00163c3053648cf885b87aa87da54da8fbdc9c7c13446335f6baba86ded4cc4b",
+    "002b622e047ceca2693f980be622655668dac1d14e72e82b72c954bdd1f43991",
+    "00522ba766ea2cbc819b860c92441d8783d6ac9ee7f004f933d0fd56ff84a359",
+    "007a33de19b7eb8fdfdf3dce59ba8c22b34cec8ca20ad102d23e728545d9be3f",
+    "007e6c9ce78f812182857c2d932b1b8a521c79b1a3756dabce2161da5976ccd8",
+    "00b3d347511b6b9b4d4a72bbaba026d15cd4cded6138d496ec47dfe9df700f22",
+    "010bdcf6ac2fac436129693ceb2d4a9e7ad6d9e502e109ccacc99294ba421717",
+    "01627a2e4b79593b0debcffcdcf9b6c795d0d9e71aa2a3e9e22a9db05a70bc85",
+    "0217449170fd69f767bf97b95ff76ad5b5151204916d94151d9539aa829099be",
+    "04b0177e9e50e4560a07b4305d857de8996750a119e8236064694f9f72344255",
+    "04df8fe544513fdfae3c8931e22ba6382890f101a1a9a11da7f7bf1f1c9e4687",
+    "06f485cd2b3df6c5a4e732d4d3ad398af04eb763243c20e483e3e8067be6a485",
+    "0bc477709ce4230f2cc5d4b42858d631c594dd59a7d54017dd478a5881eddb54",
+    "0be041c42db05b3e7a7074e5fc857a7b5d616697504048f751ea5025e856f406",
+    "0de22fbb4dd1ff989b205085775e7e1ec56ebe678c0341339740b7b18758562d",
+    "0f461d36f7e1e4445f4ac6e8ee03a1999126394ecf28b53f4c51c1e016ae8858",
+    "18304101680b0be5936c4714fa3a0d87d2f674573ffa903793a3efa8341d6430",
+    "18f685879bc641a97c7175133a92d7251de69a1979cd9b018ee26e420a46eda1",
+    "190f52ed76aa711d49fb19c29e7d2be57ddfa24e0fbb460adcbf1d94c1f90fe7",
+    "1a680f892e0e10c0504f8cbec5f6e8fe116b80124cba694eda5f12b37b91b8b2",
+    "1c937cde6bf0e6f0f156b5ee8e7bd0a393a7ff7ebf3c3758b35983a314f68aca",
+    "1d5fd2d14a5a0ffc6995c37a3e88130aee322f541cba2113f982b538be9a6430",
+    "22f88f5aa98632f0b18f7952f4a048caa015fa0669f6b5ba8f61e3f5c548f483",
+    "25f106ec83ccc0525071ab67706096e8e692dd651830982ffb297ebffa0be400",
+    "2606ee951ea858ec6de97755ec30cd19f1c5b647f2acab2ba78d9ba2129ec6ed",
+    "27fdc374629bb5fc3c059eb7f5516b940596f0b50087adf364b6b09922089eaf",
+    "319d58f0fa008d076b766671a5b607f94614f6005f773adced54a57567aa28fb",
+    "33ab3e141ee3728df59f05c3c2d03be123af528037cd2da951f4fb89c9834603",
+    "34689c830f772a429b21e21efb9e930a230736cf15110249ddb9b16557ac72d2",
+    "34a0f95acd2f0d58aa97553592c23e61dd3ef0923ef8880eed6dcebe463679bb",
+    "3572b83c43004ac3616ffc05705971f62da2a35c4031efaae6ffe52d9bafa109",
+    "3b67a83af6a51aacfb3648ef68e97e8c90aca742974a6c906e8d7caed64ded6d",
+    "3e3b877390b6f0cf1873444eae7912dea498ea6515ee60bd0a2fa6b7d5fc52fa",
+    "4140bebc0a355bad83e90fe4f0d56fe24cd331ab01f6923a5f1775cb3814d1f2",
+    "4207680ffcb21507f686d815a1119b4f7d1d70b1a766addbd0d0f15cc31cc493",
+    "45340264992ab15960d45aca64311d53269662022c0a1c73d6f9c5f3ed45adbb",
+    "455cbef44a58c104c606aec477c0d0bd2edbe4ef8f8c9e073b61b38cae3ad63b",
+    "4a3997064bea2a0a01b77ff2767cae6b2edc4f36fb7a7c71978f6a2f838ed527",
+    "4f3aa179879b53163772b1866e1790e98f36ddc384ee8dace37ec468b604dcba",
+    "4fe9ae0f078bc7d1386757a23a13be10847f72dafae4ee1f135278392f214590",
+    "512db572226b3f1034e556a79e66145944ee9b1c1e57f32919609a12e967502f",
+    "534ff00fcd447bda33da7c3ae3074e44df00d2e5fdf5401fbde33f8367bde5ec",
+    "57a58decd3d841b44ab611fda39b45f69815586899d28e0db8a58b8472213639",
+    "58487c5fed08320d902d7808bbc6e7ebed00722b9208f5c7fe3159e02b64c952",
+    "5a0511750ff647e606a5586676e1114cf337c73206bde3e9c3577995c3867e9d",
+    "5be429c41a46270ced8ea13212b6f02302e00158d9a1040ea336ec5630237ed3",
+    "5c3a0f8d1002d3ad671cf5d08e10acac1090a0375f52657c6320ae9b68c7583e",
+    "5c80b437d782fb6e82a72848576eee1b7e8271cf89350ff5183b7b6e1fe6c070",
+    "624955e2e5888069da1bfa99eb3e3965792ceb364b2c2a647e587b5e4bcb5a8f",
+    "63400110213661d864e373199072bed07218f942294463c7b613754d9252bb8a",
+    "63c4f0d18aa5de5365f125c03fd8558680dd6c797e974924e237ed543fef4d08",
+    "65cad59294282125ccfec8acd572381af824b3307d995f031d2a61b923660ff3",
+    "65d47087b3c665d64aad0120658b00ac08dc9875597a5f8d801da4f70933f7fd",
+    "682b62111c241b48829de03bca28c7d8019836105190ec8c7a23b567628458ca",
+    "6abf2e8fb8c46cf1e07a39b284846adce7ae28257faca20118fa34656990045b",
+    "6b458ff1cc4ae8c4006f460ea0b10b0e60f1e8c5775370717fd1aa5d082c4f80",
+    "6cb08a494e7ad385c91ab1baa6b756a8cc9e2b5f747092cce2a98d53f2d47601",
+    "77d84231c637c1355ddb51ec0e80b7f85ccaf7c1269952f2ef046c67dacc5d1a",
+    "78a2bdb448e5729fe89f9a4c768bdf6164ccb992e52aa7469d3c4c82a8707e49",
+    "7cd892869fc28ab5848ee5e0b69396e92a423a986492e9962b704ea0e64412a7",
+    "7dbe46ea809c070760fcd104bdd9c7b8aad378940cf3c7ffa258f4416c9c6290",
+    "817363d1d6d4e0e91923cffad920b8897ef3ae18efedf260a6b60e982fcdb73b",
+    "84618d2031824c0c62c9fd7b00e874dea8f82d20081500c1b339786d3dfc60ed",
+    "85e2b4e74ff0eb138017285cfedf6bf1ba4a0425e37dfc7c98d8b0ffb00c4043",
+    "887b3caf92b74588d54005ebdf8dfbf925af064c64fb0c6ca64549b121684b46",
+    "8d98267ce9b4c72ec8a37b19110d2e1e67607e59ad9704fb9f6d196784e32c89",
+    "8f1387fa02398a776397232d4c2e0cabeba713dd8fa0dd4e3909021de2ae73dd",
+    "8f3eea478483e5b94935fe4e20da629a3631b28895899bccb5acc0fba5286060",
+    "94d78b7c6ded336af99a5d48fcd507ddeb7b43e93d1d7e7c1bdc62aa3d0b6fd6",
+    "96527ebf45b3d5e04abbe4de4ab6daa0db75eefe139583fb7d5dbdf1cf86c4f3",
+    "96c613c64bc275eabd73b24f2ffccc4b022c85df8c9384054d54d3af4e7f11a5",
+    "a5548ceb72afb04be2e8a33e147ca81e13cc6a3dc22c6ac2c890386410652ab6",
+    "a68205cde5ae859ac50c6cb563a0a3e5f7d780f28625afddeb8db153c7dcbb71",
+    "b9d89168f1dce18477be8e59c3d0a15d4b645db6a2fa70e690e938496b4a194b",
+    "c111204aebc5d966c0ab438794c29e892edebb7248e4ec461053f9f961138aba",
+    "c523e93db4e127f191d892ddc1bbe8db14e894d76bf0231624a5cba918963254",
+    "c63959cb984a477b0969088bf0939c6fa1984687fdf40e7ed0ae803b9d599134",
+    "c7ca3724be7fb0af9c30ed2ac36f7d921b9620d78b37f824721aa6599e52fc00",
+    "c880cd670f0ac28fe01641ecdc557e8a2e880193f76ef9885e18a8eb65e26d07",
+    "c977609c2c685eef309ff9140d94fc4ae47dd66a8d8624f6af6a63fb5a5a166c",
+    "d4a3ead10cd4d5c35d51608df4daabd6f66ca6151f51b664cb4f44f3c354d5a5",
+    "d6b461cb052c89474fb97a070cc4c9ed8ead0585e8a1b535d22e76654e64ae94",
+    "d7b8c4259f18dd438b161ac1766301507cdd943a766e32d1f0c7f3146b233d3e",
+    "d89167b4015b2ffb42d4bccabc87fed2de0ca2721f96140fb451b31a52ff9982",
+    "dabaea39eeb74df84ce54dbd486adb1c0d782dc01cca67fa2fa06ed34feb90d8",
+    "ddbfc26792efff1d7f2e675390c57303f274df9f8131997505aff801b85b4e6a",
+    "de41bacebcb85dfdf3f86b66ff169f2d2e2f7151d7b6b22d42b675a3a767ffa6",
+    "e040b3d434af83c78dab765ebcca1719430fd1194f8d938b2f0294393a5d9f59",
+    "e839bf3d67112ac2cd4f1a78641c4023661f77a8841ac4814eafd9b6d0110744",
+    "e994ae206640b01c19f9eb73c9f9231e73057fb09292bb152de9a884bd1837a7",
+    "ebe729d233d9386d48c4272b82aa43ad610480f4c01c44f4a9450ab55a013502",
+    "f13df508c11a4834fefbcdfb58d342cdba55d6a616b93cdc48806f3404a42423",
+    "f172cb97c2176c8954ca652d32d1fb8a505556c99c97dd6c39dcca32d24360c2",
+    "f3247a56b457942d6a1237338f64949f410361471634b5610f348dfbc6641be6",
+    "f37b788a4975f2e4aa6218abec97ea07bc0df1345a7bcbc7266602eda22af97c",
+    "f749948102ab195f018f2c01086423081c49425c0e52c4b81ef8e371fbc097a7",
+    "f81fa98758fe5f865fafbd758c904541c6d54b864b35fbeb0b913705cdc036e9",
+    "f85c17ab33d54631410d6335a5eaa1de780904b777f1da15f9c06ce6e61d3520",
+    "fccdbb7c3e2a365c7e14874c51f30b5129d025f9252a37cdc2075b0ea13fd300",
+    "ff8953b09c73c873b4b4f1ad7bb409015c6f62675e8efea48df3113e3cc117b2"
+  ],
+  "protocol": {
+    "warmup_calls": 5,
+    "repeats": 3,
+    "batch": 1,
+    "device": "cpu",
+    "model_order": "rotated per image/profile/repetition",
+    "timing_scope": "detector.detect wall clock; excludes HTTP and input encoding",
+    "memory_scope": "native RSS of this process with all compared profiles resident; not isolated per-model allocation",
+    "object_size": "normalized GT area <.01 / <.1 / >=.1; unmatched FP bucketed by predicted area"
+  },
+  "models": {
+    "640": {
+      "model_version": "broad-coco-b0f633193403",
+      "sha256": "b0f633193403d0f6c475f3ebd616ce55d47b738ff115d867efed92de193c687c",
+      "labels": {
+        "0": "person",
+        "1": "bicycle",
+        "2": "car",
+        "3": "motorcycle",
+        "4": "airplane",
+        "5": "bus",
+        "6": "train",
+        "7": "truck",
+        "8": "boat",
+        "9": "traffic light",
+        "10": "fire hydrant",
+        "11": "stop sign",
+        "12": "parking meter",
+        "13": "bench",
+        "14": "bird",
+        "15": "cat",
+        "16": "dog",
+        "17": "horse",
+        "18": "sheep",
+        "19": "cow",
+        "20": "elephant",
+        "21": "bear",
+        "22": "zebra",
+        "23": "giraffe",
+        "24": "backpack",
+        "25": "umbrella",
+        "26": "handbag",
+        "27": "tie",
+        "28": "suitcase",
+        "29": "frisbee",
+        "30": "skis",
+        "31": "snowboard",
+        "32": "sports ball",
+        "33": "kite",
+        "34": "baseball bat",
+        "35": "baseball glove",
+        "36": "skateboard",
+        "37": "surfboard",
+        "38": "tennis racket",
+        "39": "bottle",
+        "40": "wine glass",
+        "41": "cup",
+        "42": "fork",
+        "43": "knife",
+        "44": "spoon",
+        "45": "bowl",
+        "46": "banana",
+        "47": "apple",
+        "48": "sandwich",
+        "49": "orange",
+        "50": "broccoli",
+        "51": "carrot",
+        "52": "hot dog",
+        "53": "pizza",
+        "54": "donut",
+        "55": "cake",
+        "56": "chair",
+        "57": "couch",
+        "58": "potted plant",
+        "59": "bed",
+        "60": "dining table",
+        "61": "toilet",
+        "62": "tv",
+        "63": "laptop",
+        "64": "mouse",
+        "65": "remote",
+        "66": "keyboard",
+        "67": "cell phone",
+        "68": "microwave",
+        "69": "oven",
+        "70": "toaster",
+        "71": "sink",
+        "72": "refrigerator",
+        "73": "book",
+        "74": "clock",
+        "75": "vase",
+        "76": "scissors",
+        "77": "teddy bear",
+        "78": "hair drier",
+        "79": "toothbrush",
+        "80": "can",
+        "81": "plastic_bag",
+        "82": "paper",
+        "83": "cardboard",
+        "84": "drink_carton",
+        "85": "plastic_wrapper",
+        "86": "food_container",
+        "87": "bottle_cap"
+      },
+      "scope": "broad-waste-plus-coco-experimental",
+      "components": [
+        {
+          "model_version": "candidate-3fc8b7a0baf1-square640",
+          "sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+          "input_shape": "square"
+        },
+        {
+          "model_version": "candidate-85a76fe86dd8-square640",
+          "sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+          "input_shape": "square"
+        }
+      ],
+      "merge_policy": "same-class-iou065-max50-v1"
+    },
+    "768": {
+      "model_version": "broad-coco-1056cf536eb9",
+      "sha256": "1056cf536eb93ee62a4ee8677f07152b8197cf776ad341ea878a59264abf3bf4",
+      "labels": {
+        "0": "person",
+        "1": "bicycle",
+        "2": "car",
+        "3": "motorcycle",
+        "4": "airplane",
+        "5": "bus",
+        "6": "train",
+        "7": "truck",
+        "8": "boat",
+        "9": "traffic light",
+        "10": "fire hydrant",
+        "11": "stop sign",
+        "12": "parking meter",
+        "13": "bench",
+        "14": "bird",
+        "15": "cat",
+        "16": "dog",
+        "17": "horse",
+        "18": "sheep",
+        "19": "cow",
+        "20": "elephant",
+        "21": "bear",
+        "22": "zebra",
+        "23": "giraffe",
+        "24": "backpack",
+        "25": "umbrella",
+        "26": "handbag",
+        "27": "tie",
+        "28": "suitcase",
+        "29": "frisbee",
+        "30": "skis",
+        "31": "snowboard",
+        "32": "sports ball",
+        "33": "kite",
+        "34": "baseball bat",
+        "35": "baseball glove",
+        "36": "skateboard",
+        "37": "surfboard",
+        "38": "tennis racket",
+        "39": "bottle",
+        "40": "wine glass",
+        "41": "cup",
+        "42": "fork",
+        "43": "knife",
+        "44": "spoon",
+        "45": "bowl",
+        "46": "banana",
+        "47": "apple",
+        "48": "sandwich",
+        "49": "orange",
+        "50": "broccoli",
+        "51": "carrot",
+        "52": "hot dog",
+        "53": "pizza",
+        "54": "donut",
+        "55": "cake",
+        "56": "chair",
+        "57": "couch",
+        "58": "potted plant",
+        "59": "bed",
+        "60": "dining table",
+        "61": "toilet",
+        "62": "tv",
+        "63": "laptop",
+        "64": "mouse",
+        "65": "remote",
+        "66": "keyboard",
+        "67": "cell phone",
+        "68": "microwave",
+        "69": "oven",
+        "70": "toaster",
+        "71": "sink",
+        "72": "refrigerator",
+        "73": "book",
+        "74": "clock",
+        "75": "vase",
+        "76": "scissors",
+        "77": "teddy bear",
+        "78": "hair drier",
+        "79": "toothbrush",
+        "80": "can",
+        "81": "plastic_bag",
+        "82": "paper",
+        "83": "cardboard",
+        "84": "drink_carton",
+        "85": "plastic_wrapper",
+        "86": "food_container",
+        "87": "bottle_cap"
+      },
+      "scope": "broad-waste-plus-coco-experimental",
+      "components": [
+        {
+          "model_version": "candidate-3fc8b7a0baf1-square768",
+          "sha256": "3fc8b7a0baf192b6a88554ce83b24c3ac4ffbd4551e5ee2109a81b68a608462f",
+          "input_shape": "square",
+          "input_size": 768
+        },
+        {
+          "model_version": "candidate-85a76fe86dd8-square768",
+          "sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+          "input_shape": "square",
+          "input_size": 768
+        }
+      ],
+      "merge_policy": "same-class-iou065-max50-v1"
+    }
+  },
+  "matched_results": {
+    "android_jpeg85_gateway90": {
+      "640": {
+        "images": 100,
+        "overall": {
+          "tp": 128,
+          "fp": 55,
+          "fn": 275,
+          "support": 403,
+          "precision": 0.6994535519125683,
+          "recall": 0.3176178660049628,
+          "f1": 0.43686006825938567
+        },
+        "per_class": {
+          "person": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "support": 63,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bicycle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "car": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "motorcycle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "fire hydrant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bird": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cat": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "dog": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "support": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sheep": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "backpack": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "handbag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "skis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "sports ball": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 2,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "tennis racket": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "bottle": {
+            "tp": 19,
+            "fp": 7,
+            "fn": 15,
+            "support": 34,
+            "precision": 0.7307692307692307,
+            "recall": 0.5588235294117647,
+            "f1": 0.6333333333333333
+          },
+          "wine glass": {
+            "tp": 5,
+            "fp": 0,
+            "fn": 4,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.5555555555555556,
+            "f1": 0.7142857142857143
+          },
+          "cup": {
+            "tp": 8,
+            "fp": 10,
+            "fn": 13,
+            "support": 21,
+            "precision": 0.4444444444444444,
+            "recall": 0.38095238095238093,
+            "f1": 0.41025641025641024
+          },
+          "fork": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "knife": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "spoon": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 3,
+            "support": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bowl": {
+            "tp": 9,
+            "fp": 1,
+            "fn": 3,
+            "support": 12,
+            "precision": 0.9,
+            "recall": 0.75,
+            "f1": 0.8181818181818182
+          },
+          "banana": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "apple": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "support": 6,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sandwich": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "support": 1,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "orange": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "carrot": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pizza": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "donut": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "support": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "cake": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "chair": {
+            "tp": 5,
+            "fp": 3,
+            "fn": 9,
+            "support": 14,
+            "precision": 0.625,
+            "recall": 0.35714285714285715,
+            "f1": 0.45454545454545453
+          },
+          "couch": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 1,
+            "support": 2,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5
+          },
+          "potted plant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bed": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "dining table": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 4,
+            "support": 8,
+            "precision": 0.6666666666666666,
+            "recall": 0.5,
+            "f1": 0.5714285714285714
+          },
+          "toilet": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tv": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "laptop": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 4,
+            "support": 6,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "mouse": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "remote": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 7,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.2222222222222222,
+            "f1": 0.36363636363636365
+          },
+          "keyboard": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 4,
+            "support": 7,
+            "precision": 0.75,
+            "recall": 0.42857142857142855,
+            "f1": 0.5454545454545454
+          },
+          "cell phone": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 12,
+            "support": 19,
+            "precision": 1.0,
+            "recall": 0.3684210526315789,
+            "f1": 0.5384615384615384
+          },
+          "microwave": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "oven": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 1,
+            "support": 5,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.8888888888888888
+          },
+          "sink": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 7,
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.125,
+            "f1": 0.2222222222222222
+          },
+          "refrigerator": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 2,
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.8181818181818182,
+            "f1": 0.9
+          },
+          "book": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 7,
+            "support": 10,
+            "precision": 0.75,
+            "recall": 0.3,
+            "f1": 0.42857142857142855
+          },
+          "clock": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "vase": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 0,
+            "support": 2,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "scissors": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "can": {
+            "tp": 1,
+            "fp": 7,
+            "fn": 2,
+            "support": 3,
+            "precision": 0.125,
+            "recall": 0.3333333333333333,
+            "f1": 0.18181818181818182
+          },
+          "plastic_bag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "paper": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "support": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cardboard": {
+            "tp": 19,
+            "fp": 8,
+            "fn": 32,
+            "support": 51,
+            "precision": 0.7037037037037037,
+            "recall": 0.37254901960784315,
+            "f1": 0.48717948717948717
+          },
+          "drink_carton": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "plastic_wrapper": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 16,
+            "support": 17,
+            "precision": 0.2,
+            "recall": 0.058823529411764705,
+            "f1": 0.09090909090909091
+          },
+          "food_container": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 4,
+            "support": 5,
+            "precision": 0.16666666666666666,
+            "recall": 0.2,
+            "f1": 0.18181818181818182
+          },
+          "bottle_cap": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 3,
+            "support": 4,
+            "precision": 0.5,
+            "recall": 0.25,
+            "f1": 0.3333333333333333
+          }
+        },
+        "wrong_label_instances": 24,
+        "no_overlapping_candidate_instances": 259,
+        "same_class_duplicate_pairs": 0,
+        "conflicting_label_pairs": 15,
+        "images_without_reviewable_candidate": 21,
+        "empty_target_images": 0,
+        "images_with_false_positive_on_empty": 0,
+        "latency": {
+          "samples": 300,
+          "p50_ms": 335.96455000224523,
+          "p95_ms": 383.6772699956782
+        },
+        "by_object_size": {
+          "small": {
+            "tp": 30,
+            "fp": 14,
+            "fn": 114,
+            "support": 144,
+            "precision": 0.6818181818181818,
+            "recall": 0.20833333333333334,
+            "f1": 0.3191489361702128
+          },
+          "medium": {
+            "tp": 65,
+            "fp": 31,
+            "fn": 93,
+            "support": 158,
+            "precision": 0.6770833333333334,
+            "recall": 0.41139240506329117,
+            "f1": 0.5118110236220472
+          },
+          "large": {
+            "tp": 33,
+            "fp": 10,
+            "fn": 68,
+            "support": 101,
+            "precision": 0.7674418604651163,
+            "recall": 0.32673267326732675,
+            "f1": 0.4583333333333333
+          }
+        },
+        "process_memory": {
+          "method": "GetProcessMemoryInfo",
+          "samples": 300,
+          "rss_median_bytes": 1257136128,
+          "peak_rss_max_bytes": 1294786560
+        },
+        "cpu_p95_ratio_to_640": 1.0
+      },
+      "768": {
+        "images": 100,
+        "overall": {
+          "tp": 122,
+          "fp": 48,
+          "fn": 281,
+          "support": 403,
+          "precision": 0.7176470588235294,
+          "recall": 0.3027295285359802,
+          "f1": 0.4258289703315881
+        },
+        "per_class": {
+          "person": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "support": 63,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bicycle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "car": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "motorcycle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "fire hydrant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bird": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cat": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "dog": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "support": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sheep": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "backpack": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "handbag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "frisbee": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "support": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "skis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "sports ball": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 2,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "tennis racket": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "bottle": {
+            "tp": 17,
+            "fp": 6,
+            "fn": 17,
+            "support": 34,
+            "precision": 0.7391304347826086,
+            "recall": 0.5,
+            "f1": 0.5964912280701754
+          },
+          "wine glass": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 2,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.7777777777777778,
+            "f1": 0.875
+          },
+          "cup": {
+            "tp": 8,
+            "fp": 10,
+            "fn": 13,
+            "support": 21,
+            "precision": 0.4444444444444444,
+            "recall": 0.38095238095238093,
+            "f1": 0.41025641025641024
+          },
+          "fork": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "knife": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "spoon": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 3,
+            "support": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bowl": {
+            "tp": 8,
+            "fp": 1,
+            "fn": 4,
+            "support": 12,
+            "precision": 0.8888888888888888,
+            "recall": 0.6666666666666666,
+            "f1": 0.7619047619047619
+          },
+          "banana": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "apple": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "support": 6,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sandwich": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "support": 1,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "orange": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "carrot": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pizza": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "cake": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "chair": {
+            "tp": 7,
+            "fp": 2,
+            "fn": 7,
+            "support": 14,
+            "precision": 0.7777777777777778,
+            "recall": 0.5,
+            "f1": 0.6086956521739131
+          },
+          "couch": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "potted plant": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "bed": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "dining table": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 5,
+            "support": 8,
+            "precision": 0.6,
+            "recall": 0.375,
+            "f1": 0.46153846153846156
+          },
+          "toilet": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tv": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "laptop": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 4,
+            "support": 6,
+            "precision": 0.6666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.4444444444444444
+          },
+          "mouse": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "remote": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 7,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.2222222222222222,
+            "f1": 0.36363636363636365
+          },
+          "keyboard": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 4,
+            "support": 7,
+            "precision": 0.75,
+            "recall": 0.42857142857142855,
+            "f1": 0.5454545454545454
+          },
+          "cell phone": {
+            "tp": 8,
+            "fp": 1,
+            "fn": 11,
+            "support": 19,
+            "precision": 0.8888888888888888,
+            "recall": 0.42105263157894735,
+            "f1": 0.5714285714285714
+          },
+          "microwave": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 1,
+            "support": 2,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5
+          },
+          "oven": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 2,
+            "support": 5,
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.75
+          },
+          "sink": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 6,
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4
+          },
+          "refrigerator": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3,
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.7272727272727273,
+            "f1": 0.8421052631578947
+          },
+          "book": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 7,
+            "support": 10,
+            "precision": 0.75,
+            "recall": 0.3,
+            "f1": 0.42857142857142855
+          },
+          "clock": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "vase": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "scissors": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "can": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 2,
+            "support": 3,
+            "precision": 0.16666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.2222222222222222
+          },
+          "plastic_bag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "paper": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "support": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cardboard": {
+            "tp": 17,
+            "fp": 6,
+            "fn": 34,
+            "support": 51,
+            "precision": 0.7391304347826086,
+            "recall": 0.3333333333333333,
+            "f1": 0.4594594594594595
+          },
+          "drink_carton": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "plastic_wrapper": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 16,
+            "support": 17,
+            "precision": 0.16666666666666666,
+            "recall": 0.058823529411764705,
+            "f1": 0.08695652173913043
+          },
+          "food_container": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 5,
+            "support": 5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bottle_cap": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 4,
+            "support": 4,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "wrong_label_instances": 24,
+        "no_overlapping_candidate_instances": 263,
+        "same_class_duplicate_pairs": 0,
+        "conflicting_label_pairs": 9,
+        "images_without_reviewable_candidate": 25,
+        "empty_target_images": 0,
+        "images_with_false_positive_on_empty": 0,
+        "latency": {
+          "samples": 300,
+          "p50_ms": 460.4331500013359,
+          "p95_ms": 517.9352699924493
+        },
+        "by_object_size": {
+          "small": {
+            "tp": 30,
+            "fp": 12,
+            "fn": 114,
+            "support": 144,
+            "precision": 0.7142857142857143,
+            "recall": 0.20833333333333334,
+            "f1": 0.3225806451612903
+          },
+          "medium": {
+            "tp": 62,
+            "fp": 28,
+            "fn": 96,
+            "support": 158,
+            "precision": 0.6888888888888889,
+            "recall": 0.3924050632911392,
+            "f1": 0.5
+          },
+          "large": {
+            "tp": 30,
+            "fp": 8,
+            "fn": 71,
+            "support": 101,
+            "precision": 0.7894736842105263,
+            "recall": 0.297029702970297,
+            "f1": 0.4316546762589928
+          }
+        },
+        "process_memory": {
+          "method": "GetProcessMemoryInfo",
+          "samples": 300,
+          "rss_median_bytes": 1259823104,
+          "peak_rss_max_bytes": 1294786560
+        },
+        "cpu_p95_ratio_to_640": 1.3499242996549767
+      }
+    },
+    "browser_jpeg90": {
+      "640": {
+        "images": 100,
+        "overall": {
+          "tp": 129,
+          "fp": 48,
+          "fn": 274,
+          "support": 403,
+          "precision": 0.7288135593220338,
+          "recall": 0.3200992555831266,
+          "f1": 0.44482758620689655
+        },
+        "per_class": {
+          "person": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "support": 63,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bicycle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "car": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "motorcycle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "fire hydrant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bird": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cat": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "dog": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "support": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sheep": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "backpack": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "handbag": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "skis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "sports ball": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 2,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "tennis racket": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "bottle": {
+            "tp": 18,
+            "fp": 5,
+            "fn": 16,
+            "support": 34,
+            "precision": 0.782608695652174,
+            "recall": 0.5294117647058824,
+            "f1": 0.631578947368421
+          },
+          "wine glass": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 3,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "cup": {
+            "tp": 8,
+            "fp": 8,
+            "fn": 13,
+            "support": 21,
+            "precision": 0.5,
+            "recall": 0.38095238095238093,
+            "f1": 0.43243243243243246
+          },
+          "fork": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "knife": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "spoon": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 3,
+            "support": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bowl": {
+            "tp": 9,
+            "fp": 1,
+            "fn": 3,
+            "support": 12,
+            "precision": 0.9,
+            "recall": 0.75,
+            "f1": 0.8181818181818182
+          },
+          "banana": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "apple": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "support": 6,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sandwich": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "support": 1,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "orange": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "carrot": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pizza": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "cake": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "chair": {
+            "tp": 6,
+            "fp": 4,
+            "fn": 8,
+            "support": 14,
+            "precision": 0.6,
+            "recall": 0.42857142857142855,
+            "f1": 0.5
+          },
+          "couch": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "potted plant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bed": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "dining table": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 4,
+            "support": 8,
+            "precision": 0.6666666666666666,
+            "recall": 0.5,
+            "f1": 0.5714285714285714
+          },
+          "toilet": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tv": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "laptop": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 4,
+            "support": 6,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "mouse": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "remote": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 7,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.2222222222222222,
+            "f1": 0.36363636363636365
+          },
+          "keyboard": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 4,
+            "support": 7,
+            "precision": 0.75,
+            "recall": 0.42857142857142855,
+            "f1": 0.5454545454545454
+          },
+          "cell phone": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 12,
+            "support": 19,
+            "precision": 1.0,
+            "recall": 0.3684210526315789,
+            "f1": 0.5384615384615384
+          },
+          "microwave": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "oven": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 1,
+            "support": 5,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.8888888888888888
+          },
+          "sink": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 7,
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.125,
+            "f1": 0.2222222222222222
+          },
+          "refrigerator": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 2,
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.8181818181818182,
+            "f1": 0.9
+          },
+          "book": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 8,
+            "support": 10,
+            "precision": 0.6666666666666666,
+            "recall": 0.2,
+            "f1": 0.3076923076923077
+          },
+          "clock": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "vase": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 0,
+            "support": 2,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "scissors": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "can": {
+            "tp": 2,
+            "fp": 7,
+            "fn": 1,
+            "support": 3,
+            "precision": 0.2222222222222222,
+            "recall": 0.6666666666666666,
+            "f1": 0.3333333333333333
+          },
+          "plastic_bag": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "paper": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "support": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cardboard": {
+            "tp": 17,
+            "fp": 9,
+            "fn": 34,
+            "support": 51,
+            "precision": 0.6538461538461539,
+            "recall": 0.3333333333333333,
+            "f1": 0.44155844155844154
+          },
+          "drink_carton": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "plastic_wrapper": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 16,
+            "support": 17,
+            "precision": 0.3333333333333333,
+            "recall": 0.058823529411764705,
+            "f1": 0.1
+          },
+          "food_container": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 4,
+            "support": 5,
+            "precision": 0.2,
+            "recall": 0.2,
+            "f1": 0.2
+          },
+          "bottle_cap": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 3,
+            "support": 4,
+            "precision": 0.5,
+            "recall": 0.25,
+            "f1": 0.3333333333333333
+          }
+        },
+        "wrong_label_instances": 25,
+        "no_overlapping_candidate_instances": 256,
+        "same_class_duplicate_pairs": 0,
+        "conflicting_label_pairs": 16,
+        "images_without_reviewable_candidate": 21,
+        "empty_target_images": 0,
+        "images_with_false_positive_on_empty": 0,
+        "latency": {
+          "samples": 300,
+          "p50_ms": 333.1666500016581,
+          "p95_ms": 380.4688899865141
+        },
+        "by_object_size": {
+          "small": {
+            "tp": 30,
+            "fp": 12,
+            "fn": 114,
+            "support": 144,
+            "precision": 0.7142857142857143,
+            "recall": 0.20833333333333334,
+            "f1": 0.3225806451612903
+          },
+          "medium": {
+            "tp": 65,
+            "fp": 27,
+            "fn": 93,
+            "support": 158,
+            "precision": 0.7065217391304348,
+            "recall": 0.41139240506329117,
+            "f1": 0.52
+          },
+          "large": {
+            "tp": 34,
+            "fp": 9,
+            "fn": 67,
+            "support": 101,
+            "precision": 0.7906976744186046,
+            "recall": 0.33663366336633666,
+            "f1": 0.4722222222222222
+          }
+        },
+        "process_memory": {
+          "method": "GetProcessMemoryInfo",
+          "samples": 300,
+          "rss_median_bytes": 1255954432,
+          "peak_rss_max_bytes": 1294786560
+        },
+        "cpu_p95_ratio_to_640": 1.0
+      },
+      "768": {
+        "images": 100,
+        "overall": {
+          "tp": 123,
+          "fp": 50,
+          "fn": 280,
+          "support": 403,
+          "precision": 0.7109826589595376,
+          "recall": 0.3052109181141439,
+          "f1": 0.4270833333333333
+        },
+        "per_class": {
+          "person": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "support": 63,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bicycle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "car": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "motorcycle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "fire hydrant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bird": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cat": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "dog": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "support": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sheep": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "backpack": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "handbag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "frisbee": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "support": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "skis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "sports ball": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 2,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "tennis racket": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "bottle": {
+            "tp": 18,
+            "fp": 9,
+            "fn": 16,
+            "support": 34,
+            "precision": 0.6666666666666666,
+            "recall": 0.5294117647058824,
+            "f1": 0.5901639344262295
+          },
+          "wine glass": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 1,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353
+          },
+          "cup": {
+            "tp": 8,
+            "fp": 9,
+            "fn": 13,
+            "support": 21,
+            "precision": 0.47058823529411764,
+            "recall": 0.38095238095238093,
+            "f1": 0.42105263157894735
+          },
+          "fork": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "knife": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "spoon": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 3,
+            "support": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bowl": {
+            "tp": 9,
+            "fp": 2,
+            "fn": 3,
+            "support": 12,
+            "precision": 0.8181818181818182,
+            "recall": 0.75,
+            "f1": 0.782608695652174
+          },
+          "banana": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "apple": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "support": 6,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sandwich": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "support": 1,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "orange": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 1,
+            "support": 2,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5
+          },
+          "carrot": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pizza": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "cake": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "chair": {
+            "tp": 7,
+            "fp": 2,
+            "fn": 7,
+            "support": 14,
+            "precision": 0.7777777777777778,
+            "recall": 0.5,
+            "f1": 0.6086956521739131
+          },
+          "couch": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "potted plant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bed": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "dining table": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 5,
+            "support": 8,
+            "precision": 0.6,
+            "recall": 0.375,
+            "f1": 0.46153846153846156
+          },
+          "toilet": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tv": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "laptop": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 4,
+            "support": 6,
+            "precision": 0.6666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.4444444444444444
+          },
+          "mouse": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "remote": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 7,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.2222222222222222,
+            "f1": 0.36363636363636365
+          },
+          "keyboard": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 4,
+            "support": 7,
+            "precision": 0.75,
+            "recall": 0.42857142857142855,
+            "f1": 0.5454545454545454
+          },
+          "cell phone": {
+            "tp": 5,
+            "fp": 1,
+            "fn": 14,
+            "support": 19,
+            "precision": 0.8333333333333334,
+            "recall": 0.2631578947368421,
+            "f1": 0.4
+          },
+          "microwave": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "oven": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 2,
+            "support": 5,
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.75
+          },
+          "sink": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 6,
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4
+          },
+          "refrigerator": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3,
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.7272727272727273,
+            "f1": 0.8421052631578947
+          },
+          "book": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 7,
+            "support": 10,
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.46153846153846156
+          },
+          "clock": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "vase": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "scissors": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "can": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 2,
+            "support": 3,
+            "precision": 0.16666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.2222222222222222
+          },
+          "plastic_bag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "paper": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "support": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cardboard": {
+            "tp": 16,
+            "fp": 7,
+            "fn": 35,
+            "support": 51,
+            "precision": 0.6956521739130435,
+            "recall": 0.3137254901960784,
+            "f1": 0.43243243243243246
+          },
+          "drink_carton": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "plastic_wrapper": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 16,
+            "support": 17,
+            "precision": 0.25,
+            "recall": 0.058823529411764705,
+            "f1": 0.09523809523809523
+          },
+          "food_container": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 5,
+            "support": 5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bottle_cap": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 4,
+            "support": 4,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "wrong_label_instances": 23,
+        "no_overlapping_candidate_instances": 261,
+        "same_class_duplicate_pairs": 0,
+        "conflicting_label_pairs": 12,
+        "images_without_reviewable_candidate": 24,
+        "empty_target_images": 0,
+        "images_with_false_positive_on_empty": 0,
+        "latency": {
+          "samples": 300,
+          "p50_ms": 462.23284999723546,
+          "p95_ms": 511.66109998303
+        },
+        "by_object_size": {
+          "small": {
+            "tp": 29,
+            "fp": 16,
+            "fn": 115,
+            "support": 144,
+            "precision": 0.6444444444444445,
+            "recall": 0.2013888888888889,
+            "f1": 0.30687830687830686
+          },
+          "medium": {
+            "tp": 64,
+            "fp": 26,
+            "fn": 94,
+            "support": 158,
+            "precision": 0.7111111111111111,
+            "recall": 0.4050632911392405,
+            "f1": 0.5161290322580645
+          },
+          "large": {
+            "tp": 30,
+            "fp": 8,
+            "fn": 71,
+            "support": 101,
+            "precision": 0.7894736842105263,
+            "recall": 0.297029702970297,
+            "f1": 0.4316546762589928
+          }
+        },
+        "process_memory": {
+          "method": "GetProcessMemoryInfo",
+          "samples": 300,
+          "rss_median_bytes": 1259405312,
+          "peak_rss_max_bytes": 1294786560
+        },
+        "cpu_p95_ratio_to_640": 1.3448171807192069
+      }
+    },
+    "simulated_dim055": {
+      "640": {
+        "images": 100,
+        "overall": {
+          "tp": 128,
+          "fp": 52,
+          "fn": 275,
+          "support": 403,
+          "precision": 0.7111111111111111,
+          "recall": 0.3176178660049628,
+          "f1": 0.4391080617495712
+        },
+        "per_class": {
+          "person": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "support": 63,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bicycle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "car": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "motorcycle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "fire hydrant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bird": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cat": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "dog": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "support": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sheep": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "backpack": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "handbag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "skis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "sports ball": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 3,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4
+          },
+          "tennis racket": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "bottle": {
+            "tp": 17,
+            "fp": 7,
+            "fn": 17,
+            "support": 34,
+            "precision": 0.7083333333333334,
+            "recall": 0.5,
+            "f1": 0.5862068965517241
+          },
+          "wine glass": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 3,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "cup": {
+            "tp": 8,
+            "fp": 9,
+            "fn": 13,
+            "support": 21,
+            "precision": 0.47058823529411764,
+            "recall": 0.38095238095238093,
+            "f1": 0.42105263157894735
+          },
+          "fork": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "knife": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "spoon": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 3,
+            "support": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bowl": {
+            "tp": 7,
+            "fp": 1,
+            "fn": 5,
+            "support": 12,
+            "precision": 0.875,
+            "recall": 0.5833333333333334,
+            "f1": 0.7
+          },
+          "banana": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "apple": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "support": 6,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sandwich": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "support": 1,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "orange": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "carrot": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pizza": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "donut": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "support": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "cake": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "chair": {
+            "tp": 6,
+            "fp": 3,
+            "fn": 8,
+            "support": 14,
+            "precision": 0.6666666666666666,
+            "recall": 0.42857142857142855,
+            "f1": 0.5217391304347826
+          },
+          "couch": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "potted plant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bed": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "dining table": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 4,
+            "support": 8,
+            "precision": 0.6666666666666666,
+            "recall": 0.5,
+            "f1": 0.5714285714285714
+          },
+          "toilet": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tv": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "laptop": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 3,
+            "support": 6,
+            "precision": 0.75,
+            "recall": 0.5,
+            "f1": 0.6
+          },
+          "mouse": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "remote": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 7,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.2222222222222222,
+            "f1": 0.36363636363636365
+          },
+          "keyboard": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 4,
+            "support": 7,
+            "precision": 0.75,
+            "recall": 0.42857142857142855,
+            "f1": 0.5454545454545454
+          },
+          "cell phone": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 12,
+            "support": 19,
+            "precision": 1.0,
+            "recall": 0.3684210526315789,
+            "f1": 0.5384615384615384
+          },
+          "microwave": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "oven": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 2,
+            "support": 5,
+            "precision": 0.6,
+            "recall": 0.6,
+            "f1": 0.6
+          },
+          "sink": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 5,
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.375,
+            "f1": 0.5454545454545454
+          },
+          "refrigerator": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 2,
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.8181818181818182,
+            "f1": 0.9
+          },
+          "book": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 8,
+            "support": 10,
+            "precision": 0.6666666666666666,
+            "recall": 0.2,
+            "f1": 0.3076923076923077
+          },
+          "clock": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "vase": {
+            "tp": 2,
+            "fp": 1,
+            "fn": 0,
+            "support": 2,
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8
+          },
+          "scissors": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "can": {
+            "tp": 1,
+            "fp": 6,
+            "fn": 2,
+            "support": 3,
+            "precision": 0.14285714285714285,
+            "recall": 0.3333333333333333,
+            "f1": 0.2
+          },
+          "plastic_bag": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "paper": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "support": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cardboard": {
+            "tp": 19,
+            "fp": 6,
+            "fn": 32,
+            "support": 51,
+            "precision": 0.76,
+            "recall": 0.37254901960784315,
+            "f1": 0.5
+          },
+          "drink_carton": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "plastic_wrapper": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 16,
+            "support": 17,
+            "precision": 0.2,
+            "recall": 0.058823529411764705,
+            "f1": 0.09090909090909091
+          },
+          "food_container": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 4,
+            "support": 5,
+            "precision": 0.16666666666666666,
+            "recall": 0.2,
+            "f1": 0.18181818181818182
+          },
+          "bottle_cap": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 3,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4
+          }
+        },
+        "wrong_label_instances": 24,
+        "no_overlapping_candidate_instances": 257,
+        "same_class_duplicate_pairs": 0,
+        "conflicting_label_pairs": 16,
+        "images_without_reviewable_candidate": 22,
+        "empty_target_images": 0,
+        "images_with_false_positive_on_empty": 0,
+        "latency": {
+          "samples": 300,
+          "p50_ms": 332.213750021765,
+          "p95_ms": 377.8519300132757
+        },
+        "by_object_size": {
+          "small": {
+            "tp": 27,
+            "fp": 16,
+            "fn": 117,
+            "support": 144,
+            "precision": 0.627906976744186,
+            "recall": 0.1875,
+            "f1": 0.2887700534759358
+          },
+          "medium": {
+            "tp": 65,
+            "fp": 27,
+            "fn": 93,
+            "support": 158,
+            "precision": 0.7065217391304348,
+            "recall": 0.41139240506329117,
+            "f1": 0.52
+          },
+          "large": {
+            "tp": 36,
+            "fp": 9,
+            "fn": 65,
+            "support": 101,
+            "precision": 0.8,
+            "recall": 0.3564356435643564,
+            "f1": 0.4931506849315068
+          }
+        },
+        "process_memory": {
+          "method": "GetProcessMemoryInfo",
+          "samples": 300,
+          "rss_median_bytes": 1257674752,
+          "peak_rss_max_bytes": 1294786560
+        },
+        "cpu_p95_ratio_to_640": 1.0
+      },
+      "768": {
+        "images": 100,
+        "overall": {
+          "tp": 118,
+          "fp": 49,
+          "fn": 285,
+          "support": 403,
+          "precision": 0.7065868263473054,
+          "recall": 0.29280397022332505,
+          "f1": 0.41403508771929826
+        },
+        "per_class": {
+          "person": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 63,
+            "support": 63,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bicycle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "car": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "motorcycle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "fire hydrant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bird": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cat": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "dog": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "support": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sheep": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "backpack": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "handbag": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "frisbee": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "support": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "skis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "support": 1,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "sports ball": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 2,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "tennis racket": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "bottle": {
+            "tp": 15,
+            "fp": 8,
+            "fn": 19,
+            "support": 34,
+            "precision": 0.6521739130434783,
+            "recall": 0.4411764705882353,
+            "f1": 0.5263157894736842
+          },
+          "wine glass": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 1,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.8888888888888888,
+            "f1": 0.9411764705882353
+          },
+          "cup": {
+            "tp": 8,
+            "fp": 8,
+            "fn": 13,
+            "support": 21,
+            "precision": 0.5,
+            "recall": 0.38095238095238093,
+            "f1": 0.43243243243243246
+          },
+          "fork": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "knife": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "spoon": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 3,
+            "support": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bowl": {
+            "tp": 9,
+            "fp": 1,
+            "fn": 3,
+            "support": 12,
+            "precision": 0.9,
+            "recall": 0.75,
+            "f1": 0.8181818181818182
+          },
+          "banana": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "apple": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6,
+            "support": 6,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "sandwich": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "support": 1,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "orange": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "carrot": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "support": 3,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "pizza": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          "cake": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "chair": {
+            "tp": 6,
+            "fp": 2,
+            "fn": 8,
+            "support": 14,
+            "precision": 0.75,
+            "recall": 0.42857142857142855,
+            "f1": 0.5454545454545454
+          },
+          "couch": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "potted plant": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bed": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "dining table": {
+            "tp": 3,
+            "fp": 2,
+            "fn": 5,
+            "support": 8,
+            "precision": 0.6,
+            "recall": 0.375,
+            "f1": 0.46153846153846156
+          },
+          "toilet": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1,
+            "support": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tv": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "laptop": {
+            "tp": 2,
+            "fp": 2,
+            "fn": 4,
+            "support": 6,
+            "precision": 0.5,
+            "recall": 0.3333333333333333,
+            "f1": 0.4
+          },
+          "mouse": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "support": 4,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571
+          },
+          "remote": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 7,
+            "support": 9,
+            "precision": 1.0,
+            "recall": 0.2222222222222222,
+            "f1": 0.36363636363636365
+          },
+          "keyboard": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 4,
+            "support": 7,
+            "precision": 0.75,
+            "recall": 0.42857142857142855,
+            "f1": 0.5454545454545454
+          },
+          "cell phone": {
+            "tp": 6,
+            "fp": 1,
+            "fn": 13,
+            "support": 19,
+            "precision": 0.8571428571428571,
+            "recall": 0.3157894736842105,
+            "f1": 0.46153846153846156
+          },
+          "microwave": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 1,
+            "support": 2,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5
+          },
+          "oven": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 2,
+            "support": 5,
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.75
+          },
+          "sink": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 6,
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4
+          },
+          "refrigerator": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 3,
+            "support": 11,
+            "precision": 1.0,
+            "recall": 0.7272727272727273,
+            "f1": 0.8421052631578947
+          },
+          "book": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 8,
+            "support": 10,
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.3333333333333333
+          },
+          "clock": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 1,
+            "support": 2,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "vase": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "scissors": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "support": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "can": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 2,
+            "support": 3,
+            "precision": 0.16666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.2222222222222222
+          },
+          "plastic_bag": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2,
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5
+          },
+          "paper": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "support": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "cardboard": {
+            "tp": 16,
+            "fp": 7,
+            "fn": 35,
+            "support": 51,
+            "precision": 0.6956521739130435,
+            "recall": 0.3137254901960784,
+            "f1": 0.43243243243243246
+          },
+          "drink_carton": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "support": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "plastic_wrapper": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 16,
+            "support": 17,
+            "precision": 0.25,
+            "recall": 0.058823529411764705,
+            "f1": 0.09523809523809523
+          },
+          "food_container": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 5,
+            "support": 5,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "bottle_cap": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 4,
+            "support": 4,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "wrong_label_instances": 24,
+        "no_overlapping_candidate_instances": 266,
+        "same_class_duplicate_pairs": 0,
+        "conflicting_label_pairs": 10,
+        "images_without_reviewable_candidate": 25,
+        "empty_target_images": 0,
+        "images_with_false_positive_on_empty": 0,
+        "latency": {
+          "samples": 300,
+          "p50_ms": 456.53609998407774,
+          "p95_ms": 516.5915349964052
+        },
+        "by_object_size": {
+          "small": {
+            "tp": 28,
+            "fp": 13,
+            "fn": 116,
+            "support": 144,
+            "precision": 0.6829268292682927,
+            "recall": 0.19444444444444445,
+            "f1": 0.3027027027027027
+          },
+          "medium": {
+            "tp": 59,
+            "fp": 27,
+            "fn": 99,
+            "support": 158,
+            "precision": 0.686046511627907,
+            "recall": 0.37341772151898733,
+            "f1": 0.48360655737704916
+          },
+          "large": {
+            "tp": 31,
+            "fp": 9,
+            "fn": 70,
+            "support": 101,
+            "precision": 0.775,
+            "recall": 0.3069306930693069,
+            "f1": 0.4397163120567376
+          }
+        },
+        "process_memory": {
+          "method": "GetProcessMemoryInfo",
+          "samples": 300,
+          "rss_median_bytes": 1259819008,
+          "peak_rss_max_bytes": 1294786560
+        },
+        "cpu_p95_ratio_to_640": 1.367179823531019
+      }
+    }
+  },
+  "component_validation_ap": {
+    "640": {
+      "broad": {
+        "split": "val",
+        "metrics": {
+          "metrics/precision(B)": 0.3745724544531665,
+          "metrics/recall(B)": 0.35927920531403545,
+          "metrics/mAP50(B)": 0.35815908105926186,
+          "metrics/mAP50-95(B)": 0.25828020116044337,
+          "fitness": 0.25828020116044337
+        },
+        "per_class": [
+          {
+            "label": "bottle",
+            "precision": 0.793358912552622,
+            "recall": 0.7922383340708306,
+            "map50": 0.8404575678392778,
+            "map50_95": 0.6145764953396587
+          },
+          {
+            "label": "can",
+            "precision": 0.7887281891057135,
+            "recall": 0.6923076923076923,
+            "map50": 0.7331013538343771,
+            "map50_95": 0.48092856849687493
+          },
+          {
+            "label": "cup",
+            "precision": 0.5202771848196024,
+            "recall": 0.6192170818505338,
+            "map50": 0.6241584095585868,
+            "map50_95": 0.4430434376292336
+          },
+          {
+            "label": "plastic_bag",
+            "precision": 0.6254485901687089,
+            "recall": 0.25,
+            "map50": 0.4106804101990165,
+            "map50_95": 0.3466115347800328
+          },
+          {
+            "label": "paper",
+            "precision": 0.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "cardboard",
+            "precision": 0.35895149853484204,
+            "recall": 0.47058823529411764,
+            "map50": 0.39784005772389447,
+            "map50_95": 0.2596713628886545
+          },
+          {
+            "label": "drink_carton",
+            "precision": 0.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "plastic_wrapper",
+            "precision": 0.09568736287250348,
+            "recall": 0.11764705882352941,
+            "map50": 0.08503726468421946,
+            "map50_95": 0.0751534401176841
+          },
+          {
+            "label": "food_container",
+            "precision": 0.24169543749651493,
+            "recall": 0.42857142857142855,
+            "map50": 0.22818181818181818,
+            "map50_95": 0.17693939393939395
+          },
+          {
+            "label": "bottle_cap",
+            "precision": 0.32157736898115746,
+            "recall": 0.2222222222222222,
+            "map50": 0.2621339285714286,
+            "map50_95": 0.1858777784129016
+          }
+        ]
+      },
+      "general": {
+        "split": "val",
+        "metrics": {
+          "metrics/precision(B)": 0.7692864440313228,
+          "metrics/recall(B)": 0.5991449671597924,
+          "metrics/mAP50(B)": 0.6898914132317122,
+          "metrics/mAP50-95(B)": 0.4982727475359537,
+          "fitness": 0.4982727475359537
+        },
+        "per_class": [
+          {
+            "label": "person",
+            "precision": 0.9123746034158259,
+            "recall": 0.873015873015873,
+            "map50": 0.9506821586992458,
+            "map50_95": 0.7733654710873339
+          },
+          {
+            "label": "bicycle",
+            "precision": 0.6754714549265077,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.8955
+          },
+          {
+            "label": "car",
+            "precision": 0.8424077582078477,
+            "recall": 0.6666666666666666,
+            "map50": 0.9125000000000002,
+            "map50_95": 0.6732500000000001
+          },
+          {
+            "label": "motorcycle",
+            "precision": 0.4227502246716772,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.597
+          },
+          {
+            "label": "fire hydrant",
+            "precision": 0.6773991276223678,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.796
+          },
+          {
+            "label": "bird",
+            "precision": 0.6731292833604487,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.597
+          },
+          {
+            "label": "cat",
+            "precision": 1.0,
+            "recall": 0.8849145096083744,
+            "map50": 0.995,
+            "map50_95": 0.8949999999999999
+          },
+          {
+            "label": "dog",
+            "precision": 0.6310162987541154,
+            "recall": 0.75,
+            "map50": 0.745,
+            "map50_95": 0.6705
+          },
+          {
+            "label": "sheep",
+            "precision": 0.5589103162623631,
+            "recall": 0.6666666666666666,
+            "map50": 0.8300000000000001,
+            "map50_95": 0.5238750000000001
+          },
+          {
+            "label": "backpack",
+            "precision": 1.0,
+            "recall": 0.5950057742545908,
+            "map50": 0.665,
+            "map50_95": 0.4325
+          },
+          {
+            "label": "handbag",
+            "precision": 0.7486827595674025,
+            "recall": 0.3333333333333333,
+            "map50": 0.3496666666666666,
+            "map50_95": 0.2433
+          },
+          {
+            "label": "skis",
+            "precision": 0.6526120556595847,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.796
+          },
+          {
+            "label": "sports ball",
+            "precision": 1.0,
+            "recall": 0.6520734544545752,
+            "map50": 0.8164285714285716,
+            "map50_95": 0.49371428571428577
+          },
+          {
+            "label": "tennis racket",
+            "precision": 0.7447786864425912,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.7283333333333333
+          },
+          {
+            "label": "bottle",
+            "precision": 1.0,
+            "recall": 0.7747940637571169,
+            "map50": 0.870046439628483,
+            "map50_95": 0.6920593940287441
+          },
+          {
+            "label": "wine glass",
+            "precision": 0.8829363593043953,
+            "recall": 0.8412686522129407,
+            "map50": 0.9277777777777778,
+            "map50_95": 0.7170384615384615
+          },
+          {
+            "label": "cup",
+            "precision": 0.5997576569248311,
+            "recall": 0.37465920505054373,
+            "map50": 0.4849326923076923,
+            "map50_95": 0.27362784965034964
+          },
+          {
+            "label": "fork",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.4433333333333334,
+            "map50_95": 0.15568452380952383
+          },
+          {
+            "label": "knife",
+            "precision": 0.8505163520412706,
+            "recall": 0.3333333333333333,
+            "map50": 0.555,
+            "map50_95": 0.3996666666666667
+          },
+          {
+            "label": "spoon",
+            "precision": 0.0,
+            "recall": 0.0,
+            "map50": 0.02392857142857143,
+            "map50_95": 0.02153571428571429
+          },
+          {
+            "label": "bowl",
+            "precision": 0.7537512797671624,
+            "recall": 0.75,
+            "map50": 0.8142857142857143,
+            "map50_95": 0.6000297619047619
+          },
+          {
+            "label": "banana",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "apple",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.25,
+            "map50_95": 0.10825
+          },
+          {
+            "label": "sandwich",
+            "precision": 0.38598982018268413,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.199
+          },
+          {
+            "label": "orange",
+            "precision": 0.8011411751036511,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.8955
+          },
+          {
+            "label": "carrot",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "pizza",
+            "precision": 1.0,
+            "recall": 0.9164500365005869,
+            "map50": 0.995,
+            "map50_95": 0.7305
+          },
+          {
+            "label": "cake",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "chair",
+            "precision": 0.5920941511900444,
+            "recall": 0.5714285714285714,
+            "map50": 0.5817223617455816,
+            "map50_95": 0.44130633484162896
+          },
+          {
+            "label": "couch",
+            "precision": 0.5864981944564616,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.795
+          },
+          {
+            "label": "potted plant",
+            "precision": 0.7914245233218284,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.597
+          },
+          {
+            "label": "bed",
+            "precision": 1.0,
+            "recall": 0.6337295912890158,
+            "map50": 0.863,
+            "map50_95": 0.7046
+          },
+          {
+            "label": "dining table",
+            "precision": 0.538664763226881,
+            "recall": 0.5,
+            "map50": 0.5429389978213508,
+            "map50_95": 0.4392341503267974
+          },
+          {
+            "label": "toilet",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.4975,
+            "map50_95": 0.44775
+          },
+          {
+            "label": "tv",
+            "precision": 0.8216788595146727,
+            "recall": 0.75,
+            "map50": 0.8561111111111112,
+            "map50_95": 0.6376111111111112
+          },
+          {
+            "label": "laptop",
+            "precision": 0.5586169726308569,
+            "recall": 0.4310282877180947,
+            "map50": 0.5281428571428572,
+            "map50_95": 0.45041428571428577
+          },
+          {
+            "label": "mouse",
+            "precision": 0.8331571521912723,
+            "recall": 0.75,
+            "map50": 0.745,
+            "map50_95": 0.6455
+          },
+          {
+            "label": "remote",
+            "precision": 1.0,
+            "recall": 0.29924385619109767,
+            "map50": 0.5162903225806452,
+            "map50_95": 0.3369336917562724
+          },
+          {
+            "label": "keyboard",
+            "precision": 0.535260217332407,
+            "recall": 0.42857142857142855,
+            "map50": 0.6134920634920635,
+            "map50_95": 0.5206150793650794
+          },
+          {
+            "label": "cell phone",
+            "precision": 0.8903022593245409,
+            "recall": 0.47368421052631576,
+            "map50": 0.6312981558671213,
+            "map50_95": 0.41798141772021086
+          },
+          {
+            "label": "microwave",
+            "precision": 0.5680369975836539,
+            "recall": 0.5,
+            "map50": 0.8283333333333331,
+            "map50_95": 0.6121666666666666
+          },
+          {
+            "label": "oven",
+            "precision": 0.6217947562473597,
+            "recall": 0.8,
+            "map50": 0.795,
+            "map50_95": 0.538375
+          },
+          {
+            "label": "sink",
+            "precision": 0.9304433800450725,
+            "recall": 0.5,
+            "map50": 0.6756857142857142,
+            "map50_95": 0.2897794613583138
+          },
+          {
+            "label": "refrigerator",
+            "precision": 0.9445142155773418,
+            "recall": 0.9090909090909091,
+            "map50": 0.9757142857142858,
+            "map50_95": 0.7722714285714287
+          },
+          {
+            "label": "book",
+            "precision": 0.6666758615080788,
+            "recall": 0.3,
+            "map50": 0.39597670647206257,
+            "map50_95": 0.32032279227480476
+          },
+          {
+            "label": "clock",
+            "precision": 0.6677950538726358,
+            "recall": 0.5,
+            "map50": 0.495,
+            "map50_95": 0.4455
+          },
+          {
+            "label": "vase",
+            "precision": 0.5651667432656632,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.5964999999999999
+          },
+          {
+            "label": "scissors",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          }
+        ]
+      }
+    },
+    "768": {
+      "broad": {
+        "split": "val",
+        "metrics": {
+          "metrics/precision(B)": 0.4925971452322191,
+          "metrics/recall(B)": 0.3538957135467786,
+          "metrics/mAP50(B)": 0.33988753984050046,
+          "metrics/mAP50-95(B)": 0.24077298979262282,
+          "fitness": 0.24077298979262282
+        },
+        "per_class": [
+          {
+            "label": "bottle",
+            "precision": 0.7253678434045033,
+            "recall": 0.8268398268398268,
+            "map50": 0.8418334583793254,
+            "map50_95": 0.6025905230875845
+          },
+          {
+            "label": "can",
+            "precision": 0.7834811128356403,
+            "recall": 0.6561166766742673,
+            "map50": 0.7076859956747683,
+            "map50_95": 0.4746401917881841
+          },
+          {
+            "label": "cup",
+            "precision": 0.4807686484779138,
+            "recall": 0.6761565836298933,
+            "map50": 0.6184715625346116,
+            "map50_95": 0.43744016297869576
+          },
+          {
+            "label": "plastic_bag",
+            "precision": 0.9532308154810082,
+            "recall": 0.375,
+            "map50": 0.5009766573295986,
+            "map50_95": 0.41300107376283846
+          },
+          {
+            "label": "paper",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "cardboard",
+            "precision": 0.39960676791999433,
+            "recall": 0.4698300427215576,
+            "map50": 0.37957655492645237,
+            "map50_95": 0.250326352945897
+          },
+          {
+            "label": "drink_carton",
+            "precision": 0.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "plastic_wrapper",
+            "precision": 0.052475708163007444,
+            "recall": 0.058823529411764705,
+            "map50": 0.07942702392554539,
+            "map50_95": 0.07037120719216657
+          },
+          {
+            "label": "food_container",
+            "precision": 0.17047538971938517,
+            "recall": 0.14285714285714285,
+            "map50": 0.09133492822966507,
+            "map50_95": 0.06446953882031282
+          },
+          {
+            "label": "bottle_cap",
+            "precision": 0.36056516632073826,
+            "recall": 0.3333333333333333,
+            "map50": 0.17956921740503828,
+            "map50_95": 0.09489084735054884
+          }
+        ]
+      },
+      "general": {
+        "split": "val",
+        "metrics": {
+          "metrics/precision(B)": 0.6965239316912353,
+          "metrics/recall(B)": 0.6148470613778974,
+          "metrics/mAP50(B)": 0.6542971434721893,
+          "metrics/mAP50-95(B)": 0.4820167476459161,
+          "fitness": 0.4820167476459161
+        },
+        "per_class": [
+          {
+            "label": "person",
+            "precision": 0.8773938085495663,
+            "recall": 0.8888888888888888,
+            "map50": 0.9475294917287571,
+            "map50_95": 0.7756622720783646
+          },
+          {
+            "label": "bicycle",
+            "precision": 0.6588130424556513,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.8955
+          },
+          {
+            "label": "car",
+            "precision": 0.7846014152781389,
+            "recall": 0.6666666666666666,
+            "map50": 0.9125000000000002,
+            "map50_95": 0.7227500000000001
+          },
+          {
+            "label": "motorcycle",
+            "precision": 0.39136466511467904,
+            "recall": 1.0,
+            "map50": 0.4975,
+            "map50_95": 0.34825
+          },
+          {
+            "label": "fire hydrant",
+            "precision": 1.0,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.49749999999999994
+          },
+          {
+            "label": "bird",
+            "precision": 0.6498094700790054,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.8955
+          },
+          {
+            "label": "cat",
+            "precision": 0.5276024938892702,
+            "recall": 0.5828074816678104,
+            "map50": 0.8283333333333331,
+            "map50_95": 0.7283333333333333
+          },
+          {
+            "label": "dog",
+            "precision": 0.6296801895358595,
+            "recall": 0.75,
+            "map50": 0.745,
+            "map50_95": 0.6705
+          },
+          {
+            "label": "sheep",
+            "precision": 0.7008348110783834,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.6815
+          },
+          {
+            "label": "backpack",
+            "precision": 0.4767458767649843,
+            "recall": 0.6666666666666666,
+            "map50": 0.665,
+            "map50_95": 0.41625000000000006
+          },
+          {
+            "label": "handbag",
+            "precision": 0.24663405863963103,
+            "recall": 0.16442270575975404,
+            "map50": 0.1825,
+            "map50_95": 0.08866666666666667
+          },
+          {
+            "label": "skis",
+            "precision": 0.6315603108060712,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.6965
+          },
+          {
+            "label": "sports ball",
+            "precision": 0.9857235849944576,
+            "recall": 0.75,
+            "map50": 0.745,
+            "map50_95": 0.504875
+          },
+          {
+            "label": "tennis racket",
+            "precision": 0.6012348425658717,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.8116666666666668
+          },
+          {
+            "label": "bottle",
+            "precision": 0.8628024639504002,
+            "recall": 0.7777777777777778,
+            "map50": 0.8287067099567099,
+            "map50_95": 0.6589665473415474
+          },
+          {
+            "label": "wine glass",
+            "precision": 0.8296753637996553,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.7499968253968254
+          },
+          {
+            "label": "cup",
+            "precision": 0.6966443440948281,
+            "recall": 0.375,
+            "map50": 0.4366917293233083,
+            "map50_95": 0.26520977443609023
+          },
+          {
+            "label": "fork",
+            "precision": 0.0,
+            "recall": 0.0,
+            "map50": 0.2216666666666667,
+            "map50_95": 0.14975000000000002
+          },
+          {
+            "label": "knife",
+            "precision": 0.5802639404740237,
+            "recall": 0.49386121428138086,
+            "map50": 0.555,
+            "map50_95": 0.45550000000000007
+          },
+          {
+            "label": "spoon",
+            "precision": 0.13705524247868386,
+            "recall": 0.3333333333333333,
+            "map50": 0.07416666666666666,
+            "map50_95": 0.05575
+          },
+          {
+            "label": "bowl",
+            "precision": 0.7281505479547614,
+            "recall": 0.75,
+            "map50": 0.8377725531173807,
+            "map50_95": 0.5934657486191968
+          },
+          {
+            "label": "banana",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "apple",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.018333333333333333,
+            "map50_95": 0.012833333333333332
+          },
+          {
+            "label": "sandwich",
+            "precision": 0.348811173559684,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.199
+          },
+          {
+            "label": "orange",
+            "precision": 0.6003334590888503,
+            "recall": 0.801000377266551,
+            "map50": 0.8283333333333331,
+            "map50_95": 0.7949999999999998
+          },
+          {
+            "label": "carrot",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "pizza",
+            "precision": 1.0,
+            "recall": 0.9299500210417844,
+            "map50": 0.995,
+            "map50_95": 0.7635000000000001
+          },
+          {
+            "label": "cake",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          },
+          {
+            "label": "chair",
+            "precision": 0.5804614415200258,
+            "recall": 0.6927093070759898,
+            "map50": 0.6120805109922758,
+            "map50_95": 0.4783951213818861
+          },
+          {
+            "label": "couch",
+            "precision": 0.40657603595174724,
+            "recall": 1.0,
+            "map50": 0.7450000000000001,
+            "map50_95": 0.5955000000000001
+          },
+          {
+            "label": "potted plant",
+            "precision": 0.9063368101999101,
+            "recall": 1.0,
+            "map50": 0.995,
+            "map50_95": 0.597
+          },
+          {
+            "label": "bed",
+            "precision": 1.0,
+            "recall": 0.6488665737708228,
+            "map50": 0.775,
+            "map50_95": 0.5435
+          },
+          {
+            "label": "dining table",
+            "precision": 0.47888477232234244,
+            "recall": 0.5,
+            "map50": 0.43151960784313725,
+            "map50_95": 0.3503762254901961
+          },
+          {
+            "label": "toilet",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.4975,
+            "map50_95": 0.49749999999999994
+          },
+          {
+            "label": "tv",
+            "precision": 0.5939367236477284,
+            "recall": 0.75,
+            "map50": 0.8561111111111112,
+            "map50_95": 0.6141388888888889
+          },
+          {
+            "label": "laptop",
+            "precision": 0.6797329749030578,
+            "recall": 0.5,
+            "map50": 0.5168181818181818,
+            "map50_95": 0.43193181818181825
+          },
+          {
+            "label": "mouse",
+            "precision": 0.7791339017718668,
+            "recall": 0.75,
+            "map50": 0.745,
+            "map50_95": 0.6038333333333334
+          },
+          {
+            "label": "remote",
+            "precision": 0.782250708620724,
+            "recall": 0.4444444444444444,
+            "map50": 0.5608928571428572,
+            "map50_95": 0.37827380952380957
+          },
+          {
+            "label": "keyboard",
+            "precision": 0.6266118138985863,
+            "recall": 0.5714285714285714,
+            "map50": 0.6528636363636364,
+            "map50_95": 0.5364795454545455
+          },
+          {
+            "label": "cell phone",
+            "precision": 0.703118217456757,
+            "recall": 0.42105263157894735,
+            "map50": 0.6042451690821256,
+            "map50_95": 0.3875690726224614
+          },
+          {
+            "label": "microwave",
+            "precision": 0.30726332172445453,
+            "recall": 0.5,
+            "map50": 0.637857142857143,
+            "map50_95": 0.5169285714285714
+          },
+          {
+            "label": "oven",
+            "precision": 0.7160700630897947,
+            "recall": 0.8,
+            "map50": 0.8978571428571427,
+            "map50_95": 0.6248095238095238
+          },
+          {
+            "label": "sink",
+            "precision": 0.7597825744420976,
+            "recall": 0.3994564361052441,
+            "map50": 0.6313333333333335,
+            "map50_95": 0.30271904761904767
+          },
+          {
+            "label": "refrigerator",
+            "precision": 0.9088096163684234,
+            "recall": 0.8181818181818182,
+            "map50": 0.9673076923076924,
+            "map50_95": 0.7475008394383396
+          },
+          {
+            "label": "book",
+            "precision": 0.6133785830915026,
+            "recall": 0.32006787463725395,
+            "map50": 0.5108426834969613,
+            "map50_95": 0.4069219219595272
+          },
+          {
+            "label": "clock",
+            "precision": 0.645066057017824,
+            "recall": 0.5,
+            "map50": 0.495,
+            "map50_95": 0.4455
+          },
+          {
+            "label": "vase",
+            "precision": 1.0,
+            "recall": 0.9660761555653672,
+            "map50": 0.995,
+            "map50_95": 0.6455
+          },
+          {
+            "label": "scissors",
+            "precision": 1.0,
+            "recall": 0.0,
+            "map50": 0.0,
+            "map50_95": 0.0
+          }
+        ]
+      }
+    }
+  },
+  "http": {
+    "status": "MEASURED_SEPARATELY",
+    "results": {
+      "640": {
+        "samples": 36,
+        "p50_ms": 324.05159997870214,
+        "p95_ms": 355.5690000212053
+      },
+      "768": {
+        "samples": 36,
+        "p50_ms": 447.3889000364579,
+        "p95_ms": 480.0190000096336
+      }
+    },
+    "scope": "Loopback HTTP upload, local worker detection, and response; includes inference and excludes the gateway and staging network.",
+    "input_count": 12
+  },
+  "holdout_opened": false,
+  "promoted": false,
+  "code_revision": "ec12e7931ded48855c4ad8b16ff5b0ea9f3c5054",
+  "component_ap_protocol": {
+    "input": "Full component legacy validation, matched across resolutions and encoded as browser_jpeg90",
+    "validation_photos": {
+      "broad": 975,
+      "general": 43
+    },
+    "device": "cpu",
+    "batch": 1,
+    "rect": false,
+    "confidence_floor": 0.001,
+    "nms_iou": 0.7,
+    "max_det": 50
+  },
+  "limitations": [
+    "Validation datasets and released checkpoints used for prior development. No new holdout or new physical captures.",
+    "Focus-enriched sample for matched detector metrics and latency. Overall metrics are not population estimates.",
+    "Android preprocessing and dim conditions use simulated transformations of the same photos.",
+    "Memory refers to a single process with both resolutions already loaded; HTTP uses a local inference worker.",
+    "Component AP comes from separate low-confidence model evaluation and cannot be combined into a single mAP.",
+    "Versions and timing are for the local experiment environment; staging runtime and hardware may differ."
+  ]
+}

@@ -1,6 +1,6 @@
 # Ukuran input dan biaya CPU — issue #11
 
-Perbandingan ini memakai checkpoint yang sudah dibekukan dari issue #10 dan validation yang sudah direview. Review data masih ditunda sampai akhir sesuai arahan pengguna. Karena prasyarat itu belum tersedia, implementasi saat ini menghasilkan rencana tertunda; belum ada pemenang resolusi atau model baru yang diaktifkan.
+Eksperimen penerimaan memakai checkpoint yang dibekukan dari issue #10 dan validation yang sudah direview. [Pilot #11](ISSUE_11_RESOLUTION_PROGRESS.md) mencatat hasil sementara dari bobot rilis dan validation legacy.
 
 ## Audit jalur gambar
 
@@ -81,4 +81,4 @@ Ukuran lebih besar hanya diteruskan bila macro-F1 enam kelas fokus membaik, micr
 
 Report selalu `promoted=false`, `holdout_opened=false`, dan input aktif tetap640. Pilihan eksperimen belum boleh diaktifkan sebelum kalibrasi serta evaluasi akhir issue #12. Adaptasi fine-tuning768 bila diperlukan merupakan eksperimen training terpisah dengan lineage checkpoint baru, bukan bagian dari perbandingan inference-only ini.
 
-[Rencana saat ini](../evaluations/issue11-resolution-plan.json) berstatus tertunda karena belum ada receipt kandidat beku dan dataset hasil review. Belum ada skor kualitas/latency/memori/HTTP nyata, pemenang resolusi, atau perubahan produksi.
+[Preflight eksperimen penerimaan](../evaluations/issue11-resolution-plan.json) menunggu receipt yang cocok dengan dataset hasil review. Metrik pilot tersedia di [laporan JSON](../evaluations/issue11-resolution-pilot.json).
