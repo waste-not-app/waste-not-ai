@@ -50,4 +50,23 @@ Codex memeriksa 160 gambar awal dari segi checksum, pHash, orientasi, dan geomet
 | #8 | 82 | 40 foto kardus, 13 kertas, 15 karton minuman, 20 bungkus plastik. Setiap foto bisa memuat beberapa kelas. | 0 diterima. Review anotasi lengkap oleh manusia independen masih tertunda. |
 | #9 | 69 | 43 foto ponsel dan 27 foto remote, termasuk kotak tambahan dari screening. Remote tersebar pada 19 kunci sesi sementara. | 0 diterima. Anotasi COCO80 lengkap dan review masih tertunda. |
 
-Jumlah di atas adalah cakupan kandidat dari antrean ini. Sembilan belas kunci sesi remote masih di bawah target 20 kelompok independen untuk satu split, dan independensinya masih harus diperiksa. File kandidat terbaru adalah `issue8-intake-reviewed-draft.json` dan `issue9-intake-reviewed-draft.json` di `data/local/issue8-9-public-intake/`. Preflight #10 menunda delapan run B0–B3 karena kedua output build dataset belum tersedia. [Sasaran dan hasil audit](../evaluations/issue8-9-assistant-review.json).
+Pada tahap itu, sembilan belas kunci sesi remote masih di bawah target 20 kelompok independen untuk satu split. Antreannya tersimpan sebagai `issue8-intake-reviewed-draft.json` dan `issue9-intake-reviewed-draft.json` di `data/local/issue8-9-public-intake/`. Preflight #10 menunda delapan run B0–B3 karena kedua output build dataset belum tersedia. [Sasaran dan hasil audit](../evaluations/issue8-9-assistant-review.json).
+
+## Ekspansi kandidat dan rancangan split
+
+Intake lokal kini memuat **545 kandidat #8** dan **756 kandidat #9**. Checksum gambar, orientasi, bbox dan pHash diperiksa kembali terhadap kedua baseline, replay lama, serta kandidat antarsumber dengan ambang pHash ≤5. Lima gambar dipisahkan saat pemeriksaan visual karena kelas atau objeknya kurang jelas. Pemeriksaan visual ekspansi mencakup 110 gambar terpilih, termasuk satu frame per kombinasi kolektor dan kelas pada sampel ORBIT. [Laporan intake dan build](../evaluations/issue8-9-expanded-readiness.json).
+
+| Sumber tambahan | Jumlah awal yang diperoleh | Penggunaan kandidat |
+|---|---:|---|
+| CLICK Trash v2 | 199 | Bbox publisher untuk kertas dan wrapper. EXIF menyimpan petunjuk tujuh tanggal pengambilan pada 166 foto. Identitas benda dan sesi tetap perlu dikonfirmasi. |
+| WaRP-D | 123 | Karton susu dan jus pada konveyor, satu kelompok fasilitas untuk intake. |
+| PlasticObs+ v3 | 114 | Kardus dan kelas terkait dari RGB drone 4 m, dikelompokkan menurut studi. |
+| TrashNet | 28 | Bbox sementara dari pemisahan objek dan latar posterboard. Sejumlah foto berpotensi menampilkan benda yang sama dari beberapa sudut. |
+| ORBIT | 231 | Frame dari klip rumah pada train dan test penerbit dengan bbox objek target. Klip oleh kolektor yang sama berbagi kelompok intake. |
+| COCO train2017 | 200 | Tambahan gambar dan seluruh bbox publisher untuk antrean train. Penerbit COCO mencantumkan lisensi foto. Dari total 460 foto COCO dalam intake, 352 sudah ditautkan ke nama pembuat melalui Flickr oEmbed dengan ID foto yang cocok, dan 108 masih menunggu atribusi terverifikasi. |
+
+Antrean #8 menyediakan cakupan bbox sementara pada 182 foto kardus, 187 kertas, 162 karton minuman, dan 205 bungkus plastik. Angka kardus mencakup 114 foto udara PlasticObs+. Kandidat yang paling dekat dengan pemakaian kamera aplikasi dalam perhitungan split hanya mendukung 6 kunci sesi kardus, 4 karton minuman, 1 wrapper dan 0 kertas. Untuk validation serta holdout bersama, targetnya minimal 40 kelompok independen per kelas dengan minimal 50 objek di masing-masing split. Data dari konveyor, posterboard, dan foto udara diusulkan untuk train tambahan. [TrashNet](https://huggingface.co/datasets/garythung/trashnet), [PlasticObs+](https://zenodo.org/records/15126023).
+
+Rancangan #9 memakai kelompok sumber yang terpisah untuk dua split. Dengan label sementara, validation berisi 50 objek ponsel dan 95 remote, sementara holdout berisi 51 objek ponsel dan 79 remote. Masing-masing kelas memiliki 20 kunci kelompok per split. Setelah menahan foto yang diproyeksikan ke dua split dan menyaring atribusi, masih ada 206 kandidat train ponsel dan 200 remote. Sebanyak 41 kandidat Open Images diperiksa terhadap ID Flickr COCO train2017 dan hasilnya nol kecocokan ID. Independensi sesi, anotasi seluruh COCO80, dan review manusia masih perlu diselesaikan sebelum pembagian final. [ORBIT](https://github.com/microsoft/ORBIT-Dataset), [Open Images](https://storage.googleapis.com/openimages/web/download_v7.html), [lisensi COCO](https://cocodataset.org/#termsofuse).
+
+Kedua audit resmi tetap menerima **0 gambar** dan kedua builder berhenti sebelum membuat output. Preflight #10 menunda delapan run. Antrean terbaru tersimpan lokal sebagai `data/local/issue8-expanded-review-intake.json` dan `data/local/issue9-expanded-review-intake.json`. Rancangan kapasitas #9 tersimpan sebagai `data/local/issue9-candidate-split-plan-draft-attribution.json`. [Laporan terverifikasi](../evaluations/issue8-9-expanded-readiness.json).
