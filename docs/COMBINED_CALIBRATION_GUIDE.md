@@ -21,6 +21,24 @@ Threshold search tests 0.10–0.90 in steps of 0.05, then 0.01 around the best e
 
 If calibration fails to improve validation, the runner can still freeze an upstream checkpoint or resolution change with its default fusion. It keeps the released baseline when neither upstream configuration nor calibration provides a candidate.
 
+## Legacy validation pilot
+
+The November 20 pilot uses the released Broad Waste v4 and COCO11s checkpoints at square 640, the size selected by the [resolution pilot](ISSUE_11_RESOLUTION_PROGRESS.md). It covers 975 Broad and 43 General legacy validation photos. Both checkpoints, the validation photos and labels, and the transmitted browser JPEG90 bytes were checked against the corresponding inputs or their checksums. A fresh cache uses confidence 0.05 with native NMS IoU 0.70 and a 50-entry cap per component. Component AP comes from the separate confidence 0.001 measurement in the resolution report.
+
+The pilot uncovered a normalized box with zero height after Ultralytics clipped it against the image edge. The detector now skips collapsed boxes and continues returning valid detections from the same frame. API bounding-box validation still requires positive area.
+
+The support check counts distinct groups after joining near-duplicate images. None of the six focus classes clears both 50 instances and 20 groups. Cardboard has 51 instances from 10 groups. Only bottle, cup, and person meet both thresholds for the exploratory sweep.
+
+| Same-class merge IoU | Overall F1 with control thresholds | Overall F1 with pilot thresholds | Focus macro-F1 |
+|---|---:|---:|---:|
+| 0.55 | 69.65% | 69.95% | 22.86% |
+| 0.65 | 69.54% | 69.84% | 22.86% |
+| 0.75 | 69.16% | 69.44% | 22.86% |
+
+The exploratory sweep selected `bottle=0.46` and `cup=0.51` under the precision and recall constraints. The 0.55 combination gained 0.41 percentage points overall compared with the released control. Focus macro-F1 stayed at 22.86% across all trials. With the pilot thresholds, overlapping bottle/can hypotheses fell from 21 to 13, and phone/remote overlaps stayed at 10. Overlap counts describe candidate pairs and are separate from misclassifications matched to ground truth. The detector and cached evaluator agreed on 12 live control images, and the worker responses preserved the 88-label contract.
+
+The pilot retains the released policy. A final calibration and one-time holdout evaluation still require the reviewed datasets and matched #10/#11 reports. The [pilot report](../evaluations/issue12-calibration-pilot.json) records the cache checksum, class support, threshold trials, and metrics for the three merge IoUs.
+
 ## Reserved holdout
 
 Prepare a separate manifest under the workspace with `usage` set to `FINAL_HOLDOUT` and the complete `COMBINED_LABELS` in `target_classes`. Each record follows the camera benchmark shape with unique `id`, workspace-relative `image`, `sha256`, normalized `truth` entries and `evaluated_classes`. Supply `split=test`, `holdout_eligible=true`, `group`, `session_id`, and the image `phash`. The `rights` object provides `status=RELEASE_ELIGIBLE`, `source_page`, `license_url`, and `attribution`. The `review` object provides `reviewer_type=human`, `reviewer`, `reviewed_at`, and `complete_in_scope=true`. Annotate genuine low light separately with `condition=real_low_light`. Do not count transformed copies or photos from the same object/session as independent evidence.

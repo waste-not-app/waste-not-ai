@@ -72,6 +72,31 @@ def test_sdk_coordinate_context_mismatch_is_rejected(sdk):
         instance.detect(raw.getvalue())
 
 
+def test_sdk_boxes_collapsed_by_clipping_do_not_abort_low_confidence_inference(sdk):
+    root, _ = sdk
+    instance = detector.YoloDetector(root / "waste.pt", input_shape="square")
+    valid = [0.1, 0.2, 0.9, 1.0]
+
+    def predict(image, **options):
+        assert options["conf"] == 0.05
+        boxes = [
+            SimpleNamespace(
+                cls=SimpleNamespace(item=lambda: 0),
+                conf=SimpleNamespace(item=lambda: 0.08),
+                xyxyn=[SimpleNamespace(tolist=lambda coords=coords: coords)],
+            )
+            for coords in ([0.49, 1.0, 1.0, 1.0], valid, [0.0, 0.2, 0.0, 0.8])
+        ]
+        return [SimpleNamespace(orig_shape=(image.height, image.width), boxes=boxes)]
+
+    instance.model.predict = predict
+    raw = BytesIO()
+    Image.new("RGB", (1200, 400)).save(raw, format="PNG")
+    result = instance.detect(raw.getvalue(), confidence_floor=0.05)
+    assert [obj["bbox"] for obj in result["objects"]] == [valid]
+    assert result["image"] == {"width": 1200, "height": 400}
+
+
 def test_resolution_cannot_be_mutated_without_rebuilding_profile_identity(sdk):
     root, _ = sdk
     instance = detector.YoloDetector(root / "waste.pt", input_shape="square", input_size=768)

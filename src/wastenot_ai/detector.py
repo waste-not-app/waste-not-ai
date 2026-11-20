@@ -86,13 +86,18 @@ class YoloDetector:
             objects = []
             if result.boxes is not None:
                 for box in result.boxes:
+                    bbox = tuple(float(x) for x in box.xyxyn[0].tolist())
+                    x1, y1, x2, y2 = bbox
+                    # Rescaling and clipping can collapse a box against the original image edge.
+                    if (x1 == x2 or y1 == y2) and 0 <= x1 <= x2 <= 1 and 0 <= y1 <= y2 <= 1:
+                        continue
                     class_id = int(box.cls.item())
                     objects.append(
                         RawDetection(
                             class_id=class_id,
                             raw_class=self.labels[class_id],
                             confidence=float(box.conf.item()),
-                            bbox=tuple(float(x) for x in box.xyxyn[0].tolist()),
+                            bbox=bbox,
                         )
                     )
             return {
